@@ -33,11 +33,12 @@ fun Navigation() {
 
             }
             composable("auth/username"){
-                UsernameScreen() {
-
-                }
+                UsernameScreen(
+                    onClick = { navController.navigate("auth/welcome") },
+                    onValueChange = {authViewModel.username = it},
+                    text = authViewModel.username
+                )
             }
-
         }
     }
 }
