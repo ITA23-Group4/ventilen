@@ -8,8 +8,8 @@ import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import com.example.ventilen_app.ui.screens.Username.UsernameScreen
 import com.example.ventilen_app.ui.screens.Welcome.WelcomeScreen
-import com.example.ventilen_app.AuthViewModel
-import com.example.ventilen_app.ui.screens.Credentials.Credentials
+import com.example.ventilen_app.ui.screens.Credentials.CredentialsScreen
+import com.example.ventilen_app.ui.screens.Location.LocationScreen
 
 
 @Composable
@@ -36,7 +36,7 @@ fun Navigation() {
                 route = "register"
             ) {
                 composable("auth/register/credentials"){
-                    Credentials(
+                    CredentialsScreen(
                         onNavigateUsername = { navController.navigate("auth/register/username") },
                         textEmail = authViewModel.email,
                         textPassword = authViewModel.password,
@@ -46,9 +46,16 @@ fun Navigation() {
                 }
                 composable("auth/register/username"){
                     UsernameScreen(
-                        onClick = {  },
+                        onNavigateLocation = { navController.navigate("auth/register/location") },
+                        onNavigateBack = {  },
                         onValueChange = {authViewModel.username = it},
                         text = authViewModel.username
+                    )
+                }
+                composable("auth/register/location"){
+                    LocationScreen(
+                        onNavigateHome = {  },
+                        onNavigateBack = {  },
                     )
                 }
             }

@@ -7,7 +7,7 @@ import com.example.ventilen_app.ui.composables.CustomTextField
 import com.example.ventilen_app.ui.composables.CustomFilledButton
 
 @Composable
-fun Credentials(
+fun CredentialsScreen(
     onNavigateUsername: () -> Unit,
     textEmail: String,
     textPassword: String,
