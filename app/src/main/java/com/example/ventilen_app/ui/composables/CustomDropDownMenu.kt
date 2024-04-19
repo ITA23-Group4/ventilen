@@ -26,6 +26,7 @@ fun CustomDropDownMenu(
 ) {
     var expanded by remember { mutableStateOf(false) }
 
+    // Found here: https://medium.com/@german220291/building-a-custom-exposed-dropdown-menu-with-jetpack-compose-d65232535bf2
     ExposedDropdownMenuBox(
         expanded = expanded,
         onExpandedChange = { expanded = !expanded },

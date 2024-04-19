@@ -1,5 +1,6 @@
 package com.example.ventilen_app
 
+import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.navigation.compose.NavHost
@@ -53,9 +54,14 @@ fun Navigation() {
                     )
                 }
                 composable("auth/register/location"){
+                    // TODO: Should come from database
+                    val locations = listOf("København", "Århus", "Aalborg", "Odense")
                     LocationScreen(
-                        onNavigateHome = {  },
+                        onNavigateHome = { Log.d("TAGTAGTAGTAG", "${authViewModel.email} ${authViewModel.username} ${authViewModel.password} ${authViewModel.location}" )},
                         onNavigateBack = {  },
+                        locations = locations,
+                        selectedLocation = authViewModel.location,
+                        onLocationValueChanged = { authViewModel.location = it }
                     )
                 }
             }
