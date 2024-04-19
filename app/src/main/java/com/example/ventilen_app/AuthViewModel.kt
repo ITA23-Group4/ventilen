@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 
 class AuthViewModel: ViewModel() {
     var username:String by mutableStateOf("")
-    private val email:String by mutableStateOf("")
+    var email:String by mutableStateOf("")
     private val location:String by mutableStateOf("")
-    private val password:String by mutableStateOf("")
+    var password:String by mutableStateOf("")
 }
