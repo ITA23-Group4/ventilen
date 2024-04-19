@@ -2,6 +2,7 @@ package com.example.ventilen_app.ui.screens.Username
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -22,6 +23,6 @@ fun UsernameScreen(
     Column {
         CustomTextField(text = text, onValueChange = {onValueChange(it)} )
         FilledButton(text = "Fortsæt", onClick = onClick, color = Color.Red)
-        CustomOutlinedButton(text = "Back", onClick = { /*TODO*/ }, borderColor = Color.Red, textColor = Color.Black )
+        CustomOutlinedButton(text = "Back", onClick = { /*TODO*/ }, borderColor = MaterialTheme.colorScheme.primary, textColor = MaterialTheme.colorScheme.primary )
         }
 }
