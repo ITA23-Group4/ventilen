@@ -19,9 +19,8 @@ fun CustomOutlinedButton(
     onClick: () -> Unit,
     borderColor: Color,
     textColor: Color,
-    modifier: Modifier = Modifier,
-    shape: Shape = RoundedCornerShape(8.dp)
-) {
+    modifier: Modifier = Modifier)
+{
     OutlinedButton(
         onClick = onClick,
         modifier = modifier
@@ -32,7 +31,7 @@ fun CustomOutlinedButton(
             contentColor = textColor,
             containerColor = Color.Transparent
         ),
-        shape = shape
+        shape = RoundedCornerShape(8.dp)
     ) {
         Text(text = text)
     }
