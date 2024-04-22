@@ -17,6 +17,7 @@ import androidx.compose.ui.unit.dp
 import com.example.ventilen_app.R
 import com.example.ventilen_app.ui.composables.CustomOutlinedButton
 import com.example.ventilen_app.ui.composables.CustomFilledButton
+import com.example.ventilen_app.ui.composables.TopAuthPageDesign
 import com.example.ventilen_app.ui.theme.CustomColorScheme
 
 @Composable
@@ -28,22 +29,7 @@ fun WelcomeScreen(
         Modifier.background(CustomColorScheme.Mocha),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Spacer(modifier = Modifier.height(110.dp))
-        Image(
-            painter = painterResource(id = R.drawable.vent_logo), // Replace with your image resource ID
-            contentDescription = "Welcome Image",
-            modifier = Modifier
-                .width(166.dp),
-            contentScale = ContentScale.FillWidth,
-        )
-        Spacer(modifier = Modifier.height(66.dp))
-        Text(text = "Velkommen",
-            modifier = Modifier
-        )
-        Spacer(modifier = Modifier.height(14.dp))
-        Text(text = "log in eller tilmeld dig",
-            modifier = Modifier
-        )
+        TopAuthPageDesign(false,"Velkommen","log ind eller tilmeld dig")
         Spacer(modifier = Modifier.height(28.dp))
         CustomFilledButton(
             text = "Login",
