@@ -2,6 +2,7 @@ package com.example.ventilen_app
 
 import android.util.Log
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.currentRecomposeScope
 import androidx.compose.runtime.remember
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -99,9 +100,18 @@ fun Navigation() {
                                         .addOnSuccessListener {
                                             Log.d("CREATED", "CREATED NEW USER")
                                             navController.navigate("home")
+                                            authViewModel.loginUser(
+                                                navigateOnSuccess = {
+                                                    currentUserViewModel.getCurrentUser()
+                                                    navController.navigate("home")
+                                                },
+                                                navigateOnFail = {
+                                                    Log.d("FAILED", "FAILED TO CREATE NEW USER1")
+                                                }
+                                            )
                                         }
                                         .addOnFailureListener {
-                                            Log.d("FAILED", "FAILED TO CREATE NEW USER")
+                                            Log.d("FAILED", "FAILED TO CREATE NEW USER2")
                                         }
                                 },
                                 navigateOnFail = {

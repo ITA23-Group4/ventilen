@@ -1,5 +1,6 @@
 package com.example.ventilen_app
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -18,7 +19,28 @@ class AuthViewModel: ViewModel() {
 
     fun registerNewUser(navigateOnSuccess: (String) -> Unit, navigateOnFail: () -> Unit) {
         accountService.authenticate(email, password, navigateOnSuccess, navigateOnFail)
-        repository
+        /*
+        repository.db.collection("users")
+            .document(it) // Make UID for AUTH and users document UID the same
+            .set(newUser)
+            .addOnSuccessListener {
+                Log.d("CREATED", "CREATED NEW USER")
+                navController.navigate("home")
+                authViewModel.loginUser(
+                    navigateOnSuccess = {
+                        currentUserViewModel.getCurrentUser()
+                        navController.navigate("home")
+                    },
+                    navigateOnFail = {
+                        Log.d("FAILED", "FAILED TO CREATE NEW USER1")
+                    }
+                )
+            }
+            .addOnFailureListener {
+                Log.d("FAILED", "FAILED TO CREATE NEW USER2")
+            }
+
+         */
     }
 
     fun loginUser(navigateOnSuccess: () -> Unit, navigateOnFail: () -> Unit) {
