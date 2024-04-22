@@ -66,7 +66,7 @@ fun Navigation() {
                         onNavigateLocation = { navController.navigate("auth/register/location") },
                         onNavigateBack = { },
                         onValueChange = { authViewModel.username = it },
-                        text = authViewModel.username
+                        textUsername = authViewModel.username
                     )
                 }
                 composable("auth/register/location") {
