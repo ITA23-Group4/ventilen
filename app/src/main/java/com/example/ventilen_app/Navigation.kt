@@ -7,9 +7,11 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
+import com.example.ventilen_app.data.models.User
 import com.example.ventilen_app.ui.screens.Username.UsernameScreen
 import com.example.ventilen_app.ui.screens.Welcome.WelcomeScreen
 import com.example.ventilen_app.ui.screens.Credentials.CredentialsScreen
+import com.example.ventilen_app.ui.screens.Home.HomeScreen
 import com.example.ventilen_app.ui.screens.Location.LocationScreen
 import com.example.ventilen_app.ui.screens.Login.LoginScreen
 
@@ -19,6 +21,9 @@ fun Navigation() {
     val navController = rememberNavController()
     val authViewModel: AuthViewModel = remember {
         AuthViewModel()
+    }
+    val currentUserViewModel: CurrentUserViewModel = remember {
+        CurrentUserViewModel()
     }
     NavHost(navController = navController, startDestination = "auth") {
         navigation(
@@ -37,7 +42,13 @@ fun Navigation() {
                 LoginScreen(
                     onNavigateHome = {
                         authViewModel.loginUser(
-                            { navController.navigate("auth/welcome") },
+                            {
+                                navController.navigate("home")
+
+                                currentUserViewModel.getCurrentUser()
+                                val currentUser = currentUserViewModel.currentUser
+                                Log.d("ASJDASD", currentUser.toString())
+                            },
                             { Log.d("FAILED!", "${authViewModel.email},${authViewModel.password}") }
                         )
                     },
@@ -95,6 +106,13 @@ fun Navigation() {
                     )
                 }
             }
+        }
+
+        composable("home"){
+            HomeScreen(
+                currentUserViewModel.currentUser?.username.toString(),
+                currentUserViewModel.currentUser?.uid.toString()
+            )
         }
     }
 }
