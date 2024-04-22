@@ -22,9 +22,9 @@ import com.example.ventilen_app.ui.theme.CustomColorScheme
 
 @Composable
 fun WelcomeScreen(
-    onClick: () -> Unit
+    onNavigationLogin: () -> Unit,
+    onNavigationRegister: () -> Unit
 ) {
-
     Column(
         Modifier.background(CustomColorScheme.Mocha),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -33,11 +33,11 @@ fun WelcomeScreen(
         Spacer(modifier = Modifier.height(28.dp))
         CustomFilledButton(
             text = "Login",
-            onClick = onClick,
+            onClick = onNavigationLogin,
             color = CustomColorScheme.Orange,
             padding = PaddingValues(horizontal = 25.dp, vertical = 0.dp)
         )
         Spacer(modifier = Modifier.height(30.dp))
-        CustomOutlinedButton(text = "Tilmeld", onClick = onClick)
+        CustomOutlinedButton(text = "Tilmeld", onClick = onNavigationRegister)
     }
 }

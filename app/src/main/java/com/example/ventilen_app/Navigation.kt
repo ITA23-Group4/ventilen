@@ -11,54 +11,84 @@ import com.example.ventilen_app.ui.screens.Username.UsernameScreen
 import com.example.ventilen_app.ui.screens.Welcome.WelcomeScreen
 import com.example.ventilen_app.ui.screens.Credentials.CredentialsScreen
 import com.example.ventilen_app.ui.screens.Location.LocationScreen
+import com.example.ventilen_app.ui.screens.Login.LoginScreen
 
 
 @Composable
 fun Navigation() {
     val navController = rememberNavController()
-    val authViewModel:AuthViewModel = remember {
+    val authViewModel: AuthViewModel = remember {
         AuthViewModel()
     }
     NavHost(navController = navController, startDestination = "auth") {
         navigation(
             startDestination = "auth/welcome",
             route = "auth"
-        ){
+        ) {
 
             composable("auth/welcome") {
-                WelcomeScreen(){
-                    navController.navigate("register")
-                }
+                WelcomeScreen(
+                    onNavigationLogin = { navController.navigate("auth/login") },
+                    onNavigationRegister = { navController.navigate("auth/register") }
+                )
+            }
 
+            composable("auth/login") {
+                LoginScreen(
+                    onNavigateHome = {
+                        authViewModel.loginUser(
+                            { navController.navigate("auth/welcome") },
+                            { Log.d("FAILED!", "${authViewModel.email},${authViewModel.password}") }
+                        )
+                    },
+                    textEmail = authViewModel.email,
+                    textPassword = authViewModel.password,
+                    onValueChangeEmail = { authViewModel.email = it },
+                    onValueChangePassword = { authViewModel.password = it },
+                )
             }
 
             navigation(
                 startDestination = "auth/register/credentials",
-                route = "register"
+                route = "auth/register"
             ) {
-                composable("auth/register/credentials"){
+                composable("auth/register/credentials") {
                     CredentialsScreen(
                         onNavigateUsername = { navController.navigate("auth/register/username") },
                         textEmail = authViewModel.email,
                         textPassword = authViewModel.password,
-                        onValueChangeEmail = {authViewModel.email = it},
-                        onValueChangePassword = {authViewModel.password = it},
+                        onValueChangeEmail = { authViewModel.email = it },
+                        onValueChangePassword = { authViewModel.password = it },
                     )
                 }
-                composable("auth/register/username"){
+                composable("auth/register/username") {
                     UsernameScreen(
                         onNavigateLocation = { navController.navigate("auth/register/location") },
-                        onNavigateBack = {  },
-                        onValueChange = {authViewModel.username = it},
+                        onNavigateBack = { },
+                        onValueChange = { authViewModel.username = it },
                         text = authViewModel.username
                     )
                 }
-                composable("auth/register/location"){
+                composable("auth/register/location") {
                     // TODO: Should come from database
                     val locations = listOf("København", "Århus", "Aalborg", "Odense")
                     LocationScreen(
-                        onNavigateHome = { Log.d("TAGTAGTAGTAG", "${authViewModel.email} ${authViewModel.username} ${authViewModel.password} ${authViewModel.location}" )},
-                        onNavigateBack = {  },
+                        onNavigateHome = {
+                            Log.d(
+                                "TAGTAGTAGTAG",
+                                "${authViewModel.email} ${authViewModel.username} ${authViewModel.password} ${authViewModel.location}"
+                            )
+                            authViewModel.registerNewUser(
+                                { navController.navigate("auth/welcome") },
+                                {
+                                    Log.d(
+                                        "FAILED!",
+                                        "${authViewModel.email},${authViewModel.password}"
+                                    )
+                                }
+                            )
+                        },
+                        onNavigateBack = { },
                         locations = locations,
                         selectedLocation = authViewModel.location,
                         onLocationValueChanged = { authViewModel.location = it }

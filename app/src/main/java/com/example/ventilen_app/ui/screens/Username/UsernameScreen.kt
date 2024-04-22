@@ -11,14 +11,14 @@ import com.example.ventilen_app.ui.composables.CustomFilledButton
 fun UsernameScreen(
     onNavigateBack: () -> Unit,
     onNavigateLocation: () -> Unit,
-    text:String,
+    textUsername: String,
     onValueChange: (String) -> Unit,
 
     ) {
     Text(text = "Hello")
 
     Column {
-        CustomTextField(text = text, onValueChange = {onValueChange(it)} )
+        CustomTextField(text = textUsername, onValueChange = {onValueChange(it)} )
         CustomFilledButton(text = "Fortsæt", onClick = onNavigateLocation)
         }
 }
