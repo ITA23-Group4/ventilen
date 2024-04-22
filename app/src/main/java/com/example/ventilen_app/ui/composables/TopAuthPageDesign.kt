@@ -27,7 +27,11 @@ import com.example.ventilen_app.ui.theme.CustomColorScheme
 
 
 @Composable
-fun TopAuthPageDesign(BackButton: Boolean, TopText: String, BottomText: String) {
+fun TopAuthPageDesign(
+    hasBackButton: Boolean,
+    topText: String,
+    bottomText: String
+) {
     Column(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
@@ -37,7 +41,7 @@ fun TopAuthPageDesign(BackButton: Boolean, TopText: String, BottomText: String) 
             horizontalArrangement = Arrangement.Start,
             modifier = Modifier.padding(16.dp)
         ) {
-            if (BackButton) {
+            if (hasBackButton) {
                 Icon(
                     Icons.Rounded.ArrowBack,
                     contentDescription = "Icon",
@@ -59,8 +63,8 @@ fun TopAuthPageDesign(BackButton: Boolean, TopText: String, BottomText: String) 
             contentScale = ContentScale.FillWidth
         )
         Spacer(modifier = Modifier.height(66.dp))
-        Text(text = TopText)
+        Text(text = topText)
         Spacer(modifier = Modifier.height(14.dp))
-        Text(text = BottomText)
+        Text(text = bottomText)
     }
 }
