@@ -19,11 +19,11 @@ import com.example.ventilen_app.ui.screens.Login.LoginScreen
 @Composable
 fun Navigation() {
     val navController = rememberNavController()
-    val authViewModel: AuthViewModel = remember {
-        AuthViewModel()
-    }
     val currentUserViewModel: CurrentUserViewModel = remember {
         CurrentUserViewModel()
+    }
+    val authViewModel: AuthViewModel = remember {
+        AuthViewModel()
     }
     NavHost(navController = navController, startDestination = "auth") {
         navigation(
@@ -90,8 +90,21 @@ fun Navigation() {
                                 "${authViewModel.email} ${authViewModel.username} ${authViewModel.password} ${authViewModel.location}"
                             )
                             authViewModel.registerNewUser(
-                                { navController.navigate("auth/welcome") },
-                                {
+                                navigateOnSuccess = {
+                                    val newUser: User = User(username = authViewModel.username)
+
+                                    authViewModel.repository.db.collection("users")
+                                        .document(it) // Make UID for AUTH and users document UID the same
+                                        .set(newUser)
+                                        .addOnSuccessListener {
+                                            Log.d("CREATED", "CREATED NEW USER")
+                                            navController.navigate("home")
+                                        }
+                                        .addOnFailureListener {
+                                            Log.d("FAILED", "FAILED TO CREATE NEW USER")
+                                        }
+                                },
+                                navigateOnFail = {
                                     Log.d(
                                         "FAILED!",
                                         "${authViewModel.email},${authViewModel.password}"

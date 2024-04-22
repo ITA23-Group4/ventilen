@@ -13,4 +13,16 @@ class Repository {
             .toObject(User::class.java)
     }
 
+    fun createUser(user: User, uid: String) {
+        db.collection("users")
+            .document(uid)
+            .set(user)
+            .addOnSuccessListener {
+
+            }
+            .addOnFailureListener {
+
+            }
+    }
+
 }
