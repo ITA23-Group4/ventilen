@@ -1,25 +1,39 @@
 package com.example.ventilen_app.services
 
 import android.util.Log
-import com.google.firebase.Firebase
-import com.google.firebase.auth.auth
+import com.example.ventilen_app.data.models.User
+import com.google.firebase.auth.FirebaseAuth
 
 class AccountService {
-    fun authenticate(email: String, password: String, onResult: (String) -> Unit, onFail: () -> Unit) {
-        Firebase.auth.createUserWithEmailAndPassword(email, password)
-            .addOnSuccessListener { auth ->
-                onResult(auth.user?.uid!!)
+    private val auth = FirebaseAuth.getInstance()
+
+    fun authenticate(
+        email: String,
+        password: String,
+        username: String,
+        onAuthSuccess: (User) -> Unit,
+        onAuthFailed: () -> Unit,
+    ) {
+        auth.createUserWithEmailAndPassword(email, password)
+            .addOnSuccessListener { authResult ->
+                val newAuthUID: String = authResult.user?.uid!!
+                val newUser: User = User(username, newAuthUID)
+                onAuthSuccess(newUser)
             }
             .addOnFailureListener {
-                onFail()
+                onAuthFailed()
             }
-
     }
 
-    fun login(email: String, password: String, onResult: () -> Unit, onFail: () -> Unit): Unit {
-        Firebase.auth.signInWithEmailAndPassword(email, password)
+    fun login(
+        email: String,
+        password: String,
+        onResult: () -> Unit,
+        onFail: () -> Unit
+    ) {
+        auth.signInWithEmailAndPassword(email, password)
             .addOnSuccessListener {
-                val currentUserEmail = Firebase.auth.currentUser?.email
+                val currentUserEmail = auth.currentUser?.email
                 Log.d("CURRENT EMAIL", "login: $currentUserEmail")
                 onResult()
             }

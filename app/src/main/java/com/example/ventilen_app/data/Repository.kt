@@ -1,5 +1,6 @@
 package com.example.ventilen_app.data
 
+import android.util.Log
 import com.example.ventilen_app.data.models.User
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
@@ -13,15 +14,15 @@ class Repository {
             .toObject(User::class.java)
     }
 
-    fun createUser(user: User, uid: String) {
+    fun createUser(newUser: User) {
         db.collection("users")
-            .document(uid)
-            .set(user)
+            .document(newUser.uid!!)
+            .set(newUser)
             .addOnSuccessListener {
-
+                Log.d("CREATE_USER", "User created: $newUser")
             }
             .addOnFailureListener {
-
+                Log.d("CREATE_USER", "Failed to create user: $newUser")
             }
     }
 
