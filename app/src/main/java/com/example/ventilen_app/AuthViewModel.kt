@@ -1,5 +1,6 @@
 package com.example.ventilen_app
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -27,11 +28,20 @@ class AuthViewModel: ViewModel() {
             username = username,
             onAuthSuccess = {
                 repository.createUser(it)
-                navigateOnSuccess()
+                loginUser(
+                    navigateOnSuccess = {
+                        navigateOnSuccess()
+                    },
+                    navigateOnFail = {
+                        Log.d("LOGIN_USER", "Failed to log in after registration")
+                        navigateOnFailure()
+                    }
+                )
             },
             onAuthFailed = navigateOnFailure
         )
     }
+
 
 
 
