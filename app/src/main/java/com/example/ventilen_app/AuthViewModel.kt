@@ -19,18 +19,17 @@ class AuthViewModel : ViewModel() {
     var password: String by mutableStateOf("")
 
     fun registerNewUser(
-        onAuthSuccess: () -> Unit,
-        onAuthFailed: () -> Unit
+        onRegistrationSuccess: () -> Unit,
+        onRegistrationFailed: () -> Unit
     ) {
         accountService.authenticate(
             email = email,
             password = password,
             username = username,
-            onAuthSuccess = { newUser ->
-                repository.createUser(newUser)
-                onAuthSuccess()
+            onRegistrationSuccess = { newUser ->
+                repository.createUser(newUser, onRegistrationSuccess, onRegistrationFailed)
             },
-            onAuthFailed = onAuthFailed
+            onRegistrationFailed = onRegistrationFailed
         )
     }
 

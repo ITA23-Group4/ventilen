@@ -11,17 +11,17 @@ class AccountService {
         email: String,
         password: String,
         username: String,
-        onAuthSuccess: (User) -> Unit,
-        onAuthFailed: () -> Unit,
+        onRegistrationSuccess: (User) -> Unit,
+        onRegistrationFailed: () -> Unit,
     ) {
         auth.createUserWithEmailAndPassword(email, password)
             .addOnSuccessListener { firebaseAuthResult ->
                 val newAuthUID: String = firebaseAuthResult.user?.uid!!
                 val newUser: User = User(username, newAuthUID)
-                onAuthSuccess(newUser)
+                onRegistrationSuccess(newUser)
             }
             .addOnFailureListener {
-                onAuthFailed()
+                onRegistrationFailed()
             }
     }
 
@@ -33,8 +33,7 @@ class AccountService {
     ) {
         auth.signInWithEmailAndPassword(email, password)
             .addOnSuccessListener {
-                val currentUserEmail = auth.currentUser?.email
-                Log.d("CURRENT EMAIL", "login: $currentUserEmail")
+                Log.d("Logged In", "Logged in!")
                 navigateOnLoginSuccess()
             }
             .addOnFailureListener {

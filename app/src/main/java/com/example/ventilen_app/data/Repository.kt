@@ -14,14 +14,20 @@ class Repository {
             .toObject(User::class.java)
     }
 
-    fun createUser(newUser: User) {
+    fun createUser(
+        newUser: User,
+        onRegistrationSuccess: () -> Unit,
+        onRegistrationFailed: () -> Unit
+    ) {
         db.collection("users")
             .document(newUser.uid!!)
             .set(newUser)
             .addOnSuccessListener {
+                onRegistrationSuccess()
                 Log.d("CREATE_USER", "User created: $newUser")
             }
             .addOnFailureListener {
+                onRegistrationFailed()
                 Log.d("CREATE_USER", "Failed to create user: $newUser")
             }
     }
