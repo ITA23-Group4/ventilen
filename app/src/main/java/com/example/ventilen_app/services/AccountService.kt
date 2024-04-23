@@ -15,8 +15,8 @@ class AccountService {
         onAuthFailed: () -> Unit,
     ) {
         auth.createUserWithEmailAndPassword(email, password)
-            .addOnSuccessListener { authResult ->
-                val newAuthUID: String = authResult.user?.uid!!
+            .addOnSuccessListener { firebaseAuthResult ->
+                val newAuthUID: String = firebaseAuthResult.user?.uid!!
                 val newUser: User = User(username, newAuthUID)
                 onAuthSuccess(newUser)
             }

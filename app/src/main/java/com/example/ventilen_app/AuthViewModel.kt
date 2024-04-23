@@ -26,8 +26,8 @@ class AuthViewModel : ViewModel() {
             email = email,
             password = password,
             username = username,
-            onAuthSuccess = {
-                repository.createUser(it)
+            onAuthSuccess = { newUser ->
+                repository.createUser(newUser)
                 navigateOnAuthSuccess()
             },
             onAuthFailed = onAuthFailure
