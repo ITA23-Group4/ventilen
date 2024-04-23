@@ -19,7 +19,7 @@ class AuthViewModel : ViewModel() {
     var password: String by mutableStateOf("")
 
     fun registerNewUser(
-        navigateOnAuthSuccess: () -> Unit,
+        onAuthSuccess: () -> Unit,
         onAuthFailed: () -> Unit
     ) {
         accountService.authenticate(
@@ -28,7 +28,7 @@ class AuthViewModel : ViewModel() {
             username = username,
             onAuthSuccess = { newUser ->
                 repository.createUser(newUser)
-                navigateOnAuthSuccess()
+                onAuthSuccess()
             },
             onAuthFailed = onAuthFailed
         )

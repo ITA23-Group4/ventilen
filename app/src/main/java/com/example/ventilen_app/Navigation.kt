@@ -86,7 +86,7 @@ fun Navigation() {
                     LocationScreen(
                         onNavigateHome = {
                             authViewModel.registerNewUser(
-                                navigateOnAuthSuccess = {
+                                onAuthSuccess = {
                                     // Login if registration completed
                                     authViewModel.loginUser(
                                         navigateOnLoginSuccess = {
