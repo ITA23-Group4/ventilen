@@ -18,7 +18,7 @@ fun UsernameScreen(
     Text(text = "Hello")
 
     Column {
-        CustomTextField(text = textUsername, onValueChange = {onValueChange(it)} )
+        CustomTextField(text = textUsername, label = "Username", onValueChange = {onValueChange(it)} )
         CustomFilledButton(text = "Fortsæt", onClick = onNavigateLocation)
         }
 }

@@ -17,8 +17,8 @@ fun CredentialsScreen(
     Column(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        CustomTextField(text = textEmail) { onValueChangeEmail(it) }
-        CustomTextField(text = textPassword) { onValueChangePassword(it) }
+        CustomTextField(text = textEmail, label = "Email") { onValueChangeEmail(it) }
+        CustomTextField(text = textPassword, label = "Password") { onValueChangePassword(it) }
 
         CustomFilledButton(text = "Forsæt", onClick = onNavigateUsername)
     }
