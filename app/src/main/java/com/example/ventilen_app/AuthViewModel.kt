@@ -11,7 +11,7 @@ import com.example.ventilen_app.services.AccountService
 
 class AuthViewModel : ViewModel() {
     private val accountService: AccountService = AccountService();
-    val repository: Repository = Repository()
+    private val repository: Repository = Repository()
 
     var username: String by mutableStateOf("")
     var email: String by mutableStateOf("")
