@@ -28,17 +28,17 @@ class AccountService {
     fun login(
         email: String,
         password: String,
-        onResult: () -> Unit,
-        onFail: () -> Unit
+        navigateOnLoginSuccess: () -> Unit,
+        navigateOnLoginFailed: () -> Unit
     ) {
         auth.signInWithEmailAndPassword(email, password)
             .addOnSuccessListener {
                 val currentUserEmail = auth.currentUser?.email
                 Log.d("CURRENT EMAIL", "login: $currentUserEmail")
-                onResult()
+                navigateOnLoginSuccess()
             }
             .addOnFailureListener {
-                onFail()
+                navigateOnLoginFailed()
             }
     }
 }

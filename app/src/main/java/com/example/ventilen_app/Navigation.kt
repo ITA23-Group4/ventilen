@@ -43,14 +43,13 @@ fun Navigation() {
                 LoginScreen(
                     onNavigateHome = {
                         authViewModel.loginUser(
-                            {
-                                navController.navigate("home")
-
+                            navigateOnLoginSuccess = {
                                 currentUserViewModel.getCurrentUser()
-                                val currentUser = currentUserViewModel.currentUser
-                                Log.d("ASJDASD", currentUser.toString())
+                                navController.navigate("home")
                             },
-                            { Log.d("FAILED!", "${authViewModel.email},${authViewModel.password}") }
+                            navigateOnLoginFailed = {
+                                Log.d("FAILED!", "${authViewModel.email},${authViewModel.password}")
+                            }
                         )
                     },
                     textEmail = authViewModel.email,
@@ -87,11 +86,18 @@ fun Navigation() {
                     LocationScreen(
                         onNavigateHome = {
                             authViewModel.registerNewUser(
-                                navigateOnSuccess = {
-                                    currentUserViewModel.getCurrentUser()
-                                    navController.navigate("home")
+                                // Login if registration completed
+                                navigateOnAuthSuccess = {
+                                    authViewModel.loginUser(
+                                        navigateOnLoginSuccess = {
+                                            currentUserViewModel.getCurrentUser()
+                                            navController.navigate("home")
+                                        },
+                                        navigateOnLoginFailed = {
+                                            Log.d("FAILED!", "${authViewModel.email},${authViewModel.password}") }
+                                    )
                                 },
-                                navigateOnFailure = {
+                                onAuthFailure = {
                                     Log.d("REGISTER_USER", "Failed to register new user")
                                 }
                             )

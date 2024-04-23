@@ -9,18 +9,18 @@ import com.example.ventilen_app.data.Repository
 import com.example.ventilen_app.data.models.User
 import com.example.ventilen_app.services.AccountService
 
-class AuthViewModel: ViewModel() {
+class AuthViewModel : ViewModel() {
     private val accountService: AccountService = AccountService();
     val repository: Repository = Repository()
 
-    var username:String by mutableStateOf("")
-    var email:String by mutableStateOf("")
-    var location:String by mutableStateOf("")
-    var password:String by mutableStateOf("")
+    var username: String by mutableStateOf("")
+    var email: String by mutableStateOf("")
+    var location: String by mutableStateOf("")
+    var password: String by mutableStateOf("")
 
     fun registerNewUser(
-        navigateOnSuccess: () -> Unit,
-        navigateOnFailure: () -> Unit
+        navigateOnAuthSuccess: () -> Unit,
+        onAuthFailure: () -> Unit
     ) {
         accountService.authenticate(
             email = email,
@@ -28,25 +28,14 @@ class AuthViewModel: ViewModel() {
             username = username,
             onAuthSuccess = {
                 repository.createUser(it)
-                loginUser(
-                    navigateOnSuccess = {
-                        navigateOnSuccess()
-                    },
-                    navigateOnFail = {
-                        Log.d("LOGIN_USER", "Failed to log in after registration")
-                        navigateOnFailure()
-                    }
-                )
+                navigateOnAuthSuccess()
             },
-            onAuthFailed = navigateOnFailure
+            onAuthFailed = onAuthFailure
         )
     }
 
-
-
-
-    fun loginUser(navigateOnSuccess: () -> Unit, navigateOnFail: () -> Unit) {
-        accountService.login(email, password, navigateOnSuccess, navigateOnFail)
+    fun loginUser(navigateOnLoginSuccess: () -> Unit, navigateOnLoginFailed: () -> Unit) {
+        accountService.login(email, password, navigateOnLoginSuccess, navigateOnLoginFailed)
     }
 
 }
