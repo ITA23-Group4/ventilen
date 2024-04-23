@@ -20,7 +20,7 @@ class AuthViewModel : ViewModel() {
 
     fun registerNewUser(
         navigateOnAuthSuccess: () -> Unit,
-        onAuthFailure: () -> Unit
+        onAuthFailed: () -> Unit
     ) {
         accountService.authenticate(
             email = email,
@@ -30,12 +30,12 @@ class AuthViewModel : ViewModel() {
                 repository.createUser(newUser)
                 navigateOnAuthSuccess()
             },
-            onAuthFailed = onAuthFailure
+            onAuthFailed = onAuthFailed
         )
     }
 
-    fun loginUser(navigateOnLoginSuccess: () -> Unit, navigateOnLoginFailed: () -> Unit) {
-        accountService.login(email, password, navigateOnLoginSuccess, navigateOnLoginFailed)
+    fun loginUser(navigateOnLoginSuccess: () -> Unit, onLoginFailed: () -> Unit) {
+        accountService.login(email, password, navigateOnLoginSuccess, onLoginFailed)
     }
 
 }

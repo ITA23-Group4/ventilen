@@ -47,7 +47,7 @@ fun Navigation() {
                                 currentUserViewModel.getCurrentUser()
                                 navController.navigate("home")
                             },
-                            navigateOnLoginFailed = {
+                            onLoginFailed = {
                                 Log.d("FAILED!", "${authViewModel.email},${authViewModel.password}")
                             }
                         )
@@ -93,12 +93,12 @@ fun Navigation() {
                                             currentUserViewModel.getCurrentUser()
                                             navController.navigate("home")
                                         },
-                                        navigateOnLoginFailed = {
+                                        onLoginFailed = {
                                             Log.d("FAILED!", "${authViewModel.email},${authViewModel.password}")
                                         }
                                     )
                                 },
-                                onAuthFailure = {
+                                onAuthFailed = {
                                     Log.d("REGISTER_USER", "Failed to register new user")
                                 }
                             )

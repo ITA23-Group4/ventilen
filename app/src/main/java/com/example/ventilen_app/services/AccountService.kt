@@ -29,7 +29,7 @@ class AccountService {
         email: String,
         password: String,
         navigateOnLoginSuccess: () -> Unit,
-        navigateOnLoginFailed: () -> Unit
+        onLoginFailed: () -> Unit
     ) {
         auth.signInWithEmailAndPassword(email, password)
             .addOnSuccessListener {
@@ -38,7 +38,7 @@ class AccountService {
                 navigateOnLoginSuccess()
             }
             .addOnFailureListener {
-                navigateOnLoginFailed()
+                onLoginFailed()
             }
     }
 }
