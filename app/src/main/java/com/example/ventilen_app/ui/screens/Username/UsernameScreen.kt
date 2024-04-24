@@ -31,7 +31,7 @@ fun UsernameScreen(
             hasBackButton = true,
             topText = "Hvad skal vi kalde dig",
             bottomText = "Indtast dit anonyme brugernavn" )
-        CustomTextField(text = textUsername, onValueChange = {onValueChange(it)} )
+        CustomTextField(text = textUsername, label = "Username", onValueChange = {onValueChange(it)} )
         Spacer(modifier = Modifier.height(30.dp))
         CustomFilledButton(text = "Fortsæt", onClick = onNavigateLocation, padding = PaddingValues(horizontal = 25.dp, vertical = 0.dp))
         }

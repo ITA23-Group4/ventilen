@@ -30,12 +30,12 @@ fun CredentialsScreen(
             topText = "Hvordan skal vi huske dig?",
             bottomText = "indtast din email og kodeord"
         )
-        CustomTextField(text = textEmail) { onValueChangeEmail(it) }
+        CustomTextField(text = textEmail, label = "Email") { onValueChangeEmail(it) }
         Spacer(modifier = Modifier.height(30.dp))
-        CustomTextField(text = textPassword) { onValueChangePassword(it) }
+        CustomTextField(text = textPassword, label = "Password") { onValueChangePassword(it) }
         Spacer(modifier = Modifier.height(30.dp))
         CustomFilledButton(
-            text = "Forsæt", 
+            text = "Forsæt",
             onClick = onNavigateUsername,
             padding = PaddingValues(25.dp,0.dp))
     }

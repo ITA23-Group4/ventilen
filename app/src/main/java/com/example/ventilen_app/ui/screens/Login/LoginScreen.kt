@@ -28,10 +28,10 @@ fun LoginScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         TopAuthPageDesign(hasBackButton = true, topText = "Log ind", bottomText = "Indtast din email og password")
-        CustomTextField(text = textEmail) { onValueChangeEmail(it) }
+        CustomTextField(text = textEmail, label = "Email") { onValueChangeEmail(it) }
         Spacer(modifier = Modifier.height(30.dp))
 
-        CustomTextField(text = textPassword) { onValueChangePassword(it) }
+        CustomTextField(text = textPassword, label = "Password") { onValueChangePassword(it) }
 
         Spacer(modifier = Modifier.height(30.dp))
 
@@ -42,7 +42,7 @@ fun LoginScreen(
         )
 
         Spacer(modifier = Modifier.height(30.dp))
-        
+
         Row {
             Text(text = "Har du ikke en bruger?", style = MaterialTheme.typography.headlineMedium)
             Spacer(modifier = Modifier.width(4.dp))
