@@ -56,6 +56,18 @@ val Typography = Typography(
         fontWeight = FontWeight.Bold,
         fontSize = 14.sp,
         color = CustomColorScheme.Orange
+    ),
+    labelLarge = TextStyle(
+        fontFamily = montserratFamily,
+        fontWeight = FontWeight.Bold,
+        fontSize = 18.sp,
+        color = CustomColorScheme.OffWhite
+    ),
+    labelMedium = TextStyle(
+        fontFamily = montserratFamily,
+        fontWeight = FontWeight.Bold,
+        fontSize = 18.sp,
+        color = CustomColorScheme.Orange
     )
 )
 

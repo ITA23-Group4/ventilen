@@ -37,6 +37,9 @@ fun WelcomeScreen(
             padding = PaddingValues(horizontal = 25.dp, vertical = 0.dp)
         )
         Spacer(modifier = Modifier.height(30.dp))
-        CustomOutlinedButton(text = "Tilmeld", onClick = onNavigationRegister)
+        CustomOutlinedButton(
+            text = "Tilmeld",
+            onClick = onNavigationRegister,
+            padding = PaddingValues(horizontal = 25.dp, vertical = 0.dp))
     }
 }
