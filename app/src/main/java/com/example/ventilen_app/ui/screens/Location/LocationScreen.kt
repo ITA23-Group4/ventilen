@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -14,9 +13,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.ventilen_app.ui.composables.CustomFilledButton
-import com.example.ventilen_app.ui.composables.CustomDropDownMenu
-import com.example.ventilen_app.ui.composables.TopAuthPageDesign
+import com.example.ventilen_app.ui.components.CustomFilledButton
+import com.example.ventilen_app.ui.components.CustomDropDown.CustomDropDownMenu
+import com.example.ventilen_app.ui.components.TopAuthPageDesign
 import com.example.ventilen_app.ui.theme.CustomColorScheme
 
 

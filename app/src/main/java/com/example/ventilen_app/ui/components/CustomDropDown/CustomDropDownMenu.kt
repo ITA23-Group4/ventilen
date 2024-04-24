@@ -1,4 +1,4 @@
-package com.example.ventilen_app.ui.composables
+package com.example.ventilen_app.ui.components.CustomDropDown
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.DropdownMenuItem
@@ -9,10 +9,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -24,12 +21,12 @@ fun CustomDropDownMenu(
     onValueChangedEvent: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    var expanded by remember { mutableStateOf(false) }
+    val customDropDownMenuViewModel: CustomDropDownMenuViewModel = remember { CustomDropDownMenuViewModel() }
 
     // Found here: https://medium.com/@german220291/building-a-custom-exposed-dropdown-menu-with-jetpack-compose-d65232535bf2
     ExposedDropdownMenuBox(
-        expanded = expanded,
-        onExpandedChange = { expanded = !expanded },
+        expanded = customDropDownMenuViewModel.isExpanded,
+        onExpandedChange = { customDropDownMenuViewModel.isExpanded = !customDropDownMenuViewModel.isExpanded },
         modifier = modifier
     ) {
         OutlinedTextField(
@@ -38,7 +35,7 @@ fun CustomDropDownMenu(
             onValueChange = {},
             label = { Text(text = label) },
             trailingIcon = {
-                ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded)
+                ExposedDropdownMenuDefaults.TrailingIcon(expanded = customDropDownMenuViewModel.isExpanded)
             },
             colors = OutlinedTextFieldDefaults.colors(),
             modifier = Modifier
@@ -46,12 +43,12 @@ fun CustomDropDownMenu(
                 .fillMaxWidth()
         )
 
-        ExposedDropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
+        ExposedDropdownMenu(expanded = customDropDownMenuViewModel.isExpanded, onDismissRequest = { customDropDownMenuViewModel.isExpanded = false }) {
             options.forEach { option: String ->
                 DropdownMenuItem(
                     text = { Text(text = option) },
                     onClick = {
-                        expanded = false
+                        customDropDownMenuViewModel.isExpanded = false
                         onValueChangedEvent(option)
                     }
                 )

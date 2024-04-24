@@ -12,6 +12,7 @@ import com.example.ventilen_app.data.models.User
 import com.example.ventilen_app.ui.screens.Username.UsernameScreen
 import com.example.ventilen_app.ui.screens.Welcome.WelcomeScreen
 import com.example.ventilen_app.ui.screens.Credentials.CredentialsScreen
+import com.example.ventilen_app.ui.screens.Event.EventScreen
 import com.example.ventilen_app.ui.screens.Home.HomeScreen
 import com.example.ventilen_app.ui.screens.Location.LocationScreen
 import com.example.ventilen_app.ui.screens.Login.LoginScreen
@@ -26,7 +27,7 @@ fun Navigation() {
     val authViewModel: AuthViewModel = remember {
         AuthViewModel()
     }
-    NavHost(navController = navController, startDestination = "auth") {
+    NavHost(navController = navController, startDestination = "home") {
         navigation(
             startDestination = "auth/welcome",
             route = "auth"
@@ -115,8 +116,12 @@ fun Navigation() {
         composable("home"){
             HomeScreen(
                 currentUserViewModel.currentUser?.username.toString(),
-                currentUserViewModel.currentUser?.uid.toString()
+                currentUserViewModel.currentUser?.uid.toString(),
+                onNavigateEvent = {navController.navigate("event")}
             )
+        }
+        composable("event"){
+            EventScreen()
         }
     }
 }

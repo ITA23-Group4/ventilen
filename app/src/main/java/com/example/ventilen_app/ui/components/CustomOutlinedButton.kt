@@ -1,4 +1,4 @@
-package com.example.ventilen_app.ui.composables
+package com.example.ventilen_app.ui.components
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.PaddingValues
