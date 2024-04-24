@@ -21,25 +21,20 @@ import com.example.ventilen_app.ui.screens.Login.LoginScreen
 @Composable
 fun Navigation() {
     val navController = rememberNavController()
-    val currentUserViewModel: CurrentUserViewModel = remember {
-        CurrentUserViewModel()
-    }
-    val authViewModel: AuthViewModel = remember {
-        AuthViewModel()
-    }
-    NavHost(navController = navController, startDestination = "home") {
+    val currentUserViewModel: CurrentUserViewModel = remember { CurrentUserViewModel() }
+    val authViewModel: AuthViewModel = remember { AuthViewModel() }
+
+    NavHost(navController = navController, startDestination = "auth") {
         navigation(
             startDestination = "auth/welcome",
             route = "auth"
         ) {
-
             composable("auth/welcome") {
                 WelcomeScreen(
                     onNavigationLogin = { navController.navigate("auth/login") },
                     onNavigationRegister = { navController.navigate("auth/register") }
                 )
             }
-
             composable("auth/login") {
                 LoginScreen(
                     onNavigateHome = {
