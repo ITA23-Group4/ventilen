@@ -15,6 +15,10 @@ class EventScreenViewModel: ViewModel() {
     private val repository: Repository = Repository()
     var events: MutableList<Event> by mutableStateOf(mutableStateListOf())
 
+    init {
+        getEvents()
+    }
+
     fun getEvents(){
         viewModelScope.launch {
             try {

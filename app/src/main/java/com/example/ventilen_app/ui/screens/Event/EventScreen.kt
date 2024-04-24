@@ -18,8 +18,6 @@ import com.example.ventilen_app.ui.components.CustomEventCardComponent.CustomEve
 fun EventScreen() {
     val eventScreenViewModel: EventScreenViewModel = remember { EventScreenViewModel() }
 
-    eventScreenViewModel.getEvents()
-
     LazyColumn(modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.spacedBy(30.dp)){
         items(eventScreenViewModel.events){event ->
