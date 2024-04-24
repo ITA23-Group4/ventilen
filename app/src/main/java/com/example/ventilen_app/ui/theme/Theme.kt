@@ -23,7 +23,7 @@ private val myLightColorScheme = lightColorScheme(
     onSurface = CustomColorScheme.OffBlack,
     error = Color.Red, // Placeholder color for error messages
     onError = CustomColorScheme.OffBlack,
-    surfaceVariant = CustomColorScheme.OffWhite
+    surfaceVariant = CustomColorScheme.OffWhite,
 )
 
 private val myDarkColorScheme = darkColorScheme(
