@@ -1,6 +1,7 @@
 package com.example.ventilen_app.data
 
 import android.util.Log
+import com.example.ventilen_app.data.models.Event
 import com.example.ventilen_app.data.models.User
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
@@ -30,6 +31,11 @@ class Repository {
                 onRegistrationFailed()
                 Log.d("CREATE_USER", "Failed to create user: $newUser")
             }
+    }
+
+    suspend fun getEvents():MutableList<Event>{
+        return db.collection("events").get().await()
+            .toObjects(Event::class.java)
     }
 
 }
