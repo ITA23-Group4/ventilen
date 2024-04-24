@@ -1,4 +1,4 @@
-package com.example.ventilen_app
+package com.example.ventilen_app.generalViewModels
 
 import android.util.Log
 import androidx.compose.runtime.getValue
