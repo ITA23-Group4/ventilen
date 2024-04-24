@@ -43,14 +43,13 @@ fun Navigation() {
                 LoginScreen(
                     onNavigateHome = {
                         authViewModel.loginUser(
-                            {
-                                navController.navigate("home")
-
+                            navigateOnLoginSuccess = {
                                 currentUserViewModel.getCurrentUser()
-                                val currentUser = currentUserViewModel.currentUser
-                                Log.d("ASJDASD", currentUser.toString())
+                                navController.navigate("home")
                             },
-                            { Log.d("FAILED!", "${authViewModel.email},${authViewModel.password}") }
+                            onLoginFailed = {
+                                Log.d("FAILED!", "${authViewModel.email},${authViewModel.password}")
+                            }
                         )
                     },
                     textEmail = authViewModel.email,
@@ -86,39 +85,21 @@ fun Navigation() {
                     val locations = listOf("København", "Århus", "Aalborg", "Odense")
                     LocationScreen(
                         onNavigateHome = {
-                            Log.d(
-                                "TAGTAGTAGTAG",
-                                "${authViewModel.email} ${authViewModel.username} ${authViewModel.password} ${authViewModel.location}"
-                            )
                             authViewModel.registerNewUser(
-                                navigateOnSuccess = {
-                                    val newUser: User = User(username = authViewModel.username)
-
-                                    authViewModel.repository.db.collection("users")
-                                        .document(it) // Make UID for AUTH and users document UID the same
-                                        .set(newUser)
-                                        .addOnSuccessListener {
-                                            Log.d("CREATED", "CREATED NEW USER")
+                                onRegistrationSuccess = {
+                                    // Login if registration completed
+                                    authViewModel.loginUser(
+                                        navigateOnLoginSuccess = {
+                                            currentUserViewModel.getCurrentUser()
                                             navController.navigate("home")
-                                            authViewModel.loginUser(
-                                                navigateOnSuccess = {
-                                                    currentUserViewModel.getCurrentUser()
-                                                    navController.navigate("home")
-                                                },
-                                                navigateOnFail = {
-                                                    Log.d("FAILED", "FAILED TO CREATE NEW USER1")
-                                                }
-                                            )
+                                        },
+                                        onLoginFailed = {
+                                            Log.d("FAILED!", "${authViewModel.email},${authViewModel.password}")
                                         }
-                                        .addOnFailureListener {
-                                            Log.d("FAILED", "FAILED TO CREATE NEW USER2")
-                                        }
-                                },
-                                navigateOnFail = {
-                                    Log.d(
-                                        "FAILED!",
-                                        "${authViewModel.email},${authViewModel.password}"
                                     )
+                                },
+                                onRegistrationFailed = {
+                                    Log.d("REGISTER_USER", "Failed to register new user")
                                 }
                             )
                         },

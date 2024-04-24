@@ -1,3 +1,37 @@
 <resources>
-    <string name="app_name">Ventilen_App</string>
+    <!-- General Strings (strings used across the application) -->
+    <string name="app_name">Ventilen</string>
+
+    <!-- Screen-based or Feature related Strings -->
+    <string name="home_welcome_title">Hello %1$s with UID: %2$s</string>
+
+    <!-- Error or Notification Strings -->
+    <string name="error_invalid_input">Invalid input. Please try again.</string> <!-- Example -->
 </resources>
+
+    <!-- String Naming Conventions
+
+        - Prefixes Overview: Prefixes help categorize strings by their purpose. Some common prefixes include:
+            - app_: General application-wide strings.
+            - error_: Error messages and notifications.
+            - hint_: Hint text for input fields.
+            - title_, subtitle_, label_: UI element titles, subtitles, and labels.
+            - action_, button_: Text for buttons or actionable elements.
+            - dialog_: Text for dialog boxes and pop-ups.
+
+        - Group Related Strings: Group strings related to a specific screen, feature, or functionality.
+                                 This facilitates organization and maintenance of the strings resource file.
+
+        Examples:
+            - app_name: Application name.
+            - error_network: Error message for network-related issues.
+            - hint_username: Hint text for the username input field.
+            - button_submit: Text for the submit button.
+
+        Group Related Strings (Example: Login Screen):
+            - login_title: Title of the login screen.
+            - login_username_hint: Hint text for the username input field.
+            - login_password_hint: Hint text for the password input field.
+            - login_button_submit: Text for the submit button on the login screen.
+            - login_error_invalid_credentials: Error message displayed for invalid login credentials.
+    -->
