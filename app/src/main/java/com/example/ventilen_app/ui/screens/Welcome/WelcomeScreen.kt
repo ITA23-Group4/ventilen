@@ -29,8 +29,7 @@ fun WelcomeScreen(
         Modifier.background(CustomColorScheme.Mocha),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        TopAuthPageDesign(true,"Velkommen","log ind eller tilmeld dig")
-        Spacer(modifier = Modifier.height(28.dp))
+        TopAuthPageDesign(false,"Velkommen","log ind eller tilmeld dig")
         CustomFilledButton(
             text = "Login",
             onClick = onNavigationLogin,
@@ -38,6 +37,9 @@ fun WelcomeScreen(
             padding = PaddingValues(horizontal = 25.dp, vertical = 0.dp)
         )
         Spacer(modifier = Modifier.height(30.dp))
-        CustomOutlinedButton(text = "Tilmeld", onClick = onNavigationRegister)
+        CustomOutlinedButton(
+            text = "Tilmeld",
+            onClick = onNavigationRegister,
+            padding = PaddingValues(horizontal = 25.dp, vertical = 0.dp))
     }
 }

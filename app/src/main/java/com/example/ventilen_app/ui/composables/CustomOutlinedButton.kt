@@ -1,9 +1,11 @@
 package com.example.ventilen_app.ui.composables
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
@@ -19,13 +21,15 @@ fun CustomOutlinedButton(
     onClick: () -> Unit,
     borderColor: Color = MaterialTheme.colorScheme.primary,
     textColor: Color = MaterialTheme.colorScheme.primary,
+    padding: PaddingValues = PaddingValues(),
     modifier: Modifier = Modifier)
 {
     OutlinedButton(
         onClick = onClick,
         modifier = modifier
             .fillMaxWidth()
-            .height(56.dp),
+            .height(56.dp)
+            .padding(padding),
         border = BorderStroke(1.dp, borderColor),
         colors = ButtonDefaults.outlinedButtonColors(
             contentColor = textColor,
@@ -33,6 +37,6 @@ fun CustomOutlinedButton(
         ),
         shape = RoundedCornerShape(8.dp)
     ) {
-        Text(text = text)
+        Text(text = text, style = MaterialTheme.typography.labelMedium)
     }
 }
