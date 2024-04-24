@@ -2,14 +2,17 @@ package com.example.ventilen_app
 
 import android.util.Log
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.currentRecomposeScope
 import androidx.compose.runtime.remember
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
+import com.example.ventilen_app.data.models.User
 import com.example.ventilen_app.ui.screens.Username.UsernameScreen
 import com.example.ventilen_app.ui.screens.Welcome.WelcomeScreen
 import com.example.ventilen_app.ui.screens.Credentials.CredentialsScreen
+import com.example.ventilen_app.ui.screens.Home.HomeScreen
 import com.example.ventilen_app.ui.screens.Location.LocationScreen
 import com.example.ventilen_app.ui.screens.Login.LoginScreen
 
@@ -17,6 +20,9 @@ import com.example.ventilen_app.ui.screens.Login.LoginScreen
 @Composable
 fun Navigation() {
     val navController = rememberNavController()
+    val currentUserViewModel: CurrentUserViewModel = remember {
+        CurrentUserViewModel()
+    }
     val authViewModel: AuthViewModel = remember {
         AuthViewModel()
     }
@@ -37,7 +43,13 @@ fun Navigation() {
                 LoginScreen(
                     onNavigateHome = {
                         authViewModel.loginUser(
-                            { navController.navigate("auth/welcome") },
+                            {
+                                navController.navigate("home")
+
+                                currentUserViewModel.getCurrentUser()
+                                val currentUser = currentUserViewModel.currentUser
+                                Log.d("ASJDASD", currentUser.toString())
+                            },
                             { Log.d("FAILED!", "${authViewModel.email},${authViewModel.password}") }
                         )
                     },
@@ -79,8 +91,30 @@ fun Navigation() {
                                 "${authViewModel.email} ${authViewModel.username} ${authViewModel.password} ${authViewModel.location}"
                             )
                             authViewModel.registerNewUser(
-                                { navController.navigate("auth/welcome") },
-                                {
+                                navigateOnSuccess = {
+                                    val newUser: User = User(username = authViewModel.username)
+
+                                    authViewModel.repository.db.collection("users")
+                                        .document(it) // Make UID for AUTH and users document UID the same
+                                        .set(newUser)
+                                        .addOnSuccessListener {
+                                            Log.d("CREATED", "CREATED NEW USER")
+                                            navController.navigate("home")
+                                            authViewModel.loginUser(
+                                                navigateOnSuccess = {
+                                                    currentUserViewModel.getCurrentUser()
+                                                    navController.navigate("home")
+                                                },
+                                                navigateOnFail = {
+                                                    Log.d("FAILED", "FAILED TO CREATE NEW USER1")
+                                                }
+                                            )
+                                        }
+                                        .addOnFailureListener {
+                                            Log.d("FAILED", "FAILED TO CREATE NEW USER2")
+                                        }
+                                },
+                                navigateOnFail = {
                                     Log.d(
                                         "FAILED!",
                                         "${authViewModel.email},${authViewModel.password}"
@@ -95,6 +129,13 @@ fun Navigation() {
                     )
                 }
             }
+        }
+
+        composable("home"){
+            HomeScreen(
+                currentUserViewModel.currentUser?.username.toString(),
+                currentUserViewModel.currentUser?.uid.toString()
+            )
         }
     }
 }

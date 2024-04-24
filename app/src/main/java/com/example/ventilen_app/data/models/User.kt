@@ -1,4 +1,12 @@
 package com.example.ventilen_app.data.models
 
-class User {
+import com.google.firebase.firestore.DocumentId
+
+data class User(
+    val username: String = "",
+    @DocumentId var uid: String? = null
+) {
+    override fun toString(): String {
+        return "User(username='$username', uid=$uid)"
+    }
 }
