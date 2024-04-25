@@ -1,9 +1,11 @@
 package com.example.ventilen_app.ui.screens.Location
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -27,9 +29,10 @@ fun LocationScreen(
     selectedLocation: String,
     onLocationValueChanged: (String) -> Unit,
     ) {
-    Column(
-        Modifier.background(CustomColorScheme.Mocha),
-        horizontalAlignment = Alignment.CenterHorizontally) {
+    Column(modifier = Modifier.fillMaxSize()
+        .background(CustomColorScheme.Mocha),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(30.dp)) {
         TopAuthPageDesign(
             hasBackButton = true,
             topText = "Hvor skal vi mødes",
@@ -38,7 +41,7 @@ fun LocationScreen(
         var expanded by remember { mutableStateOf(false) }
 
         CustomDropDownMenu(selectedValue = selectedLocation , options = locations, label = "Locations", onValueChangedEvent = onLocationValueChanged)
-        Spacer(modifier = Modifier.height(30.dp))
+
         CustomFilledButton(text = "Fortsæt", onClick = onNavigateHome,padding = PaddingValues(horizontal = 25.dp, vertical = 0.dp))
     }
 }
