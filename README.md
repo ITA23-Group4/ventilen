@@ -1,1 +1,33 @@
-README
+# Ventilen
+
+**TODO** [Beskrivelse af projektet her...]
+
+## Branching Strategi
+
+Vi har valgt at følge GitHub Flow som vores branching-strategi for vores MVP. Dette indebærer følgende:
+
+<img alt="github_flow" src="https://github.com/ITA23-Group4/ventilen/assets/88247953/ea226add-a21b-427a-b148-311f53e92365">
+
+- **main:** Main branch i projektet, hvor størstedelen af vores kode er samlet.
+- **Feature Branches:** Hver funktion eller opgave, som vi arbejder på, bliver implementeret i sin egen gren, startende fra main.
+- **Pull Requests (PRs):** Når en funktion er færdig, åbner vi en pull request mod main. Dette giver mulighed for gennemgang og feedback, før ændringerne integreres i hovedgrenen.
+
+Vi valgte GitHub Flow frem for eksempelvis GitFlow, da vi på nuværende tidspunkt ikke har noget kode klar til produktion. Derfor ville forskellen mellem en potentielt dev-gren og main-gren være minimal.
+
+For at gøre vores branchnavngivning mere konsistent og overskuelig, har vi valgt at følge disse præfiks konventioner:
+
+- **feature/** for nye funktioner
+- **refactor/** for omskrivninger
+- **doc/** for dokumentationsændringer
+
+## Projekt Strategi
+
+Som udgangspunkt har vi praktiseret pair-programming/co-pilot, hvor vi alle tre har siddet sammen om koden samtidig. Ved mindre opgaver, som skulle fordeles, har vi benyttet os af GitHub's backlog projekt.
+
+Her opdeler vi opgaver i følgende kategorier:
+
+- **To-Do:** Opgaver, der endnu ikke er påbegyndt.
+- **In-Progress:** Opgaver, der er i gang med at blive løst (med en af os assignet som ansvarlig).
+- **Done:** Opgaver, der er færdige og klar til main.
+
+Dette system hjælper os med at organisere vores arbejde og sikre, at vi har en klar forståelse af, hvad der skal gøres, hvad der er i gang, og hvad der er afsluttet.
