@@ -87,6 +87,10 @@ fun Navigation() {
                                     authViewModel.loginUser(
                                         navigateOnLoginSuccess = {
                                             currentUserViewModel.getCurrentUser()
+                                            navController.popBackStack(
+                                                route = "auth",
+                                                inclusive = true
+                                            )
                                             navController.navigate("home")
                                         },
                                         onLoginFailed = {
