@@ -29,9 +29,10 @@ fun EventScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(30.dp)){
         items(eventScreenViewModel.events){event ->
+
             CustomEventCard(
                 title = event.title,
-                counter = event.counter,
+                attendeesAmount = eventScreenViewModel.events.size,
                 onAttend = { eventScreenViewModel.addUserToEvent(currentUser.uid!!, event.id!!) },
                 onNotAttend = { eventScreenViewModel.removeUserFromEvent(currentUser.uid!!, event.id!!) }
             )

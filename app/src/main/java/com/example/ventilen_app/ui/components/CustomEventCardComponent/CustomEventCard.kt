@@ -14,7 +14,7 @@ import com.example.ventilen_app.ui.components.CustomSwitchComponent.CustomSwitch
 @Composable
 fun CustomEventCard(
     title: String,
-    counter: Int,
+    attendeesAmount: Int,
     onAttend: () -> Unit,
     onNotAttend: () -> Unit
 ) {
@@ -24,7 +24,7 @@ fun CustomEventCard(
             .background(MaterialTheme.colorScheme.primary)
     ) {
         Text(text = title)
-        Text(text = counter.toString())
+        Text(text = attendeesAmount.toString())
         CustomSwitch(onAttend = onAttend, onNotAttend = onNotAttend)
     }
 }
