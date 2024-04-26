@@ -44,9 +44,8 @@ fun LoginScreen(
             padding = PaddingValues(horizontal = 25.dp, vertical = 0.dp)
         )
         
-        Row {
+        Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
             Text(text = "Har du ikke en bruger?", style = MaterialTheme.typography.headlineMedium)
-            Spacer(modifier = Modifier.width(4.dp))
             Text(text = "Tilmeld Dig", style = MaterialTheme.typography.headlineSmall)
         }
 
