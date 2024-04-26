@@ -1,4 +1,4 @@
-# Ventilen
+# Ventilen - MVP
 
 **TODO** [Beskrivelse af projektet her...]
 
@@ -12,7 +12,7 @@ Vi har valgt at følge GitHub Flow som vores branching-strategi for vores MVP. D
 - **Feature Branches:** Hver funktion eller opgave, som vi arbejder på, bliver implementeret i sin egen gren, startende fra main.
 - **Pull Requests (PRs):** Når en funktion er færdig, åbner vi en pull request mod main. Dette giver mulighed for gennemgang og feedback, før ændringerne integreres i hovedgrenen.
 
-Vi valgte GitHub Flow frem for eksempelvis GitFlow, da vi på nuværende tidspunkt ikke har noget kode klar til produktion. Derfor ville forskellen mellem en potentielt dev-gren og main-gren være minimal.
+Vi valgte GitHub Flow over f.eks. GitFlow, da vi befinder os i den tidlige fase af projektet, hvor vi fokuserer på udviklingen af vores MVP. GitHub Flow tilbyder en simpel og fleksibel arbejdsproces, der passer perfekt til vores behov for hurtig iteration og implementering af nye funktioner. Ved at minimere antallet af nødvendige grene og reducere kompleksiteten sikrer GitHub Flow en lettere vej mod en funktionel MVP.
 
 For at gøre vores branchnavngivning mere konsistent og overskuelig, har vi valgt at følge disse præfiks konventioner:
 
@@ -22,7 +22,7 @@ For at gøre vores branchnavngivning mere konsistent og overskuelig, har vi valg
 
 ## Projekt Strategi
 
-Som udgangspunkt har vi praktiseret pair-programming/co-pilot, hvor vi alle tre har siddet sammen om koden samtidig. Ved mindre opgaver, som skulle fordeles, har vi benyttet os af GitHub's backlog projekt.
+Som udgangspunkt har vi praktiseret pair-programming/co-pilot, hvor vi alle tre har siddet sammen om koden samtidig. Dette gav os mulighed for at udveksle ideer, løse problemer hurtigt og sikre en høj kvalitet af koden. Ved mindre opgaver, som skulle fordeles, har vi benyttet os af GitHub's Backlog Projekt funktionalitet der er sat op med vores organisation.
 
 Her opdeler vi opgaver i følgende kategorier:
 
