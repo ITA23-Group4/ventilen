@@ -1,5 +1,6 @@
 package com.example.ventilen_app.ui.components.CustomEventCardComponent
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Card
@@ -12,7 +13,10 @@ import com.example.ventilen_app.ui.components.CustomSwitchComponent.CustomSwitch
 
 @Composable
 fun CustomEventCard(
-    title: String
+    title: String,
+    counter: Int,
+    onAttend: () -> Unit,
+    onNotAttend: () -> Unit
 ) {
     Card(
         modifier = Modifier
@@ -20,6 +24,7 @@ fun CustomEventCard(
             .background(MaterialTheme.colorScheme.primary)
     ) {
         Text(text = title)
-        CustomSwitch()
+        Text(text = counter.toString())
+        CustomSwitch(onAttend = onAttend, onNotAttend = onNotAttend)
     }
 }

@@ -29,4 +29,18 @@ class EventScreenViewModel: ViewModel() {
             }
         }
     }
+
+    fun addUserToEvent(currentUserUID: String, eventID: String) {
+        viewModelScope.launch {
+            repository.addUserToEvent(currentUserUID, eventID)
+        }
+    }
+
+    fun removeUserFromEvent(currentUserUID: String, eventID: String) {
+        viewModelScope.launch {
+            repository.removeUserFromEvent(currentUserUID, eventID)
+        }
+    }
+
+
 }

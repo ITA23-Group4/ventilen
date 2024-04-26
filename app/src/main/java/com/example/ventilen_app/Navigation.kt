@@ -120,7 +120,7 @@ fun Navigation() {
             )
         }
         composable("event"){
-            EventScreen()
+            EventScreen(currentUserViewModel.currentUser!!)
         }
     }
 }

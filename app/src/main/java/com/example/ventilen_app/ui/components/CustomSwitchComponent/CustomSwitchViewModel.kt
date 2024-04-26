@@ -10,11 +10,5 @@ class CustomSwitchViewModel: ViewModel() {
 
     fun toggle() {
         isChecked = !isChecked
-
-        if (isChecked){
-            // add to db
-        } else {
-            // remove from db
-        }
     }
 }
