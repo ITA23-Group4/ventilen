@@ -6,7 +6,7 @@
 
 Vi har valgt at følge GitHub Flow som vores branching-strategi for vores MVP. Dette indebærer følgende:
 
-<img alt="github_flow" src="https://github.com/ITA23-Group4/ventilen/assets/88247953/ea226add-a21b-427a-b148-311f53e92365">
+<img alt="githubflow" src="https://github.com/ITA23-Group4/ventilen/assets/88247953/c902802c-fb7b-482b-ad5a-356a80428618">
 
 - **main:** Main branch i projektet, hvor størstedelen af vores kode er samlet.
 - **Feature Branches:** Hver funktion eller opgave, som vi arbejder på, bliver implementeret i sin egen gren, startende fra main.
