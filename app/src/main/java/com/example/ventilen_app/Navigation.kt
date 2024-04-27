@@ -45,7 +45,7 @@ fun Navigation() {
                                     route = "auth",
                                     inclusive = true
                                 )
-                                navController.navigate("home")
+                                navController.navigate("event")
                             },
                             onLoginFailed = {
                                 Log.d("FAILED!", "${authViewModel.email},${authViewModel.password}")

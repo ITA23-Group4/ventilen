@@ -32,7 +32,7 @@ fun EventScreen(
 
             CustomEventCard(
                 title = event.title,
-                attendeesAmount = eventScreenViewModel.events.size,
+                attendeesAmount = event.attendeesByUID.size,
                 onAttend = { eventScreenViewModel.addUserToEvent(currentUser.uid!!, event.id!!) },
                 onNotAttend = { eventScreenViewModel.removeUserFromEvent(currentUser.uid!!, event.id!!) }
             )

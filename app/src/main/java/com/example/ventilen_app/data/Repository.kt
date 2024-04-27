@@ -4,6 +4,7 @@ import android.util.Log
 import com.example.ventilen_app.data.models.Event
 import com.example.ventilen_app.data.models.User
 import com.google.firebase.Firebase
+import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.firestore
 import kotlinx.coroutines.tasks.await
@@ -34,9 +35,21 @@ class Repository {
             }
     }
 
-    suspend fun getEvents():MutableList<Event>{
-        return db.collection("events").get().await()
-            .toObjects(Event::class.java)
+
+    suspend fun getEvents(): MutableList<Event> {
+        val querySnapshot = db.collection("events").get().await()
+        val events = mutableListOf<Event>()
+
+        for (document in querySnapshot.documents) {
+            val title = document.getString("title") ?: ""
+            val attendees = document.get("attendees") as? List<DocumentReference> ?: emptyList()
+            val attendeeUIDs = attendees.map { it.id }
+            val id = document.id
+            val event = Event(title, attendeeUIDs.toMutableList(), id)
+            events.add(event)
+        }
+
+        return events
     }
 
     suspend fun addUserToEvent(userUID: String, eventID: String) {
