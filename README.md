@@ -2,6 +2,10 @@
 
 **TODO** [Description of the project here...]
 
+## Demo
+
+Youtube link: https://youtu.be/Zn_20C_jflY?si=gWXznIjwcjnbaSf4
+
 ## Branching Strategy
 
 We have chosen to follow GitHub Flow as our branching strategy for our MVP. This entails the following:
@@ -34,5 +38,3 @@ This system helps us organize our work and ensures that we have a clear understa
 
 ## Figma
 Link til projekt: https://www.figma.com/team_invite/redeem/dCSgPp7Zy9YX6QZSqfhpfr
-
-
