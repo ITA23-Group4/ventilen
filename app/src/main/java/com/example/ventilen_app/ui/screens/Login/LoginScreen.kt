@@ -5,10 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.width
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -27,13 +24,19 @@ fun LoginScreen(
     textPassword: String,
     onValueChangeEmail: (String) -> Unit,
     onValueChangePassword: (String) -> Unit,
+    onNavigateBack: () -> Unit
 ) {
     Column(modifier = Modifier.fillMaxSize()
         .background(CustomColorScheme.Mocha),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(30.dp)
     ) {
-        TopAuthPageDesign(hasBackButton = true, topText = "Log ind", bottomText = "Indtast din email og password")
+        TopAuthPageDesign(
+            hasBackButton = true,
+            topText = "Log ind",
+            bottomText = "Indtast din email og password",
+            onNavigateBack = onNavigateBack
+        )
         CustomTextField(text = textEmail, label = "Email") { onValueChangeEmail(it) }
 
         CustomTextField(text = textPassword, label = "Password") { onValueChangePassword(it) }

@@ -29,7 +29,8 @@ import com.example.ventilen_app.ui.theme.CustomColorScheme
 fun TopAuthPageDesign(
     hasBackButton: Boolean,
     topText: String,
-    bottomText: String
+    bottomText: String,
+    onNavigateBack: () -> Unit
 ) {
     Column(
         verticalArrangement = Arrangement.Center,
@@ -41,14 +42,9 @@ fun TopAuthPageDesign(
             modifier = Modifier.padding(16.dp)
         ) {
             if (hasBackButton) {
-                Icon(
-                    Icons.Rounded.ArrowBack,
-                    contentDescription = "Icon",
-                    tint = CustomColorScheme.OffBlack,
-                    modifier = Modifier.size(24.dp)
-                )
+                CustomBackButton(onNavigateBack)
             }
-            Spacer(modifier = Modifier.width(200.dp))
+            Spacer(modifier = Modifier.width(600.dp))
 
             Box {
                 //there will be progressbar or something
