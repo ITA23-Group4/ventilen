@@ -45,7 +45,7 @@ fun Navigation() {
                                     route = "auth",
                                     inclusive = true
                                 )
-                                navController.navigate("event")
+                                navController.navigate("home")
                             },
                             onLoginFailed = {
                                 Log.d("FAILED!", "${authViewModel.email},${authViewModel.password}")
@@ -109,7 +109,7 @@ fun Navigation() {
                                 }
                             )
                         },
-                        onNavigateBack = { },
+                        onNavigateBack = { navController.popBackStack() },
                         locations = locations,
                         selectedLocation = authViewModel.location,
                         onLocationValueChanged = { authViewModel.location = it }

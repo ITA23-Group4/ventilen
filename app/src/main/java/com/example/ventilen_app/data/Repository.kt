@@ -52,16 +52,30 @@ class Repository {
         return events
     }
 
-    suspend fun addUserToEvent(userUID: String, eventID: String) {
-        val eventRef = db.collection("events").document(eventID)
-        val userRef = db.collection("users").document(userUID)
-        eventRef.update("attendees", FieldValue.arrayUnion(userRef)).await()
+    fun getEvent(eventID: String, onSuccess:(Event) -> Unit) {
+        db.collection("events").document(eventID).get().addOnSuccessListener {
+            val title = it.getString("title") ?: ""
+            val attendees = it.get("attendees") as? List<DocumentReference> ?: emptyList()
+            val attendeeUIDs = attendees.map { it.id }
+            val id = it.id
+            onSuccess(Event(title, attendeeUIDs.toMutableList(), id))
+        }
     }
 
-    suspend fun removeUserFromEvent(userUID: String, eventID: String) {
+    fun addUserToEvent(userUID: String, eventID: String, onSuccess: () -> Unit ) {
         val eventRef = db.collection("events").document(eventID)
         val userRef = db.collection("users").document(userUID)
-        eventRef.update("attendees", FieldValue.arrayRemove(userRef)).await()
+        eventRef.update("attendees", FieldValue.arrayUnion(userRef)).addOnSuccessListener {
+            onSuccess()
+        }
+    }
+
+    suspend fun removeUserFromEvent(userUID: String, eventID: String, onSuccess: () -> Unit ) {
+        val eventRef = db.collection("events").document(eventID)
+        val userRef = db.collection("users").document(userUID)
+        eventRef.update("attendees", FieldValue.arrayRemove(userRef)).addOnSuccessListener {
+            onSuccess()
+        }.await()
     }
 
 

@@ -3,10 +3,17 @@
     <string name="app_name">Ventilen</string>
 
     <!-- Screen-based or Feature related Strings -->
-    <string name="home_welcome_title">Hello %1$s with UID: %2$s</string>
+    <!-- <string name="home_welcome_title">Hello %1$s with UID: %2$s</string> -->
 
     <!-- Error or Notification Strings -->
     <string name="error_invalid_input">Invalid input. Please try again.</string> <!-- Example -->
+
+
+    <string name="home_welcome_title">Hello, %1$s!</string>
+    <string name="home_welcome_uid">Your UID: %1$s</string>
+    <!-- Other string resources -->
+
+
 </resources>
 
     <!-- String Naming Conventions
