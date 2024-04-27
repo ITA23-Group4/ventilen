@@ -31,3 +31,8 @@ Here we divide tasks into the following categories:
 - **Done:** Tasks that are completed and ready for main.
 
 This system helps us organize our work and ensures that we have a clear understanding of what needs to be done, what is in progress, and what is completed.
+
+## Figma
+Link til projekt: https://www.figma.com/team_invite/redeem/dCSgPp7Zy9YX6QZSqfhpfr
+
+
