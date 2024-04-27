@@ -32,7 +32,9 @@ fun UsernameScreen(
         TopAuthPageDesign(
             hasBackButton = true,
             topText = "Hvad skal vi kalde dig",
-            bottomText = "Indtast dit anonyme brugernavn" )
+            bottomText = "Indtast dit anonyme brugernavn" ,
+            onNavigateBack =  onNavigateBack
+        )
         CustomTextField(
             text = textUsername,
             label = "Username",

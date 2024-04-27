@@ -36,7 +36,9 @@ fun LocationScreen(
         TopAuthPageDesign(
             hasBackButton = true,
             topText = "Hvor skal vi mødes",
-            bottomText ="Vælg det mødested som er tættest på dig")
+            bottomText ="Vælg det mødested som er tættest på dig",
+            onNavigateBack = onNavigateBack
+        )
 
         var expanded by remember { mutableStateOf(false) }
 

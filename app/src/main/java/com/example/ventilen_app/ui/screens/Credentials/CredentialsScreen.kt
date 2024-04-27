@@ -21,6 +21,7 @@ fun CredentialsScreen(
     textPassword: String,
     onValueChangeEmail: (String) -> Unit,
     onValueChangePassword: (String) -> Unit,
+    onNavigateBack: () -> Unit
 ) {
     Column(
         Modifier.background(CustomColorScheme.Mocha),
@@ -28,7 +29,8 @@ fun CredentialsScreen(
         TopAuthPageDesign(
             hasBackButton = true,
             topText = "Hvordan skal vi huske dig?",
-            bottomText = "indtast din email og kodeord"
+            bottomText = "indtast din email og kodeord",
+            onNavigateBack = onNavigateBack
         )
         CustomTextField(text = textEmail, label = "Email") { onValueChangeEmail(it) }
         Spacer(modifier = Modifier.height(30.dp))

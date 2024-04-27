@@ -41,6 +41,10 @@ fun Navigation() {
                         authViewModel.loginUser(
                             navigateOnLoginSuccess = {
                                 currentUserViewModel.getCurrentUser()
+                                navController.popBackStack(
+                                    route = "auth",
+                                    inclusive = true
+                                )
                                 navController.navigate("home")
                             },
                             onLoginFailed = {
@@ -52,6 +56,7 @@ fun Navigation() {
                     textPassword = authViewModel.password,
                     onValueChangeEmail = { authViewModel.email = it },
                     onValueChangePassword = { authViewModel.password = it },
+                    onNavigateBack = { navController.popBackStack() }
                 )
             }
 
@@ -66,14 +71,15 @@ fun Navigation() {
                         textPassword = authViewModel.password,
                         onValueChangeEmail = { authViewModel.email = it },
                         onValueChangePassword = { authViewModel.password = it },
+                        onNavigateBack = {navController.popBackStack()}
                     )
                 }
                 composable("auth/register/username") {
                     UsernameScreen(
                         onNavigateLocation = { navController.navigate("auth/register/location") },
-                        onNavigateBack = { },
+                        onNavigateBack = { navController.popBackStack() },
                         onValueChange = { authViewModel.username = it },
-                        textUsername = authViewModel.username
+                        textUsername = authViewModel.username,
                     )
                 }
                 composable("auth/register/location") {
