@@ -5,6 +5,7 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
@@ -46,7 +47,10 @@ fun CustomDropDownMenu(
         ExposedDropdownMenu(expanded = customDropDownMenuViewModel.isExpanded, onDismissRequest = { customDropDownMenuViewModel.isExpanded = false }) {
             options.forEach { option: String ->
                 DropdownMenuItem(
-                    text = { Text(text = option) },
+                    text = { Text(text = option,
+                        style = MaterialTheme.typography.labelLarge,
+                        color = MaterialTheme.colorScheme.onSurface
+                    ) },
                     onClick = {
                         customDropDownMenuViewModel.isExpanded = false
                         onValueChangedEvent(option)
