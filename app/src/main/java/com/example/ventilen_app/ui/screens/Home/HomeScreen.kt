@@ -15,22 +15,30 @@ import com.example.ventilen_app.R
 import com.example.ventilen_app.ui.components.CustomFilledButton
 import com.example.ventilen_app.ui.theme.CustomColorScheme
 
+
 @Composable
 fun HomeScreen(
     textUsername: String,
     textUID: String,
     onNavigateEvent: () -> Unit
 ) {
-    // Text(text = "Hello $textUsername with UID: $textUID", style = MaterialTheme.typography.bodyMedium)
-    Column(modifier = Modifier.fillMaxSize()
-        .background(CustomColorScheme.Mocha),
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(CustomColorScheme.Mocha),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(30.dp)) {
+
         Text(
-            text = stringResource(R.string.home_welcome_title, textUsername, textUID),
-            style = MaterialTheme.typography.bodyMedium
+            text = stringResource(R.string.home_welcome_title, textUsername),
+            style = MaterialTheme.typography.headlineLarge
         )
+
+        Text(
+            text = stringResource(R.string.home_welcome_uid, textUID),
+            style = MaterialTheme.typography.headlineMedium
+        )
+
         CustomFilledButton(text = "Go to Event", onClick =  onNavigateEvent )
     }
-
 }

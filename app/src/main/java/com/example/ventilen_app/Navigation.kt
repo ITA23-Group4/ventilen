@@ -109,7 +109,7 @@ fun Navigation() {
                                 }
                             )
                         },
-                        onNavigateBack = { },
+                        onNavigateBack = { navController.popBackStack() },
                         locations = locations,
                         selectedLocation = authViewModel.location,
                         onLocationValueChanged = { authViewModel.location = it }
