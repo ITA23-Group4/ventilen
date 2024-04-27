@@ -25,6 +25,9 @@ fun CustomEventCard(
     ) {
         Text(text = title)
         Text(text = attendeesAmount.toString())
-        CustomSwitch(onAttend = onAttend, onNotAttend = onNotAttend)
+        CustomSwitch(
+            onAttend = onAttend,
+            onNotAttend = onNotAttend
+        )
     }
 }

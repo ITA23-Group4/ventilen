@@ -1,5 +1,6 @@
 package com.example.ventilen_app.ui.screens.Event
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -13,10 +14,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.ventilen_app.data.models.User
 import com.example.ventilen_app.generalViewModels.CurrentUserViewModel
 import com.example.ventilen_app.ui.components.CustomEventCardComponent.CustomEventCard
+import com.example.ventilen_app.ui.components.CustomEventCardComponent.CustomEventCardViewModel
 import com.example.ventilen_app.ui.theme.CustomColorScheme
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @Composable
 fun EventScreen(
@@ -24,17 +30,44 @@ fun EventScreen(
 ) {
     val eventScreenViewModel: EventScreenViewModel = remember { EventScreenViewModel() }
 
-    LazyColumn(modifier = Modifier.fillMaxSize()
-        .background(CustomColorScheme.Mocha),
+    LazyColumn(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(CustomColorScheme.Mocha),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(30.dp)){
-        items(eventScreenViewModel.events){event ->
-
+        verticalArrangement = Arrangement.spacedBy(30.dp)
+    ) {
+        items(eventScreenViewModel.events) { event ->
+            val customEventCardViewModel: CustomEventCardViewModel = remember {
+                CustomEventCardViewModel(event.attendeesByUID.size)
+            }
             CustomEventCard(
                 title = event.title,
-                attendeesAmount = event.attendeesByUID.size,
-                onAttend = { eventScreenViewModel.addUserToEvent(currentUser.uid!!, event.id!!) },
-                onNotAttend = { eventScreenViewModel.removeUserFromEvent(currentUser.uid!!, event.id!!) }
+                attendeesAmount = customEventCardViewModel.attendeesCount,
+                onAttend = {
+                    eventScreenViewModel.getEventByID(event.id.toString())
+                    customEventCardViewModel.addToEvent(
+                        onAddToEvent = {
+                            eventScreenViewModel.addUserToEvent(currentUser.uid!!, event.id!!)
+                        },
+                        onUpdateEvent = {
+                            customEventCardViewModel.attendeesCount =
+                                eventScreenViewModel.currentEventAttendeesCount
+                        }
+                    )
+                },
+                onNotAttend = {
+                    eventScreenViewModel.getEventByID(event.id.toString())
+                    customEventCardViewModel.removeFromEvent(
+                        onRemoveFromEvent = {
+                            eventScreenViewModel.removeUserFromEvent(currentUser.uid!!, event.id!!)
+                        },
+                        onUpdateEvent = {
+                            customEventCardViewModel.attendeesCount =
+                                eventScreenViewModel.currentEventAttendeesCount
+                        }
+                    )
+                }
             )
         }
     }

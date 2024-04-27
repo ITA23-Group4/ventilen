@@ -52,6 +52,15 @@ class Repository {
         return events
     }
 
+    suspend fun getEvent(eventID: String): Event {
+        val querySnapshot = db.collection("events").document(eventID).get().await()
+        val title = querySnapshot.getString("title") ?: ""
+        val attendees = querySnapshot.get("attendees") as? List<DocumentReference> ?: emptyList()
+        val attendeeUIDs = attendees.map { it.id }
+        val id = querySnapshot.id
+        return Event(title, attendeeUIDs.toMutableList(), id)
+    }
+
     suspend fun addUserToEvent(userUID: String, eventID: String) {
         val eventRef = db.collection("events").document(eventID)
         val userRef = db.collection("users").document(userUID)
