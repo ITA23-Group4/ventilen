@@ -45,26 +45,26 @@ fun EventScreen(
                 title = event.title,
                 attendeesAmount = customEventCardViewModel.attendeesCount,
                 onAttend = {
-                    eventScreenViewModel.getEventByID(event.id.toString())
-                    customEventCardViewModel.addToEvent(
-                        onAddToEvent = {
-                            eventScreenViewModel.addUserToEvent(currentUser.uid!!, event.id!!)
-                        },
-                        onUpdateEvent = {
-                            customEventCardViewModel.attendeesCount =
-                                eventScreenViewModel.currentEventAttendeesCount
-                        }
-                    )
+                           eventScreenViewModel.addUserToEvent(
+                               currentUserUID = currentUser.uid!!,
+                               eventID = event.id!!,
+                               onSuccess = {
+                                   eventScreenViewModel.getEventByID(
+                                       eventID = event.id!!,
+                                       onSuccess = {customEventCardViewModel.attendeesCount = it}
+                                   )
+                               }
+                           )
                 },
                 onNotAttend = {
-                    eventScreenViewModel.getEventByID(event.id.toString())
-                    customEventCardViewModel.removeFromEvent(
-                        onRemoveFromEvent = {
-                            eventScreenViewModel.removeUserFromEvent(currentUser.uid!!, event.id!!)
-                        },
-                        onUpdateEvent = {
-                            customEventCardViewModel.attendeesCount =
-                                eventScreenViewModel.currentEventAttendeesCount
+                    eventScreenViewModel.removeUserFromEvent(
+                        eventID = event.id!!,
+                        currentUserUID = currentUser.uid!!,
+                        onSuccess = {
+                            eventScreenViewModel.getEventByID(
+                                eventID = event.id!!,
+                                onSuccess = { customEventCardViewModel.attendeesCount = it }
+                            )
                         }
                     )
                 }
