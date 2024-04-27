@@ -31,11 +31,16 @@ class EventScreenViewModel: ViewModel() {
             }
         }
     }
-    fun getEventByID(eventID: String){
+    fun getEventByID(eventID: String, onSuccess:(Int)->Unit){
         viewModelScope.launch {
             try {
-                val currentEvent = repository.getEvent(eventID = eventID)
-                currentEventAttendeesCount = currentEvent.attendeesByUID.size
+                repository.getEvent(
+                    eventID = eventID,
+                    onSuccess = {
+                        currentEventAttendeesCount = it.attendeesByUID.size
+                        onSuccess(currentEventAttendeesCount)
+                    }
+                )
                 Log.d("get events", "Event retrieved")
             } catch (error: Exception) {
                 Log.d("ERROR",error.toString())
@@ -45,15 +50,15 @@ class EventScreenViewModel: ViewModel() {
 
 
 
-    fun addUserToEvent(currentUserUID: String, eventID: String) {
+    fun addUserToEvent(currentUserUID: String, eventID: String, onSuccess: () -> Unit) {
         viewModelScope.launch {
-            repository.addUserToEvent(currentUserUID, eventID)
+            repository.addUserToEvent(currentUserUID, eventID, onSuccess)
         }
     }
 
-    fun removeUserFromEvent(currentUserUID: String, eventID: String) {
+    fun removeUserFromEvent(currentUserUID: String, eventID: String, onSuccess: () -> Unit) {
         viewModelScope.launch {
-            repository.removeUserFromEvent(currentUserUID, eventID)
+            repository.removeUserFromEvent(currentUserUID, eventID, onSuccess)
         }
     }
 
