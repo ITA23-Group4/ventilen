@@ -38,3 +38,10 @@ This system helps us organize our work and ensures that we have a clear understa
 
 ## Figma
 Link til projekt: https://www.figma.com/team_invite/redeem/dCSgPp7Zy9YX6QZSqfhpfr
+
+## Moodboard
+![moodboard](https://github.com/ITA23-Group4/ventilen/assets/56862691/aedb9ebc-42d0-4c0f-af89-95a77305236e)
+
+## Sketch
+![scan_nijo0001_2024-04-27-15-46-27](https://github.com/ITA23-Group4/ventilen/assets/56862691/64fe8aad-a21f-47d0-8ddd-9ecb018070bf)
+
