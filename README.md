@@ -1,33 +1,33 @@
 # Ventilen - MVP
 
-**TODO** [Beskrivelse af projektet her...]
+**TODO** [Description of the project here...]
 
-## Branching Strategi
+## Branching Strategy
 
-Vi har valgt at følge GitHub Flow som vores branching-strategi for vores MVP. Dette indebærer følgende:
+We have chosen to follow GitHub Flow as our branching strategy for our MVP. This entails the following:
 
-<img alt="githubflow" src="https://github.com/ITA23-Group4/ventilen/assets/88247953/c902802c-fb7b-482b-ad5a-356a80428618">
+![githubflow](https://github.com/ITA23-Group4/ventilen/assets/88247953/c902802c-fb7b-482b-ad5a-356a80428618)
 
-- **main:** Main branch i projektet, hvor størstedelen af vores kode er samlet.
-- **Feature Branches:** Hver funktion eller opgave, som vi arbejder på, bliver implementeret i sin egen gren, startende fra main.
-- **Pull Requests (PRs):** Når en funktion er færdig, åbner vi en pull request mod main. Dette giver mulighed for gennemgang og feedback, før ændringerne integreres i hovedgrenen.
+- **main:** Main branch in the project, where the majority of our code is collected.
+- **Feature Branches:** Each feature or task we work on is implemented in its own branch, starting from main.
+- **Pull Requests (PRs):** When a feature is completed, we open a pull request against main. This allows for review and feedback before the changes are integrated into the main branch.
 
-Vi valgte GitHub Flow over f.eks. GitFlow, da vi befinder os i den tidlige fase af projektet, hvor vi fokuserer på udviklingen af vores MVP. GitHub Flow tilbyder en simpel og fleksibel arbejdsproces, der passer perfekt til vores behov for hurtig iteration og implementering af nye funktioner. Ved at minimere antallet af nødvendige grene og reducere kompleksiteten sikrer GitHub Flow en lettere vej mod en funktionel MVP.
+We chose GitHub Flow over alternatives like GitFlow because we are in the early phase of the project, focusing on developing our MVP. GitHub Flow offers a simple and flexible workflow that fits perfectly with our need for rapid iteration and implementation of new features. By minimizing the number of necessary branches and reducing complexity, GitHub Flow ensures an easier path towards a functional MVP.
 
-For at gøre vores branchnavngivning mere konsistent og overskuelig, har vi valgt at følge disse præfiks konventioner:
+To make our branch naming more consistent and comprehensible, we have chosen to follow these prefix conventions:
 
-- **feature/** for nye funktioner
-- **refactor/** for omskrivninger
-- **doc/** for dokumentationsændringer
+- **feature/** for new features
+- **refactor/** for rewrites
+- **doc/** for documentation changes
 
-## Projekt Strategi
+## Project Strategy
 
-Som udgangspunkt har vi praktiseret pair-programming/co-pilot, hvor vi alle tre har siddet sammen om koden samtidig. Dette gav os mulighed for at udveksle ideer, løse problemer hurtigt og sikre en høj kvalitet af koden. Ved mindre opgaver, som skulle fordeles, har vi benyttet os af GitHub's Backlog Projekt funktionalitet der er sat op med vores organisation.
+As a starting point, we have practiced pair-programming/co-piloting, where all three of us have worked on the code simultaneously. This allowed us to exchange ideas, solve problems quickly, and ensure a high quality of code. For smaller tasks that needed to be distributed, we have utilized GitHub's Backlog Project functionality set up within our organization.
 
-Her opdeler vi opgaver i følgende kategorier:
+Here we divide tasks into the following categories:
 
-- **To-Do:** Opgaver, der endnu ikke er påbegyndt.
-- **In-Progress:** Opgaver, der er i gang med at blive løst (med en af os assignet som ansvarlig).
-- **Done:** Opgaver, der er færdige og klar til main.
+- **To-Do:** Tasks that have not yet been started.
+- **In-Progress:** Tasks that are currently being worked on (with one of us assigned as responsible).
+- **Done:** Tasks that are completed and ready for main.
 
-Dette system hjælper os med at organisere vores arbejde og sikre, at vi har en klar forståelse af, hvad der skal gøres, hvad der er i gang, og hvad der er afsluttet.
+This system helps us organize our work and ensures that we have a clear understanding of what needs to be done, what is in progress, and what is completed.
