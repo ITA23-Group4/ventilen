@@ -25,7 +25,6 @@ class EventScreenViewModel: ViewModel() {
         viewModelScope.launch {
             try {
                 events = repository.getEvents()
-                Log.d("get events", events.toString())
             } catch (error: Exception) {
                 Log.d("ERROR",error.toString())
             }
@@ -52,7 +51,7 @@ class EventScreenViewModel: ViewModel() {
         viewModelScope.launch {
             try {
                 val updatedEvent = repository.getEvent(eventID)
-                events = events.map { if (it.id == eventID) updatedEvent else it }.toMutableList()
+                events = events.map { if (it.id == eventID) updatedEvent else it }
             } catch (error: Exception) {
                 Log.e("ERROR", "Failed to update event attendees: $error")
             }
