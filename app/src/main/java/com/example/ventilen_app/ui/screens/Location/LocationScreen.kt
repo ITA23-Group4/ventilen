@@ -40,8 +40,6 @@ fun LocationScreen(
             onNavigateBack = onNavigateBack
         )
 
-        var expanded by remember { mutableStateOf(false) }
-
         CustomDropDownMenu(selectedValue = selectedLocation , options = locations, label = "Locations", onValueChangedEvent = onLocationValueChanged)
 
         CustomFilledButton(text = "Fortsæt", onClick = onNavigateHome,padding = PaddingValues(horizontal = 25.dp, vertical = 0.dp))
