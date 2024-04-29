@@ -26,22 +26,30 @@ class EventScreenViewModel: ViewModel() {
             try {
                 events = repository.getEvents()
             } catch (error: Exception) {
-                Log.d("ERROR",error.toString())
+                Log.d("GetAllEvents", "ERROR: ${error.message}")
             }
         }
     }
 
     fun addUserToEvent(currentUserUID: String, eventID: String) {
         viewModelScope.launch {
-            repository.addUserToEvent(currentUserUID, eventID)
-            updateEventAttendeesCount(eventID)
+            try {
+                repository.addUserToEvent(currentUserUID, eventID)
+                updateEventAttendeesCount(eventID)
+            } catch (error: Exception) {
+                Log.e("AddUserToEvent", "ERROR: ${error.message}")
+            }
         }
     }
 
     fun removeUserFromEvent(currentUserUID: String, eventID: String) {
         viewModelScope.launch {
-            repository.removeUserFromEvent(currentUserUID, eventID)
-            updateEventAttendeesCount(eventID)
+            try {
+                repository.removeUserFromEvent(currentUserUID, eventID)
+                updateEventAttendeesCount(eventID)
+            } catch (error: Exception) {
+                Log.e("RemoveUserFromEvent", "ERROR: ${error.message}")
+            }
         }
     }
 
@@ -56,9 +64,7 @@ class EventScreenViewModel: ViewModel() {
                 Log.e("ERROR", "Failed to update event attendees: $error")
             }
         }
-    }
-
-    /*
+    } /*
     TODO Making a copy of the event on index, does not seem to trigger recompose
     private fun updateEventAttendeesCount(eventID: String) {
         viewModelScope.launch {
