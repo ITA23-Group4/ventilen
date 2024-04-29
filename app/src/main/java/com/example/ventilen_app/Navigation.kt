@@ -24,6 +24,7 @@ fun Navigation() {
     val navController = rememberNavController()
     val currentUserViewModel: CurrentUserViewModel = remember { CurrentUserViewModel() }
     val authViewModel: AuthViewModel = remember { AuthViewModel() }
+    val eventScreenViewModel: EventScreenViewModel = remember { EventScreenViewModel() } // init here to get all events on launch?
 
     NavHost(navController = navController, startDestination = "auth") {
         navigation(
@@ -127,7 +128,6 @@ fun Navigation() {
             )
         }
         composable("event"){
-            val eventScreenViewModel: EventScreenViewModel = remember { EventScreenViewModel() }
             EventScreen(
                 events = eventScreenViewModel.events,
                 onAttend = {
