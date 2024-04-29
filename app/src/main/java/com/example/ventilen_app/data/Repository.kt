@@ -5,7 +5,9 @@ import com.example.ventilen_app.data.models.Event
 import com.example.ventilen_app.data.models.User
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FieldValue
+import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.firestore
 import kotlinx.coroutines.tasks.await
 
@@ -35,28 +37,18 @@ class Repository {
             }
     }
 
+    suspend fun getEvents(): List<Event> {
+        val querySnapshot: QuerySnapshot = db.collection("events").get().await()
 
-    suspend fun getEvents(): MutableList<Event> {
-        val querySnapshot = db.collection("events").get().await()
-
-        return querySnapshot.documents.map { document ->
-            val title = document.getString("title") ?: ""
-            val attendees = (document.get("attendees") as? List<DocumentReference>)?.map { it.id } ?: emptyList()
-            val id = document.id
-            Event(title, attendees.toMutableList(), id)
-        }.toMutableList()
-    }
-
-    suspend fun getEvent(eventID: String): Event {
-        db.collection("events").document(eventID).get().await().let { document ->
-            val title = document.getString("title") ?: ""
-            val attendees = document.get("attendees") as? List<DocumentReference> ?: emptyList()
-            val attendeeUIDs = attendees.map { it.id }
-            val id = document.id
-            return Event(title, attendeeUIDs.toMutableList(), id)
+        return querySnapshot.documents.mapNotNull { document ->
+            convertEventDocumentToEvent(document)
         }
     }
 
+    suspend fun getEvent(eventID: String): Event {
+        val document = db.collection("events").document(eventID).get().await()
+        return convertEventDocumentToEvent(document)
+    }
 
     suspend fun addUserToEvent(userUID: String, eventID: String) {
         val eventRef = db.collection("events").document(eventID)
@@ -70,5 +62,12 @@ class Repository {
         eventRef.update("attendees", FieldValue.arrayRemove(userRef)).await()
     }
 
+    private fun convertEventDocumentToEvent(document: DocumentSnapshot): Event {
+        val title: String = document.getString("title") ?: ""
+        val attendees: List<DocumentReference> = document.get("attendees") as? List<DocumentReference> ?: emptyList()
+        val attendeeUIDs: List<String> = attendees.map { it.id }
+        val id = document.id
+        return Event(title, attendeeUIDs, id)
+    }
 
 }

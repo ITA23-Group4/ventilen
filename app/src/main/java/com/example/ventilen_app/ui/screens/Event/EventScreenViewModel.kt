@@ -15,7 +15,7 @@ import kotlinx.coroutines.launch
 
 class EventScreenViewModel: ViewModel() {
     private val repository: Repository = Repository()
-    var events: MutableList<Event> by mutableStateOf(mutableStateListOf())
+    var events: List<Event> by mutableStateOf(mutableStateListOf())
 
     init {
         getEvents()

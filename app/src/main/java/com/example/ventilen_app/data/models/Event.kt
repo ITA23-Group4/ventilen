@@ -6,10 +6,10 @@ import com.google.firebase.firestore.DocumentId
 
 data class Event(
     val title:String = "",
-    val attendeesByUID: MutableList<String> = mutableListOf(),
+    val attendeesByUID: List<String> = mutableListOf(),
     @DocumentId var id: String? = null
 ) {
-    fun withUpdatedAttendees(attendees: MutableList<String>): Event {
-        return this.copy(attendeesByUID = attendees)
-    }
+    // fun withUpdatedAttendees(attendees: MutableList<String>): Event {
+    //     return this.copy(attendeesByUID = attendees)
+    // }
 }
