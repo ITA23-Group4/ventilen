@@ -6,7 +6,7 @@ import com.google.firebase.firestore.DocumentId
 
 data class Event(
     val title:String = "",
-    val attendeesByUID: List<String> = mutableListOf(),
+    val attendeesByUID: List<String> = listOf(),
     @DocumentId var id: String? = null
 ) {
     // fun withUpdatedAttendees(attendees: MutableList<String>): Event {

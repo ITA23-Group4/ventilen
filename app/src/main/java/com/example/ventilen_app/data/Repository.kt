@@ -40,8 +40,8 @@ class Repository {
     suspend fun getEvents(): List<Event> {
         val querySnapshot: QuerySnapshot = db.collection("events").get().await()
 
-        return querySnapshot.documents.mapNotNull { document ->
-            convertEventDocumentToEvent(document)
+        return querySnapshot.documents.mapNotNull { eventDocument ->
+            convertEventDocumentToEvent(eventDocument)
         }
     }
 
