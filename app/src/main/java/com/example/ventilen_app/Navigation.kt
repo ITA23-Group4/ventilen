@@ -13,6 +13,7 @@ import com.example.ventilen_app.ui.screens.Username.UsernameScreen
 import com.example.ventilen_app.ui.screens.Welcome.WelcomeScreen
 import com.example.ventilen_app.ui.screens.Credentials.CredentialsScreen
 import com.example.ventilen_app.ui.screens.Event.EventScreen
+import com.example.ventilen_app.ui.screens.Event.EventScreenViewModel
 import com.example.ventilen_app.ui.screens.Home.HomeScreen
 import com.example.ventilen_app.ui.screens.Location.LocationScreen
 import com.example.ventilen_app.ui.screens.Login.LoginScreen
@@ -126,7 +127,22 @@ fun Navigation() {
             )
         }
         composable("event"){
-            EventScreen(currentUserViewModel.currentUser!!)
+            val eventScreenViewModel: EventScreenViewModel = remember { EventScreenViewModel() }
+            EventScreen(
+                events = eventScreenViewModel.events,
+                onAttend = {
+                    eventScreenViewModel.addUserToEvent(
+                        currentUserUID = currentUserViewModel.currentUser?.uid!!,
+                        eventID = it
+                    )
+                },
+                onNotAttend = {
+                    eventScreenViewModel.removeUserFromEvent(
+                        eventID = it,
+                        currentUserUID = currentUserViewModel.currentUser?.uid!!
+                    )
+                }
+            )
         }
     }
 }

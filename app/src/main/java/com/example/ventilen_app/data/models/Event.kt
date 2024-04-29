@@ -9,5 +9,7 @@ data class Event(
     val attendeesByUID: MutableList<String> = mutableListOf(),
     @DocumentId var id: String? = null
 ) {
-
+    fun withUpdatedAttendees(attendees: MutableList<String>): Event {
+        return this.copy(attendeesByUID = attendees)
+    }
 }

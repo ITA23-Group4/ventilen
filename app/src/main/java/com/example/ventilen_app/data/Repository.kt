@@ -52,30 +52,27 @@ class Repository {
         return events
     }
 
-    fun getEvent(eventID: String, onSuccess:(Event) -> Unit) {
-        db.collection("events").document(eventID).get().addOnSuccessListener {
-            val title = it.getString("title") ?: ""
-            val attendees = it.get("attendees") as? List<DocumentReference> ?: emptyList()
+    suspend fun getEvent(eventID: String): Event {
+        db.collection("events").document(eventID).get().await().let { document ->
+            val title = document.getString("title") ?: ""
+            val attendees = document.get("attendees") as? List<DocumentReference> ?: emptyList()
             val attendeeUIDs = attendees.map { it.id }
-            val id = it.id
-            onSuccess(Event(title, attendeeUIDs.toMutableList(), id))
+            val id = document.id
+            return Event(title, attendeeUIDs.toMutableList(), id)
         }
     }
 
-    fun addUserToEvent(userUID: String, eventID: String, onSuccess: () -> Unit ) {
+
+    suspend fun addUserToEvent(userUID: String, eventID: String) {
         val eventRef = db.collection("events").document(eventID)
         val userRef = db.collection("users").document(userUID)
-        eventRef.update("attendees", FieldValue.arrayUnion(userRef)).addOnSuccessListener {
-            onSuccess()
-        }
+        eventRef.update("attendees", FieldValue.arrayUnion(userRef)).await()
     }
 
-    suspend fun removeUserFromEvent(userUID: String, eventID: String, onSuccess: () -> Unit ) {
+    suspend fun removeUserFromEvent(userUID: String, eventID: String) {
         val eventRef = db.collection("events").document(eventID)
         val userRef = db.collection("users").document(userUID)
-        eventRef.update("attendees", FieldValue.arrayRemove(userRef)).addOnSuccessListener {
-            onSuccess()
-        }.await()
+        eventRef.update("attendees", FieldValue.arrayRemove(userRef)).await()
     }
 
 
