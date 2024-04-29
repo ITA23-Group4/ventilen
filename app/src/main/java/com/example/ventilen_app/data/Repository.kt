@@ -35,13 +35,17 @@ class Repository {
             }
     }
 
-    suspend fun getEvents(): MutableList<Event> =
-        db.collection("events").get().await().documents.map { document ->
+
+    suspend fun getEvents(): MutableList<Event> {
+        val querySnapshot = db.collection("events").get().await()
+
+        return querySnapshot.documents.map { document ->
             val title = document.getString("title") ?: ""
             val attendees = (document.get("attendees") as? List<DocumentReference>)?.map { it.id } ?: emptyList()
             val id = document.id
             Event(title, attendees.toMutableList(), id)
         }.toMutableList()
+    }
 
     suspend fun getEvent(eventID: String): Event {
         db.collection("events").document(eventID).get().await().let { document ->
