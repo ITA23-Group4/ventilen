@@ -5,9 +5,9 @@ import androidx.compose.runtime.mutableStateOf
 import com.google.firebase.firestore.DocumentId
 
 data class Event(
-    val title:String = "",
+    val title: String = "",
     val attendeesByUID: MutableList<String> = mutableListOf(),
-    @DocumentId var id: String? = null
+    @DocumentId val id: String,
 ) {
     fun withUpdatedAttendees(attendees: MutableList<String>): Event {
         return this.copy(attendeesByUID = attendees)

@@ -15,7 +15,7 @@ import kotlinx.coroutines.launch
 
 class EventScreenViewModel: ViewModel() {
     private val repository: Repository = Repository()
-    val events: MutableList<Event> = mutableStateListOf() // Most be val and not var: https://jetc.dev/slack/2021-11-20-why-does-my-list-not-recompose.html
+    val events: MutableList<Event> = mutableStateListOf()
 
     init {
         getEvents()
@@ -24,8 +24,9 @@ class EventScreenViewModel: ViewModel() {
     private fun getEvents(){
         viewModelScope.launch {
             try {
-                events.clear() // Clear the existing list
-                events.addAll(repository.getEvents()) // Add all items from the repository's response
+                events.clear()
+                events.addAll(repository.getEvents())
+                // events = repository.getEvents() with 'var events' was the recompose problem
             } catch (error: Exception) {
                 Log.d("GetAllEvents", "ERROR: ${error.message}")
             }
@@ -54,19 +55,6 @@ class EventScreenViewModel: ViewModel() {
         }
     }
 
-    /*
-    TODO Look up var events: SnapshotStateList<Event> by mutableStateOf(SnapshotStateList())
-    private fun updateEventAttendeesCount(eventID: String) {
-        viewModelScope.launch {
-            try {
-                val updatedEvent = repository.getEvent(eventID)
-                events = events.map { if (it.id == eventID) updatedEvent else it }.toMutableList()
-            } catch (error: Exception) {
-                Log.e("ERROR", "Failed to update event attendees: $error")
-            }
-        }
-    }
-    */
     private fun updateEventAttendeesCount(eventID: String) {
         viewModelScope.launch {
             events.indexOfFirst { it.id == eventID }.let { eventIndex ->
