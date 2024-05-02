@@ -37,12 +37,12 @@ class Repository {
             }
     }
 
-    suspend fun getEvents(): List<Event> {
+    suspend fun getEvents(): MutableList<Event> {
         val querySnapshot: QuerySnapshot = db.collection("events").get().await()
 
         return querySnapshot.documents.mapNotNull { eventDocument ->
             convertEventDocumentToEvent(eventDocument)
-        }
+        }.toMutableList()
     }
 
     suspend fun getEvent(eventID: String): Event {
@@ -65,7 +65,7 @@ class Repository {
     private fun convertEventDocumentToEvent(document: DocumentSnapshot): Event {
         val title: String = document.getString("title") ?: ""
         val attendees: List<DocumentReference> = document.get("attendees") as? List<DocumentReference> ?: emptyList()
-        val attendeeUIDs: List<String> = attendees.map { it.id }
+        val attendeeUIDs: MutableList<String> = attendees.map { it.id }.toMutableList()
         val id = document.id
         return Event(title, attendeeUIDs, id)
     }

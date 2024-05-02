@@ -15,7 +15,7 @@ import kotlinx.coroutines.launch
 
 class EventScreenViewModel: ViewModel() {
     private val repository: Repository = Repository()
-    var events: List<Event> by mutableStateOf(mutableStateListOf())
+    var events: MutableList<Event> by mutableStateOf(mutableStateListOf())
 
     init {
         getEvents()
@@ -59,7 +59,7 @@ class EventScreenViewModel: ViewModel() {
         viewModelScope.launch {
             try {
                 val updatedEvent = repository.getEvent(eventID)
-                events = events.map { if (it.id == eventID) updatedEvent else it }
+                events = events.map { if (it.id == eventID) updatedEvent else it }.toMutableList()
             } catch (error: Exception) {
                 Log.e("ERROR", "Failed to update event attendees: $error")
             }
