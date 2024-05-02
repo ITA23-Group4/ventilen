@@ -15,7 +15,7 @@ import kotlinx.coroutines.launch
 
 class EventScreenViewModel: ViewModel() {
     private val repository: Repository = Repository()
-    var events: MutableList<Event> by mutableStateOf(mutableStateListOf())
+    val events: MutableList<Event> = mutableStateListOf() // Most be val and not var: https://jetc.dev/slack/2021-11-20-why-does-my-list-not-recompose.html
 
     init {
         getEvents()
@@ -24,7 +24,8 @@ class EventScreenViewModel: ViewModel() {
     private fun getEvents(){
         viewModelScope.launch {
             try {
-                events = repository.getEvents()
+                events.clear() // Clear the existing list
+                events.addAll(repository.getEvents()) // Add all items from the repository's response
             } catch (error: Exception) {
                 Log.d("GetAllEvents", "ERROR: ${error.message}")
             }
@@ -53,8 +54,8 @@ class EventScreenViewModel: ViewModel() {
         }
     }
 
-    // TODO Look up
-    // var events: SnapshotStateList<Event> by mutableStateOf(SnapshotStateList())
+    /*
+    TODO Look up var events: SnapshotStateList<Event> by mutableStateOf(SnapshotStateList())
     private fun updateEventAttendeesCount(eventID: String) {
         viewModelScope.launch {
             try {
@@ -64,18 +65,23 @@ class EventScreenViewModel: ViewModel() {
                 Log.e("ERROR", "Failed to update event attendees: $error")
             }
         }
-    } /*
-    TODO Making a copy of the event on index, does not seem to trigger recompose
+    }
+    */
     private fun updateEventAttendeesCount(eventID: String) {
         viewModelScope.launch {
             events.indexOfFirst { it.id == eventID }.let { eventIndex ->
+                // Extract the updated attendees from the updated event
                 val updatedEvent = repository.getEvent(eventID = eventID)
-                events[eventIndex] = events[eventIndex].withUpdatedAttendees(updatedEvent.attendeesByUID)
+                val updatedEventAttendees = updatedEvent.attendeesByUID
+
+                val eventToUpdate = events[eventIndex]
+
+                // Create a copy of the event with updated attendees
+                val eventWithUpdatedAttendees = eventToUpdate.withUpdatedAttendees(updatedEventAttendees)
+
+                events[eventIndex] = eventWithUpdatedAttendees
             }
         }
     }
-    */
-
-
 
 }
