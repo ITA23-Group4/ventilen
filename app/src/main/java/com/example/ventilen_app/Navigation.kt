@@ -18,7 +18,6 @@ import com.example.ventilen_app.ui.screens.Home.HomeScreen
 import com.example.ventilen_app.ui.screens.Location.LocationScreen
 import com.example.ventilen_app.ui.screens.Login.LoginScreen
 
-
 @Composable
 fun Navigation() {
     val navController = rememberNavController()
