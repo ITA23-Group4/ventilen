@@ -57,7 +57,8 @@ fun Navigation() {
                     textPassword = authViewModel.password,
                     onValueChangeEmail = { authViewModel.email = it },
                     onValueChangePassword = { authViewModel.password = it },
-                    onNavigateBack = { navController.popBackStack() }
+                    onNavigateBack = { navController.popBackStack() },
+                    onNavigateRegistration = { navController.navigate("auth/register") }
                 )
             }
 
