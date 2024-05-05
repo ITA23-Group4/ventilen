@@ -1,6 +1,5 @@
 package com.example.ventilen_app
 
-import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.navigation.compose.NavHost
@@ -9,6 +8,7 @@ import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import com.example.ventilen_app.generalViewModels.AuthViewModel
 import com.example.ventilen_app.generalViewModels.CurrentUserViewModel
+import com.example.ventilen_app.ui.screens.Location.LocationsViewModel
 import com.example.ventilen_app.ui.screens.Username.UsernameScreen
 import com.example.ventilen_app.ui.screens.Welcome.WelcomeScreen
 import com.example.ventilen_app.ui.screens.Credentials.CredentialsScreen
@@ -25,6 +25,8 @@ fun Navigation() {
     val currentUserViewModel: CurrentUserViewModel = remember { CurrentUserViewModel() }
     val authViewModel: AuthViewModel = remember { AuthViewModel() }
     val eventScreenViewModel: EventScreenViewModel = remember { EventScreenViewModel() } // init here to get all events on launch?
+    val locationsViewModel: LocationsViewModel = remember { LocationsViewModel() }
+
     // TODO: Remove
     currentUserViewModel.logout()
     currentUserViewModel.getCurrentUser()
@@ -46,11 +48,11 @@ fun Navigation() {
                 LoginScreen(
                     onNavigateHome = {
                         authViewModel.loginUser()
+                        currentUserViewModel.getCurrentUser()
                         navController.popBackStack(
                             route = "auth",
                             inclusive = true
                         )
-                        currentUserViewModel.getCurrentUser()
                         navController.navigate("home")
                     },
                     textEmail = authViewModel.email,
@@ -89,15 +91,16 @@ fun Navigation() {
                     LocationScreen(
                         onNavigateHome = {
                             authViewModel.registerNewUser()
+                            authViewModel.loginUser()
+                            currentUserViewModel.getCurrentUser()
                             navController.popBackStack(
                                 route = "auth",
                                 inclusive = true
                             )
-                            currentUserViewModel.getCurrentUser()
                             navController.navigate("home")
                         },
                         onNavigateBack = { navController.popBackStack() },
-                        locations = locations,
+                        locations = locationsViewModel.locationNames,
                         selectedLocation = authViewModel.location,
                         onLocationValueChanged = { authViewModel.location = it }
                     )
