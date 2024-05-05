@@ -8,6 +8,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import com.example.ventilen_app.generalViewModels.AuthViewModel
+import com.example.ventilen_app.generalViewModels.ChatViewModel
 import com.example.ventilen_app.generalViewModels.CurrentUserViewModel
 import com.example.ventilen_app.ui.screens.Username.UsernameScreen
 import com.example.ventilen_app.ui.screens.Welcome.WelcomeScreen
@@ -121,10 +122,12 @@ fun Navigation() {
         }
 
         composable("home"){
+            val chatViewModel: ChatViewModel = remember { ChatViewModel() } // Initialize ChatViewModel
             HomeScreen(
                 currentUserViewModel.currentUser?.username.toString(),
                 currentUserViewModel.currentUser?.uid.toString(),
-                onNavigateEvent = {navController.navigate("event")}
+                onNavigateEvent = {navController.navigate("event")},
+                chatViewModel = chatViewModel,
             )
         }
         composable("event"){
