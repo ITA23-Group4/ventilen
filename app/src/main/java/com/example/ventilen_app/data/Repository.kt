@@ -19,6 +19,8 @@ class Repository {
             .toObject(User::class.java)
     }
 
+    // Old createUser function that uses callbacks
+    /*
     fun createUser(
         newUser: User,
         onRegistrationSuccess: () -> Unit,
@@ -36,6 +38,16 @@ class Repository {
                 Log.d("CREATE_USER", "Failed to create user: $newUser")
             }
     }
+    */
+
+    // New createUser function that uses coroutines
+    suspend fun createUser(newUser: User) {
+        db.collection("users")
+            .document(newUser.uid!!)
+            .set(newUser)
+            .await()
+    }
+
 
     suspend fun getEvents(): MutableList<Event> {
         val querySnapshot: QuerySnapshot = db.collection("events").get().await()

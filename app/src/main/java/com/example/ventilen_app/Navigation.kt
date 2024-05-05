@@ -47,9 +47,6 @@ fun Navigation() {
                                     inclusive = true
                                 )
                                 navController.navigate("home")
-                            },
-                            onLoginFailed = {
-                                Log.d("FAILED!", "${authViewModel.email},${authViewModel.password}")
                             }
                         )
                     },
@@ -88,27 +85,13 @@ fun Navigation() {
                     val locations = listOf("København", "Århus", "Aalborg", "Odense")
                     LocationScreen(
                         onNavigateHome = {
-                            authViewModel.registerNewUser(
-                                onRegistrationSuccess = {
-                                    // Login if registration completed
-                                    authViewModel.loginUser(
-                                        navigateOnLoginSuccess = {
-                                            currentUserViewModel.getCurrentUser()
-                                            navController.popBackStack(
-                                                route = "auth",
-                                                inclusive = true
-                                            )
-                                            navController.navigate("home")
-                                        },
-                                        onLoginFailed = {
-                                            Log.d("FAILED!", "${authViewModel.email},${authViewModel.password}")
-                                        }
-                                    )
-                                },
-                                onRegistrationFailed = {
-                                    Log.d("REGISTER_USER", "Failed to register new user")
-                                }
+                            authViewModel.registerNewUser()
+                            currentUserViewModel.getCurrentUser()
+                            navController.popBackStack(
+                                route = "auth",
+                                inclusive = true
                             )
+                            navController.navigate("home")
                         },
                         onNavigateBack = { navController.popBackStack() },
                         locations = locations,
