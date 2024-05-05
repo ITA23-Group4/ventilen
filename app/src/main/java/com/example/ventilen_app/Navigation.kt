@@ -20,10 +20,14 @@ import com.example.ventilen_app.ui.screens.Login.LoginScreen
 
 @Composable
 fun Navigation() {
+
     val navController = rememberNavController()
     val currentUserViewModel: CurrentUserViewModel = remember { CurrentUserViewModel() }
     val authViewModel: AuthViewModel = remember { AuthViewModel() }
     val eventScreenViewModel: EventScreenViewModel = remember { EventScreenViewModel() } // init here to get all events on launch?
+    // TODO: Remove
+    currentUserViewModel.logout()
+    currentUserViewModel.getCurrentUser()
 
     NavHost(navController = navController, startDestination = "auth") {
         navigation(
@@ -33,22 +37,21 @@ fun Navigation() {
             composable("auth/welcome") {
                 WelcomeScreen(
                     onNavigationLogin = { navController.navigate("auth/login") },
-                    onNavigationRegister = { navController.navigate("auth/register") }
+                    onNavigationRegister = { navController.navigate("auth/register") },
+                    // TODO: Remove
+                    whoUser = { currentUserViewModel.getCurrentUser() }
                 )
             }
             composable("auth/login") {
                 LoginScreen(
                     onNavigateHome = {
-                        authViewModel.loginUser(
-                            navigateOnLoginSuccess = {
-                                currentUserViewModel.getCurrentUser()
-                                navController.popBackStack(
-                                    route = "auth",
-                                    inclusive = true
-                                )
-                                navController.navigate("home")
-                            }
+                        authViewModel.loginUser()
+                        navController.popBackStack(
+                            route = "auth",
+                            inclusive = true
                         )
+                        currentUserViewModel.getCurrentUser()
+                        navController.navigate("home")
                     },
                     textEmail = authViewModel.email,
                     textPassword = authViewModel.password,
@@ -86,11 +89,11 @@ fun Navigation() {
                     LocationScreen(
                         onNavigateHome = {
                             authViewModel.registerNewUser()
-                            currentUserViewModel.getCurrentUser()
                             navController.popBackStack(
                                 route = "auth",
                                 inclusive = true
                             )
+                            currentUserViewModel.getCurrentUser()
                             navController.navigate("home")
                         },
                         onNavigateBack = { navController.popBackStack() },
@@ -106,7 +109,16 @@ fun Navigation() {
             HomeScreen(
                 currentUserViewModel.currentUser?.username.toString(),
                 currentUserViewModel.currentUser?.uid.toString(),
-                onNavigateEvent = {navController.navigate("event")}
+                onNavigateEvent = {navController.navigate("event")},
+
+                // TODO: Remove
+                logout = {
+                    currentUserViewModel.logout()
+                    navController.navigate("auth")
+                },
+                getCurrentUser = {
+                    currentUserViewModel.getCurrentUser()
+                }
             )
         }
         composable("event"){

@@ -15,8 +15,11 @@ class AccountService {
         username: String
     ): User? {
         return try {
-            val firebaseAuthResult = auth.createUserWithEmailAndPassword(email, password).await()
+            val firebaseAuthResult = auth
+                .createUserWithEmailAndPassword(email, password)
+                .await()
             val authUIDForDocumentTitle: String = firebaseAuthResult.user?.uid!!
+            Log.d("CREATE_USER", "User created: $authUIDForDocumentTitle")
             User(username, authUIDForDocumentTitle)
         } catch (error: Exception) {
             Log.d("CREATE_USER", "Failed to create user: $error")
