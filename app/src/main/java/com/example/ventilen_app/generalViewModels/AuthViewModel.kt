@@ -58,13 +58,16 @@ class AuthViewModel : ViewModel() {
          */
     }
 
-    fun loginUser() {
+    fun loginUser(
+        onLoginSucces: () -> Unit,
+    ) {
         viewModelScope.launch {
             try {
                 accountService.login(
                     email = email,
                     password = password
                 )
+                onLoginSucces()
             } catch (error: Exception) {
                 Log.d("Logged In", "Failed to log in: $error")
             }

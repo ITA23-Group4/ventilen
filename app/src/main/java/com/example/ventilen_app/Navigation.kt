@@ -47,13 +47,16 @@ fun Navigation() {
             composable("auth/login") {
                 LoginScreen(
                     onNavigateHome = {
-                        authViewModel.loginUser()
-                        currentUserViewModel.getCurrentUser()
-                        navController.popBackStack(
-                            route = "auth",
-                            inclusive = true
+                        authViewModel.loginUser(
+                            onLoginSucces = {
+                                currentUserViewModel.getCurrentUser()
+                                navController.popBackStack(
+                                    route = "auth",
+                                    inclusive = true
+                                )
+                                navController.navigate("home")
+                            }
                         )
-                        navController.navigate("home")
                     },
                     textEmail = authViewModel.email,
                     textPassword = authViewModel.password,
@@ -86,18 +89,19 @@ fun Navigation() {
                     )
                 }
                 composable("auth/register/location") {
-                    // TODO: Should come from database
-                    val locations = listOf("København", "Århus", "Aalborg", "Odense")
                     LocationScreen(
                         onNavigateHome = {
                             authViewModel.registerNewUser()
-                            authViewModel.loginUser()
-                            currentUserViewModel.getCurrentUser()
-                            navController.popBackStack(
-                                route = "auth",
-                                inclusive = true
+                            authViewModel.loginUser(
+                                onLoginSucces = {
+                                    currentUserViewModel.getCurrentUser()
+                                    navController.popBackStack(
+                                        route = "auth",
+                                        inclusive = true
+                                    )
+                                    navController.navigate("home")
+                                }
                             )
-                            navController.navigate("home")
                         },
                         onNavigateBack = { navController.popBackStack() },
                         locations = locationsViewModel.locationNames,
