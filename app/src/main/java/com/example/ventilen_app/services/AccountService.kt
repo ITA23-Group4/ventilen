@@ -13,18 +13,13 @@ class AccountService {
         email: String,
         password: String,
         username: String
-    ): User? {
-        return try {
-            val firebaseAuthResult = auth
-                .createUserWithEmailAndPassword(email, password)
-                .await()
-            val authUIDForDocumentTitle: String = firebaseAuthResult.user?.uid!!
-            Log.d("CREATE_USER", "User created: $authUIDForDocumentTitle")
-            User(username, authUIDForDocumentTitle)
-        } catch (error: Exception) {
-            Log.d("CREATE_USER", "Failed to create user: $error")
-            null
-        }
+    ): User {
+        val firebaseAuthResult = auth
+            .createUserWithEmailAndPassword(email, password)
+            .await()
+        val authUIDForDocumentTitle: String = firebaseAuthResult.user?.uid!!
+        Log.d("CREATE_USER", "User created: $authUIDForDocumentTitle")
+        return User(username, authUIDForDocumentTitle)
     }
 
 
@@ -50,16 +45,11 @@ class AccountService {
         email: String,
         password: String
     ) {
-        try {
-            auth.signInWithEmailAndPassword(
-                email,
-                password
-            ).await()
-            Log.d("Logged In", "Logged in!")
-        } catch (error: Exception) {
-            Log.d("Logged In", "Failed to log in: $error")
-        }
-
+        auth.signInWithEmailAndPassword(
+            email,
+            password
+        ).await()
+        Log.d("Logged In", "Logged in!")
     }
 
     /*

@@ -22,19 +22,23 @@ class AuthViewModel : ViewModel() {
 
 
 
-    fun registerNewUser() {
+    fun registerNewUser(
+        onRegistrationSuccess: () -> Unit,
+        onRegistrationFailed: () -> Unit
+    ) {
         viewModelScope.launch {
             try {
                 accountService.createUserWithEmailAndPassword(
                     email = email,
                     password = password,
                     username = username
-                )?.let { newUser ->
+                ).let { newUser ->
                     repository.createUser(newUser)
+                    onRegistrationSuccess()
                 }
             } catch (error: Exception) {
                 Log.d("CREATE_USER", "Failed to create user: $error")
-
+                onRegistrationFailed()
             }
         }
 
@@ -59,7 +63,8 @@ class AuthViewModel : ViewModel() {
     }
 
     fun loginUser(
-        onLoginSucces: () -> Unit,
+        onLoginSuccess: () -> Unit,
+        onLoginFailure: () -> Unit
     ) {
         viewModelScope.launch {
             try {
@@ -67,9 +72,10 @@ class AuthViewModel : ViewModel() {
                     email = email,
                     password = password
                 )
-                onLoginSucces()
+                onLoginSuccess()
             } catch (error: Exception) {
                 Log.d("Logged In", "Failed to log in: $error")
+                onLoginFailure()
             }
 
         }

@@ -48,13 +48,16 @@ fun Navigation() {
                 LoginScreen(
                     onNavigateHome = {
                         authViewModel.loginUser(
-                            onLoginSucces = {
+                            onLoginSuccess = {
                                 currentUserViewModel.getCurrentUser()
                                 navController.popBackStack(
                                     route = "auth",
                                     inclusive = true
                                 )
                                 navController.navigate("home")
+                            },
+                            onLoginFailure = {
+                                navController.navigate("auth/welcome")
                             }
                         )
                     },
@@ -91,15 +94,24 @@ fun Navigation() {
                 composable("auth/register/location") {
                     LocationScreen(
                         onNavigateHome = {
-                            authViewModel.registerNewUser()
-                            authViewModel.loginUser(
-                                onLoginSucces = {
-                                    currentUserViewModel.getCurrentUser()
-                                    navController.popBackStack(
-                                        route = "auth",
-                                        inclusive = true
+                            authViewModel.registerNewUser(
+                                onRegistrationSuccess = {
+                                    authViewModel.loginUser(
+                                        onLoginSuccess = {
+                                            currentUserViewModel.getCurrentUser()
+                                            navController.popBackStack(
+                                                route = "auth",
+                                                inclusive = true
+                                            )
+                                            navController.navigate("home")
+                                        },
+                                        onLoginFailure = {
+                                            navController.navigate("auth/welcome")
+                                        }
                                     )
-                                    navController.navigate("home")
+                                },
+                                onRegistrationFailed = {
+                                    navController.navigate("auth/welcome")
                                 }
                             )
                         },
