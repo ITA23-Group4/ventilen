@@ -1,6 +1,7 @@
 package com.example.ventilen_app.ui.screens.Credentials
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
@@ -25,17 +26,21 @@ fun CredentialsScreen(
     onNavigateBack: () -> Unit
 ) {
     CustomColumn(
-        horizontalAlignment = Alignment.CenterHorizontally    ) {
+        horizontalAlignment = Alignment.CenterHorizontally ,
+        verticalArrangement = Arrangement.spacedBy(30.dp)
+    ) {
         TopAuthPageDesign(
             hasBackButton = true,
-            topText = "Hvordan skal vi huske dig?",
+            topText = "Hvordan skal vi huske dig",
             bottomText = "indtast din email og password",
             onNavigateBack = onNavigateBack
         )
         CustomTextField(text = textEmail, label = "Email") { onValueChangeEmail(it) }
-        Spacer(modifier = Modifier.height(30.dp))
+
         CustomTextField(text = textPassword, label = "Password") { onValueChangePassword(it) }
-        Spacer(modifier = Modifier.height(30.dp))
+
+        CustomTextField(text = textPassword, label = "Gentag Password") { onValueChangePassword(it) }
+
         CustomFilledButton(
             text = "Forsæt",
             onClick = onNavigateUsername

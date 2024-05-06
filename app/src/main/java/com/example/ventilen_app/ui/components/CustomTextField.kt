@@ -22,6 +22,7 @@ fun CustomTextField(
     OutlinedTextField(
         modifier = Modifier.fillMaxWidth(),
         value = text,
+        singleLine = true,
         onValueChange = { onValueChange(it) },
         label = { Text(label) },
         colors = TextFieldDefaults.outlinedTextFieldColors(

@@ -20,7 +20,7 @@ fun CustomColumn(
 ) {
     Column(
         modifier
-            .padding(25.dp, 0.dp)
+            .padding(16.dp, 0.dp)
             .fillMaxSize(),
         verticalArrangement = verticalArrangement,
         horizontalAlignment = horizontalAlignment,
