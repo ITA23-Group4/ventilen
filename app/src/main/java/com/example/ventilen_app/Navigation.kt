@@ -1,6 +1,5 @@
 package com.example.ventilen_app
 
-import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.navigation.compose.NavHost
@@ -10,7 +9,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.ventilen_app.generalViewModels.AuthViewModel
 import com.example.ventilen_app.generalViewModels.ChatViewModel
 import com.example.ventilen_app.generalViewModels.CurrentUserViewModel
-import com.example.ventilen_app.ui.screens.Location.LocationsViewModel
+import com.example.ventilen_app.generalViewModels.LocationViewModel
 import com.example.ventilen_app.ui.screens.Username.UsernameScreen
 import com.example.ventilen_app.ui.screens.Welcome.WelcomeScreen
 import com.example.ventilen_app.ui.screens.Credentials.CredentialsScreen
@@ -26,7 +25,7 @@ fun Navigation() {
     val currentUserViewModel: CurrentUserViewModel = remember { CurrentUserViewModel() }
     val authViewModel: AuthViewModel = remember { AuthViewModel() }
     val eventScreenViewModel: EventScreenViewModel = remember { EventScreenViewModel() } // init here to get all events on launch?
-    val locationsViewModel: LocationsViewModel = remember { LocationsViewModel() }
+    val locationViewModel: LocationViewModel = remember { LocationViewModel() }
 
     // TODO: Remove
     currentUserViewModel.logout()
@@ -118,8 +117,8 @@ fun Navigation() {
                             )
                         },
                         onNavigateBack = { navController.popBackStack() },
-                        locations = locationsViewModel.locationNames,
-                        selectedLocation = authViewModel.location,
+                        locations = locationViewModel.locations,
+                        selectedLocation = authViewModel.location.name,
                         onLocationValueChanged = { authViewModel.location = it }
                     )
                 }

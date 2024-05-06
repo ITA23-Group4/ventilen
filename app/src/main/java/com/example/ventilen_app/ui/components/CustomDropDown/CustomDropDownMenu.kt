@@ -15,14 +15,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.example.ventilen_app.data.models.Location
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CustomDropDownMenu(
     selectedValue: String,
-    options: List<String>,
+    options: List<Location>,
     label: String,
-    onValueChangedEvent: (String) -> Unit,
+    onValueChangedEvent: (Location) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val customDropDownMenuViewModel: CustomDropDownMenuViewModel = remember { CustomDropDownMenuViewModel() }
@@ -54,17 +55,17 @@ fun CustomDropDownMenu(
             expanded = customDropDownMenuViewModel.isExpanded,
             onDismissRequest = { customDropDownMenuViewModel.isExpanded = false }
         ) {
-            options.forEach { option: String ->
+            options.forEach {
                 DropdownMenuItem(
                     text = {
                         Text(
-                            text = option,
+                            text = it.name,
                             style = MaterialTheme.typography.labelLarge,
                             color = MaterialTheme.colorScheme.onSurface
                     ) },
                     onClick = {
                         customDropDownMenuViewModel.isExpanded = false
-                        onValueChangedEvent(option)
+                        onValueChangedEvent(it)
                     }
                 )
             }

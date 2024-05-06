@@ -15,6 +15,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.example.ventilen_app.data.models.Location
 import com.example.ventilen_app.ui.components.CustomColumn
 import com.example.ventilen_app.ui.components.CustomFilledButton
 import com.example.ventilen_app.ui.components.CustomDropDown.CustomDropDownMenu
@@ -27,9 +28,9 @@ fun LocationScreen(
     onNavigateBack: () -> Unit,
     onNavigateHome: () -> Unit,
     // Parameters for the CustomDropDownMenu
-    locations: List<String>,
+    locations: List<Location>,
     selectedLocation: String,
-    onLocationValueChanged: (String) -> Unit,
+    onLocationValueChanged: (Location) -> Unit,
     ) {
     CustomColumn(modifier = Modifier.fillMaxSize()
         .background(CustomColorScheme.Mocha),
