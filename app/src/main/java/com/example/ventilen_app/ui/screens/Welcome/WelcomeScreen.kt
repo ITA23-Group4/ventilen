@@ -34,18 +34,17 @@ fun WelcomeScreen(
         TopAuthPageDesign(
             hasBackButton = false,
             topText = "Velkommen",
-            bottomText = "log ind eller tilmeld dig",
+            bottomText = "login eller tilmeld dig",
             onNavigateBack = {}
             )
         CustomFilledButton(
             text = "Login",
             onClick = onNavigationLogin,
             color = CustomColorScheme.Orange,
-            padding = PaddingValues(horizontal = 25.dp, vertical = 0.dp)
         )
         CustomOutlinedButton(
             text = "Tilmeld dig",
-            onClick = onNavigationRegister,
-            padding = PaddingValues(horizontal = 25.dp, vertical = 0.dp))
+            onClick = onNavigationRegister
+        )
     }
 }

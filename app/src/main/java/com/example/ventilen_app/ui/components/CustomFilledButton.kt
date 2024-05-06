@@ -19,14 +19,12 @@ fun CustomFilledButton(
     text: String,
     onClick: () -> Unit,
     color: Color = MaterialTheme.colorScheme.primary,
-    padding: PaddingValues = PaddingValues()
 ) {
     FilledTonalButton(
         onClick = onClick,
         modifier = Modifier
         .fillMaxWidth()
-        .height(56.dp)
-        .padding(padding),
+        .height(56.dp),
         colors = ButtonDefaults.buttonColors(containerColor = color),
         shape = RoundedCornerShape(8.dp)
     ){
