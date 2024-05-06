@@ -15,9 +15,6 @@ class ChatViewModel : ViewModel() {
     // LiveData list of messages for observing real-time changes
     val messages: LiveData<List<Message>> = repository.observeMessages()
 
-    // Mutable state list of messages for handling LazyColumn
-    val mutableMessages: MutableList<Message> = mutableStateListOf()
-
     /*
 
     init {
@@ -43,11 +40,6 @@ class ChatViewModel : ViewModel() {
         }
     }
 
-    fun fetchMessagesByLocation(locationId: String) {
-        viewModelScope.launch {
-            mutableMessages.clear()
-            mutableMessages.addAll(repository.getMessagesByLocation(locationId))
-        }
-    }
+
 
 }
