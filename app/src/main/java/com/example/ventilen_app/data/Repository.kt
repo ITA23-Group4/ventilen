@@ -2,10 +2,13 @@ package com.example.ventilen_app.data
 
 import android.util.Log
 import com.example.ventilen_app.data.models.Event
+import com.example.ventilen_app.data.models.Location
 import com.example.ventilen_app.data.models.User
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FieldValue
+import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.firestore
 import kotlinx.coroutines.tasks.await
 
@@ -17,6 +20,8 @@ class Repository {
             .toObject(User::class.java)
     }
 
+    // Old createUser function that uses callbacks
+    /*
     fun createUser(
         newUser: User,
         onRegistrationSuccess: () -> Unit,
@@ -34,49 +39,61 @@ class Repository {
                 Log.d("CREATE_USER", "Failed to create user: $newUser")
             }
     }
+    */
+
+    // New createUser function that uses coroutines
+    suspend fun createUser(newUser: User) {
+        db.collection("users")
+            .document(newUser.uid!!)
+            .set(newUser)
+            .await()
+    }
 
 
     suspend fun getEvents(): MutableList<Event> {
-        val querySnapshot = db.collection("events").get().await()
-        val events = mutableListOf<Event>()
+        val querySnapshot: QuerySnapshot = db.collection("events").get().await()
 
-        for (document in querySnapshot.documents) {
-            val title = document.getString("title") ?: ""
-            val attendees = document.get("attendees") as? List<DocumentReference> ?: emptyList()
-            val attendeeUIDs = attendees.map { it.id }
-            val id = document.id
-            val event = Event(title, attendeeUIDs.toMutableList(), id)
-            events.add(event)
-        }
-
-        return events
+        return querySnapshot.documents.map { eventDocument ->
+            convertEventDocumentToEvent(eventDocument)
+        }.toMutableList()
     }
 
-    fun getEvent(eventID: String, onSuccess:(Event) -> Unit) {
-        db.collection("events").document(eventID).get().addOnSuccessListener {
-            val title = it.getString("title") ?: ""
-            val attendees = it.get("attendees") as? List<DocumentReference> ?: emptyList()
-            val attendeeUIDs = attendees.map { it.id }
-            val id = it.id
-            onSuccess(Event(title, attendeeUIDs.toMutableList(), id))
-        }
+    suspend fun getEvent(eventID: String): Event {
+        val document = db.collection("events").document(eventID).get().await()
+        return convertEventDocumentToEvent(document)
     }
 
-    fun addUserToEvent(userUID: String, eventID: String, onSuccess: () -> Unit ) {
+    suspend fun addUserToEvent(userUID: String, eventID: String) {
         val eventRef = db.collection("events").document(eventID)
         val userRef = db.collection("users").document(userUID)
-        eventRef.update("attendees", FieldValue.arrayUnion(userRef)).addOnSuccessListener {
-            onSuccess()
-        }
+        eventRef.update("attendees", FieldValue.arrayUnion(userRef)).await()
     }
 
-    suspend fun removeUserFromEvent(userUID: String, eventID: String, onSuccess: () -> Unit ) {
+    suspend fun removeUserFromEvent(userUID: String, eventID: String) {
         val eventRef = db.collection("events").document(eventID)
         val userRef = db.collection("users").document(userUID)
-        eventRef.update("attendees", FieldValue.arrayRemove(userRef)).addOnSuccessListener {
-            onSuccess()
-        }.await()
+        eventRef.update("attendees", FieldValue.arrayRemove(userRef)).await()
     }
 
+    private fun convertEventDocumentToEvent(document: DocumentSnapshot): Event {
+        val title: String = document.getString("title") ?: ""
+        val attendees: List<DocumentReference> = document.get("attendees") as? List<DocumentReference> ?: emptyList()
+        val attendeeUIDs: MutableList<String> = attendees.map { it.id }.toMutableList()
+        val id = document.id
+        return Event(title, attendeeUIDs, id)
+    }
+
+
+    suspend fun getLocations(): List<Location> {
+        val querySnapshot = db.collection("meetingPoints").get().await()
+        return querySnapshot.documents.map { locationDocument ->
+            convertLocationDocumentToLocation(locationDocument)
+        }
+    }
+    private fun convertLocationDocumentToLocation(document: DocumentSnapshot): Location {
+        val name: String = document.getString("name") ?: ""
+        val id = document.id
+        return Location(name, id)
+    }
 
 }

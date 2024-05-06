@@ -15,52 +15,61 @@ import kotlinx.coroutines.launch
 
 class EventScreenViewModel: ViewModel() {
     private val repository: Repository = Repository()
-    var events: MutableList<Event> by mutableStateOf(mutableStateListOf())
-    var currentEventAttendeesCount: Int by mutableIntStateOf(0)
+    val events: MutableList<Event> = mutableStateListOf()
+
     init {
         getEvents()
     }
 
-    fun getEvents(){
+    private fun getEvents(){
         viewModelScope.launch {
             try {
-                events = repository.getEvents()
-                Log.d("get events", events.toString())
+                events.clear()
+                events.addAll(repository.getEvents())
+                // events = repository.getEvents() with 'var events' was the recompose problem
             } catch (error: Exception) {
-                Log.d("ERROR",error.toString())
-            }
-        }
-    }
-    fun getEventByID(eventID: String, onSuccess:(Int)->Unit){
-        viewModelScope.launch {
-            try {
-                repository.getEvent(
-                    eventID = eventID,
-                    onSuccess = {
-                        currentEventAttendeesCount = it.attendeesByUID.size
-                        onSuccess(currentEventAttendeesCount)
-                    }
-                )
-                Log.d("get events", "Event retrieved")
-            } catch (error: Exception) {
-                Log.d("ERROR",error.toString())
+                Log.d("GetAllEvents", "ERROR: ${error.message}")
             }
         }
     }
 
-
-
-    fun addUserToEvent(currentUserUID: String, eventID: String, onSuccess: () -> Unit) {
+    fun addUserToEvent(currentUserUID: String, eventID: String) {
         viewModelScope.launch {
-            repository.addUserToEvent(currentUserUID, eventID, onSuccess)
+            try {
+                repository.addUserToEvent(currentUserUID, eventID)
+                updateEventAttendeesCount(eventID)
+            } catch (error: Exception) {
+                Log.e("AddUserToEvent", "ERROR: ${error.message}")
+            }
         }
     }
 
-    fun removeUserFromEvent(currentUserUID: String, eventID: String, onSuccess: () -> Unit) {
+    fun removeUserFromEvent(currentUserUID: String, eventID: String) {
         viewModelScope.launch {
-            repository.removeUserFromEvent(currentUserUID, eventID, onSuccess)
+            try {
+                repository.removeUserFromEvent(currentUserUID, eventID)
+                updateEventAttendeesCount(eventID)
+            } catch (error: Exception) {
+                Log.e("RemoveUserFromEvent", "ERROR: ${error.message}")
+            }
         }
     }
 
+    private fun updateEventAttendeesCount(eventID: String) {
+        viewModelScope.launch {
+            events.indexOfFirst { it.id == eventID }.let { eventIndex ->
+                // Extract the updated attendees from the updated event
+                val updatedEvent = repository.getEvent(eventID = eventID)
+                val updatedEventAttendees = updatedEvent.attendeesByUID
+
+                val eventToUpdate = events[eventIndex]
+
+                // Create a copy of the event with updated attendees
+                val eventWithUpdatedAttendees = eventToUpdate.withUpdatedAttendees(updatedEventAttendees)
+
+                events[eventIndex] = eventWithUpdatedAttendees
+            }
+        }
+    }
 
 }

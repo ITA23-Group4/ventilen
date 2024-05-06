@@ -28,4 +28,9 @@ class CurrentUserViewModel : ViewModel() {
         }
     }
 
+    // TODO: Remove
+    fun logout() {
+        FirebaseAuth.getInstance().signOut()
+    }
+
 }
