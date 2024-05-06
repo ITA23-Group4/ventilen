@@ -85,7 +85,7 @@ class Repository {
 
 
     suspend fun getLocations(): List<Location> {
-        val querySnapshot = db.collection("meetingPoints").get().await()
+        val querySnapshot = db.collection("locations").get().await()
         return querySnapshot.documents.map { locationDocument ->
             convertLocationDocumentToLocation(locationDocument)
         }
