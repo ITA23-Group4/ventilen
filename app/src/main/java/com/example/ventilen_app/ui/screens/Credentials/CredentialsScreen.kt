@@ -28,7 +28,7 @@ fun CredentialsScreen(
         horizontalAlignment = Alignment.CenterHorizontally    ) {
         TopAuthPageDesign(
             hasBackButton = true,
-            topText = "Hvordan skal vi huske dig?",
+            topText = "Hvordan skal vi huske dig",
             bottomText = "indtast din email og password",
             onNavigateBack = onNavigateBack
         )
