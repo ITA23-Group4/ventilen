@@ -129,10 +129,8 @@ fun Navigation() {
         composable("home"){
             val chatViewModel: ChatViewModel = remember { ChatViewModel() } // Initialize ChatViewModel
             HomeScreen(
-                currentUserViewModel.currentUser?.username.toString(),
-                currentUserViewModel.currentUser?.uid.toString(),
-                onNavigateEvent = {navController.navigate("event")},
-
+                textUsername = currentUserViewModel.currentUser?.username.toString(),
+                textUID = currentUserViewModel.currentUser?.uid.toString(),
                 // TODO: Remove
                 logout = {
                     currentUserViewModel.logout()
