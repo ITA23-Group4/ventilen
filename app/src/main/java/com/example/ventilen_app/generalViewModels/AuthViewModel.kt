@@ -21,8 +21,6 @@ class AuthViewModel : ViewModel() {
     var location: Location by mutableStateOf(Location("Name","UID"))
     var password: String by mutableStateOf("")
 
-
-
     fun registerNewUser(
         onRegistrationSuccess: () -> Unit,
         onRegistrationFailed: () -> Unit
@@ -43,25 +41,6 @@ class AuthViewModel : ViewModel() {
                 onRegistrationFailed()
             }
         }
-
-        // This is the original code that was replaced by the code above
-        // Changed the code to make use of coroutines instead of callbacks
-
-        /*
-        accountService.authenticate(
-            email = email,
-            password = password,
-            username = username,
-            onRegistrationSuccess = { newUser ->
-                repository.createUser(
-                    newUser,
-                    onRegistrationSuccess,
-                    onRegistrationFailed
-                )
-            },
-            onRegistrationFailed = onRegistrationFailed
-        )
-         */
     }
 
     fun loginUser(
@@ -83,14 +62,4 @@ class AuthViewModel : ViewModel() {
         }
     }
 
-    /*
-    fun loginUser(navigateOnLoginSuccess: () -> Unit, onLoginFailed: () -> Unit) {
-        accountService.login(
-            email = email,
-            password = password,
-            navigateOnLoginSuccess = navigateOnLoginSuccess,
-            onLoginFailed = onLoginFailed
-        )
-    }
-    */
 }

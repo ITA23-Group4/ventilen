@@ -28,9 +28,9 @@ fun LocationScreen(
     onNavigateBack: () -> Unit,
     onNavigateHome: () -> Unit,
     // Parameters for the CustomDropDownMenu
-    locations: List<Location>,
+    locations: List<String>,
     selectedLocation: String,
-    onLocationValueChanged: (Location) -> Unit,
+    onLocationValueChanged: (String) -> Unit,
     ) {
     CustomColumn(modifier = Modifier.fillMaxSize()
         .background(CustomColorScheme.Mocha),
