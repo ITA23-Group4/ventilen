@@ -29,7 +29,7 @@ fun CredentialsScreen(
         TopAuthPageDesign(
             hasBackButton = true,
             topText = "Hvordan skal vi huske dig?",
-            bottomText = "indtast din email og kodeord",
+            bottomText = "indtast din email og password",
             onNavigateBack = onNavigateBack
         )
         CustomTextField(text = textEmail, label = "Email") { onValueChangeEmail(it) }

@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.example.ventilen_app.ui.components.CustomColumn
 import com.example.ventilen_app.ui.components.CustomOutlinedButton
 import com.example.ventilen_app.ui.components.CustomFilledButton
 import com.example.ventilen_app.ui.components.TopAuthPageDesign
@@ -22,7 +23,7 @@ fun WelcomeScreen(
     onNavigationLogin: () -> Unit,
     onNavigationRegister: () -> Unit
 ) {
-    Column(
+    CustomColumn(
         modifier = Modifier
         .fillMaxSize()
         .background(CustomColorScheme.Mocha),
@@ -43,7 +44,7 @@ fun WelcomeScreen(
             padding = PaddingValues(horizontal = 25.dp, vertical = 0.dp)
         )
         CustomOutlinedButton(
-            text = "Tilmeld",
+            text = "Tilmeld dig",
             onClick = onNavigationRegister,
             padding = PaddingValues(horizontal = 25.dp, vertical = 0.dp))
     }
