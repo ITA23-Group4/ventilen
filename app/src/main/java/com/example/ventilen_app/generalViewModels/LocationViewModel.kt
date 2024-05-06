@@ -10,13 +10,17 @@ import kotlinx.coroutines.launch
 class LocationViewModel: ViewModel() {
     private val repository: Repository = Repository()
     var locations: List<Location> = listOf()
+    var mapLocationNameToLocation: Map<String, Location> = emptyMap()
+
     init {
         getLocations()
     }
+
     private fun getLocations() {
         viewModelScope.launch {
             try {
                 locations = repository.getLocations()
+                mapLocationNameToLocation = locations.associateBy { it.name }
                 Log.d("LOCATION_LIST", locations.toString())
             } catch (error: Exception) {
                 Log.d("ERROR", error.toString())

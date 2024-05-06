@@ -18,7 +18,7 @@ class AuthViewModel : ViewModel() {
 
     var username: String by mutableStateOf("")
     var email: String by mutableStateOf("")
-    var location: Location by mutableStateOf(Location("Name","UID"))
+    var location: Location by mutableStateOf(Location("",""))
     var password: String by mutableStateOf("")
 
     fun registerNewUser(
