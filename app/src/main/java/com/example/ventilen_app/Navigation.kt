@@ -121,6 +121,7 @@ fun Navigation() {
                         selectedLocation = authViewModel.location.name,
                         onLocationValueChanged = { selectedLocationName ->
                             authViewModel.location = locationViewModel.mapLocationNameToLocation[selectedLocationName]!!
+                            // TODO: Should maybe be co-routine with try-catch
                         }
 
                     )
