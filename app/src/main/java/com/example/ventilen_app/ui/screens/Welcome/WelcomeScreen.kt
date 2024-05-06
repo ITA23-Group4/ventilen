@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.example.ventilen_app.ui.components.CustomColumn
 import com.example.ventilen_app.ui.components.CustomOutlinedButton
 import com.example.ventilen_app.ui.components.CustomFilledButton
 import com.example.ventilen_app.ui.components.TopAuthPageDesign
@@ -23,7 +24,7 @@ fun WelcomeScreen(
     onNavigationRegister: () -> Unit,
     whoUser: () -> Unit
 ) {
-    Column(
+    CustomColumn(
         modifier = Modifier
         .fillMaxSize()
         .background(CustomColorScheme.Mocha),
@@ -34,26 +35,23 @@ fun WelcomeScreen(
         TopAuthPageDesign(
             hasBackButton = false,
             topText = "Velkommen",
-            bottomText = "log ind eller tilmeld dig",
+            bottomText = "login eller tilmeld dig",
             onNavigateBack = {}
             )
         CustomFilledButton(
             text = "Login",
             onClick = onNavigationLogin,
-            color = CustomColorScheme.Orange,
-            padding = PaddingValues(horizontal = 25.dp, vertical = 0.dp)
+            color = CustomColorScheme.Orange
         )
         CustomOutlinedButton(
-            text = "Tilmeld",
-            onClick = onNavigationRegister,
-            padding = PaddingValues(horizontal = 25.dp, vertical = 0.dp)
+            text = "Tilmeld dig",
+            onClick = onNavigationRegister
         )
 
         // TODO: Remove
         CustomFilledButton(
             text = "Who User",
-            onClick = whoUser,
-            padding = PaddingValues(horizontal = 25.dp, vertical = 0.dp)
+            onClick = whoUser
         )
     }
 }

@@ -10,6 +10,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.ventilen_app.data.models.Event
+import com.example.ventilen_app.ui.components.CustomColumn
 import com.example.ventilen_app.ui.components.CustomEventCardComponent.CustomEventCard
 import com.example.ventilen_app.ui.theme.CustomColorScheme
 
@@ -19,20 +20,25 @@ fun EventScreen(
     onAttend: (String) -> Unit,
     onNotAttend: (String) -> Unit
 ) {
-    LazyColumn(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(CustomColorScheme.Mocha),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(30.dp)
-    ) {
-        items(events) { event ->
-            CustomEventCard(
-                title = event.title,
-                attendeesAmount = event.attendeesByUID.size,
-                onAttend = { onAttend(event.id!!) },
-                onNotAttend = { onNotAttend(event.id!!) }
-            )
+    CustomColumn {
+
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(CustomColorScheme.Mocha),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(30.dp)
+        ) {
+            items(events) { event ->
+                CustomEventCard(
+                    title = event.title,
+                    attendeesAmount = event.attendeesByUID.size,
+                    onAttend = { onAttend(event.id!!) },
+                    onNotAttend = { onNotAttend(event.id!!) }
+                    //Lol
+                )
+            }
         }
+
     }
 }

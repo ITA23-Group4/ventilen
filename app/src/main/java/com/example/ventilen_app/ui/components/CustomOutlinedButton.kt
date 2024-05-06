@@ -21,15 +21,13 @@ fun CustomOutlinedButton(
     onClick: () -> Unit,
     borderColor: Color = MaterialTheme.colorScheme.primary,
     textColor: Color = MaterialTheme.colorScheme.primary,
-    padding: PaddingValues = PaddingValues(),
     modifier: Modifier = Modifier)
 {
     OutlinedButton(
         onClick = onClick,
         modifier = modifier
             .fillMaxWidth()
-            .height(56.dp)
-            .padding(padding),
+            .height(56.dp),
         border = BorderStroke(1.dp, borderColor),
         colors = ButtonDefaults.outlinedButtonColors(
             contentColor = textColor,
