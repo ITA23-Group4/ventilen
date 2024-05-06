@@ -12,11 +12,10 @@ import com.example.ventilen_app.ui.theme.CustomColorScheme
 
 @Composable
 fun CustomColumn(
-    backgroundColor: CustomColorScheme,
+    backgroundColor: CustomColorScheme = CustomColorScheme,
     modifier: Modifier = Modifier,
     verticalArrangement: Arrangement.Vertical = Arrangement.Top,
     horizontalAlignment: Alignment.Horizontal = Alignment.CenterHorizontally,
-    verticalAlignment: Alignment.Vertical = Alignment.Top,
     content: @Composable () -> Unit
 ) {
     Column(
