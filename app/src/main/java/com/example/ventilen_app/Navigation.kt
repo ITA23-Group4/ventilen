@@ -1,5 +1,6 @@
 package com.example.ventilen_app
 
+import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.navigation.compose.NavHost
@@ -7,6 +8,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import com.example.ventilen_app.generalViewModels.AuthViewModel
+import com.example.ventilen_app.generalViewModels.ChatViewModel
 import com.example.ventilen_app.generalViewModels.CurrentUserViewModel
 import com.example.ventilen_app.ui.screens.Location.LocationsViewModel
 import com.example.ventilen_app.ui.screens.Username.UsernameScreen
@@ -20,7 +22,6 @@ import com.example.ventilen_app.ui.screens.Login.LoginScreen
 
 @Composable
 fun Navigation() {
-
     val navController = rememberNavController()
     val currentUserViewModel: CurrentUserViewModel = remember { CurrentUserViewModel() }
     val authViewModel: AuthViewModel = remember { AuthViewModel() }
@@ -126,11 +127,10 @@ fun Navigation() {
         }
 
         composable("home"){
+            val chatViewModel: ChatViewModel = remember { ChatViewModel() } // Initialize ChatViewModel
             HomeScreen(
-                currentUserViewModel.currentUser?.username.toString(),
-                currentUserViewModel.currentUser?.uid.toString(),
-                onNavigateEvent = {navController.navigate("event")},
-
+                textUsername = currentUserViewModel.currentUser?.username.toString(),
+                textUID = currentUserViewModel.currentUser?.uid.toString(),
                 // TODO: Remove
                 logout = {
                     currentUserViewModel.logout()
@@ -138,7 +138,9 @@ fun Navigation() {
                 },
                 getCurrentUser = {
                     currentUserViewModel.getCurrentUser()
-                }
+                },
+                onNavigateEvent = {navController.navigate("event")},
+                chatViewModel = chatViewModel
             )
         }
         composable("event"){
