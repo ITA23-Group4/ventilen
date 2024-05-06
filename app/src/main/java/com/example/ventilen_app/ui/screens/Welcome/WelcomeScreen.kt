@@ -21,7 +21,8 @@ import com.example.ventilen_app.ui.theme.CustomColorScheme
 @Composable
 fun WelcomeScreen(
     onNavigationLogin: () -> Unit,
-    onNavigationRegister: () -> Unit
+    onNavigationRegister: () -> Unit,
+    whoUser: () -> Unit
 ) {
     CustomColumn(
         modifier = Modifier
@@ -40,11 +41,17 @@ fun WelcomeScreen(
         CustomFilledButton(
             text = "Login",
             onClick = onNavigationLogin,
-            color = CustomColorScheme.Orange,
+            color = CustomColorScheme.Orange
         )
         CustomOutlinedButton(
             text = "Tilmeld dig",
             onClick = onNavigationRegister
+        )
+
+        // TODO: Remove
+        CustomFilledButton(
+            text = "Who User",
+            onClick = whoUser
         )
     }
 }

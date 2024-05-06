@@ -26,6 +26,7 @@ import com.example.ventilen_app.ui.theme.CustomColorScheme
 fun LocationScreen(
     onNavigateBack: () -> Unit,
     onNavigateHome: () -> Unit,
+    // Parameters for the CustomDropDownMenu
     locations: List<String>,
     selectedLocation: String,
     onLocationValueChanged: (String) -> Unit,
@@ -41,7 +42,12 @@ fun LocationScreen(
             onNavigateBack = onNavigateBack
         )
 
-        CustomDropDownMenu(selectedValue = selectedLocation , options = locations, label = "Locations", onValueChangedEvent = onLocationValueChanged)
+        CustomDropDownMenu(
+            selectedValue = selectedLocation,
+            options = locations,
+            label = "Locations",
+            onValueChangedEvent = onLocationValueChanged
+        )
 
         CustomFilledButton(
             text = "Fortsæt",
