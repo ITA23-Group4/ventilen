@@ -49,10 +49,16 @@ fun HomeScreen(
         CustomFilledButton(text = "Go to Event", onClick =  onNavigateEvent )
 
         LazyColumn {
-            items(chatViewModel.mutableMessages) { message ->
-                Text(text = "${message.senderUID}: ${message.message}", style = MaterialTheme.typography.headlineMedium)
-                Log.d("CHAT", "${message.senderUID}: ${message.message}")
+            chatViewModel.messages.value?.let { messages ->
+                items(messages.toMutableList()) { message ->
+                    Text(
+                        text = "${message.senderUID}: ${message.message}",
+                        style = MaterialTheme.typography.headlineMedium
+                    )
+                    Log.d("CHAT", "${message.senderUID}: ${message.message}")
+                }
             }
         }
+
     }
 }
