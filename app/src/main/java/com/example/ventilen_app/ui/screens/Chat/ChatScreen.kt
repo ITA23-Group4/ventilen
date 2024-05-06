@@ -26,7 +26,10 @@ fun ChatScreen(
 
         LazyColumn {
             chatViewModel.messages.value?.let { messages ->
-                items(messages.filter { it.locationID == currentUserViewModel.currentUser?.primaryLocationID } ) { message ->
+                items(messages.filter
+                // Filter to only show messages from the current user's primary location
+                { it.locationID == currentUserViewModel.currentUser?.primaryLocationID }
+                ) { message ->
                     Text(
                         text = "${message.senderUID}: ${message.message}",
                         style = MaterialTheme.typography.headlineMedium
