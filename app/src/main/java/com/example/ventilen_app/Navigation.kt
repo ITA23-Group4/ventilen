@@ -1,6 +1,5 @@
 package com.example.ventilen_app
 
-import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.navigation.compose.NavHost
@@ -9,6 +8,7 @@ import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import com.example.ventilen_app.generalViewModels.AuthViewModel
 import com.example.ventilen_app.generalViewModels.CurrentUserViewModel
+import com.example.ventilen_app.ui.screens.Location.LocationsViewModel
 import com.example.ventilen_app.ui.screens.Username.UsernameScreen
 import com.example.ventilen_app.ui.screens.Welcome.WelcomeScreen
 import com.example.ventilen_app.ui.screens.Credentials.CredentialsScreen
@@ -20,10 +20,16 @@ import com.example.ventilen_app.ui.screens.Login.LoginScreen
 
 @Composable
 fun Navigation() {
+
     val navController = rememberNavController()
     val currentUserViewModel: CurrentUserViewModel = remember { CurrentUserViewModel() }
     val authViewModel: AuthViewModel = remember { AuthViewModel() }
     val eventScreenViewModel: EventScreenViewModel = remember { EventScreenViewModel() } // init here to get all events on launch?
+    val locationsViewModel: LocationsViewModel = remember { LocationsViewModel() }
+
+    // TODO: Remove
+    currentUserViewModel.logout()
+    currentUserViewModel.getCurrentUser()
 
     NavHost(navController = navController, startDestination = "auth") {
         navigation(
@@ -33,14 +39,16 @@ fun Navigation() {
             composable("auth/welcome") {
                 WelcomeScreen(
                     onNavigationLogin = { navController.navigate("auth/login") },
-                    onNavigationRegister = { navController.navigate("auth/register") }
+                    onNavigationRegister = { navController.navigate("auth/register") },
+                    // TODO: Remove
+                    whoUser = { currentUserViewModel.getCurrentUser() }
                 )
             }
             composable("auth/login") {
                 LoginScreen(
                     onNavigateHome = {
                         authViewModel.loginUser(
-                            navigateOnLoginSuccess = {
+                            onLoginSuccess = {
                                 currentUserViewModel.getCurrentUser()
                                 navController.popBackStack(
                                     route = "auth",
@@ -48,8 +56,8 @@ fun Navigation() {
                                 )
                                 navController.navigate("home")
                             },
-                            onLoginFailed = {
-                                Log.d("FAILED!", "${authViewModel.email},${authViewModel.password}")
+                            onLoginFailure = {
+                                navController.navigate("auth/welcome")
                             }
                         )
                     },
@@ -84,15 +92,12 @@ fun Navigation() {
                     )
                 }
                 composable("auth/register/location") {
-                    // TODO: Should come from database
-                    val locations = listOf("København", "Århus", "Aalborg", "Odense")
                     LocationScreen(
                         onNavigateHome = {
                             authViewModel.registerNewUser(
                                 onRegistrationSuccess = {
-                                    // Login if registration completed
                                     authViewModel.loginUser(
-                                        navigateOnLoginSuccess = {
+                                        onLoginSuccess = {
                                             currentUserViewModel.getCurrentUser()
                                             navController.popBackStack(
                                                 route = "auth",
@@ -100,18 +105,18 @@ fun Navigation() {
                                             )
                                             navController.navigate("home")
                                         },
-                                        onLoginFailed = {
-                                            Log.d("FAILED!", "${authViewModel.email},${authViewModel.password}")
+                                        onLoginFailure = {
+                                            navController.navigate("auth/welcome")
                                         }
                                     )
                                 },
                                 onRegistrationFailed = {
-                                    Log.d("REGISTER_USER", "Failed to register new user")
+                                    navController.navigate("auth/welcome")
                                 }
                             )
                         },
                         onNavigateBack = { navController.popBackStack() },
-                        locations = locations,
+                        locations = locationsViewModel.locationNames,
                         selectedLocation = authViewModel.location,
                         onLocationValueChanged = { authViewModel.location = it }
                     )
@@ -123,7 +128,16 @@ fun Navigation() {
             HomeScreen(
                 currentUserViewModel.currentUser?.username.toString(),
                 currentUserViewModel.currentUser?.uid.toString(),
-                onNavigateEvent = {navController.navigate("event")}
+                onNavigateEvent = {navController.navigate("event")},
+
+                // TODO: Remove
+                logout = {
+                    currentUserViewModel.logout()
+                    navController.navigate("auth")
+                },
+                getCurrentUser = {
+                    currentUserViewModel.getCurrentUser()
+                }
             )
         }
         composable("event"){

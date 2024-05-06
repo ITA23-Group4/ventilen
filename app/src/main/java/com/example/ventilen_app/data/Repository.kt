@@ -2,6 +2,7 @@ package com.example.ventilen_app.data
 
 import android.util.Log
 import com.example.ventilen_app.data.models.Event
+import com.example.ventilen_app.data.models.Location
 import com.example.ventilen_app.data.models.User
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.DocumentReference
@@ -19,6 +20,8 @@ class Repository {
             .toObject(User::class.java)
     }
 
+    // Old createUser function that uses callbacks
+    /*
     fun createUser(
         newUser: User,
         onRegistrationSuccess: () -> Unit,
@@ -36,6 +39,16 @@ class Repository {
                 Log.d("CREATE_USER", "Failed to create user: $newUser")
             }
     }
+    */
+
+    // New createUser function that uses coroutines
+    suspend fun createUser(newUser: User) {
+        db.collection("users")
+            .document(newUser.uid!!)
+            .set(newUser)
+            .await()
+    }
+
 
     suspend fun getEvents(): MutableList<Event> {
         val querySnapshot: QuerySnapshot = db.collection("events").get().await()
@@ -68,6 +81,19 @@ class Repository {
         val attendeeUIDs: MutableList<String> = attendees.map { it.id }.toMutableList()
         val id = document.id
         return Event(title, attendeeUIDs, id)
+    }
+
+
+    suspend fun getLocations(): List<Location> {
+        val querySnapshot = db.collection("meetingPoints").get().await()
+        return querySnapshot.documents.map { locationDocument ->
+            convertLocationDocumentToLocation(locationDocument)
+        }
+    }
+    private fun convertLocationDocumentToLocation(document: DocumentSnapshot): Location {
+        val name: String = document.getString("name") ?: ""
+        val id = document.id
+        return Location(name, id)
     }
 
 }

@@ -20,7 +20,8 @@ import com.example.ventilen_app.ui.theme.CustomColorScheme
 @Composable
 fun WelcomeScreen(
     onNavigationLogin: () -> Unit,
-    onNavigationRegister: () -> Unit
+    onNavigationRegister: () -> Unit,
+    whoUser: () -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -45,6 +46,14 @@ fun WelcomeScreen(
         CustomOutlinedButton(
             text = "Tilmeld",
             onClick = onNavigationRegister,
-            padding = PaddingValues(horizontal = 25.dp, vertical = 0.dp))
+            padding = PaddingValues(horizontal = 25.dp, vertical = 0.dp)
+        )
+
+        // TODO: Remove
+        CustomFilledButton(
+            text = "Who User",
+            onClick = whoUser,
+            padding = PaddingValues(horizontal = 25.dp, vertical = 0.dp)
+        )
     }
 }

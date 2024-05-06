@@ -20,7 +20,10 @@ import com.example.ventilen_app.ui.theme.CustomColorScheme
 fun HomeScreen(
     textUsername: String,
     textUID: String,
-    onNavigateEvent: () -> Unit
+    onNavigateEvent: () -> Unit,
+    // TODO: Remove
+    logout: () -> Unit,
+    getCurrentUser: () -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -40,5 +43,9 @@ fun HomeScreen(
         )
 
         CustomFilledButton(text = "Go to Event", onClick =  onNavigateEvent )
+
+        // TODO: Remove
+        CustomFilledButton(text = "Logout", onClick = logout)
+        CustomFilledButton(text = "Current User", onClick = getCurrentUser)
     }
 }
