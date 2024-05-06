@@ -10,6 +10,7 @@ import com.example.ventilen_app.generalViewModels.AuthViewModel
 import com.example.ventilen_app.generalViewModels.ChatViewModel
 import com.example.ventilen_app.generalViewModels.CurrentUserViewModel
 import com.example.ventilen_app.generalViewModels.LocationViewModel
+import com.example.ventilen_app.ui.screens.Chat.ChatScreen
 import com.example.ventilen_app.ui.screens.Username.UsernameScreen
 import com.example.ventilen_app.ui.screens.Welcome.WelcomeScreen
 import com.example.ventilen_app.ui.screens.Credentials.CredentialsScreen
@@ -26,6 +27,7 @@ fun Navigation() {
     val authViewModel: AuthViewModel = remember { AuthViewModel() }
     val eventScreenViewModel: EventScreenViewModel = remember { EventScreenViewModel() } // init here to get all events on launch?
     val locationViewModel: LocationViewModel = remember { LocationViewModel() }
+
 
     // TODO: Remove
     currentUserViewModel.logout()
@@ -139,9 +141,18 @@ fun Navigation() {
                     currentUserViewModel.getCurrentUser()
                 },
                 onNavigateEvent = {navController.navigate("event")},
-                chatViewModel = chatViewModel
+                chatViewModel = chatViewModel,
+                onNavigateChat = {navController.navigate("chat")}
             )
         }
+        composable("chat"){
+            val chatViewModel: ChatViewModel = remember { ChatViewModel() } // Initialize ChatViewModel
+            ChatScreen(
+                chatViewModel = chatViewModel,
+                currentUserViewModel = currentUserViewModel
+            )
+        }
+
         composable("event"){
             EventScreen(
                 events = eventScreenViewModel.events,

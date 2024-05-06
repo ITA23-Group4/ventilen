@@ -26,6 +26,7 @@ fun HomeScreen(
     textUID: String,
     onNavigateEvent: () -> Unit,
     chatViewModel: ChatViewModel,
+    onNavigateChat: () -> Unit,
     // TODO: Remove
     logout: () -> Unit,
     getCurrentUser: () -> Unit
@@ -53,6 +54,8 @@ fun HomeScreen(
         // TODO: Remove
         CustomFilledButton(text = "Logout", onClick = logout)
         CustomFilledButton(text = "Current User", onClick = getCurrentUser)
+        CustomFilledButton(text = "Go to Chat", onClick = onNavigateChat )
+        //
 
         LazyColumn {
             chatViewModel.messages.value?.let { messages ->

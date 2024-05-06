@@ -30,8 +30,10 @@ class ChatRepository {
                     val senderUID = senderRef?.id ?: ""
                     val messageContent = document.getString("message") ?: ""
                     val timestamp = document.getTimestamp("timestamp")?.toDate()?.time ?: 0
+                    val locationRef = document.get("location") as? DocumentReference
+                    val locationID = locationRef?.id ?: ""
 
-                    Message(senderUID, messageContent, timestamp)
+                    Message(senderUID, messageContent, timestamp, locationID)
                 } ?: emptyList()
 
                 messagesLiveData.value = messages
@@ -58,4 +60,14 @@ class ChatRepository {
             Log.e(TAG, "Error sending message", e)
         }
     }
+
+    // Specific location messages function
+    suspend fun getMessagesByLocation(locationId: String): List<Message> {
+        val querySnapshot = db.collection("chats")
+            .whereEqualTo("location", locationId)
+            .get()
+            .await()
+        return querySnapshot.documents.mapNotNull { it.toObject(Message::class.java) }
+    }
+
 }

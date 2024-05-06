@@ -42,4 +42,12 @@ class ChatViewModel : ViewModel() {
             repository.sendMessage(senderUID, messageContent)
         }
     }
+
+    fun fetchMessagesByLocation(locationId: String) {
+        viewModelScope.launch {
+            mutableMessages.clear()
+            mutableMessages.addAll(repository.getMessagesByLocation(locationId))
+        }
+    }
+
 }
