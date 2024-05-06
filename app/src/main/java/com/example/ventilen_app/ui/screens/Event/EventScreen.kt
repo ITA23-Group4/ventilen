@@ -35,6 +35,7 @@ fun EventScreen(
                     attendeesAmount = event.attendeesByUID.size,
                     onAttend = { onAttend(event.id!!) },
                     onNotAttend = { onNotAttend(event.id!!) }
+                    //Lol
                 )
             }
         }
