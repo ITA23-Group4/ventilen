@@ -4,6 +4,7 @@ import android.content.ContentValues.TAG
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.example.ventilen_app.data.models.LocationInfo
 import com.example.ventilen_app.data.models.Message
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.DocumentReference
@@ -18,7 +19,7 @@ class ChatRepository {
         val messagesLiveData = MutableLiveData<List<Message>>()
 
         db.collection("chats")
-            .whereEqualTo("location", locationId)
+            // .whereEqualTo("location", locationId)
             .orderBy("timestamp", Query.Direction.ASCENDING)
             .addSnapshotListener { snapshot, exception ->
                 if (exception != null) {
@@ -43,6 +44,26 @@ class ChatRepository {
         return messagesLiveData
     }
 
+    // Function to get the latest message from each location in the database
+    // Then it returns a list of LocationInfo objects
+    // This function is accessing the locations collection in firebase (not chats)
+    // This might not be the best way of doing it since now we both have:
+    // - Location
+    // - LocationInfo
+    // Data classes but they do serve different purposes - idk?
+    suspend fun chatHubMessagesSnapshot(): List<LocationInfo> {
+        val querySnapshot = db.collection("locations")
+            .get()
+            .await()
+        return querySnapshot.documents.mapNotNull { document ->
+            val locationId = document.getString("name") ?: ""
+            val latestMessage = document.getString("latestMessage") ?: ""
+            val abbreviation = document.getString("abbreviation") ?: ""
+            LocationInfo(locationId, latestMessage, abbreviation)
+        }
+    }
+
+
     suspend fun sendMessage(senderUID: String, messageContent: String) {
         val message = hashMapOf(
             "senderUID" to senderUID,
@@ -62,7 +83,9 @@ class ChatRepository {
         }
     }
 
+
     // Specific location messages function
+    /*
     suspend fun getMessagesByLocation(locationId: String): List<Message> {
         val querySnapshot = db.collection("chats")
             .whereEqualTo("location", locationId)
@@ -70,5 +93,5 @@ class ChatRepository {
             .await()
         return querySnapshot.documents.mapNotNull { it.toObject(Message::class.java) }
     }
-
+    */
 }

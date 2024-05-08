@@ -147,6 +147,7 @@ fun Navigation() {
         }
         composable("chat"){
             val chatViewModel: ChatViewModel = remember { ChatViewModel() } // Initialize ChatViewModel
+            chatViewModel.getLatestMessagesFromEachLocation() // Get the latest messages from each location in the database, before navigating to the ChatHubScreen
             ChatHubScreen(
                 chatViewModel = chatViewModel,
                 currentUserViewModel = currentUserViewModel

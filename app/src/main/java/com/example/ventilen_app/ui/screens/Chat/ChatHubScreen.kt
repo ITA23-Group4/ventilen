@@ -31,18 +31,12 @@ fun ChatHubScreen(
             modifier = Modifier.fillMaxWidth(),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ){
-            chatViewModel.messages.value?.let { messages ->
-                items(messages.filter
-                // Filter to only show messages from the current user's primary location
-                { it.locationID == currentUserViewModel.currentUser?.primaryLocationID }
-                ) { message ->
-                    CustomChatCard()
-                    // Text(
-                    //    text = "${message.senderUID}: ${message.message}",
-                    //    style = MaterialTheme.typography.headlineMedium
-                    //)
-                    Log.d("CHAT", "${message.senderUID}: ${message.message}")
-                }
+            items(chatViewModel.latestMessagesFromEachLocation) { locationInfo ->
+                CustomChatCard(
+                    locationName = locationInfo.locationName,
+                    latestMessage = locationInfo.latestMessage,
+                    abbreviation = locationInfo.abbreviation
+                )
             }
         }
     }
