@@ -9,11 +9,18 @@ import com.example.ventilen_app.data.ChatRepository
 import com.example.ventilen_app.data.models.Message
 import kotlinx.coroutines.launch
 
+// TODO Parameter:
+// - current route
+// - primaryLocationID
 class ChatViewModel : ViewModel() {
     private val repository = ChatRepository()
 
     // LiveData list of messages for observing real-time changes
-    val messages: LiveData<List<Message>> = repository.observeMessages()
+    val messages: LiveData<List<Message>> = if (true) {
+            repository.observeMessages("123")
+        } else {
+            repository.observeMessages("123")
+        }
 
     /*
 

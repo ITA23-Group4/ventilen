@@ -14,10 +14,11 @@ import kotlinx.coroutines.tasks.await
 class ChatRepository {
     private val db = Firebase.firestore
 
-    fun observeMessages(): LiveData<List<Message>> {
+    fun observeMessages(locationId: String): LiveData<List<Message>> {
         val messagesLiveData = MutableLiveData<List<Message>>()
 
         db.collection("chats")
+            .whereEqualTo("location", locationId)
             .orderBy("timestamp", Query.Direction.ASCENDING)
             .addSnapshotListener { snapshot, exception ->
                 if (exception != null) {

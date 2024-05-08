@@ -10,7 +10,7 @@ import com.example.ventilen_app.generalViewModels.AuthViewModel
 import com.example.ventilen_app.generalViewModels.ChatViewModel
 import com.example.ventilen_app.generalViewModels.CurrentUserViewModel
 import com.example.ventilen_app.generalViewModels.LocationViewModel
-import com.example.ventilen_app.ui.screens.Chat.ChatScreen
+import com.example.ventilen_app.ui.screens.Chat.ChatHubScreen
 import com.example.ventilen_app.ui.screens.Username.UsernameScreen
 import com.example.ventilen_app.ui.screens.Welcome.WelcomeScreen
 import com.example.ventilen_app.ui.screens.Credentials.CredentialsScreen
@@ -147,7 +147,7 @@ fun Navigation() {
         }
         composable("chat"){
             val chatViewModel: ChatViewModel = remember { ChatViewModel() } // Initialize ChatViewModel
-            ChatScreen(
+            ChatHubScreen(
                 chatViewModel = chatViewModel,
                 currentUserViewModel = currentUserViewModel
             )
