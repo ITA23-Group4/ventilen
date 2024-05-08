@@ -13,6 +13,16 @@ import com.example.ventilen_app.ui.screens.Login.LoginScreen
 import com.example.ventilen_app.ui.screens.Username.UsernameScreen
 import com.example.ventilen_app.ui.screens.Welcome.WelcomeScreen
 
+/** @author Marcus, Christian, Nikolaj
+ *
+ * Authentication navigation graph for the authentication flow, which includes screens
+ * for user login & registration.
+ *
+ * @param navController The same navigation controller as used in RootNavigation
+ * @param currentUserViewModel The view model for managing current user information.
+ * @param authViewModel The view model for authentication logic.
+ * @param locationsViewModel The view model for managing location information.
+ */
 fun NavGraphBuilder.authNavGraph(
     navController: NavController,
     currentUserViewModel: CurrentUserViewModel,
@@ -53,6 +63,7 @@ fun NavGraphBuilder.authNavGraph(
         )
     }
 
+    // Nested navigation for register flow
     navigation(
         startDestination = "auth/register/credentials",
         route = "auth/register"

@@ -10,21 +10,22 @@ import com.example.ventilen_app.generalViewModels.AuthViewModel
 import com.example.ventilen_app.generalViewModels.ChatViewModel
 import com.example.ventilen_app.generalViewModels.CurrentUserViewModel
 import com.example.ventilen_app.ui.screens.Location.LocationsViewModel
-import com.example.ventilen_app.ui.screens.Username.UsernameScreen
-import com.example.ventilen_app.ui.screens.Welcome.WelcomeScreen
-import com.example.ventilen_app.ui.screens.Credentials.CredentialsScreen
 import com.example.ventilen_app.ui.screens.Event.EventScreen
 import com.example.ventilen_app.ui.screens.Event.EventScreenViewModel
 import com.example.ventilen_app.ui.screens.Home.HomeScreen
-import com.example.ventilen_app.ui.screens.Location.LocationScreen
-import com.example.ventilen_app.ui.screens.Login.LoginScreen
 
+/** @author Marcus, Christian, Nikolaj
+ * Root navigation structure of the application.
+ */
 @Composable
 fun RootNavigation() {
+    // Initialize navigation controller
     val navController = rememberNavController()
+
+    // Initialize view models
     val currentUserViewModel: CurrentUserViewModel = remember { CurrentUserViewModel() }
     val authViewModel: AuthViewModel = remember { AuthViewModel() }
-    val eventScreenViewModel: EventScreenViewModel = remember { EventScreenViewModel() } // init here to get all events on launch?
+    val eventScreenViewModel: EventScreenViewModel = remember { EventScreenViewModel() }
     val locationsViewModel: LocationsViewModel = remember { LocationsViewModel() }
 
     // TODO: Remove
@@ -38,9 +39,9 @@ fun RootNavigation() {
         ) {
             authNavGraph(navController, currentUserViewModel, authViewModel, locationsViewModel)
         }
-
         composable("home"){
-            val chatViewModel: ChatViewModel = remember { ChatViewModel() } // Initialize ChatViewModel
+            // Initialize ChatViewModel
+            val chatViewModel: ChatViewModel = remember { ChatViewModel() }
             HomeScreen(
                 textUsername = currentUserViewModel.currentUser?.username.toString(),
                 textUID = currentUserViewModel.currentUser?.uid.toString(),
