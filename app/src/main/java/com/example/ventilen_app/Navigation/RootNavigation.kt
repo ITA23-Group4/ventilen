@@ -14,8 +14,9 @@ import com.example.ventilen_app.ui.screens.Event.EventScreen
 import com.example.ventilen_app.ui.screens.Event.EventScreenViewModel
 import com.example.ventilen_app.ui.screens.Home.HomeScreen
 
-/** @author Marcus, Christian, Nikolaj
+/**
  * Root navigation structure of the application.
+ * @author Marcus, Christian, Nikolaj
  */
 @Composable
 fun RootNavigation() {

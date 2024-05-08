@@ -13,7 +13,7 @@ import com.example.ventilen_app.ui.screens.Login.LoginScreen
 import com.example.ventilen_app.ui.screens.Username.UsernameScreen
 import com.example.ventilen_app.ui.screens.Welcome.WelcomeScreen
 
-/** @author Marcus, Christian, Nikolaj
+/**
  *
  * Authentication navigation graph for the authentication flow, which includes screens
  * for user login & registration.
@@ -22,6 +22,7 @@ import com.example.ventilen_app.ui.screens.Welcome.WelcomeScreen
  * @param currentUserViewModel The view model for managing current user information.
  * @param authViewModel The view model for authentication logic.
  * @param locationsViewModel The view model for managing location information.
+ * @author Marcus, Christian, Nikolaj
  */
 fun NavGraphBuilder.authNavGraph(
     navController: NavController,
