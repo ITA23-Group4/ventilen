@@ -64,7 +64,7 @@ fun HomeScreen(
                         text = "${message.senderUID}: ${message.message}",
                         style = MaterialTheme.typography.headlineMedium
                     )
-                    Log.d("CHAT", "${message.senderUID}: ${message.message}")
+                    Log.d("CHAT", "${message.senderUID}: ${message.message}. LocationID: ${message.locationID}")
                 }
             }
         }

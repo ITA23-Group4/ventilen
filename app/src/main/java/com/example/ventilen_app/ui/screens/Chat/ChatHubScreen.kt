@@ -18,7 +18,8 @@ import com.example.ventilen_app.ui.components.CustomColumn
 @Composable
 fun ChatHubScreen(
     chatViewModel: ChatViewModel,
-    currentUserViewModel: CurrentUserViewModel
+    currentUserViewModel: CurrentUserViewModel, // Might not be needed
+    onChatLocalNavigate: (String) -> Unit
 ) {
     CustomColumn {
         Text(text = "Primære mødested", style = MaterialTheme.typography.headlineLarge)
@@ -35,7 +36,8 @@ fun ChatHubScreen(
                 CustomChatCard(
                     locationName = locationInfo.locationName,
                     latestMessage = locationInfo.latestMessage,
-                    abbreviation = locationInfo.abbreviation
+                    abbreviation = locationInfo.abbreviation,
+                    onClick = { onChatLocalNavigate(locationInfo.locationID) }
                 )
             }
         }

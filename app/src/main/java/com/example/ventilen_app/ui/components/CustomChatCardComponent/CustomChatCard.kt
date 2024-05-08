@@ -18,12 +18,13 @@ import androidx.compose.ui.unit.dp
 fun CustomChatCard(
     locationName: String = "København",
     latestMessage: String = "Latest",
-    abbreviation: String = "K"
+    abbreviation: String = "K",
+    onClick: () -> Unit = {}
 ) {
     Card(
         modifier = Modifier
             .fillMaxWidth(),
-        onClick = { }
+        onClick = onClick
     ){
         Row (
             modifier = Modifier.fillMaxWidth()

@@ -15,11 +15,10 @@ import kotlinx.coroutines.tasks.await
 class ChatRepository {
     private val db = Firebase.firestore
 
-    fun observeMessages(locationId: String): LiveData<List<Message>> {
+    fun observeMessages(): LiveData<List<Message>> {
         val messagesLiveData = MutableLiveData<List<Message>>()
 
         db.collection("chats")
-            // .whereEqualTo("location", locationId)
             .orderBy("timestamp", Query.Direction.ASCENDING)
             .addSnapshotListener { snapshot, exception ->
                 if (exception != null) {
@@ -34,8 +33,9 @@ class ChatRepository {
                     val timestamp = document.getTimestamp("timestamp")?.toDate()?.time ?: 0
                     val locationRef = document.get("location") as? DocumentReference
                     val locationID = locationRef?.id ?: ""
+                    val username = document.getString("username") ?: ""
 
-                    Message(senderUID, messageContent, timestamp, locationID)
+                    Message(senderUID, messageContent, timestamp, locationID, username)
                 } ?: emptyList()
 
                 messagesLiveData.value = messages
@@ -55,12 +55,48 @@ class ChatRepository {
         val querySnapshot = db.collection("locations")
             .get()
             .await()
-        return querySnapshot.documents.mapNotNull { document ->
+        val locations = querySnapshot.documents.mapNotNull { document ->
             val locationId = document.getString("name") ?: ""
             val latestMessage = document.getString("latestMessage") ?: ""
             val abbreviation = document.getString("abbreviation") ?: ""
-            LocationInfo(locationId, latestMessage, abbreviation)
+            val locationID = document.id
+
+            LocationInfo(locationId, latestMessage, abbreviation, locationID)
         }
+
+        return locations
+    }
+
+
+    // Functions might not be correct can't query message from log: "FAILED_PRECONDITION: The query requires an index" TODO: FIX
+    fun observeMessagesByLocation(locationId: String): LiveData<List<Message>> {
+        val messagesLiveData = MutableLiveData<List<Message>>()
+
+        db.collection("chats")
+            .whereEqualTo("location", locationId)
+            .orderBy("timestamp", Query.Direction.ASCENDING)
+            .addSnapshotListener { snapshot, exception ->
+                if (exception != null) {
+                    Log.e(TAG, "Error observing messages", exception)
+                    return@addSnapshotListener
+                }
+
+                val messages = snapshot?.documents?.mapNotNull { document ->
+                    val senderRef = document.get("senderUID") as? DocumentReference
+                    val senderUID = senderRef?.id ?: ""
+                    val messageContent = document.getString("message") ?: ""
+                    val timestamp = document.getTimestamp("timestamp")?.toDate()?.time ?: 0
+                    val locationRef = document.get("location") as? DocumentReference
+                    val locationID = locationRef?.id ?: ""
+                    val username = document.getString("username") ?: ""
+
+                    Message(senderUID, messageContent, timestamp, locationID, username)
+                } ?: emptyList()
+
+                messagesLiveData.value = messages
+            }
+
+        return messagesLiveData
     }
 
 

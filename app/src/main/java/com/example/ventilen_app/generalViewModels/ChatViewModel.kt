@@ -19,9 +19,9 @@ class ChatViewModel : ViewModel() {
 
     // LiveData list of messages for observing real-time changes
     val messages: LiveData<List<Message>> = if (true) {
-            repository.observeMessages("123")
+            repository.observeMessages()
         } else {
-            repository.observeMessages("123")
+            repository.observeMessages()
         }
 
     /*
@@ -55,7 +55,17 @@ class ChatViewModel : ViewModel() {
         }
     }
 
-
+    // A mutable livedata list of local messages
+    // Scope needed??
+    var localMessages: LiveData<List<Message>> = MutableLiveData<List<Message>>()
+    fun getLocalMessages(locationID: String) {
+        viewModelScope.launch {
+            val messages = repository.observeMessagesByLocation(locationID)
+            localMessages = messages
+        }
+    }
+    // Think below is correct but the observer needs to be terminated when exiting the screen!
+    // localMessages: LiveData<List<Message>> = repository.observeMessagesByLocation(locationID)
 
     fun sendMessage(senderUID: String, messageContent: String) {
         viewModelScope.launch{

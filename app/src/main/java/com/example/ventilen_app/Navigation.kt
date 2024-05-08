@@ -1,5 +1,6 @@
 package com.example.ventilen_app
 
+import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.navigation.compose.NavHost
@@ -11,6 +12,7 @@ import com.example.ventilen_app.generalViewModels.ChatViewModel
 import com.example.ventilen_app.generalViewModels.CurrentUserViewModel
 import com.example.ventilen_app.generalViewModels.LocationViewModel
 import com.example.ventilen_app.ui.screens.Chat.ChatHubScreen
+import com.example.ventilen_app.ui.screens.Chat.ChatLocalScreen
 import com.example.ventilen_app.ui.screens.Username.UsernameScreen
 import com.example.ventilen_app.ui.screens.Welcome.WelcomeScreen
 import com.example.ventilen_app.ui.screens.Credentials.CredentialsScreen
@@ -27,6 +29,7 @@ fun Navigation() {
     val authViewModel: AuthViewModel = remember { AuthViewModel() }
     val eventScreenViewModel: EventScreenViewModel = remember { EventScreenViewModel() } // init here to get all events on launch?
     val locationViewModel: LocationViewModel = remember { LocationViewModel() }
+    val chatViewModel: ChatViewModel = remember { ChatViewModel() } // Initialize ChatViewModel
 
 
     // TODO: Remove
@@ -128,7 +131,7 @@ fun Navigation() {
         }
 
         composable("home"){
-            val chatViewModel: ChatViewModel = remember { ChatViewModel() } // Initialize ChatViewModel
+            chatViewModel.messages
             HomeScreen(
                 textUsername = currentUserViewModel.currentUser?.username.toString(),
                 textUID = currentUserViewModel.currentUser?.uid.toString(),
@@ -146,14 +149,26 @@ fun Navigation() {
             )
         }
         composable("chat"){
-            val chatViewModel: ChatViewModel = remember { ChatViewModel() } // Initialize ChatViewModel
             chatViewModel.getLatestMessagesFromEachLocation() // Get the latest messages from each location in the database, before navigating to the ChatHubScreen
             ChatHubScreen(
                 chatViewModel = chatViewModel,
-                currentUserViewModel = currentUserViewModel
+                currentUserViewModel = currentUserViewModel,
+                onChatLocalNavigate = {
+                    currentUserViewModel.selectedLocationChatID = it
+                    navController.navigate("chat/local")
+                }
             )
         }
+        composable("chat/local"){
+            // Can't query message from log: "FAILED_PRECONDITION: The query requires an index" TODO: FIX
+            // chatViewModel.getLocalMessages(currentUserViewModel.selectedLocationChatID)
 
+            // Screen is still empty
+            ChatLocalScreen(
+                chatViewModel = chatViewModel,
+                currentUserViewModel = currentUserViewModel,
+            )
+        }
         composable("event"){
             EventScreen(
                 events = eventScreenViewModel.events,
