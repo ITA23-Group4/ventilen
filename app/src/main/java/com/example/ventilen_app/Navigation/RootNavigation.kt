@@ -1,6 +1,5 @@
-package com.example.ventilen_app
+package com.example.ventilen_app.Navigation
 
-import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.navigation.compose.NavHost
@@ -21,7 +20,7 @@ import com.example.ventilen_app.ui.screens.Location.LocationScreen
 import com.example.ventilen_app.ui.screens.Login.LoginScreen
 
 @Composable
-fun Navigation() {
+fun RootNavigation() {
     val navController = rememberNavController()
     val currentUserViewModel: CurrentUserViewModel = remember { CurrentUserViewModel() }
     val authViewModel: AuthViewModel = remember { AuthViewModel() }
