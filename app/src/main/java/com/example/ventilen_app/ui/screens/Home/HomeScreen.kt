@@ -25,7 +25,7 @@ fun HomeScreen(
     textUsername: String,
     textUID: String,
     onNavigateEvent: () -> Unit,
-    chatViewModel: ChatViewModel,
+    chatViewModel: ChatViewModel, // TODO: REMOVE?
     onNavigateChat: () -> Unit,
     // TODO: Remove
     logout: () -> Unit,

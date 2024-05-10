@@ -164,8 +164,8 @@ fun Navigation() {
 
             // Screen is still empty
             ChatLocalScreen(
-                listOfLocationMessages = chatViewModel.messages // TODO: USE CORRECT LIST
-
+                listOfLocationMessages = chatViewModel.messages, // TODO: USE CORRECT LIST
+                chatViewModel = chatViewModel
             )
         }
         composable("event"){
