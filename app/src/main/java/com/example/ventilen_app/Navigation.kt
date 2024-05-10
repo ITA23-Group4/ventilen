@@ -131,7 +131,7 @@ fun Navigation() {
         }
 
         composable("home"){
-            chatViewModel.messages
+            chatViewModel.messages // TODO: LOOK AT
             HomeScreen(
                 textUsername = currentUserViewModel.currentUser?.username.toString(),
                 textUID = currentUserViewModel.currentUser?.uid.toString(),
@@ -149,10 +149,9 @@ fun Navigation() {
             )
         }
         composable("chat"){
-            chatViewModel.getLatestMessagesFromEachLocation() // Get the latest messages from each location in the database, before navigating to the ChatHubScreen
+            chatViewModel.getLatestMessagesFromEachLocation() // Get the latest messages from each location in the database, before navigating to the ChatHubScreen TODO: LOOK AT
             ChatHubScreen(
-                chatViewModel = chatViewModel,
-                currentUserViewModel = currentUserViewModel,
+                listOfLocations = chatViewModel.latestMessagesFromEachLocation,
                 onChatLocalNavigate = {
                     currentUserViewModel.selectedLocationChatID = it
                     navController.navigate("chat/local")
@@ -165,8 +164,7 @@ fun Navigation() {
 
             // Screen is still empty
             ChatLocalScreen(
-                chatViewModel = chatViewModel,
-                currentUserViewModel = currentUserViewModel,
+
             )
         }
         composable("event"){

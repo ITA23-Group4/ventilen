@@ -7,8 +7,7 @@ import com.example.ventilen_app.generalViewModels.CurrentUserViewModel
 
 @Composable
 fun ChatLocalScreen(
-    chatViewModel: ChatViewModel,
-    currentUserViewModel: CurrentUserViewModel
+
 ) {
 
 }
