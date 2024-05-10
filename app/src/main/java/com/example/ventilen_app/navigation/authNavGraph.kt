@@ -2,7 +2,6 @@ package com.example.ventilen_app.navigation
 
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import com.example.ventilen_app.generalViewModels.AuthViewModel
@@ -26,7 +25,7 @@ import com.example.ventilen_app.ui.screens.Welcome.WelcomeScreen
  * @author Marcus, Christian, Nikolaj
  */
 fun NavGraphBuilder.authNavGraph(
-    navController: NavHostController,
+    navController: NavController,
     currentUserViewModel: CurrentUserViewModel,
     authViewModel: AuthViewModel,
     locationsViewModel: LocationsViewModel
