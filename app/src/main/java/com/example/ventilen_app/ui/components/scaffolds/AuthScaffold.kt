@@ -12,6 +12,15 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TopAppBarDefaults
 import com.example.ventilen_app.ui.components.CustomBackButton
 
+/**
+ * AuthScaffold is a scaffold component tailored for authentication screens. It provides
+ * a customizable top app bar with optional back navigation functionality for the welcome screen.
+ *
+ * @param showBackButton Determines whether to show the back button in the top app bar. Defaults to true.
+ * @param onNavigateBack Callback function invoked when the back button is clicked.
+ * @param content The content to be displayed within the scaffold.
+ * @author Marcus
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AuthScaffold(

@@ -10,6 +10,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
+/**
+ * CustomBackButton is a button component representing a back navigation arrow typically
+ * used in navigation bars or toolbars to navigate to the previous screen.
+ *
+ * @param onNavigateBack Callback function invoked when the back button is clicked.
+ * @author Christian, Nikola, Marcus
+ */
 @Composable
 fun CustomBackButton(
     onNavigateBack: () -> Unit
