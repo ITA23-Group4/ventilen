@@ -5,7 +5,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
@@ -25,9 +24,10 @@ fun CustomMessageBox(
                 topEnd = 16.dp,
                 bottomEnd = if ( message.senderUID == currentUserID) 0.dp else 16.dp,
                 bottomStart = if ( message.senderUID == currentUserID) 16.dp else 0.dp
+                )
             )
-        ),
-        contentAlignment = if ( message.senderUID == currentUserID) Alignment.TopEnd else Alignment.TopStart
+            // TODO: HOW TF DO WE ALIGN THIS SHIT!
+            //.align(if (message.senderUID == currentUserID) Alignment.CenterEnd else Alignment.CenterStart)
     ) {
         Text(text = message.username, style = MaterialTheme.typography.bodySmall)
         Text(text = message.message, style = MaterialTheme.typography.bodyLarge)

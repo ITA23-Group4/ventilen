@@ -1,6 +1,7 @@
 package com.example.ventilen_app.ui.screens.Chat
 
 import android.util.Log
+import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.lifecycle.LiveData
 import com.example.ventilen_app.data.models.Message
@@ -14,7 +15,6 @@ fun ChatLocalScreen(
 
 ) {
     // Måske en CustomColumn?
-
 
 
 }
