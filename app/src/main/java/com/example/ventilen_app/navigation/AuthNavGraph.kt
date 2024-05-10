@@ -1,4 +1,4 @@
-package com.example.ventilen_app.Navigation
+package com.example.ventilen_app.navigation
 
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
@@ -6,7 +6,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import com.example.ventilen_app.generalViewModels.AuthViewModel
 import com.example.ventilen_app.generalViewModels.CurrentUserViewModel
-import com.example.ventilen_app.ui.components.scaffold.AuthScaffold
+import com.example.ventilen_app.ui.components.scaffolds.AuthScaffold
 import com.example.ventilen_app.ui.screens.Credentials.CredentialsScreen
 import com.example.ventilen_app.ui.screens.Location.LocationScreen
 import com.example.ventilen_app.ui.screens.Location.LocationsViewModel
@@ -29,10 +29,10 @@ fun NavGraphBuilder.authNavGraph(
     currentUserViewModel: CurrentUserViewModel,
     authViewModel: AuthViewModel,
     locationsViewModel: LocationsViewModel
-    ) {
+) {
     composable("auth/welcome") {
         AuthScaffold (
-            onNavigateBack = {},
+            onNavigateBack = { },
             showBackButton = false
         ) {
             WelcomeScreen(
