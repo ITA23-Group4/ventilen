@@ -2,6 +2,7 @@ package com.example.ventilen_app.navigation
 
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import com.example.ventilen_app.generalViewModels.AuthViewModel
@@ -25,13 +26,13 @@ import com.example.ventilen_app.ui.screens.Welcome.WelcomeScreen
  * @author Marcus, Christian, Nikolaj
  */
 fun NavGraphBuilder.authNavGraph(
-    navController: NavController,
+    navController: NavHostController,
     currentUserViewModel: CurrentUserViewModel,
     authViewModel: AuthViewModel,
     locationsViewModel: LocationsViewModel
 ) {
     composable("auth/welcome") {
-        AuthScaffold (
+        AuthScaffold(
             onNavigateBack = { },
             showBackButton = false
         ) {
@@ -44,9 +45,9 @@ fun NavGraphBuilder.authNavGraph(
         }
     }
     composable("auth/login") {
-        AuthScaffold (
+        AuthScaffold(
             onNavigateBack = { navController.popBackStack() }
-        ){
+        ) {
             LoginScreen(
                 onNavigateHome = {
                     authViewModel.loginUser(
@@ -79,11 +80,13 @@ fun NavGraphBuilder.authNavGraph(
         route = "auth/register"
     ) {
         composable("auth/register/credentials") {
-            AuthScaffold (
-                onNavigateBack = { navController.popBackStack(
-                    route = "auth/register",
-                    inclusive = true
-                ) }
+            AuthScaffold(
+                onNavigateBack = {
+                    navController.popBackStack(
+                        route = "auth/register",
+                        inclusive = true
+                    )
+                }
             ) {
                 CredentialsScreen(
                     onNavigateUsername = { navController.navigate("auth/register/username") },
@@ -96,7 +99,7 @@ fun NavGraphBuilder.authNavGraph(
             }
         }
         composable("auth/register/username") {
-            AuthScaffold (
+            AuthScaffold(
                 onNavigateBack = { navController.popBackStack() }
             ) {
                 UsernameScreen(
@@ -108,7 +111,7 @@ fun NavGraphBuilder.authNavGraph(
             }
         }
         composable("auth/register/location") {
-            AuthScaffold (
+            AuthScaffold(
                 onNavigateBack = { navController.popBackStack() }
             ) {
                 LocationScreen(

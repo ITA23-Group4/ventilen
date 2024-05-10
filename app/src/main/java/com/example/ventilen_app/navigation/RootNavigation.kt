@@ -51,19 +51,25 @@ fun RootNavigation() {
             startDestination = "auth/welcome",
             route = "auth"
         ) {
-            authNavGraph(navController, currentUserViewModel, authViewModel, locationsViewModel)
+            authNavGraph(
+                navController = navController,
+                currentUserViewModel = currentUserViewModel,
+                authViewModel = authViewModel,
+                locationsViewModel = locationsViewModel
+            )
         }
         composable("home") {
             Scaffold(
-                topBar = { TopAppBar(
-                    title = { Text("Home") },
-                    colors = TopAppBarDefaults.topAppBarColors(
-                        containerColor = MaterialTheme.colorScheme.primary,
-                        navigationIconContentColor = MaterialTheme.colorScheme.onPrimary,
-                        titleContentColor = MaterialTheme.colorScheme.onPrimary
+                topBar = {
+                    TopAppBar(
+                        title = { Text("Home") },
+                        colors = TopAppBarDefaults.topAppBarColors(
+                            containerColor = MaterialTheme.colorScheme.surface,
+                            navigationIconContentColor = MaterialTheme.colorScheme.onSurface,
+                            titleContentColor = MaterialTheme.colorScheme.onSurface
+                        )
                     )
-                )
-                         },
+                },
                 bottomBar = {
                     CustomNavigationBar(
                         currentRoute = navController.currentDestination!!.route!!,
@@ -97,14 +103,19 @@ fun RootNavigation() {
                 topBar = {
                     TopAppBar(
                         colors = TopAppBarDefaults.topAppBarColors(
-                            containerColor = MaterialTheme.colorScheme.primary,
-                            navigationIconContentColor = MaterialTheme.colorScheme.onPrimary,
-                            titleContentColor = MaterialTheme.colorScheme.onPrimary
+                            containerColor = MaterialTheme.colorScheme.surface,
+                            navigationIconContentColor = MaterialTheme.colorScheme.onSurface,
+                            titleContentColor = MaterialTheme.colorScheme.onSurface
                         ),
                         title = { Text("Home") },
                         navigationIcon = {
                             CustomBackButton(
-                                onNavigateBack = { navController.navigate("home") }
+                                onNavigateBack = {
+                                    navController.popBackStack(
+                                        route = "home",
+                                        inclusive = true
+                                    )
+                                }
                             )
                         }
                     )
