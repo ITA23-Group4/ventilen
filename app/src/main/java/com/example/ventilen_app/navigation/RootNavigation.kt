@@ -2,6 +2,7 @@ package com.example.ventilen_app.navigation
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -18,12 +19,17 @@ import androidx.navigation.compose.rememberNavController
 import com.example.ventilen_app.generalViewModels.AuthViewModel
 import com.example.ventilen_app.generalViewModels.ChatViewModel
 import com.example.ventilen_app.generalViewModels.CurrentUserViewModel
-import com.example.ventilen_app.ui.components.CustomBackButton
+import com.example.ventilen_app.ui.components.scaffolds.AuthScaffold
 import com.example.ventilen_app.ui.components.scaffolds.CustomBottomNavigationBar
+import com.example.ventilen_app.ui.screens.Credentials.CredentialsScreen
 import com.example.ventilen_app.ui.screens.Event.EventScreen
 import com.example.ventilen_app.ui.screens.Event.EventScreenViewModel
 import com.example.ventilen_app.ui.screens.Home.HomeScreen
+import com.example.ventilen_app.ui.screens.Location.LocationScreen
 import com.example.ventilen_app.ui.screens.Location.LocationsViewModel
+import com.example.ventilen_app.ui.screens.Login.LoginScreen
+import com.example.ventilen_app.ui.screens.Username.UsernameScreen
+import com.example.ventilen_app.ui.screens.Welcome.WelcomeScreen
 
 /**
  * Root navigation structure of the application.
@@ -61,7 +67,7 @@ fun RootNavigation() {
         composable("home") {
             Scaffold(
                 topBar = {
-                    TopAppBar(
+                    CenterAlignedTopAppBar(
                         title = { Text("Home") },
                         colors = TopAppBarDefaults.topAppBarColors(
                             containerColor = MaterialTheme.colorScheme.surface,
@@ -107,17 +113,7 @@ fun RootNavigation() {
                             navigationIconContentColor = MaterialTheme.colorScheme.onSurface,
                             titleContentColor = MaterialTheme.colorScheme.onSurface
                         ),
-                        title = { Text("Home") },
-                        navigationIcon = {
-                            CustomBackButton(
-                                onNavigateBack = {
-                                    navController.popBackStack(
-                                        route = "home",
-                                        inclusive = true
-                                    )
-                                }
-                            )
-                        }
+                        title = { Text("Events") }
                     )
                 },
                 bottomBar = {
