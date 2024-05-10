@@ -6,6 +6,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import com.example.ventilen_app.generalViewModels.AuthViewModel
 import com.example.ventilen_app.generalViewModels.CurrentUserViewModel
+import com.example.ventilen_app.ui.components.scaffold.AuthScaffold
 import com.example.ventilen_app.ui.screens.Credentials.CredentialsScreen
 import com.example.ventilen_app.ui.screens.Location.LocationScreen
 import com.example.ventilen_app.ui.screens.Location.LocationsViewModel
@@ -30,37 +31,46 @@ fun NavGraphBuilder.authNavGraph(
     locationsViewModel: LocationsViewModel
     ) {
     composable("auth/welcome") {
-        WelcomeScreen(
-            onNavigationLogin = { navController.navigate("auth/login") },
-            onNavigationRegister = { navController.navigate("auth/register") },
-            // TODO: Remove
-            whoUser = { currentUserViewModel.getCurrentUser() }
-        )
+        AuthScaffold (
+            onNavigateBack = {},
+            showBackButton = false
+        ) {
+            WelcomeScreen(
+                onNavigationLogin = { navController.navigate("auth/login") },
+                onNavigationRegister = { navController.navigate("auth/register") },
+                // TODO: Remove
+                whoUser = { currentUserViewModel.getCurrentUser() }
+            )
+        }
     }
     composable("auth/login") {
-        LoginScreen(
-            onNavigateHome = {
-                authViewModel.loginUser(
-                    onLoginSuccess = {
-                        currentUserViewModel.getCurrentUser()
-                        navController.popBackStack(
-                            route = "auth",
-                            inclusive = true
-                        )
-                        navController.navigate("home")
-                    },
-                    onLoginFailure = {
-                        navController.navigate("auth/welcome")
-                    }
-                )
-            },
-            textEmail = authViewModel.email,
-            textPassword = authViewModel.password,
-            onValueChangeEmail = { authViewModel.email = it },
-            onValueChangePassword = { authViewModel.password = it },
-            onNavigateBack = { navController.popBackStack() },
-            onNavigateRegistration = { navController.navigate("auth/register") }
-        )
+        AuthScaffold (
+            onNavigateBack = { navController.popBackStack() }
+        ){
+            LoginScreen(
+                onNavigateHome = {
+                    authViewModel.loginUser(
+                        onLoginSuccess = {
+                            currentUserViewModel.getCurrentUser()
+                            navController.popBackStack(
+                                route = "auth",
+                                inclusive = true
+                            )
+                            navController.navigate("home")
+                        },
+                        onLoginFailure = {
+                            navController.navigate("auth/welcome")
+                        }
+                    )
+                },
+                textEmail = authViewModel.email,
+                textPassword = authViewModel.password,
+                onValueChangeEmail = { authViewModel.email = it },
+                onValueChangePassword = { authViewModel.password = it },
+                onNavigateBack = { navController.popBackStack() },
+                onNavigateRegistration = { navController.navigate("auth/register") }
+            )
+        }
     }
 
     // Nested navigation for register flow
@@ -69,52 +79,67 @@ fun NavGraphBuilder.authNavGraph(
         route = "auth/register"
     ) {
         composable("auth/register/credentials") {
-            CredentialsScreen(
-                onNavigateUsername = { navController.navigate("auth/register/username") },
-                textEmail = authViewModel.email,
-                textPassword = authViewModel.password,
-                onValueChangeEmail = { authViewModel.email = it },
-                onValueChangePassword = { authViewModel.password = it },
-                onNavigateBack = {navController.popBackStack()}
-            )
+            AuthScaffold (
+                onNavigateBack = { navController.popBackStack(
+                    route = "auth/register",
+                    inclusive = true
+                ) }
+            ) {
+                CredentialsScreen(
+                    onNavigateUsername = { navController.navigate("auth/register/username") },
+                    textEmail = authViewModel.email,
+                    textPassword = authViewModel.password,
+                    onValueChangeEmail = { authViewModel.email = it },
+                    onValueChangePassword = { authViewModel.password = it },
+                    onNavigateBack = { navController.popBackStack() }
+                )
+            }
         }
         composable("auth/register/username") {
-            UsernameScreen(
-                onNavigateLocation = { navController.navigate("auth/register/location") },
-                onNavigateBack = { navController.popBackStack() },
-                onValueChange = { authViewModel.username = it },
-                textUsername = authViewModel.username,
-            )
+            AuthScaffold (
+                onNavigateBack = { navController.popBackStack() }
+            ) {
+                UsernameScreen(
+                    onNavigateLocation = { navController.navigate("auth/register/location") },
+                    onNavigateBack = { navController.popBackStack() },
+                    onValueChange = { authViewModel.username = it },
+                    textUsername = authViewModel.username,
+                )
+            }
         }
         composable("auth/register/location") {
-            LocationScreen(
-                onNavigateHome = {
-                    authViewModel.registerNewUser(
-                        onRegistrationSuccess = {
-                            authViewModel.loginUser(
-                                onLoginSuccess = {
-                                    currentUserViewModel.getCurrentUser()
-                                    navController.popBackStack(
-                                        route = "auth",
-                                        inclusive = true
-                                    )
-                                    navController.navigate("home")
-                                },
-                                onLoginFailure = {
-                                    navController.navigate("auth/welcome")
-                                }
-                            )
-                        },
-                        onRegistrationFailed = {
-                            navController.navigate("auth/welcome")
-                        }
-                    )
-                },
-                onNavigateBack = { navController.popBackStack() },
-                locations = locationsViewModel.locationNames,
-                selectedLocation = authViewModel.location,
-                onLocationValueChanged = { authViewModel.location = it }
-            )
+            AuthScaffold (
+                onNavigateBack = { navController.popBackStack() }
+            ) {
+                LocationScreen(
+                    onNavigateHome = {
+                        authViewModel.registerNewUser(
+                            onRegistrationSuccess = {
+                                authViewModel.loginUser(
+                                    onLoginSuccess = {
+                                        currentUserViewModel.getCurrentUser()
+                                        navController.popBackStack(
+                                            route = "auth",
+                                            inclusive = true
+                                        )
+                                        navController.navigate("home")
+                                    },
+                                    onLoginFailure = {
+                                        navController.navigate("auth/welcome")
+                                    }
+                                )
+                            },
+                            onRegistrationFailed = {
+                                navController.navigate("auth/welcome")
+                            }
+                        )
+                    },
+                    onNavigateBack = { navController.popBackStack() },
+                    locations = locationsViewModel.locationNames,
+                    selectedLocation = authViewModel.location,
+                    onLocationValueChanged = { authViewModel.location = it }
+                )
+            }
         }
     }
 }

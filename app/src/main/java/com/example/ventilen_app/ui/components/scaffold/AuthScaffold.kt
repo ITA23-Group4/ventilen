@@ -13,18 +13,21 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.rounded.KeyboardArrowLeft
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.navigation.NavController
 import com.example.ventilen_app.ui.components.CustomBackButton
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AuthScaffold(
     showBackButton: Boolean = true,
-    onNavigateBack: () -> Unit = {},
+    onNavigateBack: () -> Unit,
     content: @Composable () -> Unit
 ) {
     Scaffold(
         topBar = {
             TopAppBar(
+                colors = TopAppBarDefaults.topAppBarColors(),
                 navigationIcon = {
                     if (showBackButton) {
                         CustomBackButton(onNavigateBack = onNavigateBack)
