@@ -23,6 +23,7 @@ import com.example.ventilen_app.ui.components.CustomTextField
 fun ChatLocalScreen(
     listOfLocationMessages: LiveData<List<Message>>,
     chatViewModel: ChatViewModel, // TODO: REMOVE
+    onSendMessage: () -> Unit // To use when sending message
 ) {
 
     Scaffold(

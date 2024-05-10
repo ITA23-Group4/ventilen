@@ -100,11 +100,20 @@ class ChatRepository {
     }
 
 
-    suspend fun sendMessage(senderUID: String, messageContent: String) {
+    suspend fun sendMessage(
+        senderUID: String,
+        messageContent: String,
+        senderUsername: String,
+        locationID: String
+    ) {
+
+        // Why do we hashMap this?? :D
         val message = hashMapOf(
-            "senderUID" to senderUID,
+            "location" to locationID,
             "message" to messageContent,
-            "timestamp" to System.currentTimeMillis()
+            "senderUID" to senderUID,
+            "timestamp" to System.currentTimeMillis(),
+            "username" to senderUsername
         )
 
         try {

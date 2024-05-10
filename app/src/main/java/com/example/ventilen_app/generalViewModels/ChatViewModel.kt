@@ -72,11 +72,24 @@ class ChatViewModel : ViewModel() {
     // Think below is correct but the observer needs to be terminated when exiting the screen!
     // localMessages: LiveData<List<Message>> = repository.observeMessagesByLocation(locationID)
 
-    fun sendMessage(senderUID: String, messageContent: String) {
+
+
+    fun sendMessage(
+        senderUID: String,
+        messageContent: String,
+        senderUsername: String,
+        locationID: String
+    ) {
         viewModelScope.launch{
-            repository.sendMessage(senderUID, messageContent)
+            repository.sendMessage(
+                senderUID,
+                messageContent,
+                senderUsername,
+                locationID
+            )
         }
     }
+
 
 
 
