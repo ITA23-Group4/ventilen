@@ -16,6 +16,7 @@ import com.example.ventilen_app.ui.screens.Home.HomeScreen
 
 /**
  * Root navigation structure of the application.
+ *
  * @author Marcus, Christian, Nikolaj
  */
 @Composable
