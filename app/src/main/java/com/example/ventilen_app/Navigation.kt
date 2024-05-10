@@ -151,7 +151,7 @@ fun Navigation() {
         composable("chat"){
             chatViewModel.getLatestMessagesFromEachLocation() // Get the latest messages from each location in the database, before navigating to the ChatHubScreen TODO: LOOK AT
             ChatHubScreen(
-                listOfLocations = chatViewModel.latestMessagesFromEachLocation,
+                listOfLatestMessagesLocations = chatViewModel.latestMessagesFromEachLocation,
                 onChatLocalNavigate = {
                     chatViewModel.selectedLocationChatID = it
                     navController.navigate("chat/local")
@@ -165,7 +165,8 @@ fun Navigation() {
             // Screen is still empty
             ChatLocalScreen(
                 listOfLocationMessages = chatViewModel.messages, // TODO: USE CORRECT LIST
-                chatViewModel = chatViewModel
+                chatViewModel = chatViewModel,
+                onSendMessage = {}
             )
         }
         composable("event"){

@@ -25,7 +25,7 @@ fun ChatLocalScreen(
     chatViewModel: ChatViewModel, // TODO: REMOVE
     onSendMessage: () -> Unit // To use when sending message
 ) {
-
+    // Scaffold added to have textfield at the bottom of the screen that then expands a keyboard when clicked
     Scaffold(
         content = {
             Column(
