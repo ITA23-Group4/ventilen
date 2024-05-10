@@ -37,10 +37,8 @@ fun LoginScreen(
         verticalArrangement = Arrangement.spacedBy(30.dp)
     ) {
         TopAuthPageDesign(
-            hasBackButton = true,
             topText = "Log ind",
             bottomText = "Indtast din email og password",
-            onNavigateBack = onNavigateBack
         )
         CustomTextField(text = textEmail, label = "Email") { onValueChangeEmail(it) }
 

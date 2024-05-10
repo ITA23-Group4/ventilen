@@ -34,12 +34,11 @@ fun LocationScreen(
     CustomColumn(modifier = Modifier.fillMaxSize()
         .background(CustomColorScheme.Mocha),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(30.dp)) {
+        verticalArrangement = Arrangement.spacedBy(30.dp))
+    {
         TopAuthPageDesign(
-            hasBackButton = true,
             topText = "Hvor skal vi mødes",
             bottomText ="Vælg det mødested som er tættest på dig",
-            onNavigateBack = onNavigateBack
         )
 
         CustomDropDownMenu(

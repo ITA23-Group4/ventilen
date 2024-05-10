@@ -31,12 +31,9 @@ fun WelcomeScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(30.dp)
     ) {
-        Spacer(modifier = Modifier.size(20.dp))
         TopAuthPageDesign(
-            hasBackButton = false,
             topText = "Velkommen",
             bottomText = "login eller tilmeld dig",
-            onNavigateBack = {}
             )
         CustomFilledButton(
             text = "Login",
