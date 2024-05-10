@@ -14,7 +14,6 @@ import com.example.ventilen_app.ui.screens.Username.UsernameScreen
 import com.example.ventilen_app.ui.screens.Welcome.WelcomeScreen
 
 /**
- *
  * Authentication navigation graph for the authentication flow, which includes screens
  * for user login & registration.
  *
