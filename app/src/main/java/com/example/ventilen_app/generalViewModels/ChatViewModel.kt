@@ -1,7 +1,10 @@
 package com.example.ventilen_app.generalViewModels
 
 import android.util.Log
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -16,6 +19,8 @@ import kotlinx.coroutines.launch
 // - primaryLocationID
 class ChatViewModel : ViewModel() {
     private val repository = ChatRepository()
+
+    var selectedLocationChatID by mutableStateOf("") // Might be a solution to select the right chat - idk if it's the best way
 
     // LiveData list of messages for observing real-time changes
     val messages: LiveData<List<Message>> = if (true) {

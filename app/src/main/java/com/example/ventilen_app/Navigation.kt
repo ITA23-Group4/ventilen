@@ -153,7 +153,7 @@ fun Navigation() {
             ChatHubScreen(
                 listOfLocations = chatViewModel.latestMessagesFromEachLocation,
                 onChatLocalNavigate = {
-                    currentUserViewModel.selectedLocationChatID = it
+                    chatViewModel.selectedLocationChatID = it
                     navController.navigate("chat/local")
                 }
             )
@@ -164,7 +164,7 @@ fun Navigation() {
 
             // Screen is still empty
             ChatLocalScreen(
-
+                listOfLocationMessages = chatViewModel.messages // TODO: USE CORRECT LIST
 
             )
         }

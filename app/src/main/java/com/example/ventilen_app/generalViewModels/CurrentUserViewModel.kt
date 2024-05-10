@@ -15,7 +15,6 @@ import java.lang.Exception
 class CurrentUserViewModel : ViewModel() {
     val repository: Repository = Repository()
     var currentUser: User? by mutableStateOf(User("username"))
-    var selectedLocationChatID by mutableStateOf("") // Might be a solution to select the right chat - idk if it's the best way
 
     fun getCurrentUser() {
         viewModelScope.launch {
