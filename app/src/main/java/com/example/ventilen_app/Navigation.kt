@@ -3,6 +3,7 @@ package com.example.ventilen_app
 import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.lifecycle.Observer
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
@@ -159,13 +160,12 @@ fun Navigation() {
             )
         }
         composable("chat/local"){
-            // Can't query message from log: "FAILED_PRECONDITION: The query requires an index" TODO: FIX
-            // chatViewModel.getLocalMessages(currentUserViewModel.selectedLocationChatID)
-
-            // Screen is still empty
+            chatViewModel.getLocalMessages(chatViewModel.selectedLocationChatID) // Get the local messages for the selected location TODO: LOOK AT
+            Log.d("Chat", chatViewModel.localMessages.toString())
+            // It is logging this: androidx.lifecycle.MutableLiveData@********
+            // It should log the list of messages -- IDK dude
             ChatLocalScreen(
-                listOfLocationMessages = chatViewModel.messages, // TODO: USE CORRECT LIST
-                chatViewModel = chatViewModel,
+                listOfLocationMessages = chatViewModel.localMessages, // TODO: USE CORRECT LIST
                 onSendMessage = {}
             )
         }

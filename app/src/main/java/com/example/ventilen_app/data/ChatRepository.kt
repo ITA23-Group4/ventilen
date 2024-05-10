@@ -69,12 +69,14 @@ class ChatRepository {
 
 
     // Functions might not be correct can't query message from log: "FAILED_PRECONDITION: The query requires an index" TODO: FIX
+    // Usefull links:
+    // https://stackoverflow.com/questions/50207339/cloud-firestore-failed-precondition-the-query-requires-an-index
+    // https://www.fullstackfirebase.com/cloud-firestore/indexes
     fun observeMessagesByLocation(locationId: String): LiveData<List<Message>> {
         val messagesLiveData = MutableLiveData<List<Message>>()
 
         db.collection("chats")
             .whereEqualTo("location", locationId)
-            .orderBy("timestamp", Query.Direction.ASCENDING)
             .addSnapshotListener { snapshot, exception ->
                 if (exception != null) {
                     Log.e(TAG, "Error observing messages", exception)

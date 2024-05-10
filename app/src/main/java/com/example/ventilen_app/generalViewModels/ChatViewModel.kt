@@ -56,7 +56,6 @@ class ChatViewModel : ViewModel() {
         viewModelScope.launch {
             val latestMessages = repository.chatHubMessagesSnapshot()
             latestMessagesFromEachLocation = latestMessages
-            Log.d("LLMLD", latestMessages.toString())
         }
     }
 
