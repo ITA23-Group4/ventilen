@@ -19,7 +19,7 @@ import com.example.ventilen_app.generalViewModels.AuthViewModel
 import com.example.ventilen_app.generalViewModels.ChatViewModel
 import com.example.ventilen_app.generalViewModels.CurrentUserViewModel
 import com.example.ventilen_app.ui.components.CustomBackButton
-import com.example.ventilen_app.ui.components.scaffolds.CustomNavigationBar
+import com.example.ventilen_app.ui.components.scaffolds.CustomBottomNavigationBar
 import com.example.ventilen_app.ui.screens.Event.EventScreen
 import com.example.ventilen_app.ui.screens.Event.EventScreenViewModel
 import com.example.ventilen_app.ui.screens.Home.HomeScreen
@@ -71,7 +71,7 @@ fun RootNavigation() {
                     )
                 },
                 bottomBar = {
-                    CustomNavigationBar(
+                    CustomBottomNavigationBar(
                         currentRoute = navController.currentDestination!!.route!!,
                         onNavigateEvent = { navController.navigate("event") },
                         onNavigateChat = { navController.navigate("chat") }
@@ -121,7 +121,7 @@ fun RootNavigation() {
                     )
                 },
                 bottomBar = {
-                    CustomNavigationBar(
+                    CustomBottomNavigationBar(
                         currentRoute = navController.currentDestination!!.route!!,
                         onNavigateHome = { navController.navigate("home") },
                         onNavigateChat = { navController.navigate("chat") }

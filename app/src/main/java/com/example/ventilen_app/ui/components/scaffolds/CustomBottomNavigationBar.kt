@@ -29,7 +29,7 @@ import androidx.compose.ui.unit.dp
  * @author Marcus
  */
 @Composable
-fun CustomNavigationBar(
+fun CustomBottomNavigationBar(
     currentRoute: String,
     onNavigateHome: () -> Unit = {},
     onNavigateChat: () -> Unit = {},
