@@ -86,7 +86,6 @@ class ChatRepository {
     // https://www.fullstackfirebase.com/cloud-firestore/indexes
     fun observeMessagesByLocation(locationId: String): LiveData<List<Message>> {
         val messagesLiveData = MutableLiveData<List<Message>>()
-
         db.collection("chats")
             .whereEqualTo("location", locationId)
             .addSnapshotListener { snapshot, exception ->
@@ -136,6 +135,10 @@ class ChatRepository {
                 .let { documentReference ->
                     Log.d(TAG, "Message sent with ID: ${documentReference.id}")
                 }
+            db.collection("locations")
+                .document(message.locationID)
+                .update("latestMessage", message.message)
+                .await()
         } catch (e: Exception) {
             Log.e(TAG, "Error sending message", e)
         }

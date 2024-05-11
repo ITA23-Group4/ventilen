@@ -75,6 +75,7 @@ class ChatViewModel : ViewModel() {
             chatRepository.sendMessage(
                 message
             )
+
             currentMessage = ""
         }
     }

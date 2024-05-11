@@ -118,7 +118,7 @@ fun RootNavigation() {
 
 
                 ChatLocalScreen(
-                    listOfLocationMessages = chatViewModel.messages.value!!, // TODO: USE CORRECT LIST
+                    listOfLocationMessages = chatViewModel.messages.value!!, // TODO: USE CORRECT LIST (LOCAL MESSAGES)
                     onSendMessage = {
                         chatViewModel.sendMessage(
                         message = Message(
