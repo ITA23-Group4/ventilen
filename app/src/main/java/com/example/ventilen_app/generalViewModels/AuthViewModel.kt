@@ -6,19 +6,24 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.ventilen_app.data.Repository
 import com.example.ventilen_app.data.models.Location
-import com.example.ventilen_app.data.models.User
+import com.example.ventilen_app.data.repositories.UserRepository
 import com.example.ventilen_app.services.AccountService
 import kotlinx.coroutines.launch
 
 class AuthViewModel : ViewModel() {
     private val accountService: AccountService = AccountService();
-    private val repository: Repository = Repository()
+    private val userRepository: UserRepository = UserRepository()
 
     var username: String by mutableStateOf("")
     var email: String by mutableStateOf("christianbt96@gmail.com")
-    var location: Location by mutableStateOf(Location("Name","UID"))
+    var location: Location by mutableStateOf(Location(
+        locationName = "Name",
+        latestMessage = "Latest message",
+        abbreviation = "Abbreviation",
+        locationID = "Location ID"
+        )
+    )
     var password: String by mutableStateOf("Ventilen1234")
 
     fun registerNewUser(
@@ -33,7 +38,7 @@ class AuthViewModel : ViewModel() {
                     username = username,
                     location = location
                 ).let { newUser ->
-                    repository.createUser(newUser)
+                    userRepository.createUser(newUser)
                     onRegistrationSuccess()
                 }
             } catch (error: Exception) {

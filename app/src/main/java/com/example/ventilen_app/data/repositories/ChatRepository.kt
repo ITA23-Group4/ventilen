@@ -1,4 +1,4 @@
-package com.example.ventilen_app.data
+package com.example.ventilen_app.data.repositories
 
 import android.content.ContentValues.TAG
 import android.util.Log

@@ -6,21 +6,21 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.ventilen_app.data.Repository
 import com.example.ventilen_app.data.models.User
+import com.example.ventilen_app.data.repositories.UserRepository
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.launch
 import java.lang.Exception
 
 class CurrentUserViewModel : ViewModel() {
-    val repository: Repository = Repository()
+    val userRepository: UserRepository = UserRepository()
     var currentUser: User? by mutableStateOf(User("username"))
 
     fun getCurrentUser() {
         viewModelScope.launch {
             try {
                 val currentUserUID: String = FirebaseAuth.getInstance().currentUser!!.uid
-                currentUser = repository.getUser(currentUserUID)
+                currentUser = userRepository.getUser(currentUserUID)
                 Log.d("CurrentUser:", "Username = ${currentUser?.username.toString()} primaryLocation = ${currentUser?.primaryLocationID.toString()} UID = ${currentUser?.uid.toString()}")
             } catch (error: Exception) {
                 Log.d("ERROR", error.toString());
