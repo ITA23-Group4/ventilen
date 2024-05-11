@@ -7,6 +7,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.ventilen_app.data.Repository
+import com.example.ventilen_app.data.models.Location
 import com.example.ventilen_app.data.models.User
 import com.example.ventilen_app.services.AccountService
 import kotlinx.coroutines.launch
@@ -17,10 +18,8 @@ class AuthViewModel : ViewModel() {
 
     var username: String by mutableStateOf("")
     var email: String by mutableStateOf("")
-    var location: String by mutableStateOf("")
+    var location: Location by mutableStateOf(Location("",""))
     var password: String by mutableStateOf("")
-
-
 
     fun registerNewUser(
         onRegistrationSuccess: () -> Unit,
@@ -31,7 +30,8 @@ class AuthViewModel : ViewModel() {
                 accountService.createUserWithEmailAndPassword(
                     email = email,
                     password = password,
-                    username = username
+                    username = username,
+                    location = location
                 ).let { newUser ->
                     repository.createUser(newUser)
                     onRegistrationSuccess()
@@ -41,25 +41,6 @@ class AuthViewModel : ViewModel() {
                 onRegistrationFailed()
             }
         }
-
-        // This is the original code that was replaced by the code above
-        // Changed the code to make use of coroutines instead of callbacks
-
-        /*
-        accountService.authenticate(
-            email = email,
-            password = password,
-            username = username,
-            onRegistrationSuccess = { newUser ->
-                repository.createUser(
-                    newUser,
-                    onRegistrationSuccess,
-                    onRegistrationFailed
-                )
-            },
-            onRegistrationFailed = onRegistrationFailed
-        )
-         */
     }
 
     fun loginUser(
@@ -81,14 +62,4 @@ class AuthViewModel : ViewModel() {
         }
     }
 
-    /*
-    fun loginUser(navigateOnLoginSuccess: () -> Unit, onLoginFailed: () -> Unit) {
-        accountService.login(
-            email = email,
-            password = password,
-            navigateOnLoginSuccess = navigateOnLoginSuccess,
-            onLoginFailed = onLoginFailed
-        )
-    }
-    */
 }

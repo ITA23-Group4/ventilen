@@ -23,30 +23,14 @@ import com.example.ventilen_app.R
 
 @Composable
 fun TopAuthPageDesign(
-    hasBackButton: Boolean,
     topText: String,
-    bottomText: String,
-    onNavigateBack: () -> Unit
+    bottomText: String
 ) {
     Column(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Spacer(modifier = Modifier.size(16.dp))
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Start,
-        ) {
-            if (hasBackButton) {
-                CustomBackButton(onNavigateBack)
-            }
-            Spacer(modifier = Modifier.width(600.dp))
-
-            Box {
-                //there will be progressbar or something
-            }
-
-        }
+        Spacer(modifier = Modifier.size(34.dp))
         Image(
             painter = painterResource(id = R.drawable.vent_logo),
             contentDescription = "Welcome Image",
