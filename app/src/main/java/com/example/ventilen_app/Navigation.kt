@@ -120,10 +120,8 @@ fun Navigation() {
                         locations = locationViewModel.locations.map { it.name },
                         selectedLocation = authViewModel.location.name,
                         onLocationValueChanged = { selectedLocationName ->
-                            authViewModel.location = locationViewModel.mapLocationNameToLocation[selectedLocationName]!!
-                            // TODO: Should maybe be co-routine with try-catch
+                            authViewModel.location = locationViewModel.mapLocationNameToLocation.get(selectedLocationName)!!
                         }
-
                     )
                 }
             }

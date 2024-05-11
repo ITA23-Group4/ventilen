@@ -10,7 +10,7 @@ import kotlinx.coroutines.launch
 class LocationViewModel: ViewModel() {
     private val repository: Repository = Repository()
     var locations: List<Location> = listOf()
-    var mapLocationNameToLocation: Map<String, Location> = emptyMap()
+    var mapLocationNameToLocation: Map<String, Location> = emptyMap() //TODO: Locations are saved two places now
 
     init {
         getLocations()
@@ -20,7 +20,7 @@ class LocationViewModel: ViewModel() {
         viewModelScope.launch {
             try {
                 locations = repository.getLocations()
-                mapLocationNameToLocation = locations.associateBy { it.name }
+                mapLocationNameToLocation = locations.associateBy { location -> location.name }
                 Log.d("LOCATION_LIST", locations.toString())
             } catch (error: Exception) {
                 Log.d("ERROR", error.toString())
