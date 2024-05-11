@@ -17,9 +17,11 @@ class AuthViewModel : ViewModel() {
     private val repository: Repository = Repository()
 
     var username: String by mutableStateOf("")
-    var email: String by mutableStateOf("")
-    var location: Location by mutableStateOf(Location("",""))
-    var password: String by mutableStateOf("")
+    var email: String by mutableStateOf("christianbt96@gmail.com")
+    var location: Location by mutableStateOf(Location("Name","UID"))
+    var password: String by mutableStateOf("Ventilen1234")
+
+
 
     fun registerNewUser(
         onRegistrationSuccess: () -> Unit,

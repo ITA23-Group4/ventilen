@@ -1,5 +1,6 @@
 package com.example.ventilen_app.navigation
 
+import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -12,6 +13,7 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
@@ -21,6 +23,8 @@ import com.example.ventilen_app.generalViewModels.ChatViewModel
 import com.example.ventilen_app.generalViewModels.CurrentUserViewModel
 import com.example.ventilen_app.generalViewModels.LocationViewModel
 import com.example.ventilen_app.ui.components.scaffolds.CustomBottomNavigationBar
+import com.example.ventilen_app.ui.screens.Chat.ChatHubScreen
+import com.example.ventilen_app.ui.screens.Chat.ChatLocalScreen
 import com.example.ventilen_app.ui.screens.Event.EventScreen
 import com.example.ventilen_app.ui.screens.Event.EventScreenViewModel
 import com.example.ventilen_app.ui.screens.Home.HomeScreen
@@ -37,10 +41,11 @@ fun RootNavigation() {
     val navController = rememberNavController()
 
     // Initialize view models
-    val currentUserViewModel: CurrentUserViewModel = remember { CurrentUserViewModel() }
-    val authViewModel: AuthViewModel = remember { AuthViewModel() }
-    val eventScreenViewModel: EventScreenViewModel = remember { EventScreenViewModel() }
-    val locationsViewModel: LocationViewModel = remember { LocationViewModel() }
+    val currentUserViewModel: CurrentUserViewModel = viewModel<CurrentUserViewModel>()
+    val authViewModel: AuthViewModel = viewModel<AuthViewModel>()
+    val eventScreenViewModel: EventScreenViewModel = viewModel<EventScreenViewModel>()
+    val locationsViewModel: LocationViewModel = viewModel<LocationViewModel>()
+    val chatViewModel: ChatViewModel = viewModel<ChatViewModel>()
 
     // TODO: Remove
     currentUserViewModel.logout()
@@ -79,8 +84,7 @@ fun RootNavigation() {
                 }
             ) { paddingValues ->
                 Box(modifier = Modifier.padding(paddingValues)) {
-                    // Initialize ChatViewModel
-                    val chatViewModel: ChatViewModel = remember { ChatViewModel() }
+                    chatViewModel.messages // TODO: LOOK AT
                     HomeScreen(
                         textUsername = currentUserViewModel.currentUser?.username.toString(),
                         textUID = currentUserViewModel.currentUser?.uid.toString(),
@@ -92,10 +96,36 @@ fun RootNavigation() {
                         getCurrentUser = {
                             currentUserViewModel.getCurrentUser()
                         },
-                        onNavigateEvent = { navController.navigate("event") },
-                        chatViewModel = chatViewModel
+                        onNavigateEvent = {navController.navigate("event")},
+                        chatViewModel = chatViewModel,
+                        onNavigateChat = {navController.navigate("chat")}
                     )
                 }
+            }
+        }
+        navigation(
+            startDestination = "chat/hub",
+            route = "chat"
+        ) {
+            composable("chat/hub") {
+                chatViewModel.getLatestMessagesFromEachLocation() // Get the latest messages from each location in the database, before navigating to the ChatHubScreen TODO: LOOK AT
+                ChatHubScreen(
+                    listOfLatestMessagesLocations = chatViewModel.latestMessagesFromEachLocation,
+                    onChatLocalNavigate = {
+                        chatViewModel.selectedLocationChatID = it
+                        navController.navigate("chat/local")
+                    }
+                )
+            }
+            composable("chat/local") {
+                chatViewModel.getLocalMessages(chatViewModel.selectedLocationChatID) // Get the local messages for the selected location TODO: LOOK AT
+                Log.d("Chat", chatViewModel.localMessages.toString())
+                // It is logging this: androidx.lifecycle.MutableLiveData@********
+                // It should log the list of messages -- IDK dude
+                ChatLocalScreen(
+                    listOfLocationMessages = chatViewModel.localMessages, // TODO: USE CORRECT LIST
+                    onSendMessage = {}
+                )
             }
         }
         composable("event") {

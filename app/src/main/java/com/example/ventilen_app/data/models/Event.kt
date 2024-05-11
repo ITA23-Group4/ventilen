@@ -19,6 +19,7 @@ data class Event(
      * @param other The other Event to compare with.
      * @return A negative integer if this name is less than [other]'s name,
      *         zero if they are equal, or a positive integer if this name is greater.
+     * @author Marcus
      *
      * TODO: Look into Comparator if we want to sort in other ways than natural order
      */
