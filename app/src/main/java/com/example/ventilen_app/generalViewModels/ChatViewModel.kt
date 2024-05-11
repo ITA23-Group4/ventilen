@@ -18,6 +18,7 @@ import kotlinx.coroutines.launch
 class ChatViewModel : ViewModel() {
     private val chatRepository = ChatRepository()
 
+    var currentMessage: String by mutableStateOf("")
     var selectedLocationChatID by mutableStateOf("") // Might be a solution to select the right chat - idk if it's the best way
 
     // LiveData list of messages for observing real-time changes
@@ -68,18 +69,13 @@ class ChatViewModel : ViewModel() {
 
 
     fun sendMessage(
-        senderUID: String,
-        messageContent: String,
-        senderUsername: String,
-        locationID: String
+        message: Message
     ) {
         viewModelScope.launch{
             chatRepository.sendMessage(
-                senderUID,
-                messageContent,
-                senderUsername,
-                locationID
+                message
             )
+            currentMessage = ""
         }
     }
 

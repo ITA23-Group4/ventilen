@@ -11,13 +11,13 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
+import com.example.ventilen_app.data.models.Message
 import com.example.ventilen_app.generalViewModels.AuthViewModel
 import com.example.ventilen_app.generalViewModels.ChatViewModel
 import com.example.ventilen_app.generalViewModels.CurrentUserViewModel
@@ -28,6 +28,7 @@ import com.example.ventilen_app.ui.screens.Chat.ChatLocalScreen
 import com.example.ventilen_app.ui.screens.Event.EventScreen
 import com.example.ventilen_app.ui.screens.Event.EventScreenViewModel
 import com.example.ventilen_app.ui.screens.Home.HomeScreen
+import java.util.Date
 
 /**
  * Root navigation structure of the application.
@@ -108,13 +109,31 @@ fun RootNavigation() {
                 )
             }
             composable("chat/local") {
+
+
                 chatViewModel.getLocalMessages(chatViewModel.selectedLocationChatID) // Get the local messages for the selected location TODO: LOOK AT
                 Log.d("Chat", chatViewModel.localMessages.toString())
                 // It is logging this: androidx.lifecycle.MutableLiveData@********
                 // It should log the list of messages -- IDK dude
+
+
                 ChatLocalScreen(
-                    listOfLocationMessages = chatViewModel.localMessages, // TODO: USE CORRECT LIST
-                    onSendMessage = {}
+                    listOfLocationMessages = chatViewModel.messages.value!!, // TODO: USE CORRECT LIST
+                    onSendMessage = {
+                        chatViewModel.sendMessage(
+                        message = Message(
+                            senderUID = currentUserViewModel.currentUser?.uid!!,
+                            message = chatViewModel.currentMessage,
+                            timestamp = Date(),
+                            locationID = chatViewModel.selectedLocationChatID,
+                            username = currentUserViewModel.currentUser?.username!!
+                        )
+                    )
+                    },
+                    currentMessage = chatViewModel.currentMessage,
+                    onCurrentMessageChange = {
+                        chatViewModel.currentMessage = it
+                    }
                 )
             }
         }

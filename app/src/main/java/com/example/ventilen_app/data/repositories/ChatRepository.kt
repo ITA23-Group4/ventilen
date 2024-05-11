@@ -115,24 +115,23 @@ class ChatRepository {
 
 
     suspend fun sendMessage(
-        senderUID: String,
-        messageContent: String,
-        senderUsername: String,
-        locationID: String
+        message: Message
     ) {
 
-        // Why do we hashMap this?? :D
-        val message = hashMapOf(
-            "location" to locationID,
-            "message" to messageContent,
-            "senderUID" to senderUID,
-            "timestamp" to System.currentTimeMillis(),
-            "username" to senderUsername
+        val locationRef = db.collection("locations").document(message.locationID)
+        val senderUIDRef = db.collection("users").document(message.senderUID)
+
+        val messageHashMap = hashMapOf(
+            "location" to locationRef,
+            "message" to message.message,
+            "senderUID" to senderUIDRef,
+            "timestamp" to message.timestamp,
+            "username" to message.username
         )
 
         try {
             db.collection("chats")
-                .add(message)
+                .add(messageHashMap)
                 .await()
                 .let { documentReference ->
                     Log.d(TAG, "Message sent with ID: ${documentReference.id}")
