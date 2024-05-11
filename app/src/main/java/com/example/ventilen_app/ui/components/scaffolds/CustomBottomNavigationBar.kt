@@ -6,6 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.LocationOn
@@ -97,7 +98,7 @@ fun CustomBottomNavigationBar(
             label = { Text(text = "Events", style = MaterialTheme.typography.headlineMedium) },
             icon = {
                 Icon(
-                    imageVector = Icons.Default.LocationOn,
+                    imageVector = Icons.Default.DateRange,
                     contentDescription = "Event",
                     modifier = Modifier.size(30.dp)
                 )

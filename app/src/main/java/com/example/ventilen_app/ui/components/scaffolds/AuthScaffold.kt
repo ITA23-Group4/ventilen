@@ -25,7 +25,7 @@ import com.example.ventilen_app.ui.components.CustomBackButton
 @Composable
 fun AuthScaffold(
     showBackButton: Boolean = true,
-    onNavigateBack: () -> Unit,
+    onNavigateBack: () -> Unit = {},
     content: @Composable () -> Unit
 ) {
     Scaffold(
