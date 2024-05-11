@@ -14,18 +14,28 @@ import kotlinx.coroutines.tasks.await
 class ChatRepository {
     private val db = Firebase.firestore
 
+    /**
+     * Observes messages from our Firestore database collection "chats" and returns them as LiveData.
+     * Messages are ordered by timestamp in ascending order.
+     *
+     * @return LiveData object containing a list of messages.
+     */
     fun observeMessages(): LiveData<List<Message>> {
         val messagesLiveData = MutableLiveData<List<Message>>()
 
+        // Set up a listener to monitor changes in the Firestore "chats" collection
         db.collection("chats")
             .orderBy("timestamp", Query.Direction.ASCENDING)
             .addSnapshotListener { snapshot, exception ->
+                // Log an error if there's an issue retrieving messages
                 if (exception != null) {
                     Log.e(TAG, "Error observing messages", exception)
                     return@addSnapshotListener
                 }
 
-                val messages = snapshot?.documents?.mapNotNull { document ->
+                // Convert each Firestore document into a Message object using map
+                // TODO: Should maybe be a separate method
+                val messages = snapshot?.documents?.map { document ->
                     val senderRef = document.get("senderUID") as? DocumentReference
                     val senderUID = senderRef?.id ?: ""
                     val messageContent = document.getString("message") ?: ""
@@ -34,6 +44,7 @@ class ChatRepository {
                     Message(senderUID, messageContent, timestamp)
                 } ?: emptyList()
 
+                // Update LiveData with the list of messages
                 messagesLiveData.value = messages
             }
 

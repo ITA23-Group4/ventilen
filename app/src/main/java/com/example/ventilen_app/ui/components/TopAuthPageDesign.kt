@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -22,30 +23,14 @@ import com.example.ventilen_app.R
 
 @Composable
 fun TopAuthPageDesign(
-    hasBackButton: Boolean,
     topText: String,
-    bottomText: String,
-    onNavigateBack: () -> Unit
+    bottomText: String
 ) {
     Column(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Start,
-            modifier = Modifier.padding(16.dp)
-        ) {
-            if (hasBackButton) {
-                CustomBackButton(onNavigateBack)
-            }
-            Spacer(modifier = Modifier.width(600.dp))
-
-            Box {
-                //there will be progressbar or something
-            }
-
-        }
+        Spacer(modifier = Modifier.size(34.dp))
         Image(
             painter = painterResource(id = R.drawable.vent_logo),
             contentDescription = "Welcome Image",

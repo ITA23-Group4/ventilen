@@ -31,10 +31,8 @@ fun UsernameScreen(
         verticalArrangement = Arrangement.spacedBy(30.dp)
     ){
         TopAuthPageDesign(
-            hasBackButton = true,
             topText = "Hvad skal vi kalde dig",
             bottomText = "Indtast dit anonyme username" ,
-            onNavigateBack =  onNavigateBack
         )
         CustomTextField(
             text = textUsername,
