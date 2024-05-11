@@ -88,17 +88,7 @@ fun RootNavigation() {
                     HomeScreen(
                         textUsername = currentUserViewModel.currentUser?.username.toString(),
                         textUID = currentUserViewModel.currentUser?.uid.toString(),
-                        // TODO: Remove
-                        logout = {
-                            currentUserViewModel.logout()
-                            navController.navigate("auth")
-                        },
-                        getCurrentUser = {
-                            currentUserViewModel.getCurrentUser()
-                        },
-                        onNavigateEvent = {navController.navigate("event")},
-                        chatViewModel = chatViewModel,
-                        onNavigateChat = {navController.navigate("chat")}
+                        chatViewModel = chatViewModel, // TODO: REMOVE
                     )
                 }
             }

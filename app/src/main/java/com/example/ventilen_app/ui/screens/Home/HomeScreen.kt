@@ -24,12 +24,7 @@ import com.example.ventilen_app.ui.theme.CustomColorScheme
 fun HomeScreen(
     textUsername: String,
     textUID: String,
-    onNavigateEvent: () -> Unit,
-    chatViewModel: ChatViewModel, // TODO: REMOVE?
-    onNavigateChat: () -> Unit,
-    // TODO: Remove
-    logout: () -> Unit,
-    getCurrentUser: () -> Unit
+    chatViewModel: ChatViewModel // TODO: REMOVE?
 ) {
 
     CustomColumn(
@@ -48,14 +43,6 @@ fun HomeScreen(
             text = stringResource(R.string.home_welcome_uid, textUID),
             style = MaterialTheme.typography.headlineMedium
         )
-
-        CustomFilledButton(text = "Go to Event", onClick =  onNavigateEvent )
-
-        // TODO: Remove
-        CustomFilledButton(text = "Logout", onClick = logout)
-        CustomFilledButton(text = "Current User", onClick = getCurrentUser)
-        CustomFilledButton(text = "Go to Chat", onClick = onNavigateChat )
-        //
 
         LazyColumn {
             chatViewModel.messages.value?.let { messages ->

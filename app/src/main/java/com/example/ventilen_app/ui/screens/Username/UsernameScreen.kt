@@ -19,7 +19,6 @@ import com.example.ventilen_app.ui.theme.CustomColorScheme
 
 @Composable
 fun UsernameScreen(
-    onNavigateBack: () -> Unit,
     onNavigateLocation: () -> Unit,
     textUsername: String,
     onValueChange: (String) -> Unit,

@@ -27,7 +27,6 @@ fun LoginScreen(
     textPassword: String,
     onValueChangeEmail: (String) -> Unit,
     onValueChangePassword: (String) -> Unit,
-    onNavigateBack: () -> Unit,
     onNavigateRegistration: () -> Unit
 ) {
     CustomColumn(modifier = Modifier

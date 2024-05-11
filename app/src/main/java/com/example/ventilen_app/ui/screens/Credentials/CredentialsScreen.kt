@@ -22,8 +22,7 @@ fun CredentialsScreen(
     textEmail: String,
     textPassword: String,
     onValueChangeEmail: (String) -> Unit,
-    onValueChangePassword: (String) -> Unit,
-    onNavigateBack: () -> Unit
+    onValueChangePassword: (String) -> Unit
 ) {
     CustomColumn(
         horizontalAlignment = Alignment.CenterHorizontally ,
