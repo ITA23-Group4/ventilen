@@ -25,7 +25,8 @@ fun HomeScreen(
     textUsername: String,
     textUID: String,
     onNavigateEvent: () -> Unit,
-    chatViewModel: ChatViewModel,
+    chatViewModel: ChatViewModel, // TODO: REMOVE?
+    onNavigateChat: () -> Unit,
     // TODO: Remove
     logout: () -> Unit,
     getCurrentUser: () -> Unit
@@ -53,6 +54,8 @@ fun HomeScreen(
         // TODO: Remove
         CustomFilledButton(text = "Logout", onClick = logout)
         CustomFilledButton(text = "Current User", onClick = getCurrentUser)
+        CustomFilledButton(text = "Go to Chat", onClick = onNavigateChat )
+        //
 
         LazyColumn {
             chatViewModel.messages.value?.let { messages ->
@@ -61,7 +64,7 @@ fun HomeScreen(
                         text = "${message.senderUID}: ${message.message}",
                         style = MaterialTheme.typography.headlineMedium
                     )
-                    Log.d("CHAT", "${message.senderUID}: ${message.message}")
+                    Log.d("CHAT", "${message.senderUID}: ${message.message}. LocationID: ${message.locationID}")
                 }
             }
         }

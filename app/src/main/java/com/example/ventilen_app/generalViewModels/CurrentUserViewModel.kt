@@ -21,7 +21,7 @@ class CurrentUserViewModel : ViewModel() {
             try {
                 val currentUserUID: String = FirebaseAuth.getInstance().currentUser!!.uid
                 currentUser = repository.getUser(currentUserUID)
-                Log.d("CurrentUser:", currentUser.toString())
+                Log.d("CurrentUser:", "Username = ${currentUser?.username.toString()} primaryLocation = ${currentUser?.primaryLocationID.toString()} UID = ${currentUser?.uid.toString()}")
             } catch (error: Exception) {
                 Log.d("ERROR", error.toString());
             }
