@@ -4,7 +4,7 @@ import android.content.ContentValues.TAG
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.ventilen_app.data.models.LocationInfo
+import com.example.ventilen_app.data.models.Location
 import com.example.ventilen_app.data.models.Message
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.DocumentReference
@@ -56,13 +56,13 @@ class ChatRepository {
     }
 
     // Function to get the latest message from each location in the database
-    // Then it returns a list of LocationInfo objects
+    // Then it returns a list of Location objects
     // This function is accessing the locations collection in firebase (not chats)
     // This might not be the best way of doing it since now we both have:
     // - Location
-    // - LocationInfo
+    // - Location
     // Data classes but they do serve different purposes - idk?
-    suspend fun chatHubMessagesSnapshot(): List<LocationInfo> {
+    suspend fun chatHubMessagesSnapshot(): List<Location> {
         val querySnapshot = db.collection("locations")
             .get()
             .await()
@@ -72,7 +72,7 @@ class ChatRepository {
             val abbreviation = document.getString("abbreviation") ?: ""
             val locationID = document.id
 
-            LocationInfo(locationId, latestMessage, abbreviation, locationID)
+            Location(locationId, latestMessage, abbreviation, locationID)
         }
 
         return locations

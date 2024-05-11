@@ -9,13 +9,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.ventilen_app.data.models.LocationInfo
+import com.example.ventilen_app.data.models.Location
 import com.example.ventilen_app.ui.components.CustomChatCardComponent.CustomChatCard
 import com.example.ventilen_app.ui.components.CustomColumn
 
 @Composable
 fun ChatHubScreen(
-    listOfLatestMessagesLocations: List<LocationInfo>,
+    listOfLatestMessagesLocations: List<Location>,
     onChatLocalNavigate: (String) -> Unit
 ) {
     CustomColumn {
@@ -31,12 +31,12 @@ fun ChatHubScreen(
             modifier = Modifier.fillMaxWidth(),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ){
-            items(listOfLatestMessagesLocations) { locationInfo ->
+            items(listOfLatestMessagesLocations) { Location ->
                 CustomChatCard(
-                    locationName = locationInfo.locationName,
-                    latestMessage = locationInfo.latestMessage,
-                    abbreviation = locationInfo.abbreviation,
-                    onClick = { onChatLocalNavigate(locationInfo.locationID) }
+                    locationName = Location.locationName,
+                    latestMessage = Location.latestMessage,
+                    abbreviation = Location.abbreviation,
+                    onClick = { onChatLocalNavigate(Location.locationID!!) }
                 )
             }
         }

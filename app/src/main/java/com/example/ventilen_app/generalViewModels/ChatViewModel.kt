@@ -7,8 +7,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.ventilen_app.data.models.Location
 import com.example.ventilen_app.data.repositories.ChatRepository
-import com.example.ventilen_app.data.models.LocationInfo
 import com.example.ventilen_app.data.models.Message
 import kotlinx.coroutines.launch
 
@@ -48,7 +48,7 @@ class ChatViewModel : ViewModel() {
     // A non-mutable list of messages
     // It is non-mutable because it is run every time the screen is re-rendered
     // Therefore it does not need to be mutable since it is re-initialized every time
-    var latestMessagesFromEachLocation: List<LocationInfo> = emptyList<LocationInfo>()
+    var latestMessagesFromEachLocation: List<Location> = emptyList<Location>()
     // The function below is called whenever we navigate to the ChatHubScreen
     fun getLatestMessagesFromEachLocation() {
         viewModelScope.launch {
