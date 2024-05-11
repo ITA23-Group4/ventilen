@@ -16,15 +16,11 @@ class LocationRepository {
         }
     }
     private fun convertLocationDocumentToLocation(document: DocumentSnapshot): Location {
-        val abbreviation: String = document.getString("abbreviation") ?: ""
         val name: String = document.getString("name") ?: ""
-        val latestMessage: String = document.getString("latestMessage") ?: ""
         val id = document.id
         return Location(
             locationName = name,
-            locationID =  id,
-            abbreviation =  abbreviation,
-            latestMessage =  latestMessage
+            locationID =  id
         )
     }
 }

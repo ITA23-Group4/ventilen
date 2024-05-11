@@ -23,6 +23,12 @@ class ChatViewModel : ViewModel() {
 
     // LiveData list of messages for observing real-time changes
     val messages: LiveData<List<Message>> = chatRepository.observeMessages()
+    // TODO: ADD STATE :(
+    var locationsWithLatestMessages: List<Location> = emptyList<Location>()
+
+    init {
+        getLatestMessagesFromEachLocation()
+    }
 
     /*
 
@@ -45,12 +51,11 @@ class ChatViewModel : ViewModel() {
     // A non-mutable list of messages
     // It is non-mutable because it is run every time the screen is re-rendered
     // Therefore it does not need to be mutable since it is re-initialized every time
-    var latestMessagesFromEachLocation: List<Location> = emptyList<Location>()
     // The function below is called whenever we navigate to the ChatHubScreen
     fun getLatestMessagesFromEachLocation() {
         viewModelScope.launch {
             val latestMessages = chatRepository.chatHubMessagesSnapshot()
-            latestMessagesFromEachLocation = latestMessages
+            locationsWithLatestMessages = latestMessages
         }
     }
 

@@ -4,8 +4,8 @@ import com.google.firebase.firestore.DocumentId
 
 data class Location(
     var locationName: String,
-    var latestMessage: String,
-    var abbreviation: String,
+    var latestMessage: String = "",
+    var abbreviation: String = "",
     @DocumentId var locationID: String? = null
 ) : Comparable<Location> {
 
