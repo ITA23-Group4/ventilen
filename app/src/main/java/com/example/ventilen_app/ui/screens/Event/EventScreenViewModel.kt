@@ -52,7 +52,7 @@ class EventScreenViewModel: ViewModel() {
 
     private fun updateEventAttendeesCount(eventID: String) {
         viewModelScope.launch {
-            events.indexOfFirst { it.id == eventID }.let { eventIndex ->
+            events.indexOfFirst { it.eventID == eventID }.let { eventIndex ->
                 // Extract the updated attendees from the updated event
                 val updatedEvent = eventRepository.getEvent(eventID = eventID)
                 val updatedEventAttendees = updatedEvent.attendeesByUID

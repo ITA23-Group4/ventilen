@@ -31,10 +31,10 @@ fun EventScreen(
         ) {
             items(events) { event ->
                 CustomEventCard(
-                    title = event.title,
+                    title = event.eventName,
                     attendeesAmount = event.attendeesByUID.size,
-                    onAttend = { onAttend(event.id!!) },
-                    onNotAttend = { onNotAttend(event.id!!) }
+                    onAttend = { onAttend(event.eventID!!) },
+                    onNotAttend = { onNotAttend(event.eventID!!) }
                     //Lol
                 )
             }

@@ -42,6 +42,10 @@ class EventRepository {
         val attendees: List<DocumentReference> = document.get("attendees") as? List<DocumentReference> ?: emptyList()
         val attendeeUIDs: MutableList<String> = attendees.map { it.id }.toMutableList()
         val id = document.id
-        return Event(title, attendeeUIDs, id)
+        return Event(
+            eventName =  title,
+            attendeesByUID =  attendeeUIDs,
+            eventID =  id
+        )
     }
 }

@@ -16,16 +16,12 @@ import kotlinx.coroutines.launch
 // - current route
 // - primaryLocationID
 class ChatViewModel : ViewModel() {
-    private val repository = ChatRepository()
+    private val chatRepository = ChatRepository()
 
     var selectedLocationChatID by mutableStateOf("") // Might be a solution to select the right chat - idk if it's the best way
 
     // LiveData list of messages for observing real-time changes
-    val messages: LiveData<List<Message>> = if (true) {
-            repository.observeMessages()
-        } else {
-            repository.observeMessages()
-        }
+    val messages: LiveData<List<Message>> = chatRepository.observeMessages()
 
     /*
 
@@ -52,7 +48,7 @@ class ChatViewModel : ViewModel() {
     // The function below is called whenever we navigate to the ChatHubScreen
     fun getLatestMessagesFromEachLocation() {
         viewModelScope.launch {
-            val latestMessages = repository.chatHubMessagesSnapshot()
+            val latestMessages = chatRepository.chatHubMessagesSnapshot()
             latestMessagesFromEachLocation = latestMessages
         }
     }
@@ -62,7 +58,7 @@ class ChatViewModel : ViewModel() {
     var localMessages: LiveData<List<Message>> = MutableLiveData<List<Message>>()
     fun getLocalMessages(locationID: String) {
         viewModelScope.launch {
-            val messages = repository.observeMessagesByLocation(locationID)
+            val messages = chatRepository.observeMessagesByLocation(locationID)
             localMessages = messages
         }
     }
@@ -78,7 +74,7 @@ class ChatViewModel : ViewModel() {
         locationID: String
     ) {
         viewModelScope.launch{
-            repository.sendMessage(
+            chatRepository.sendMessage(
                 senderUID,
                 messageContent,
                 senderUsername,

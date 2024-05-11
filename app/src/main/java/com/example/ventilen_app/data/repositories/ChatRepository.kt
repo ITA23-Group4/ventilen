@@ -26,7 +26,8 @@ class ChatRepository {
 
         // Set up a listener to monitor changes in the Firestore "chats" collection
         db.collection("chats")
-            .orderBy("timestamp", Query.Direction.ASCENDING)
+            .orderBy("timestamp", Query.Direction.DESCENDING)
+            .limit(3)
             .addSnapshotListener { snapshot, exception ->
                 // Log an error if there's an issue retrieving messages
                 if (exception != null) {
@@ -40,7 +41,7 @@ class ChatRepository {
                     val senderRef = document.get("senderUID") as? DocumentReference
                     val senderUID = senderRef?.id ?: ""
                     val messageContent = document.getString("message") ?: ""
-                    val timestamp = document.getTimestamp("timestamp")?.toDate()?.time ?: 0
+                    val timestamp = document.getTimestamp("timestamp")!!.toDate()
                     val locationRef = document.get("location") as? DocumentReference
                     val locationID = locationRef?.id ?: ""
                     val username = document.getString("username") ?: ""
@@ -98,7 +99,7 @@ class ChatRepository {
                     val senderRef = document.get("senderUID") as? DocumentReference
                     val senderUID = senderRef?.id ?: ""
                     val messageContent = document.getString("message") ?: ""
-                    val timestamp = document.getTimestamp("timestamp")?.toDate()?.time ?: 0
+                    val timestamp = document.getTimestamp("timestamp")!!.toDate()
                     val locationRef = document.get("location") as? DocumentReference
                     val locationID = locationRef?.id ?: ""
                     val username = document.getString("username") ?: ""
@@ -141,15 +142,4 @@ class ChatRepository {
         }
     }
 
-
-    // Specific location messages function
-    /*
-    suspend fun getMessagesByLocation(locationId: String): List<Message> {
-        val querySnapshot = db.collection("chats")
-            .whereEqualTo("location", locationId)
-            .get()
-            .await()
-        return querySnapshot.documents.mapNotNull { it.toObject(Message::class.java) }
-    }
-    */
 }
