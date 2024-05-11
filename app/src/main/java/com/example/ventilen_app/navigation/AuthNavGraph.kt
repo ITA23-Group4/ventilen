@@ -6,10 +6,10 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import com.example.ventilen_app.generalViewModels.AuthViewModel
 import com.example.ventilen_app.generalViewModels.CurrentUserViewModel
+import com.example.ventilen_app.generalViewModels.LocationViewModel
 import com.example.ventilen_app.ui.components.scaffolds.AuthScaffold
 import com.example.ventilen_app.ui.screens.Credentials.CredentialsScreen
 import com.example.ventilen_app.ui.screens.Location.LocationScreen
-import com.example.ventilen_app.ui.screens.Location.LocationsViewModel
 import com.example.ventilen_app.ui.screens.Login.LoginScreen
 import com.example.ventilen_app.ui.screens.Username.UsernameScreen
 import com.example.ventilen_app.ui.screens.Welcome.WelcomeScreen
@@ -28,7 +28,7 @@ fun NavGraphBuilder.AuthNavGraph(
     navController: NavController,
     currentUserViewModel: CurrentUserViewModel,
     authViewModel: AuthViewModel,
-    locationsViewModel: LocationsViewModel
+    locationsViewModel: LocationViewModel
 ) {
     composable("auth/welcome") {
         AuthScaffold(
@@ -136,9 +136,11 @@ fun NavGraphBuilder.AuthNavGraph(
                         )
                     },
                     onNavigateBack = { navController.popBackStack() },
-                    locations = locationsViewModel.locationNames,
-                    selectedLocation = authViewModel.location,
-                    onLocationValueChanged = { authViewModel.location = it }
+                    locations = locationsViewModel.locations.map { it.name },
+                    selectedLocation = authViewModel.location.name,
+                    onLocationValueChanged = { selectedLocationName ->
+                        authViewModel.location = locationsViewModel.mapLocationNameToLocation.get(selectedLocationName)!!
+                    }
                 )
             }
         }

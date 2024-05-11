@@ -19,11 +19,11 @@ import androidx.navigation.compose.rememberNavController
 import com.example.ventilen_app.generalViewModels.AuthViewModel
 import com.example.ventilen_app.generalViewModels.ChatViewModel
 import com.example.ventilen_app.generalViewModels.CurrentUserViewModel
+import com.example.ventilen_app.generalViewModels.LocationViewModel
 import com.example.ventilen_app.ui.components.scaffolds.CustomBottomNavigationBar
 import com.example.ventilen_app.ui.screens.Event.EventScreen
 import com.example.ventilen_app.ui.screens.Event.EventScreenViewModel
 import com.example.ventilen_app.ui.screens.Home.HomeScreen
-import com.example.ventilen_app.ui.screens.Location.LocationsViewModel
 
 /**
  * Root navigation structure of the application.
@@ -40,7 +40,7 @@ fun RootNavigation() {
     val currentUserViewModel: CurrentUserViewModel = remember { CurrentUserViewModel() }
     val authViewModel: AuthViewModel = remember { AuthViewModel() }
     val eventScreenViewModel: EventScreenViewModel = remember { EventScreenViewModel() }
-    val locationsViewModel: LocationsViewModel = remember { LocationsViewModel() }
+    val locationsViewModel: LocationViewModel = remember { LocationViewModel() }
 
     // TODO: Remove
     currentUserViewModel.logout()
