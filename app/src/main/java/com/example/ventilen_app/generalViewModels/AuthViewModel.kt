@@ -21,8 +21,6 @@ class AuthViewModel : ViewModel() {
     var location: Location by mutableStateOf(Location("Name","UID"))
     var password: String by mutableStateOf("Ventilen1234")
 
-
-
     fun registerNewUser(
         onRegistrationSuccess: () -> Unit,
         onRegistrationFailed: () -> Unit
