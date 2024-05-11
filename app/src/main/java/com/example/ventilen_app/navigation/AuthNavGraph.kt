@@ -136,7 +136,7 @@ fun NavGraphBuilder.AuthNavGraph(
                         )
                     },
                     onNavigateBack = { navController.popBackStack() },
-                    locations = locationsViewModel.locations.map { it.locationName },
+                    locations = locationsViewModel.locations.sorted().map { it.locationName },
                     selectedLocation = authViewModel.location.locationName,
                     onLocationValueChanged = { selectedLocationName ->
                         authViewModel.location = locationsViewModel.mapLocationNameToLocation.get(selectedLocationName)!!
