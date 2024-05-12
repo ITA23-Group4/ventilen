@@ -41,9 +41,6 @@ class ChatViewModel : ViewModel() {
         }
     }
 
-    init {
-    }
-
     /*
 
     init {

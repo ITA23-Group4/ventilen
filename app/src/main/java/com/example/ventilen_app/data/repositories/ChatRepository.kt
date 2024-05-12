@@ -19,7 +19,7 @@ class ChatRepository {
      * Observes messages from our Firestore database collection "chats" and returns them as LiveData.
      * Messages are ordered by timestamp in ascending order.
      *
-     * @return LiveData object containing a list of messages.
+     * @callback update messages with list of messages from snapshot
      */
     fun observeMessages(updateMessages: (List<Message>) -> Unit) {
         // Set up a listener to monitor changes in the Firestore "chats" collection
