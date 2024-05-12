@@ -31,8 +31,6 @@ import com.example.ventilen_app.ui.screens.Event.EventCardDetailRow
 import com.example.ventilen_app.ui.theme.VentilenAppTheme
 
 // TODO: Split up into more composable for readability
-// TODO: un expand the others when one i expanded
-// TODO: A lot of hoisting
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CustomEventCard(
@@ -139,8 +137,9 @@ fun CustomEventCard(
                     MaterialTheme.colorScheme.primary
                 )
                 .padding(8.dp),
-            horizontalArrangement = Arrangement.Start,
+            horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
+
         ) {
             Text(
                 text = "Deltagere: ${attendeesAmount}",

@@ -22,7 +22,6 @@ fun EventCardDetailRow(
         modifier = Modifier
             .fillMaxWidth(),
         horizontalArrangement = Arrangement.spacedBy(8.dp),
-        verticalAlignment = Alignment.CenterVertically
     ) {
         Icon(
             imageVector = icon,
