@@ -12,14 +12,20 @@ import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.firestore
 import kotlinx.coroutines.tasks.await
 
+/**
+ * Repository class responsible for handling chat-related data operations.
+ *
+ * @property db Firebase Firestore instance.
+ * @author Marcus, Christian
+ */
 class ChatRepository {
     private val db = Firebase.firestore
 
     /**
-     * Observes messages from our Firestore database collection "chats" and returns them as LiveData.
-     * Messages are ordered by timestamp in ascending order.
+     * Observes changes in the Firestore "chats" collection and invokes the provided callback
+     * with the updated list of messages whenever there is a change.
      *
-     * @callback update messages with list of messages from snapshot
+     * @param updateMessages Callback function to be invoked with the updated list of messages.
      */
     fun observeMessages(updateMessages: (List<Message>) -> Unit) {
         // Set up a listener to monitor changes in the Firestore "chats" collection
@@ -46,6 +52,7 @@ class ChatRepository {
                     Message(senderUID, messageContent, timestamp, locationID, username)
                 } ?: emptyList()
 
+                // Invoke the callback with the updated list of messages
                 updateMessages(messages)
             }
     }
