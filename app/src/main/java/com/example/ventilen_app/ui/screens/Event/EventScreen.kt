@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -19,8 +20,10 @@ import com.example.ventilen_app.ui.theme.VentilenAppTheme
 @Composable
 fun EventScreen(
     events: List<Event>,
+    isExpandedHashMap: MutableMap<String, MutableState<Boolean>>,
     onAttend: (String) -> Unit,
-    onNotAttend: (String) -> Unit
+    onNotAttend: (String) -> Unit,
+    onCardClick: (String) -> Unit,
 ) {
     CustomColumn {
         LazyColumn(
@@ -35,11 +38,12 @@ fun EventScreen(
                     title = event.eventName,
                     attendeesAmount = event.attendeesByUID.size,
                     onAttend = { onAttend(event.eventID) },
-                    onNotAttend = { onNotAttend(event.eventID) }
+                    onNotAttend = { onNotAttend(event.eventID) },
+                    isExpanded = isExpandedHashMap[event.eventID]!!,
+                    onCardClick = { onCardClick(event.eventID) }
                 )
             }
         }
-
     }
 }
 
@@ -52,6 +56,6 @@ fun EventScreenPreview() {
         Event(eventName = "Pita Night", attendeesByUID = mutableListOf(), eventID = "3")
     )
     VentilenAppTheme {
-        EventScreen(events = sampleEvents, onAttend = {}, onNotAttend = {})
+        EventScreen(events = sampleEvents, onAttend = {}, onNotAttend = {}, onCardClick = {}, isExpandedHashMap = hashMapOf())
     }
 }

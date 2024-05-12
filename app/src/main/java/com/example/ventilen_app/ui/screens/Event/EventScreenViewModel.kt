@@ -1,7 +1,9 @@
 package com.example.ventilen_app.ui.screens.Event
 
 import android.util.Log
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.ventilen_app.data.models.Event
@@ -12,6 +14,8 @@ class EventScreenViewModel: ViewModel() {
     private val eventRepository: EventRepository = EventRepository()
     val events: MutableList<Event> = mutableStateListOf()
 
+    val isExpandedStateMap: MutableMap<String, MutableState<Boolean>> = mutableMapOf()
+
     init {
         getEvents()
     }
@@ -21,7 +25,9 @@ class EventScreenViewModel: ViewModel() {
             try {
                 events.clear()
                 events.addAll(eventRepository.getEvents())
-                // events = repository.getEvents() with 'var events' was the recompose problem
+                events.forEach { event ->
+                    isExpandedStateMap[event.eventID] = mutableStateOf(false)
+                }
             } catch (error: Exception) {
                 Log.d("GetAllEvents", "ERROR: ${error.message}")
             }
@@ -65,6 +71,12 @@ class EventScreenViewModel: ViewModel() {
                 events[eventIndex] = eventWithUpdatedAttendees
             }
         }
+    }
+
+    // Function to toggle expanded state for a specific event
+    fun toggleExpandedState(eventID: String) {
+        val isExpandedValue = isExpandedStateMap[eventID]!!.value
+        isExpandedStateMap[eventID]!!.value = !isExpandedValue
     }
 
 }
