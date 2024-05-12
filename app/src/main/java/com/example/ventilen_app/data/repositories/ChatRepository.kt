@@ -21,9 +21,7 @@ class ChatRepository {
      *
      * @return LiveData object containing a list of messages.
      */
-    fun observeMessages(): LiveData<List<Message>> {
-        val messagesLiveData = MutableLiveData<List<Message>>()
-
+    fun observeMessages(updateMessages: (List<Message>) -> Unit) {
         // Set up a listener to monitor changes in the Firestore "chats" collection
         db.collection("chats")
             .orderBy("timestamp", Query.Direction.DESCENDING)
@@ -36,8 +34,7 @@ class ChatRepository {
                 }
 
                 // Convert each Firestore document into a Message object using map
-                // TODO: Should maybe be a separate method
-                val messages = snapshot?.documents?.map { document ->
+                val messages: List<Message> = snapshot?.documents?.map { document ->
                     val senderRef = document.get("senderUID") as? DocumentReference
                     val senderUID = senderRef?.id ?: ""
                     val messageContent = document.getString("message") ?: ""
@@ -49,12 +46,10 @@ class ChatRepository {
                     Message(senderUID, messageContent, timestamp, locationID, username)
                 } ?: emptyList()
 
-                // Update LiveData with the list of messages
-                messagesLiveData.value = messages
+                updateMessages(messages)
             }
-
-        return messagesLiveData
     }
+
 
     // Function to get the latest message from each location in the database
     // Then it returns a list of Location objects

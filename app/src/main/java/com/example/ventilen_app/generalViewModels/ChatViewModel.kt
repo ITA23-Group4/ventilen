@@ -1,6 +1,7 @@
 package com.example.ventilen_app.generalViewModels
 
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.LiveData
@@ -22,12 +23,25 @@ class ChatViewModel : ViewModel() {
     var selectedLocationChatID by mutableStateOf("") // Might be a solution to select the right chat - idk if it's the best way
 
     // LiveData list of messages for observing real-time changes
-    val messages: LiveData<List<Message>> = chatRepository.observeMessages()
+    //val messages: LiveData<List<Message>> = chatRepository.observeMessages()
     // TODO: ADD STATE :(
     var locationsWithLatestMessages: List<Location> = emptyList<Location>()
 
+    val messages: MutableList<Message> = mutableStateListOf() // MutableState to hold the list of messages
+
     init {
         getLatestMessagesFromEachLocation()
+        observeMessages()
+    }
+
+    private fun observeMessages() {
+        chatRepository.observeMessages { messages: List<Message> ->
+            this.messages.clear()
+            this.messages.addAll(messages)
+        }
+    }
+
+    init {
     }
 
     /*

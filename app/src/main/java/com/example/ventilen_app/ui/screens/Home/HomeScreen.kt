@@ -45,7 +45,7 @@ fun HomeScreen(
         )
 
         LazyColumn {
-            chatViewModel.messages.value?.let { messages ->
+            chatViewModel.messages?.let { messages ->
                 items(messages.toMutableList()) { message ->
                     Text(
                         text = "${message.senderUID}: ${message.message}",
