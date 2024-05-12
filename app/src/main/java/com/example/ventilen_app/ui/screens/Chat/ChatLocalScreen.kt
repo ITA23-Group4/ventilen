@@ -10,16 +10,18 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.LiveData
 import com.example.ventilen_app.data.models.Message
 import com.example.ventilen_app.ui.components.CustomFilledButton
 import com.example.ventilen_app.ui.components.CustomTextField
+import kotlinx.coroutines.flow.StateFlow
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun ChatLocalScreen(
-    listOfLocationMessages: List<Message>,
+    listOfLocationMessages: State<List<Message>>,
     onSendMessage: () -> Unit, // To use when sending message
     currentMessage: String,
     onCurrentMessageChange: (String) -> Unit,
@@ -35,14 +37,12 @@ fun ChatLocalScreen(
                 LazyColumn(
                     reverseLayout = true
                 ) {
-                    listOfLocationMessages.let { messages ->
-                        items(messages) { message ->
-                            Text(
-                                text = "${message.senderUID}: ${message.message}",
-                                style = MaterialTheme.typography.headlineMedium
-                            )
-                            Log.d("CHAT", "${message.senderUID}: ${message.message}. LocationID: ${message.locationID}. Timestamp: ${message.timestamp}")
-                        }
+                    items(listOfLocationMessages.value) { message ->
+                        Text(
+                            text = "${message.senderUID}: ${message.message}",
+                            style = MaterialTheme.typography.headlineMedium
+                        )
+                        Log.d("CHAT", "${message.senderUID}: ${message.message}. LocationID: ${message.locationID}. Timestamp: ${message.timestamp}")
                     }
                 }
                 CustomFilledButton(text = "Send", onClick = onSendMessage )

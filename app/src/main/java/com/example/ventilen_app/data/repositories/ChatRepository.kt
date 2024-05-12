@@ -11,6 +11,8 @@ import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.firestore
 import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 
 /**
  * Repository class responsible for handling chat-related data operations.
@@ -86,10 +88,11 @@ class ChatRepository {
     // Usefull links:
     // https://stackoverflow.com/questions/50207339/cloud-firestore-failed-precondition-the-query-requires-an-index
     // https://www.fullstackfirebase.com/cloud-firestore/indexes
-    fun observeMessagesByLocation(locationId: String): LiveData<List<Message>> {
-        val messagesLiveData = MutableLiveData<List<Message>>()
-        db.collection("chats")
-            .whereEqualTo("location", locationId)
+    private val _messagesFlow = MutableStateFlow<List<Message>>(emptyList())
+    val messagesFlow: StateFlow<List<Message>> get() = _messagesFlow
+    fun observeMessagesByLocation(locationId: String) {
+        db.collection("locations").document(locationId).collection("messages")
+            .orderBy("timestamp", Query.Direction.DESCENDING)
             .addSnapshotListener { snapshot, exception ->
                 if (exception != null) {
                     Log.e(TAG, "Error observing messages", exception)
@@ -108,10 +111,8 @@ class ChatRepository {
                     Message(senderUID, messageContent, timestamp, locationID, username)
                 } ?: emptyList()
 
-                messagesLiveData.value = messages
+                _messagesFlow.value = messages
             }
-
-        return messagesLiveData
     }
 
 
