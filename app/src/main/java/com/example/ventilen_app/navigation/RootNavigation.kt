@@ -55,7 +55,7 @@ fun RootNavigation() {
             startDestination = "auth/welcome",
             route = "auth"
         ) {
-            authNavGraph(
+            AuthNavGraph(
                 navController = navController,
                 currentUserViewModel = currentUserViewModel,
                 authViewModel = authViewModel,
@@ -112,7 +112,7 @@ fun RootNavigation() {
                 chatViewModel.getLocalMessages(chatViewModel.selectedLocationChatID) // Get the local messages for the selected location
                 ChatLocalScreen(
                     listOfLocationMessages = chatViewModel.localMessages.collectAsState(),
-                    onSendMessage = {
+                    /*onSendMessage = {
                         chatViewModel.sendMessage(
                         message = Message(
                             senderUID = currentUserViewModel.currentUser?.uid!!,
@@ -126,7 +126,7 @@ fun RootNavigation() {
                     currentMessage = chatViewModel.currentMessage,
                     onCurrentMessageChange = {
                         chatViewModel.currentMessage = it
-                    },
+                    }*/
                     isCurrentUserSender = {
                         chatViewModel.isCurrentUserSender(currentUserViewModel.getUID(), it)
                     }
