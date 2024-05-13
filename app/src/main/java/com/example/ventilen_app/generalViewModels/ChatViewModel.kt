@@ -49,4 +49,8 @@ class ChatViewModel : ViewModel() {
         }
     }
 
+    fun isCurrentUserSender(currentUserUID: String, messageUserUID: String): Boolean {
+        return currentUserUID == messageUserUID
+    }
+
 }
