@@ -32,7 +32,7 @@ data class Event(
      * TODO: Look into Comparator if we want to sort in other ways than natural order
      */
     override fun compareTo(other: Event): Int {
-        return eventName.compareTo(other.eventName)
+        return eventDateTime.compareTo(other.eventDateTime)
     }
 
     fun getDate(): String {

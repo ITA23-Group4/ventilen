@@ -55,7 +55,7 @@ fun RootNavigation() {
             startDestination = "auth/welcome",
             route = "auth"
         ) {
-            authNavGraph(
+            AuthNavGraph(
                 navController = navController,
                 currentUserViewModel = currentUserViewModel,
                 authViewModel = authViewModel,
@@ -181,7 +181,7 @@ fun RootNavigation() {
                 ) { paddingValues ->
                     Box(modifier = Modifier.padding(paddingValues)) {
                         EventScreen(
-                            events = eventScreenViewModel.events,
+                            events = eventScreenViewModel.events.sorted(),
                             onAttend = {
                                 eventScreenViewModel.addUserToEvent(
                                     currentUserUID = currentUserViewModel.currentUser?.uid!!,
