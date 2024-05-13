@@ -47,7 +47,7 @@ fun EventCardDetails(
             icon = Icons.Default.ShoppingCart,
             contentDescription = "Price",
             content = {
-                Text(text = "Pris: $price kr")
+                Text(text = "Pris: ${price.toInt()} kr.")
             }
         )
     }
