@@ -49,10 +49,6 @@ fun ChatLocalScreen(
                     message = message,
                     currentUserIsSender = isCurrentUserSender(message.senderUID)
                 )
-                Log.d(
-                    "CHAT",
-                    "${message.senderUID}: ${message.message}. LocationID: ${message.locationID}. Timestamp: ${message.timestamp}"
-                )
             }
         }
     }
