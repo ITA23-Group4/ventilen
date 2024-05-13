@@ -28,7 +28,7 @@ fun EventCardDetailRow(
             imageVector = icon,
             contentDescription = contentDescription,
             tint = MaterialTheme.colorScheme.primary,
-            modifier = Modifier.size(30.dp)
+            modifier = Modifier.size(40.dp)
         )
         content()
     }

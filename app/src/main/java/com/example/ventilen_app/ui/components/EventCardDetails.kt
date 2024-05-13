@@ -27,7 +27,7 @@ fun EventCardDetails(
         modifier = modifier
             .fillMaxWidth(),
         horizontalAlignment = Alignment.Start,
-        verticalArrangement = Arrangement.spacedBy(12.dp),
+        verticalArrangement = Arrangement.spacedBy(14.dp),
     ) {
         EventCardDetailRow(
             icon = Icons.Default.LocationOn,
