@@ -26,6 +26,17 @@ import com.example.ventilen_app.ui.theme.VentilenAppTheme
 import com.google.firebase.Timestamp
 import java.util.Date
 
+/**
+ * Composable function to display a custom event card.
+ *
+ * @param event The event to display.
+ * @param isAttending indicating whether the user is attending the event.
+ * @param onAttend Callback function when the user decides to attend the event.
+ * @param onNotAttend Callback function when the user decides not to attend the event.
+ * @param isExpanded indicating whether the event card is expanded.
+ * @param onCardClick Callback function when the event card is clicked.
+ * @author Marcus, Christian, Nikolaj
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CustomEventCard(
