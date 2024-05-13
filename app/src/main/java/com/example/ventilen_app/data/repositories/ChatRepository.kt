@@ -132,7 +132,7 @@ class ChatRepository {
         )
 
         try {
-            db.collection("chats")
+            db.collection("locations").document(message.locationID).collection("messages")
                 .add(messageHashMap)
                 .await()
                 .let { documentReference ->
