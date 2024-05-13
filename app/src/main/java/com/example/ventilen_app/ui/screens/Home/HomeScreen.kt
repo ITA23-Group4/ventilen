@@ -19,21 +19,17 @@ import com.example.ventilen_app.ui.components.CustomColumn
 import com.example.ventilen_app.ui.components.CustomFilledButton
 import com.example.ventilen_app.ui.theme.CustomColorScheme
 
-
 @Composable
 fun HomeScreen(
     textUsername: String,
     textUID: String,
-    chatViewModel: ChatViewModel // TODO: REMOVE?
 ) {
-
     CustomColumn(
         modifier = Modifier
             .fillMaxSize()
             .background(CustomColorScheme.Mocha),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(30.dp)) {
-
         Text(
             text = stringResource(R.string.home_welcome_title, textUsername),
             style = MaterialTheme.typography.headlineLarge
