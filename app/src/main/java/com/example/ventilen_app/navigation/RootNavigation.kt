@@ -163,7 +163,7 @@ fun RootNavigation() {
                 eventScreenViewModel.clearSelectedEventCard() // TODO: Scuffed transition on navigation
                 Scaffold(
                     topBar = {
-                        TopAppBar(
+                        CenterAlignedTopAppBar(
                             colors = TopAppBarDefaults.topAppBarColors(
                                 containerColor = MaterialTheme.colorScheme.surface,
                                 navigationIconContentColor = MaterialTheme.colorScheme.onSurface,
