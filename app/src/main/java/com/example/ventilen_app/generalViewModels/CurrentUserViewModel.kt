@@ -33,4 +33,8 @@ class CurrentUserViewModel : ViewModel() {
         FirebaseAuth.getInstance().signOut()
     }
 
+    fun getUID(): String {
+        return currentUser!!.uid!!
+    }
+
 }
