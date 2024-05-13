@@ -1,5 +1,6 @@
 package com.example.ventilen_app.navigation
 
+import android.annotation.SuppressLint
 import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
@@ -11,6 +12,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
@@ -35,6 +37,7 @@ import java.util.Date
  *
  * @author Marcus, Christian, Nikolaj
  */
+@SuppressLint("StateFlowValueCalledInComposition")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RootNavigation() {
@@ -47,10 +50,6 @@ fun RootNavigation() {
     val eventScreenViewModel: EventScreenViewModel = viewModel<EventScreenViewModel>()
     val locationsViewModel: LocationViewModel = viewModel<LocationViewModel>()
     val chatViewModel: ChatViewModel = viewModel<ChatViewModel>()
-
-    // TODO: Remove
-    currentUserViewModel.logout()
-    currentUserViewModel.getCurrentUser()
 
     NavHost(navController = navController, startDestination = "auth") {
         navigation(
@@ -85,11 +84,9 @@ fun RootNavigation() {
                 }
             ) { paddingValues ->
                 Box(modifier = Modifier.padding(paddingValues)) {
-                    chatViewModel.messages // TODO: LOOK AT
                     HomeScreen(
                         textUsername = currentUserViewModel.currentUser?.username.toString(),
                         textUID = currentUserViewModel.currentUser?.uid.toString(),
-                        chatViewModel = chatViewModel, // TODO: REMOVE
                     )
                 }
             }
@@ -99,7 +96,6 @@ fun RootNavigation() {
             route = "chat"
         ) {
             composable("chat/hub") {
-
                 chatViewModel.getLatestMessagesFromEachLocation() // Get the latest messages from each location in the database, before navigating to the ChatHubScreen TODO: LOOK AT
                 ChatHubScreen(
                     locationsExcludingCurrentUserPrimaryLocation = chatViewModel.locationsWithLatestMessages.filter { location ->
@@ -114,16 +110,9 @@ fun RootNavigation() {
                 )
             }
             composable("chat/local") {
-
-
-                chatViewModel.getLocalMessages(chatViewModel.selectedLocationChatID) // Get the local messages for the selected location TODO: LOOK AT
-                Log.d("Chat", chatViewModel.localMessages.toString())
-                // It is logging this: androidx.lifecycle.MutableLiveData@********
-                // It should log the list of messages -- IDK dude
-
-
+                chatViewModel.getLocalMessages(chatViewModel.selectedLocationChatID) // Get the local messages for the selected location
                 ChatLocalScreen(
-                    listOfLocationMessages = chatViewModel.messages!!, // TODO: USE CORRECT LIST (LOCAL MESSAGES)
+                    listOfLocationMessages = chatViewModel.localMessages.collectAsState(),
                     onSendMessage = {
                         chatViewModel.sendMessage(
                         message = Message(
