@@ -88,4 +88,8 @@ class EventScreenViewModel: ViewModel() {
         selectedEventCardID = if (isSelectedEvent(eventID)) "" else eventID
     }
 
+    fun clearSelectedEventCard() {
+        selectedEventCardID = ""
+    }
+
 }

@@ -56,7 +56,7 @@ fun RootNavigation() {
             startDestination = "auth/welcome",
             route = "auth"
         ) {
-            AuthNavGraph(
+            authNavGraph(
                 navController = navController,
                 currentUserViewModel = currentUserViewModel,
                 authViewModel = authViewModel,
@@ -160,6 +160,7 @@ fun RootNavigation() {
                 }
             }
             composable("event") {
+                eventScreenViewModel.clearSelectedEventCard() // TODO: Scuffed transition on navigation
                 Scaffold(
                     topBar = {
                         TopAppBar(
