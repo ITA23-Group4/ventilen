@@ -3,31 +3,24 @@ package com.example.ventilen_app.ui.components.CustomEventCardComponent
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Info
-import androidx.compose.material.icons.filled.LocationOn
-import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.ventilen_app.ui.components.CustomSwitchComponent.CustomSwitch
-import com.example.ventilen_app.ui.components.EventCardDetailRow
+import com.example.ventilen_app.ui.components.EventCardAttendeesRow
+import com.example.ventilen_app.ui.components.EventCardDetails
+import com.example.ventilen_app.ui.components.EventCardTopRow
 import com.example.ventilen_app.ui.theme.VentilenAppTheme
 
 // TODO: Split up into more composable for readability
@@ -54,103 +47,50 @@ fun CustomEventCard(
                     durationMillis = 300,
                     easing = LinearOutSlowInEasing
                 )
-            )
-            .padding(8.dp),
+            ),
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surface
         ),
         shape = RoundedCornerShape(8.dp),
         onClick = onCardClick
     ) {
-        Row(
+        Column (
             modifier = Modifier
-                .fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Text(
-                modifier = Modifier
-                    .padding(8.dp),
-                text = title,
-                style = MaterialTheme.typography.bodyMedium
+                .fillMaxSize()
+                .padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ){
+            EventCardTopRow(
+                title = title,
+                isExpanded = isExpanded,
+                date = date
             )
-            if (!isExpanded) {
-                Text(
-                    modifier = Modifier
-                        .padding(8.dp),
-                    text = date,
-                    style = MaterialTheme.typography.headlineMedium
+
+            // TODO: Should probably be hoisted :)
+            // EventCard description
+            if (isExpanded) {
+                Text(text = description)
+            } else {
+                Text(text = description.take(90) + "...")
+            }
+
+            if (isExpanded) {
+                EventCardDetails(
+                    address = address,
+                    date = date,
+                    price = price,
+                    modifier = Modifier.padding(0.dp, 8.dp)
                 )
             }
         }
 
-        // TODO: Should probably be hoisted :)
-        if (isExpanded) {
-            Text(
-                text = description,
-                modifier = Modifier
-                    .padding(8.dp)
-            )
-        } else {
-            Text(
-                text = description.take(90) + "...",
-                modifier = Modifier
-                    .padding(8.dp)
-            )
-        }
+        EventCardAttendeesRow(
+            attendeesAmount = attendeesAmount,
+            onAttend = onAttend,
+            onNotAttend = onNotAttend,
+            modifierRow = Modifier.padding(16.dp, 4.dp)
+        )
 
-        if (isExpanded) {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp),
-                horizontalAlignment = Alignment.Start,
-                verticalArrangement = Arrangement.spacedBy(10.dp)
-            ) {
-                EventCardDetailRow(
-                    icon = Icons.Default.LocationOn,
-                    contentDescription = "Address location",
-                    content = {
-                        Text(text = address)
-                    }
-                )
-                EventCardDetailRow(
-                    icon = Icons.Default.Info,
-                    contentDescription = "Date and time",
-                    content = {
-                        Text(text = date)
-                    }
-                )
-                EventCardDetailRow(
-                    icon = Icons.Default.ShoppingCart,
-                    contentDescription = "Price",
-                    content = {
-                        Text(text = "Prris: $price kr")
-                    }
-                )
-            }
-        }
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(
-                    MaterialTheme.colorScheme.primary
-                )
-                .padding(8.dp),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-
-        ) {
-            Text(
-                text = "Deltagere: ${attendeesAmount}",
-                style = MaterialTheme.typography.labelLarge
-            )
-            CustomSwitch(
-                onAttend = onAttend,
-                onNotAttend = onNotAttend
-            )
-
-        }
     }
 }
 
