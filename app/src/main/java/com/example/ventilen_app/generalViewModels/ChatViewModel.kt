@@ -16,7 +16,14 @@ class ChatViewModel : ViewModel() {
     private val chatRepository = ChatRepository()
 
     var currentMessage: String by mutableStateOf("")
-    var selectedLocationChatID by mutableStateOf("")
+    var selectedLocation: Location by mutableStateOf(
+        Location(
+            locationName = "",
+            latestMessage = "",
+            abbreviation = "",
+            locationID = ""
+        )
+    )
 
     // TODO: ADD STATE :(
     var locationsWithLatestMessages: List<Location> = emptyList<Location>()
@@ -31,6 +38,7 @@ class ChatViewModel : ViewModel() {
             chatRepository.observeMessagesByLocation(locationID)
         }
     }
+
     fun getLatestMessagesFromEachLocation() {
         viewModelScope.launch {
             val latestMessages = chatRepository.chatHubMessagesSnapshot()
@@ -41,7 +49,7 @@ class ChatViewModel : ViewModel() {
     fun sendMessage(
         message: Message
     ) {
-        viewModelScope.launch{
+        viewModelScope.launch {
             chatRepository.sendMessage(
                 message
             )

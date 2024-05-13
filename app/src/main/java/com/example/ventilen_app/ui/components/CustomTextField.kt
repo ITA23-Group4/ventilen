@@ -16,11 +16,12 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 @Composable
 fun CustomTextField(
     text: String,
-    label: String,
-    onValueChange: (String) -> Unit
+    label: String = "",
+    modifier: Modifier = Modifier,
+    onValueChange: (String) -> Unit,
 ) {
     OutlinedTextField(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = modifier.fillMaxWidth(),
         value = text,
         singleLine = true,
         onValueChange = { onValueChange(it) },
