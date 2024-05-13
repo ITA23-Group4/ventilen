@@ -1,7 +1,6 @@
 package com.example.ventilen_app.navigation
 
 import android.annotation.SuppressLint
-import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -56,7 +55,7 @@ fun RootNavigation() {
             startDestination = "auth/welcome",
             route = "auth"
         ) {
-            AuthNavGraph(
+            authNavGraph(
                 navController = navController,
                 currentUserViewModel = currentUserViewModel,
                 authViewModel = authViewModel,
@@ -127,6 +126,9 @@ fun RootNavigation() {
                     currentMessage = chatViewModel.currentMessage,
                     onCurrentMessageChange = {
                         chatViewModel.currentMessage = it
+                    },
+                    isCurrentUserSender = {
+                        chatViewModel.isCurrentUserSender(currentUserViewModel.getUID(), it)
                     }
                 )
             }

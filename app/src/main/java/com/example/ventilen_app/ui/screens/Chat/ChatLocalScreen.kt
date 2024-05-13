@@ -29,26 +29,23 @@ import kotlinx.coroutines.flow.StateFlow
 fun ChatLocalScreen(
     listOfLocationMessages: State<List<Message>>,
     onSendMessage: () -> Unit, // To use when sending message
-    currentUserID: String,
     currentMessage: String,
     onCurrentMessageChange: (String) -> Unit,
+    isCurrentUserSender: (String) -> Boolean
 ) {
     // Scaffold added to have textfield at the bottom of the screen that then expands a keyboard when clicked
     Scaffold(
         content = {
-            Column(
-
-            ) {
+            Column() {
                 LazyColumn(
                     modifier = Modifier.height(600.dp).fillMaxWidth(),
                     verticalArrangement = Arrangement.spacedBy(8.dp),
                     reverseLayout = true
                 ) {
                     items(listOfLocationMessages.value) { message ->
-                        val currentUserIsSender: Boolean = message.senderUID == currentUserID
                         CustomMessageBox(
                             message = message,
-                            currentUserIsSender = currentUserIsSender
+                            currentUserIsSender = isCurrentUserSender(message.senderUID)
                         )
                         Log.d("CHAT", "${message.senderUID}: ${message.message}. LocationID: ${message.locationID}. Timestamp: ${message.timestamp}")
                     }
