@@ -2,8 +2,10 @@ package com.example.ventilen_app.ui.screens.Event
 
 import android.util.Log
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.ventilen_app.data.models.Event
@@ -14,7 +16,7 @@ class EventScreenViewModel: ViewModel() {
     private val eventRepository: EventRepository = EventRepository()
     val events: MutableList<Event> = mutableStateListOf()
 
-    val isExpandedStateMap: MutableMap<String, MutableState<Boolean>> = mutableMapOf()
+    var selectedEventCardID: String by mutableStateOf("")
 
     init {
         getEvents()
@@ -25,9 +27,6 @@ class EventScreenViewModel: ViewModel() {
             try {
                 events.clear()
                 events.addAll(eventRepository.getEvents())
-                events.forEach { event ->
-                    isExpandedStateMap[event.eventID] = mutableStateOf(false)
-                }
             } catch (error: Exception) {
                 Log.d("GetAllEvents", "ERROR: ${error.message}")
             }
@@ -73,10 +72,20 @@ class EventScreenViewModel: ViewModel() {
         }
     }
 
-    // Function to toggle expanded state for a specific event
-    fun toggleExpandedState(eventID: String) {
-        val isExpandedValue = isExpandedStateMap.get(eventID)!!.value
-        isExpandedStateMap.get(eventID)!!.value = !isExpandedValue
+    fun isSelectedEvent(eventID: String): Boolean {
+        return eventID == selectedEventCardID
+    }
+
+    /**
+     * Toggles the selected event card ID.
+     *
+     * If the provided event ID is already selected, clears the selection;
+     * otherwise, sets the provided event ID as the selected ID.
+     *
+     * @param eventID The ID of the event to toggle.
+     */
+    fun toggleEventCard(eventID: String) {
+        selectedEventCardID = if (isSelectedEvent(eventID)) "" else eventID
     }
 
 }

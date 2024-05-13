@@ -20,10 +20,10 @@ import com.example.ventilen_app.ui.theme.VentilenAppTheme
 @Composable
 fun EventScreen(
     events: List<Event>,
-    isExpandedHashMap: MutableMap<String, MutableState<Boolean>>,
+    isEventSelected: (String) -> Boolean,
     onAttend: (String) -> Unit,
     onNotAttend: (String) -> Unit,
-    onCardClick: (String) -> Unit,
+    onEventCardClick: (String) -> Unit,
 ) {
     CustomColumn {
         LazyColumn(
@@ -39,8 +39,8 @@ fun EventScreen(
                     attendeesAmount = event.attendeesByUID.size,
                     onAttend = { onAttend(event.eventID) },
                     onNotAttend = { onNotAttend(event.eventID) },
-                    isExpanded = isExpandedHashMap[event.eventID]!!,
-                    onCardClick = { onCardClick(event.eventID) }
+                    isExpanded = isEventSelected(event.eventID),
+                    onCardClick = { onEventCardClick(event.eventID) }
                 )
             }
         }
@@ -56,6 +56,6 @@ fun EventScreenPreview() {
         Event(eventName = "Pita Night", attendeesByUID = mutableListOf(), eventID = "3")
     )
     VentilenAppTheme {
-        EventScreen(events = sampleEvents, onAttend = {}, onNotAttend = {}, onCardClick = {}, isExpandedHashMap = hashMapOf())
+        EventScreen(events = sampleEvents, onAttend = {}, onNotAttend = {}, onEventCardClick = {}, isEventSelected = { true })
     }
 }

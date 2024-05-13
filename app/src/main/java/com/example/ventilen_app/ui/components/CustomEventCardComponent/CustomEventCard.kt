@@ -43,7 +43,7 @@ fun CustomEventCard(
     onAttend: () -> Unit,
     onNotAttend: () -> Unit,
     // Expanded functions
-    isExpanded: MutableState<Boolean> = mutableStateOf(true),
+    isExpanded: Boolean,
     onCardClick: () -> Unit
 ) {
     Card(
@@ -74,7 +74,7 @@ fun CustomEventCard(
                 text = title,
                 style = MaterialTheme.typography.bodyMedium
             )
-            if (!isExpanded.value) {
+            if (!isExpanded) {
                 Text(
                     modifier = Modifier
                         .padding(8.dp),
@@ -84,8 +84,8 @@ fun CustomEventCard(
             }
         }
 
-        // TODO: Should be hoisted :)
-        if (isExpanded.value) {
+        // TODO: Should probably be hoisted :)
+        if (isExpanded) {
             Text(
                 text = description,
                 modifier = Modifier
@@ -99,7 +99,7 @@ fun CustomEventCard(
             )
         }
 
-        if (isExpanded.value) {
+        if (isExpanded) {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -168,6 +168,7 @@ fun CustomEventCardPreview() {
             onAttend = {},
             onNotAttend = {},
             onCardClick = {},
+            isExpanded = true
         )
     }
 }

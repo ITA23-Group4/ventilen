@@ -56,7 +56,7 @@ fun RootNavigation() {
             startDestination = "auth/welcome",
             route = "auth"
         ) {
-            authNavGraph(
+            AuthNavGraph(
                 navController = navController,
                 currentUserViewModel = currentUserViewModel,
                 authViewModel = authViewModel,
@@ -194,8 +194,8 @@ fun RootNavigation() {
                                     currentUserUID = currentUserViewModel.currentUser?.uid!!
                                 )
                             },
-                            onCardClick = { eventScreenViewModel.toggleExpandedState(eventID = it) },
-                            isExpandedHashMap = eventScreenViewModel.isExpandedStateMap
+                            isEventSelected = { eventScreenViewModel.isSelectedEvent(it) },
+                            onEventCardClick = { eventScreenViewModel.toggleEventCard(it) }
                         )
                     }
                 }
