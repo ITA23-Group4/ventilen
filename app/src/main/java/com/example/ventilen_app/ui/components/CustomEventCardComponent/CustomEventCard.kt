@@ -27,7 +27,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.ventilen_app.ui.components.CustomSwitchComponent.CustomSwitch
-import com.example.ventilen_app.ui.screens.Event.EventCardDetailRow
+import com.example.ventilen_app.ui.components.EventCardDetailRow
 import com.example.ventilen_app.ui.theme.VentilenAppTheme
 
 // TODO: Split up into more composable for readability
