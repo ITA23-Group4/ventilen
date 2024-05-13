@@ -18,21 +18,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.ventilen_app.data.models.Event
 import com.example.ventilen_app.ui.components.EventCardAttendeesRow
 import com.example.ventilen_app.ui.components.EventCardDetails
 import com.example.ventilen_app.ui.components.EventCardTopRow
 import com.example.ventilen_app.ui.theme.VentilenAppTheme
+import com.google.type.DateTime
 
 // TODO: Split up into more composable for readability
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CustomEventCard(
-    title: String,
-    date: String = "11. Maj", //TODO: Should be date
-    description: String = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed rutrum vitae mauris nec pretium. Cras rutrum ipsum non massa porttitor efficitur. Aenean id euismod neque, id malesuada eros.",
-    address: String = "Guldbergsgade 29N, 2200 København",
-    price: Double = 20.0,
-    attendeesAmount: Int,
+    event: Event,
     onAttend: () -> Unit,
     onNotAttend: () -> Unit,
     // Expanded functions
@@ -61,31 +58,31 @@ fun CustomEventCard(
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ){
             EventCardTopRow(
-                title = title,
+                title = event.eventName,
                 isExpanded = isExpanded,
-                date = date
+                date = event.eventDateTime.day.toString(),
             )
 
             // TODO: Should probably be hoisted :)
             // EventCard description
             if (isExpanded) {
-                Text(text = description)
+                Text(text = event.eventDescription)
             } else {
-                Text(text = description.take(90) + "...")
+                Text(text = event.eventDescription.take(90) + "...")
             }
 
             if (isExpanded) {
                 EventCardDetails(
-                    address = address,
-                    date = date,
-                    price = price,
+                    address = event.eventAddress,
+                    date = event.eventDateTime.toString(),
+                    price = event.eventPrice,
                     modifier = Modifier.padding(0.dp, 8.dp)
                 )
             }
         }
 
         EventCardAttendeesRow(
-            attendeesAmount = attendeesAmount,
+            attendeesAmount = event.attendeesByUID.size,
             onAttend = onAttend,
             onNotAttend = onNotAttend,
             modifierRow = Modifier.padding(16.dp, 4.dp)
@@ -97,14 +94,19 @@ fun CustomEventCard(
 @Preview
 @Composable
 fun CustomEventCardPreview() {
+    val event = Event(
+        eventName = "Event Title",
+        eventAddress = "123 Main St",
+        eventDateTime = DateTime.getDefaultInstance(), // Provide a DateTime value
+        eventDescription = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+        eventPrice = 20.0,
+        attendeesByUID = mutableListOf(), // Provide a mutable list of attendees
+        eventID = "12345" // Provide an event ID
+    )
+
     VentilenAppTheme {
         CustomEventCard(
-            title = "Event Title",
-            address = "123 Main St",
-            date = "11. May",
-            description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed rutrum vitae mauris nec pretium. Cras rutrum ipsum non massa porttitor efficitur. Aenean id euismod neque, id malesuada eros.",
-            price = 20.0,
-            attendeesAmount = 10,
+            event = event,
             onAttend = {},
             onNotAttend = {},
             onCardClick = {},

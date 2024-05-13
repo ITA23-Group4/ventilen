@@ -41,8 +41,7 @@ fun EventScreen(
         ) {
             items(events) { event ->
                 CustomEventCard(
-                    title = event.eventName,
-                    attendeesAmount = event.attendeesByUID.size,
+                    event = event,
                     onAttend = { onAttend(event.eventID) },
                     onNotAttend = { onNotAttend(event.eventID) },
                     isExpanded = isEventSelected(event.eventID),

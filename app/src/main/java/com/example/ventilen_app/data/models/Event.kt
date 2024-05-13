@@ -1,10 +1,15 @@
 package com.example.ventilen_app.data.models
 
 import com.google.firebase.firestore.DocumentId
+import com.google.type.DateTime
 
 data class Event(
     val eventName: String = "",
     val attendeesByUID: MutableList<String> = mutableListOf(),
+    val eventDateTime: DateTime = DateTime.getDefaultInstance(),
+    val eventDescription: String = "",
+    val eventAddress: String = "",
+    val eventPrice: Double = 0.0,
     // val eventDateTime: DateTime = DateTime.getDefaultInstance(), TODO: Implement this
     @DocumentId val eventID: String,
 ) : Comparable<Event> {
