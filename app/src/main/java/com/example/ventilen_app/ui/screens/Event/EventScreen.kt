@@ -33,7 +33,7 @@ fun EventScreen(
                 .background(CustomColorScheme.Mocha),
             contentPadding = PaddingValues(vertical = 16.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(30.dp)
+            verticalArrangement = Arrangement.spacedBy(20.dp)
         ) {
             items(events) { event ->
                 CustomEventCard(
