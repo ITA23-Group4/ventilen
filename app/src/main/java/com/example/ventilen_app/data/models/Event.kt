@@ -55,5 +55,4 @@ data class Event(
 
         return "$capitalizedMonthDate - $formattedEndDate"
     }
-
 }
