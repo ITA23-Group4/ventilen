@@ -1,4 +1,4 @@
-package com.example.ventilen_app.ui.screens.Event
+package com.example.ventilen_app.ui.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
