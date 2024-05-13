@@ -37,8 +37,6 @@ fun NavGraphBuilder.authNavGraph(
             WelcomeScreen(
                 onNavigationLogin = { navController.navigate("auth/login") },
                 onNavigationRegister = { navController.navigate("auth/register") },
-                // TODO: Remove
-                whoUser = { currentUserViewModel.getCurrentUser() }
             )
         }
     }

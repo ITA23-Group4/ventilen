@@ -96,18 +96,40 @@ fun RootNavigation() {
             route = "chat"
         ) {
             composable("chat/hub") {
-                chatViewModel.getLatestMessagesFromEachLocation() // Get the latest messages from each location in the database, before navigating to the ChatHubScreen TODO: LOOK AT
-                ChatHubScreen(
-                    locationsExcludingCurrentUserPrimaryLocation = chatViewModel.locationsWithLatestMessages.filter { location ->
-                        location.locationID != currentUserViewModel.currentUser?.primaryLocationID },
-                    onChatLocalNavigate = {
-                        chatViewModel.selectedLocationChatID = it
-                        navController.navigate("chat/local")
+                Scaffold(
+                    topBar = {
+                        CenterAlignedTopAppBar(
+                            title = { Text("Chat") },
+                            colors = TopAppBarDefaults.topAppBarColors(
+                                containerColor = MaterialTheme.colorScheme.surface,
+                                navigationIconContentColor = MaterialTheme.colorScheme.onSurface,
+                                titleContentColor = MaterialTheme.colorScheme.onSurface
+                            )
+                        )
                     },
-                    currentUserPrimaryLocation = chatViewModel.locationsWithLatestMessages.find { location ->
-                        location.locationID == currentUserViewModel.currentUser?.primaryLocationID
-                    }!!
-                )
+                    bottomBar = {
+                        CustomBottomNavigationBar(
+                            currentRoute = navController.currentDestination!!.route!!,
+                            onNavigateEvent = { navController.navigate("event") },
+                            onNavigateHome = { navController.navigate("home") }
+                        )
+                    }
+                ) { paddingValues ->
+                    Box(modifier = Modifier.padding(paddingValues)) {
+                        chatViewModel.getLatestMessagesFromEachLocation() // Get the latest messages from each location in the database, before navigating to the ChatHubScreen TODO: LOOK AT
+                        ChatHubScreen(
+                            locationsExcludingCurrentUserPrimaryLocation = chatViewModel.locationsWithLatestMessages.filter { location ->
+                                location.locationID != currentUserViewModel.currentUser?.primaryLocationID },
+                            onChatLocalNavigate = {
+                                chatViewModel.selectedLocationChatID = it
+                                navController.navigate("chat/local")
+                            },
+                            currentUserPrimaryLocation = chatViewModel.locationsWithLatestMessages.find { location ->
+                                location.locationID == currentUserViewModel.currentUser?.primaryLocationID
+                            }!!
+                        )
+                    }
+                }
             }
             composable("chat/local") {
                 chatViewModel.getLocalMessages(chatViewModel.selectedLocationChatID) // Get the local messages for the selected location
