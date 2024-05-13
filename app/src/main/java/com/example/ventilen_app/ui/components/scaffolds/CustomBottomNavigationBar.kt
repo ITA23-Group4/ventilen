@@ -63,7 +63,7 @@ fun CustomBottomNavigationBar(
             }
         )
         NavigationBarItem(
-            selected = currentRoute == "chat",
+            selected = currentRoute == "chat/hub",
             onClick = onNavigateChat,
             colors = NavigationBarItemDefaults.colors(
                 selectedIconColor = MaterialTheme.colorScheme.primary,

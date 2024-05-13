@@ -24,6 +24,7 @@ import com.example.ventilen_app.generalViewModels.ChatViewModel
 import com.example.ventilen_app.generalViewModels.CurrentUserViewModel
 import com.example.ventilen_app.generalViewModels.LocationViewModel
 import com.example.ventilen_app.ui.components.scaffolds.CustomBottomNavigationBar
+import com.example.ventilen_app.ui.components.scaffolds.LocalChatScaffold
 import com.example.ventilen_app.ui.screens.Chat.ChatHubScreen
 import com.example.ventilen_app.ui.screens.Chat.ChatLocalScreen
 import com.example.ventilen_app.ui.screens.Event.EventScreen
@@ -55,7 +56,7 @@ fun RootNavigation() {
             startDestination = "auth/welcome",
             route = "auth"
         ) {
-            AuthNavGraph(
+            authNavGraph(
                 navController = navController,
                 currentUserViewModel = currentUserViewModel,
                 authViewModel = authViewModel,
@@ -95,82 +96,108 @@ fun RootNavigation() {
             route = "chat"
         ) {
             composable("chat/hub") {
-                chatViewModel.getLatestMessagesFromEachLocation() // Get the latest messages from each location in the database, before navigating to the ChatHubScreen TODO: LOOK AT
-                ChatHubScreen(
-                    locationsExcludingCurrentUserPrimaryLocation = chatViewModel.locationsWithLatestMessages.filter { location ->
-                        location.locationID != currentUserViewModel.currentUser?.primaryLocationID },
-                    onChatLocalNavigate = {
-                        chatViewModel.selectedLocationChatID = it
-                        navController.navigate("chat/local")
+                Scaffold(
+                    topBar = {
+                        CenterAlignedTopAppBar(
+                            title = { Text("Chat") },
+                            colors = TopAppBarDefaults.topAppBarColors(
+                                containerColor = MaterialTheme.colorScheme.surface,
+                                navigationIconContentColor = MaterialTheme.colorScheme.onSurface,
+                                titleContentColor = MaterialTheme.colorScheme.onSurface
+                            )
+                        )
                     },
-                    currentUserPrimaryLocation = chatViewModel.locationsWithLatestMessages.find { location ->
-                        location.locationID == currentUserViewModel.currentUser?.primaryLocationID
-                    }!!
-                )
+                    bottomBar = {
+                        CustomBottomNavigationBar(
+                            currentRoute = navController.currentDestination!!.route!!,
+                            onNavigateEvent = { navController.navigate("event") },
+                            onNavigateHome = { navController.navigate("home") }
+                        )
+                    }
+                ) { paddingValues ->
+                    Box(modifier = Modifier.padding(paddingValues)) {
+                        chatViewModel.getLatestMessagesFromEachLocation() // Get the latest messages from each location in the database, before navigating to the ChatHubScreen TODO: LOOK AT
+                        ChatHubScreen(
+                            locationsExcludingCurrentUserPrimaryLocation = chatViewModel.locationsWithLatestMessages.filter { location ->
+                                location.locationID != currentUserViewModel.currentUser?.primaryLocationID
+                            },
+                            onChatLocalNavigate = {
+                                chatViewModel.selectedLocation = it
+                                navController.navigate("chat/local")
+                            },
+                            currentUserPrimaryLocation = chatViewModel.locationsWithLatestMessages.find { location ->
+                                location.locationID == currentUserViewModel.currentUser?.primaryLocationID
+                            }!!
+                        )
+                    }
+                }
             }
             composable("chat/local") {
-                chatViewModel.getLocalMessages(chatViewModel.selectedLocationChatID) // Get the local messages for the selected location
-                ChatLocalScreen(
-                    listOfLocationMessages = chatViewModel.localMessages.collectAsState(),
-                    /*onSendMessage = {
-                        chatViewModel.sendMessage(
-                        message = Message(
-                            senderUID = currentUserViewModel.currentUser?.uid!!,
-                            message = chatViewModel.currentMessage,
-                            timestamp = Date(),
-                            locationID = chatViewModel.selectedLocationChatID,
-                            username = currentUserViewModel.currentUser?.username!!
-                        )
-                    )
-                    },
+                chatViewModel.getLocalMessages(chatViewModel.selectedLocation.locationID!!) // Get the local messages for the selected location
+                LocalChatScaffold(
+                    locationName = chatViewModel.selectedLocation.locationName,
+                    onNavigateBack = { navController.navigate("chat/hub") },
                     currentMessage = chatViewModel.currentMessage,
-                    onCurrentMessageChange = {
-                        chatViewModel.currentMessage = it
-                    }*/
-                    isCurrentUserSender = {
-                        chatViewModel.isCurrentUserSender(currentUserViewModel.getUID(), it)
-                    }
-                )
-            }
-        }
-        composable("event") {
-            Scaffold(
-                topBar = {
-                    TopAppBar(
-                        colors = TopAppBarDefaults.topAppBarColors(
-                            containerColor = MaterialTheme.colorScheme.surface,
-                            navigationIconContentColor = MaterialTheme.colorScheme.onSurface,
-                            titleContentColor = MaterialTheme.colorScheme.onSurface
-                        ),
-                        title = { Text("Events") }
-                    )
-                },
-                bottomBar = {
-                    CustomBottomNavigationBar(
-                        currentRoute = navController.currentDestination!!.route!!,
-                        onNavigateHome = { navController.navigate("home") },
-                        onNavigateChat = { navController.navigate("chat") }
+                    onCurrentMessageChange = { chatViewModel.currentMessage = it },
+                    onSendMessage = {
+                        chatViewModel.sendMessage(
+                            message = Message(
+                                senderUID = currentUserViewModel.currentUser?.uid!!,
+                                message = chatViewModel.currentMessage,
+                                timestamp = Date(),
+                                locationID = chatViewModel.selectedLocation.locationID!!,
+                                username = currentUserViewModel.currentUser?.username!!
+                            )
+                        )
+                    },
+                ) {
+                    ChatLocalScreen(
+                        listOfLocationMessages = chatViewModel.localMessages.collectAsState(),
+                        isCurrentUserSender = {
+                            chatViewModel.isCurrentUserSender(currentUserViewModel.getUID(), it)
+                        }
                     )
                 }
-            ) { paddingValues ->
-                Box(modifier = Modifier.padding(paddingValues)) {
-                    EventScreen(
-                        events = eventScreenViewModel.events,
-                        onAttend = {
-                            eventScreenViewModel.addUserToEvent(
-                                currentUserUID = currentUserViewModel.currentUser?.uid!!,
-                                eventID = it
-                            )
-                        },
-                        onNotAttend = {
-                            eventScreenViewModel.removeUserFromEvent(
-                                eventID = it,
-                                currentUserUID = currentUserViewModel.currentUser?.uid!!
-                            )
-                        },
-                        onCardClick = { eventScreenViewModel.toggleExpandedState(eventID = it) },
-                        isExpandedHashMap = eventScreenViewModel.isExpandedStateMap
-                    )
+            }
+            composable("event") {
+                Scaffold(
+                    topBar = {
+                        TopAppBar(
+                            colors = TopAppBarDefaults.topAppBarColors(
+                                containerColor = MaterialTheme.colorScheme.surface,
+                                navigationIconContentColor = MaterialTheme.colorScheme.onSurface,
+                                titleContentColor = MaterialTheme.colorScheme.onSurface
+                            ),
+                            title = { Text("Events") }
+                        )
+                    },
+                    bottomBar = {
+                        CustomBottomNavigationBar(
+                            currentRoute = navController.currentDestination!!.route!!,
+                            onNavigateHome = { navController.navigate("home") },
+                            onNavigateChat = { navController.navigate("chat") }
+                        )
+                    }
+                ) { paddingValues ->
+                    Box(modifier = Modifier.padding(paddingValues)) {
+                        EventScreen(
+                            events = eventScreenViewModel.events,
+                            onAttend = {
+                                eventScreenViewModel.addUserToEvent(
+                                    currentUserUID = currentUserViewModel.currentUser?.uid!!,
+                                    eventID = it
+                                )
+                            },
+                            onNotAttend = {
+                                eventScreenViewModel.removeUserFromEvent(
+                                    eventID = it,
+                                    currentUserUID = currentUserViewModel.currentUser?.uid!!
+                                )
+                            },
+                            onCardClick = { eventScreenViewModel.toggleExpandedState(eventID = it) },
+                            isExpandedHashMap = eventScreenViewModel.isExpandedStateMap
+                        )
+                    }
                 }
             }
         }
