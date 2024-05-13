@@ -3,6 +3,7 @@ package com.example.ventilen_app.generalViewModels
 import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -16,7 +17,9 @@ class AuthViewModel : ViewModel() {
     private val userRepository: UserRepository = UserRepository()
 
     var username: String by mutableStateOf("")
-    var email: String by mutableStateOf("christianbt96@gmail.com")
+
+    var email: String by mutableStateOf("")
+
     var location: Location by mutableStateOf(Location(
         locationName = "Name",
         latestMessage = "Latest message",
@@ -24,7 +27,11 @@ class AuthViewModel : ViewModel() {
         locationID = "Location ID"
         )
     )
-    var password: String by mutableStateOf("Ventilen1234")
+    var password: String by mutableStateOf("")
+
+    var isErrorInEmail by
+        mutableStateOf(false)
+
 
     fun registerNewUser(
         onRegistrationSuccess: () -> Unit,
