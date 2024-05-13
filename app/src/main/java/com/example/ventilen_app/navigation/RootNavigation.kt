@@ -88,7 +88,6 @@ fun RootNavigation() {
                 }
             ) { paddingValues ->
                 Box(modifier = Modifier.padding(paddingValues)) {
-                    chatViewModel.messages // TODO: LOOK AT
                     HomeScreen(
                         textUsername = currentUserViewModel.currentUser?.username.toString(),
                         textUID = currentUserViewModel.currentUser?.uid.toString(),

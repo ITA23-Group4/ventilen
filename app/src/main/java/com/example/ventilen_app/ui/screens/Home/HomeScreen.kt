@@ -43,18 +43,5 @@ fun HomeScreen(
             text = stringResource(R.string.home_welcome_uid, textUID),
             style = MaterialTheme.typography.headlineMedium
         )
-
-        LazyColumn {
-            chatViewModel.messages?.let { messages ->
-                items(messages.toMutableList()) { message ->
-                    Text(
-                        text = "${message.senderUID}: ${message.message}",
-                        style = MaterialTheme.typography.headlineMedium
-                    )
-                    Log.d("CHAT", "${message.senderUID}: ${message.message}. LocationID: ${message.locationID}. Timestamp: ${message.timestamp}")
-                }
-            }
-        }
-
     }
 }
