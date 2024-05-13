@@ -24,13 +24,13 @@ import com.example.ventilen_app.ui.components.EventCardDetails
 import com.example.ventilen_app.ui.components.EventCardTopRow
 import com.example.ventilen_app.ui.theme.VentilenAppTheme
 import com.google.firebase.Timestamp
-import com.google.type.DateTime
 import java.util.Date
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CustomEventCard(
     event: Event,
+    isAttending: Boolean,
     onAttend: () -> Unit,
     onNotAttend: () -> Unit,
     // Expanded functions
@@ -84,6 +84,7 @@ fun CustomEventCard(
 
         EventCardAttendeesRow(
             attendeesAmount = event.attendeesByUID.size,
+            isAttending = isAttending,
             onAttend = onAttend,
             onNotAttend = onNotAttend,
             modifierRow = Modifier.padding(16.dp, 4.dp)
@@ -111,7 +112,8 @@ fun CustomEventCardPreview() {
             onAttend = {},
             onNotAttend = {},
             onCardClick = {},
-            isExpanded = true
+            isExpanded = true,
+            isAttending = false
         )
     }
 }

@@ -72,6 +72,10 @@ class EventScreenViewModel: ViewModel() {
         }
     }
 
+    fun isCurrentUserAttendingEvent(event: Event, currentUserUID: String): Boolean {
+        return event.attendeesByUID.contains(currentUserUID)
+    }
+
     fun isSelectedEvent(eventID: String): Boolean {
         return eventID == selectedEventCardID
     }

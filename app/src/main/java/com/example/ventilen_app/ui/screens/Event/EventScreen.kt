@@ -21,6 +21,7 @@ import com.example.ventilen_app.ui.theme.VentilenAppTheme
 fun EventScreen(
     events: List<Event>,
     isEventSelected: (String) -> Boolean,
+    isAttending: (Event) -> Boolean,
     onAttend: (String) -> Unit,
     onNotAttend: (String) -> Unit,
     onEventCardClick: (String) -> Unit,
@@ -40,7 +41,8 @@ fun EventScreen(
                     onAttend = { onAttend(event.eventID) },
                     onNotAttend = { onNotAttend(event.eventID) },
                     isExpanded = isEventSelected(event.eventID),
-                    onCardClick = { onEventCardClick(event.eventID) }
+                    isAttending = isAttending(event),
+                    onCardClick = { onEventCardClick(event.eventID) },
                 )
             }
         }
@@ -56,6 +58,6 @@ fun EventScreenPreview() {
         Event(eventName = "Pita Night", attendeesByUID = mutableListOf(), eventID = "3")
     )
     VentilenAppTheme {
-        EventScreen(events = sampleEvents, onAttend = {}, onNotAttend = {}, onEventCardClick = {}, isEventSelected = { true })
+        EventScreen(events = sampleEvents, onAttend = {}, onNotAttend = {}, onEventCardClick = {}, isEventSelected = { false }, isAttending = { false })
     }
 }

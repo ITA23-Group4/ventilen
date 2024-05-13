@@ -195,7 +195,13 @@ fun RootNavigation() {
                                 )
                             },
                             isEventSelected = { eventScreenViewModel.isSelectedEvent(it) },
-                            onEventCardClick = { eventScreenViewModel.toggleEventCard(it) }
+                            onEventCardClick = { eventScreenViewModel.toggleEventCard(it) },
+                            isAttending = { event ->
+                                eventScreenViewModel.isCurrentUserAttendingEvent(
+                                    event = event,
+                                    currentUserUID = currentUserViewModel.getUID()
+                                )
+                            }
                         )
                     }
                 }
