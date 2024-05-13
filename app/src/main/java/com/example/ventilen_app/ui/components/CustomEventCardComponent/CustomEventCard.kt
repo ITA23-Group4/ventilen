@@ -23,9 +23,10 @@ import com.example.ventilen_app.ui.components.EventCardAttendeesRow
 import com.example.ventilen_app.ui.components.EventCardDetails
 import com.example.ventilen_app.ui.components.EventCardTopRow
 import com.example.ventilen_app.ui.theme.VentilenAppTheme
+import com.google.firebase.Timestamp
 import com.google.type.DateTime
+import java.util.Date
 
-// TODO: Split up into more composable for readability
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CustomEventCard(
@@ -60,7 +61,7 @@ fun CustomEventCard(
             EventCardTopRow(
                 title = event.eventName,
                 isExpanded = isExpanded,
-                date = event.eventDateTime.day.toString(),
+                date = event.getDate(),
             )
 
             // TODO: Should probably be hoisted :)
@@ -74,7 +75,7 @@ fun CustomEventCard(
             if (isExpanded) {
                 EventCardDetails(
                     address = event.eventAddress,
-                    date = event.eventDateTime.toString(),
+                    date = event.getDateWithTimeRange(),
                     price = event.eventPrice,
                     modifier = Modifier.padding(0.dp, 8.dp)
                 )
@@ -97,7 +98,7 @@ fun CustomEventCardPreview() {
     val event = Event(
         eventName = "Event Title",
         eventAddress = "123 Main St",
-        eventDateTime = DateTime.getDefaultInstance(), // Provide a DateTime value
+        eventDateTime = Timestamp(Date()), // Provide a DateTime value
         eventDescription = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
         eventPrice = 20.0,
         attendeesByUID = mutableListOf(), // Provide a mutable list of attendees

@@ -55,7 +55,7 @@ fun RootNavigation() {
             startDestination = "auth/welcome",
             route = "auth"
         ) {
-            AuthNavGraph(
+            authNavGraph(
                 navController = navController,
                 currentUserViewModel = currentUserViewModel,
                 authViewModel = authViewModel,
