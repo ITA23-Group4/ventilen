@@ -75,8 +75,8 @@ class EventScreenViewModel: ViewModel() {
 
     // Function to toggle expanded state for a specific event
     fun toggleExpandedState(eventID: String) {
-        val isExpandedValue = isExpandedStateMap[eventID]!!.value
-        isExpandedStateMap[eventID]!!.value = !isExpandedValue
+        val isExpandedValue = isExpandedStateMap.get(eventID)!!.value
+        isExpandedStateMap.get(eventID)!!.value = !isExpandedValue
     }
 
 }
