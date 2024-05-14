@@ -2,6 +2,7 @@ package com.example.ventilen_app.navigation
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -26,6 +27,7 @@ import com.example.ventilen_app.ui.components.scaffolds.CustomBottomNavigationBa
 import com.example.ventilen_app.ui.components.scaffolds.LocalChatScaffold
 import com.example.ventilen_app.ui.screens.Chat.ChatHubScreen
 import com.example.ventilen_app.ui.screens.Chat.ChatLocalScreen
+import com.example.ventilen_app.ui.screens.CreateEvent.CreateEventScreen
 import com.example.ventilen_app.ui.screens.Event.EventScreen
 import com.example.ventilen_app.ui.screens.Event.EventScreenViewModel
 import com.example.ventilen_app.ui.screens.Home.HomeScreen
@@ -201,8 +203,29 @@ fun RootNavigation() {
                                     event = event,
                                     currentUserUID = currentUserViewModel.getUID()
                                 )
-                            }
+                            },
+                            onAddEvent = { navController.navigate("event/create") }
                         )
+                    }
+                }
+            }
+            composable("event/create") {
+                Scaffold(
+                    topBar = {
+                        CenterAlignedTopAppBar(
+                            colors = TopAppBarDefaults.topAppBarColors(
+                                containerColor = MaterialTheme.colorScheme.surface,
+                                navigationIconContentColor = MaterialTheme.colorScheme.onSurface,
+                                titleContentColor = MaterialTheme.colorScheme.onSurface
+                            ),
+                            title = { Text("Opret Event") }
+                        )
+                    }
+                ) { PaddingValues ->
+                    Box(modifier = Modifier.padding(PaddingValues)) {
+                        CreateEventScreen {
+
+                        }
                     }
                 }
             }

@@ -57,4 +57,8 @@ class EventRepository {
             eventPrice = price
         )
     }
+
+    private fun createEvent(event: Event){
+
+    }
 }
