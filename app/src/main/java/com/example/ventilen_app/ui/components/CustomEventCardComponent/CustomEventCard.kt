@@ -98,7 +98,7 @@ fun CustomEventCard(
             isAttending = isAttending,
             onAttend = onAttend,
             onNotAttend = onNotAttend,
-            modifierRow = Modifier.padding(16.dp, 4.dp)
+            modifierRow = Modifier.padding(16.dp, 2.dp)
         )
 
     }
