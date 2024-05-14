@@ -24,7 +24,7 @@ import com.example.ventilen_app.ui.screens.Welcome.WelcomeScreen
  * @param locationsViewModel The view model for managing location information.
  * @author Marcus, Christian, Nikolaj
  */
-fun NavGraphBuilder.authNavGraph(
+fun NavGraphBuilder.AuthNavGraph(
     navController: NavController,
     currentUserViewModel: CurrentUserViewModel,
     authViewModel: AuthViewModel,
@@ -48,7 +48,7 @@ fun NavGraphBuilder.authNavGraph(
                 onNavigateHome = {
                     authViewModel.loginUser(
                         onLoginSuccess = {
-                            currentUserViewModel.isEmailInAdmins(authViewModel.email)
+                            authViewModel.isEmailInAdmins(authViewModel.email)
                             currentUserViewModel.getCurrentUser()
                             navController.popBackStack(
                                 route = "auth",
@@ -114,7 +114,7 @@ fun NavGraphBuilder.authNavGraph(
                             onRegistrationSuccess = {
                                 authViewModel.loginUser(
                                     onLoginSuccess = {
-                                        currentUserViewModel.isEmailInAdmins(authViewModel.email)
+                                        authViewModel.isEmailInAdmins(authViewModel.email)
                                         currentUserViewModel.getCurrentUser()
                                         navController.popBackStack(
                                             route = "auth",

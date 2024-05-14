@@ -45,23 +45,24 @@ fun RootNavigation() {
     val navController = rememberNavController()
 
     // Initialize view models
-    val currentUserViewModel: CurrentUserViewModel = viewModel<CurrentUserViewModel>()
     val authViewModel: AuthViewModel = viewModel<AuthViewModel>()
     val eventScreenViewModel: EventScreenViewModel = viewModel<EventScreenViewModel>()
     val locationsViewModel: LocationViewModel = viewModel<LocationViewModel>()
     val chatViewModel: ChatViewModel = viewModel<ChatViewModel>()
 
-    // Initialize adminViewModel if the user is an admin
-    val adminViewModel: AdminViewModel? = if (currentUserViewModel.isAdmin) {
+    // Initialize currentUserViewModel based on isAdmin state in authViewModel
+    val currentUserViewModel = if (authViewModel.isAdmin == true) {
         viewModel<AdminViewModel>()
-    } else null
+    } else {
+        viewModel<CurrentUserViewModel>()
+    }
 
     NavHost(navController = navController, startDestination = "auth") {
         navigation(
             startDestination = "auth/welcome",
             route = "auth"
         ) {
-            authNavGraph(
+            AuthNavGraph(
                 navController = navController,
                 currentUserViewModel = currentUserViewModel,
                 authViewModel = authViewModel,
@@ -93,7 +94,7 @@ fun RootNavigation() {
                         textUsername = currentUserViewModel.currentUser?.username.toString(),
                         textUID = currentUserViewModel.currentUser?.uid.toString(),
                         isAdmin = currentUserViewModel.isAdmin,
-                        logout = { adminViewModel!!.logout() }
+                        logout = { (currentUserViewModel as AdminViewModel).logout() }
                     )
                 }
             }

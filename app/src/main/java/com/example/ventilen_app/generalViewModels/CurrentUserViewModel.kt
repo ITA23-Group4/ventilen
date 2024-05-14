@@ -15,7 +15,7 @@ import java.lang.Exception
 open class CurrentUserViewModel : ViewModel() {
     val userRepository: UserRepository = UserRepository()
     var currentUser: User? by mutableStateOf(User("username"))
-    var isAdmin: Boolean by mutableStateOf(false)
+    open val isAdmin: Boolean = false
 
     fun getCurrentUser() {
         viewModelScope.launch {
@@ -24,16 +24,6 @@ open class CurrentUserViewModel : ViewModel() {
                 currentUser = userRepository.getUser(currentUserUID)
                 Log.d("CurrentUser:", "Username = ${currentUser?.username.toString()} primaryLocation = ${currentUser?.primaryLocationID.toString()} UID = ${currentUser?.uid.toString()}")
             } catch (error: Exception) {
-                Log.d("ERROR", error.toString());
-            }
-        }
-    }
-
-    fun isEmailInAdmins(email: String) {
-        viewModelScope.launch {
-            try {
-                isAdmin = userRepository.isEmailInAdmins(email)
-            }catch (error: Exception){
                 Log.d("ERROR", error.toString());
             }
         }
