@@ -48,7 +48,6 @@ fun NavGraphBuilder.AuthNavGraph(
                 onNavigateHome = {
                     authViewModel.loginUser(
                         onLoginSuccess = {
-                            authViewModel.isEmailInAdmins(authViewModel.email)
                             currentUserViewModel.getCurrentUser()
                             navController.popBackStack(
                                 route = "auth",
@@ -114,7 +113,6 @@ fun NavGraphBuilder.AuthNavGraph(
                             onRegistrationSuccess = {
                                 authViewModel.loginUser(
                                     onLoginSuccess = {
-                                        authViewModel.isEmailInAdmins(authViewModel.email)
                                         currentUserViewModel.getCurrentUser()
                                         navController.popBackStack(
                                             route = "auth",

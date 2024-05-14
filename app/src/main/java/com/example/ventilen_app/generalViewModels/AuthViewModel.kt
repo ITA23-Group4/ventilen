@@ -60,6 +60,7 @@ class AuthViewModel : ViewModel() {
                     email = email,
                     password = password
                 )
+                isEmailInAdmins()
                 onLoginSuccess()
             } catch (error: Exception) {
                 Log.d("Logged In", "Failed to log in: $error")
@@ -69,14 +70,8 @@ class AuthViewModel : ViewModel() {
         }
     }
 
-    fun isEmailInAdmins(email: String) {
-        viewModelScope.launch {
-            try {
-                isAdmin = userRepository.isEmailInAdmins(email)
-            }catch (error: java.lang.Exception){
-                Log.d("ERROR", error.toString());
-            }
-        }
+    private suspend fun isEmailInAdmins() {
+        isAdmin = userRepository.isEmailInAdmins(email)
     }
 
 }
