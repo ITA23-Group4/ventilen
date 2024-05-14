@@ -19,9 +19,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.ventilen_app.data.models.Event
-import com.example.ventilen_app.ui.components.EventCardAttendeesRow
-import com.example.ventilen_app.ui.components.EventCardDetails
-import com.example.ventilen_app.ui.components.EventCardTopRow
 import com.example.ventilen_app.ui.theme.VentilenAppTheme
 import com.google.firebase.Timestamp
 import java.util.Date

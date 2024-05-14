@@ -1,4 +1,4 @@
-package com.example.ventilen_app.ui.components
+package com.example.ventilen_app.ui.components.CustomEventCardComponent
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
