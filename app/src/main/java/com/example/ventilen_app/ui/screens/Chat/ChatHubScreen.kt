@@ -33,7 +33,7 @@ fun ChatHubScreen(
 
         LazyColumn (
             modifier = Modifier.fillMaxWidth(),
-            verticalArrangement = Arrangement.spacedBy(8.dp)
+            verticalArrangement = Arrangement.spacedBy(4.dp)
         ){
             items(locationsExcludingCurrentUserPrimaryLocation) { Location ->
                 CustomChatCard(
