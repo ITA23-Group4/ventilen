@@ -90,8 +90,9 @@ fun NavGraphBuilder.authNavGraph(
                     textEmail = authViewModel.email,
                     textPassword = authViewModel.password,
                     onValueChangeEmail = { authViewModel.email = it },
-                    onValueChangePassword = { authViewModel.password = it },
-                    onValueChangePasswordRepeat = { authViewModel.password = it }
+                    onValueChangePassword = { authViewModel.changePassword(it) },
+                    onValueChangePasswordRepeat = { authViewModel.password = it },
+                    passwordError = authViewModel.passwordError
                 )
             }
         }

@@ -5,16 +5,25 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.ventilen_app.data.models.Location
+import com.example.ventilen_app.data.models.PassordValidationState
+import com.example.ventilen_app.data.models.ValidatePassword
 import com.example.ventilen_app.data.repositories.UserRepository
 import com.example.ventilen_app.services.AccountService
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.mapLatest
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 class AuthViewModel : ViewModel() {
     private val accountService: AccountService = AccountService();
     private val userRepository: UserRepository = UserRepository()
+    private val validatePassword: ValidatePassword = ValidatePassword()
+
 
     var username: String by mutableStateOf("")
 
@@ -29,8 +38,20 @@ class AuthViewModel : ViewModel() {
     )
     var password: String by mutableStateOf("")
 
-    var isErrorInEmail by
-        mutableStateOf(false)
+    @OptIn(ExperimentalCoroutinesApi::class)
+    private val _passwordError =
+        snapshotFlow { password }
+            .mapLatest { validatePassword.execute(it) }
+            .stateIn(
+                scope = viewModelScope,
+                started = SharingStarted.WhileSubscribed(5_000),
+                initialValue = PassordValidationState()
+            )
+    val passwordError: PassordValidationState = validatePassword.execute(password)
+    fun changePassword(value: String) {
+        password = value
+    }
+
 
 
     fun registerNewUser(

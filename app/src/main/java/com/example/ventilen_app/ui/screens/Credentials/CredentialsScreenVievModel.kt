@@ -20,15 +20,6 @@ class CredentialsScreenVievModel(
     var password by mutableStateOf("")
         private set
 
-    val passwordError =
-        snapshotFlow { password }
-            .mapLatest { validatePassword.execute(it) }
-            .stateIn(
-                scope = viewModelScope,
-                started = SharingStarted.WhileSubscribed(5_000),
-                initialValue = PassordValidationState()
-            )
-    fun changePassword(value: String) {
-        password = value
-    }
+
+
 }

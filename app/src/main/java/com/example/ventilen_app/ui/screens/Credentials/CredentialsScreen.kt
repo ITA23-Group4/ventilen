@@ -20,6 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.ventilen_app.data.models.PassordValidationState
 import com.example.ventilen_app.ui.components.ConditionsRow
 import com.example.ventilen_app.ui.components.CustomColumn
 import com.example.ventilen_app.ui.components.CustomTextField
@@ -36,9 +37,11 @@ fun CredentialsScreen(
     textPassword: String,
     onValueChangeEmail: (String) -> Unit,
     onValueChangePassword: (String) -> Unit,
-    onValueChangePasswordRepeat: (String) -> Unit
+    onValueChangePasswordRepeat: (String) -> Unit,
+    passwordError: PassordValidationState,
+
 ) {
-    val passwordError by viewModel.passwordError.collectAsState()
+
 
     CustomColumn(
         horizontalAlignment = Alignment.CenterHorizontally ,
@@ -50,17 +53,8 @@ fun CredentialsScreen(
         )
         CustomTextField(text = textEmail, label = "Email") { onValueChangeEmail(it) }
 
-        OutlinedTextField(
-            modifier = Modifier.fillMaxWidth(),
-            value = viewModel.password,
-            onValueChange = viewModel::changePassword,
-            visualTransformation = PasswordVisualTransformation(),
-            singleLine = true,
-            colors = TextFieldDefaults.outlinedTextFieldColors(
-                unfocusedBorderColor = MaterialTheme.colorScheme.primary,
-                unfocusedLabelColor = MaterialTheme.colorScheme.primary
-            )
-            )
+        CustomTextField(text = textPassword, label = "Password" , onValueChange = {onValueChangePassword(it)})
+
 
 
 
