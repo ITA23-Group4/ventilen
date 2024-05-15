@@ -4,7 +4,6 @@ import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import com.example.ventilen_app.data.models.Location
 import com.example.ventilen_app.data.models.User
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
@@ -16,7 +15,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 
 class UserRepository(viewModelScope: CoroutineScope){
-    private val db = Firebase.firestore;
+    private val db = Firebase.firestore
     var currentUser: User? by mutableStateOf(null)
 
     init {
