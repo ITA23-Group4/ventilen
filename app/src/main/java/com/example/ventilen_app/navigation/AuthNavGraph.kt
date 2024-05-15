@@ -23,7 +23,7 @@ import com.example.ventilen_app.ui.screens.Welcome.WelcomeScreen
  * @param locationsViewModel The view model for managing location information.
  * @author Marcus, Christian, Nikolaj
  */
-fun NavGraphBuilder.authNavGraph(
+fun NavGraphBuilder.AuthNavGraph(
     navController: NavController,
     authViewModel: AuthViewModel,
     locationsViewModel: LocationViewModel
@@ -141,3 +141,4 @@ fun NavGraphBuilder.authNavGraph(
         }
     }
 }
+

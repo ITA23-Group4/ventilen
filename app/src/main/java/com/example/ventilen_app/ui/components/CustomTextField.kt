@@ -16,6 +16,7 @@ import androidx.compose.ui.Modifier
 fun CustomTextField(
     text: String,
     label: String,
+    modifier: Modifier = Modifier,
     isPassword: Boolean = false,
     isSingleLine: Boolean = true,
     hasError: Boolean = false,
@@ -23,7 +24,7 @@ fun CustomTextField(
 ) {
 
     OutlinedTextField(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = modifier.fillMaxWidth(),
         value = text,
         singleLine = isSingleLine,
         onValueChange = { onValueChange(it)},

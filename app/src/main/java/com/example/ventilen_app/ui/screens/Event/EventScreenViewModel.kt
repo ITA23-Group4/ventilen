@@ -1,7 +1,11 @@
 package com.example.ventilen_app.ui.screens.Event
 
 import android.util.Log
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.ventilen_app.data.models.Event
@@ -14,6 +18,8 @@ class EventScreenViewModel: ViewModel() {
     private val userRepository: UserRepository = UserRepository(viewModelScope)
     val events: MutableList<Event> = mutableStateListOf()
 
+    var selectedEventCardID: String by mutableStateOf("")
+
     init {
         getEvents()
     }
@@ -23,7 +29,6 @@ class EventScreenViewModel: ViewModel() {
             try {
                 events.clear()
                 events.addAll(eventRepository.getEvents())
-                // events = repository.getEvents() with 'var events' was the recompose problem
             } catch (error: Exception) {
                 Log.d("GetAllEvents", "ERROR: ${error.message}")
             }
@@ -69,6 +74,30 @@ class EventScreenViewModel: ViewModel() {
                 events[eventIndex] = eventWithUpdatedAttendees
             }
         }
+    }
+
+    fun isCurrentUserAttendingEvent(event: Event, currentUserUID: String): Boolean {
+        return event.attendeesByUID.contains(currentUserUID)
+    }
+
+    fun isSelectedEvent(eventID: String): Boolean {
+        return eventID == selectedEventCardID
+    }
+
+    /**
+     * Toggles the selected event card ID.
+     *
+     * If the provided event ID is already selected, clears the selection;
+     * otherwise, sets the provided event ID as the selected ID.
+     *
+     * @param eventID The ID of the event to toggle.
+     */
+    fun toggleEventCard(eventID: String) {
+        selectedEventCardID = if (isSelectedEvent(eventID)) "" else eventID
+    }
+
+    fun clearSelectedEventCard() {
+        selectedEventCardID = ""
     }
 
 }
