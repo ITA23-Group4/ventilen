@@ -26,8 +26,6 @@ class AuthViewModel : ViewModel() {
     var passwordRepeat: String by mutableStateOf("")
     var hasPasswordError: Boolean by mutableStateOf(false)
 
-    var isAdmin: Boolean? by mutableStateOf(null)
-
     var username: String by mutableStateOf("")
     var hasUsernameError: Boolean by mutableStateOf(false)
 
