@@ -21,40 +21,6 @@ import com.example.ventilen_app.ui.theme.CustomColorScheme
 
 
 @Composable
-fun HomeScreen(
-    textUsername: String,
-    textUID: String,
-    chatViewModel: ChatViewModel // TODO: REMOVE?
-) {
+fun HomeScreen() {
 
-    CustomColumn(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(CustomColorScheme.Mocha),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(30.dp)) {
-
-        Text(
-            text = stringResource(R.string.home_welcome_title, textUsername),
-            style = MaterialTheme.typography.headlineLarge
-        )
-
-        Text(
-            text = stringResource(R.string.home_welcome_uid, textUID),
-            style = MaterialTheme.typography.headlineMedium
-        )
-
-        LazyColumn {
-            chatViewModel.messages?.let { messages ->
-                items(messages.toMutableList()) { message ->
-                    Text(
-                        text = "${message.senderUID}: ${message.message}",
-                        style = MaterialTheme.typography.headlineMedium
-                    )
-                    Log.d("CHAT", "${message.senderUID}: ${message.message}. LocationID: ${message.locationID}. Timestamp: ${message.timestamp}")
-                }
-            }
-        }
-
-    }
 }

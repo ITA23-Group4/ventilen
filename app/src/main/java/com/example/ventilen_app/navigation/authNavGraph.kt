@@ -5,7 +5,6 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import com.example.ventilen_app.generalViewModels.AuthViewModel
-import com.example.ventilen_app.generalViewModels.CurrentUserViewModel
 import com.example.ventilen_app.generalViewModels.LocationViewModel
 import com.example.ventilen_app.ui.components.scaffolds.AuthScaffold
 import com.example.ventilen_app.ui.screens.Credentials.CredentialsScreen
@@ -26,7 +25,6 @@ import com.example.ventilen_app.ui.screens.Welcome.WelcomeScreen
  */
 fun NavGraphBuilder.authNavGraph(
     navController: NavController,
-    currentUserViewModel: CurrentUserViewModel,
     authViewModel: AuthViewModel,
     locationsViewModel: LocationViewModel
 ) {
@@ -37,8 +35,6 @@ fun NavGraphBuilder.authNavGraph(
             WelcomeScreen(
                 onNavigationLogin = { navController.navigate("auth/login") },
                 onNavigationRegister = { navController.navigate("auth/register") },
-                // TODO: Remove
-                whoUser = { currentUserViewModel.getCurrentUser() }
             )
         }
     }
@@ -50,7 +46,6 @@ fun NavGraphBuilder.authNavGraph(
                 onNavigateHome = {
                     authViewModel.loginUser(
                         onLoginSuccess = {
-                            currentUserViewModel.getCurrentUser()
                             navController.popBackStack(
                                 route = "auth",
                                 inclusive = true
@@ -120,7 +115,6 @@ fun NavGraphBuilder.authNavGraph(
                             onRegistrationSuccess = {
                                 authViewModel.loginUser(
                                     onLoginSuccess = {
-                                        currentUserViewModel.getCurrentUser()
                                         navController.popBackStack(
                                             route = "auth",
                                             inclusive = true

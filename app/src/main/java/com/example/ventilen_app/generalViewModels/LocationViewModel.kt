@@ -5,10 +5,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.ventilen_app.data.repositories.LocationRepository
 import com.example.ventilen_app.data.models.Location
+import com.example.ventilen_app.data.repositories.UserRepository
 import kotlinx.coroutines.launch
 
 class LocationViewModel: ViewModel() {
     private val locationRepository: LocationRepository = LocationRepository()
+    private val userRepository = UserRepository()
     var locations: List<Location> = listOf()
     var mapLocationNameToLocation: Map<String, Location> = emptyMap() //TODO: Locations are saved two places now
 
@@ -27,4 +29,15 @@ class LocationViewModel: ViewModel() {
             }
         }
     }
+
+    fun getLocationsExcludingPrimaryLocation(): List<Location> {
+        return locations.filter { it.locationID != userRepository.currentUser?.primaryLocationID }
+    }
+
+    fun getPrimaryLocation(): Location {
+        return locations.find { location ->
+            location.locationID == userRepository.currentUser?.primaryLocationID
+        }!!
+    }
+
 }

@@ -6,10 +6,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.ventilen_app.data.models.Event
 import com.example.ventilen_app.data.repositories.EventRepository
+import com.example.ventilen_app.data.repositories.UserRepository
 import kotlinx.coroutines.launch
 
 class EventScreenViewModel: ViewModel() {
     private val eventRepository: EventRepository = EventRepository()
+    private val userRepository: UserRepository = UserRepository()
     val events: MutableList<Event> = mutableStateListOf()
 
     init {
@@ -28,9 +30,10 @@ class EventScreenViewModel: ViewModel() {
         }
     }
 
-    fun addUserToEvent(currentUserUID: String, eventID: String) {
+    fun addUserToEvent(eventID: String) {
         viewModelScope.launch {
             try {
+                val currentUserUID: String = userRepository.currentUser?.uid!!
                 eventRepository.addUserToEvent(currentUserUID, eventID)
                 updateEventAttendeesCount(eventID)
             } catch (error: Exception) {
@@ -39,9 +42,10 @@ class EventScreenViewModel: ViewModel() {
         }
     }
 
-    fun removeUserFromEvent(currentUserUID: String, eventID: String) {
+    fun removeUserFromEvent(eventID: String) {
         viewModelScope.launch {
             try {
+                val currentUserUID: String = userRepository.currentUser?.uid!!
                 eventRepository.removeUserFromEvent(currentUserUID, eventID)
                 updateEventAttendeesCount(eventID)
             } catch (error: Exception) {

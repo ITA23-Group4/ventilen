@@ -11,12 +11,15 @@ import androidx.lifecycle.viewModelScope
 import com.example.ventilen_app.data.models.Location
 import com.example.ventilen_app.data.repositories.ChatRepository
 import com.example.ventilen_app.data.models.Message
+import com.example.ventilen_app.data.repositories.UserRepository
 import kotlinx.coroutines.launch
+import java.util.Date
 
 // TODO Parameter:
 // - current route
 // - primaryLocationID
 class ChatViewModel : ViewModel() {
+    private val userRepository = UserRepository()
     private val chatRepository = ChatRepository()
 
     var currentMessage: String by mutableStateOf("")
@@ -41,24 +44,6 @@ class ChatViewModel : ViewModel() {
         }
     }
 
-    /*
-
-    init {
-        // Initialize the mutable list with the current messages
-        viewModelScope.launch {
-            mutableMessages.addAll(messages.value ?: emptyList())
-        }
-
-        // Observe changes in the LiveData list and update the mutable list accordingly
-        messages.observeForever { messageList ->
-            mutableMessages.clear()
-            mutableMessages.addAll(messageList)
-        }
-
-    }
-
-     */
-
     // A non-mutable list of messages
     // It is non-mutable because it is run every time the screen is re-rendered
     // Therefore it does not need to be mutable since it is re-initialized every time
@@ -79,24 +64,23 @@ class ChatViewModel : ViewModel() {
             localMessages = messages
         }
     }
-    // Think below is correct but the observer needs to be terminated when exiting the screen!
-    // localMessages: LiveData<List<Message>> = repository.observeMessagesByLocation(locationID)
 
+    fun sendMessage() {
+        val messageToSend = Message(
+            senderUID = userRepository.currentUser?.uid!!,
+            message = currentMessage,
+            timestamp = Date(),
+            locationID = selectedLocationChatID,
+            username = userRepository.currentUser?.username!!
+        )
 
-
-    fun sendMessage(
-        message: Message
-    ) {
         viewModelScope.launch{
             chatRepository.sendMessage(
-                message
+                messageToSend
             )
 
             currentMessage = ""
         }
     }
-
-
-
 
 }

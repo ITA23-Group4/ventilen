@@ -68,7 +68,7 @@ class AuthViewModel : ViewModel() {
                     email = email,
                     password = password
                 )
-                onLoginSuccess()
+                userRepository.getUser()
             } catch (error: Exception) {
                 Log.d("Logged In", "Failed to log in: $error")
                 onLoginFailure()
