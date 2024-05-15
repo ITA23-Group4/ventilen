@@ -35,13 +35,13 @@ fun ChatLocalScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(4.dp, 0.dp)
+            .padding(16.dp, 0.dp)
     ) {
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(0.dp, 8.dp, 0.dp, 8.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
+            verticalArrangement = Arrangement.spacedBy(20.dp),
             reverseLayout = true
         ) {
             items(listOfLocationMessages.value) { message ->

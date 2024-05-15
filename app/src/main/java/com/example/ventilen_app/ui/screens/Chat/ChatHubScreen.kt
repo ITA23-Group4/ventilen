@@ -9,12 +9,15 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.ventilen_app.data.models.Location
 import com.example.ventilen_app.ui.components.CustomChatCardComponent.CustomChatCard
 import com.example.ventilen_app.ui.components.CustomColumn
+
 
 @Composable
 fun ChatHubScreen(
@@ -26,7 +29,9 @@ fun ChatHubScreen(
         modifier = Modifier.padding(0.dp, 8.dp, 0.dp, 0.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        Text(text = "Primære mødested", style = MaterialTheme.typography.headlineLarge)
+        Text(text = "Primære mødested", style = MaterialTheme.typography.headlineLarge,
+            modifier = Modifier.fillMaxWidth(),
+            textAlign = TextAlign.Start)
         CustomChatCard(
             locationName = currentUserPrimaryLocation.locationName,
             latestMessage = currentUserPrimaryLocation.latestMessage,
@@ -34,14 +39,16 @@ fun ChatHubScreen(
             onClick = { onChatLocalNavigate(currentUserPrimaryLocation) }
         )
 
-        Text(text = "Andre mødesteder", style = MaterialTheme.typography.headlineLarge)
+        Text(text = "Andre mødesteder", style = MaterialTheme.typography.headlineLarge,
+            modifier = Modifier.fillMaxWidth(),
+            textAlign = TextAlign.Start)
 
         // TODO: Should prob be more white cards and gray lazyColumn background
         LazyColumn(
             modifier = Modifier
                 .fillMaxWidth()
                 .clip(RoundedCornerShape(12.dp)),
-            verticalArrangement = Arrangement.spacedBy(4.dp)
+            verticalArrangement = Arrangement.spacedBy(0.dp)
         ) {
             items(locationsExcludingCurrentUserPrimaryLocation) { Location ->
                 CustomChatCard(
