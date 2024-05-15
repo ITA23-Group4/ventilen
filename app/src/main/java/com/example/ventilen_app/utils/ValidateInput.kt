@@ -2,6 +2,11 @@ package com.example.ventilen_app.utils
 
 import android.util.Patterns
 
+/**
+ * Utility class for input validation.
+ * Provides methods to validate email addresses, passwords, and usernames.
+ * @author
+ */
 class ValidateInput {
 
     fun validateEmail(email: String): Boolean {
