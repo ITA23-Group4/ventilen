@@ -18,6 +18,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
+import com.example.ventilen_app.data.models.Message
 import com.example.ventilen_app.generalViewModels.AuthViewModel
 import com.example.ventilen_app.generalViewModels.ChatViewModel
 import com.example.ventilen_app.generalViewModels.LocationViewModel
@@ -28,6 +29,7 @@ import com.example.ventilen_app.ui.screens.Chat.ChatLocalScreen
 import com.example.ventilen_app.ui.screens.Event.EventScreen
 import com.example.ventilen_app.ui.screens.Event.EventScreenViewModel
 import com.example.ventilen_app.ui.screens.Home.HomeScreen
+import java.util.Date
 
 /**
  * Root navigation structure of the application.
@@ -121,11 +123,6 @@ fun RootNavigation() {
                 }
             }
             composable("chat/local") {
-                chatViewModel.getLocalMessages(chatViewModel.selectedLocation.locationID!!) // Get the local messages for the selected location TODO: LOOK AT
-                Log.d("Chat", chatViewModel.localMessages.toString())
-                // It is logging this: androidx.lifecycle.MutableLiveData@********
-                // It should log the list of messages -- IDK dude
-
                 chatViewModel.getLocalMessages(chatViewModel.selectedLocation.locationID!!) // Get the local messages for the selected location
                 LocalChatScaffold(
                     locationName = chatViewModel.selectedLocation.locationName,

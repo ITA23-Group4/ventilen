@@ -18,7 +18,7 @@ import com.example.ventilen_app.ui.screens.Welcome.WelcomeScreen
  * for user login & registration.
  *
  * @param navController The same navigation controller as used in RootNavigation
- * @param currentUserViewModel The view model for managing current user information.
+ * @param userViewModel The view model for managing current user information.
  * @param authViewModel The view model for authentication logic.
  * @param locationsViewModel The view model for managing location information.
  * @author Marcus, Christian, Nikolaj

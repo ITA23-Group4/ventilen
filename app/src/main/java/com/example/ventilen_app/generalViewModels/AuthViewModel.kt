@@ -24,6 +24,8 @@ class AuthViewModel : ViewModel() {
     var passwordRepeat: String by mutableStateOf("")
     var hasPasswordError: Boolean by mutableStateOf(false)
 
+    var isAdmin: Boolean? by mutableStateOf(null)
+
     var username: String by mutableStateOf("")
     var hasUsernameError: Boolean by mutableStateOf(false)
 
@@ -68,6 +70,7 @@ class AuthViewModel : ViewModel() {
                     email = email,
                     password = password
                 )
+                isEmailInAdmins()
                 onLoginSuccess()
             } catch (error: Exception) {
                 Log.e("LOG IN", "Failed to log in: $error")
@@ -75,6 +78,10 @@ class AuthViewModel : ViewModel() {
             }
 
         }
+    }
+
+    private suspend fun isEmailInAdmins() {
+        isAdmin = userRepository.isEmailInAdmins(email)
     }
 
     fun changeEmail(newEmail: String) {

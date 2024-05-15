@@ -23,6 +23,15 @@ class UserRepository (viewModelScope: CoroutineScope){
         }
     }
 
+    suspend fun isEmailInAdmins(email: String): Boolean {
+        val querySnapshot = db.collection("admins")
+            .whereEqualTo("email", email)
+            .get()
+            .await()
+
+        return !querySnapshot.isEmpty
+    }
+
     private suspend fun getUser() {
         val currentUserUID: String = FirebaseAuth.getInstance().currentUser!!.uid
 
