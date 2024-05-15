@@ -10,11 +10,13 @@ import androidx.lifecycle.viewModelScope
 import com.example.ventilen_app.data.models.Event
 import com.example.ventilen_app.data.repositories.EventRepository
 import com.example.ventilen_app.data.repositories.UserRepository
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.launch
 
 class EventViewModel: ViewModel() {
     private val eventRepository: EventRepository = EventRepository()
-    private val userRepository: UserRepository = UserRepository(viewModelScope)
+    private var currentUserUID: String by mutableStateOf(FirebaseAuth.getInstance().currentUser?.uid!!)
+
 
     val events: MutableList<Event> = mutableStateListOf()
     private var selectedEventCardID: String by mutableStateOf("")
@@ -36,7 +38,7 @@ class EventViewModel: ViewModel() {
     fun addUserToEvent(eventID: String) {
         viewModelScope.launch {
             try {
-                val currentUserUID: String = userRepository.currentUser?.uid!!
+                val currentUserUID: String = currentUserUID
                 eventRepository.addUserToEvent(currentUserUID, eventID)
                 updateEventAttendeesCount(eventID)
             } catch (error: Exception) {
@@ -48,7 +50,7 @@ class EventViewModel: ViewModel() {
     fun removeUserFromEvent(eventID: String) {
         viewModelScope.launch {
             try {
-                val currentUserUID: String = userRepository.currentUser?.uid!!
+                val currentUserUID: String = currentUserUID
                 eventRepository.removeUserFromEvent(currentUserUID, eventID)
                 updateEventAttendeesCount(eventID)
             } catch (error: Exception) {
@@ -75,7 +77,7 @@ class EventViewModel: ViewModel() {
     }
 
     fun isCurrentUserAttendingEvent(event: Event): Boolean {
-        val currentUserUID = userRepository.currentUser!!.uid
+        val currentUserUID = currentUserUID
         return event.attendeesByUID.contains(currentUserUID)
     }
 

@@ -11,11 +11,11 @@ import com.example.ventilen_app.data.repositories.LocationRepository
 import com.example.ventilen_app.utils.ValidateInput
 import com.example.ventilen_app.data.repositories.UserRepository
 import com.example.ventilen_app.services.AccountService
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.launch
 
 class AuthViewModel : ViewModel() {
     private val accountService: AccountService = AccountService()
-    val userRepository: UserRepository = UserRepository(viewModelScope) //TODO: Should be private
     val locationRepository: LocationRepository = LocationRepository(viewModelScope) //TODO: Should be private
     private val validateInput: ValidateInput = ValidateInput()
 
@@ -50,6 +50,7 @@ class AuthViewModel : ViewModel() {
                     username = username,
                     location = location
                 ).let { newUser ->
+                    val userRepository: UserRepository = UserRepository()
                     userRepository.createUser(newUser)
                     onRegistrationSuccess()
                 }
@@ -66,7 +67,6 @@ class AuthViewModel : ViewModel() {
     ) {
         viewModelScope.launch {
             try {
-                // userRepository.logout() // TODO: Why I this needed?
                 accountService.login(
                     email = email,
                     password = password

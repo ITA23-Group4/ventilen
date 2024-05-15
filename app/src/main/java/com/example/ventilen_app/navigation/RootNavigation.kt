@@ -27,6 +27,7 @@ import com.example.ventilen_app.ui.screens.Chat.ChatLocalScreen
 import com.example.ventilen_app.ui.screens.Event.EventScreen
 import com.example.ventilen_app.viewmodels.EventViewModel
 import com.example.ventilen_app.ui.screens.Home.HomeScreen
+import com.google.firebase.auth.FirebaseAuth
 
 /**
  * Root navigation structure of the application.
@@ -50,7 +51,7 @@ fun RootNavigation() {
             startDestination = "auth/welcome",
             route = "auth"
         ) {
-            AuthNavGraph(
+            authNavGraph(
                 navController = navController,
                 authViewModel = authViewModel
             )
@@ -77,7 +78,7 @@ fun RootNavigation() {
             ) { paddingValues ->
                 Box(modifier = Modifier.padding(paddingValues)) {
                     HomeScreen()
-                    Log.d("CurrentUser", "${authViewModel.userRepository.currentUser}")
+                    Log.d("CurrentUser", FirebaseAuth.getInstance().currentUser!!.uid)
                 }
             }
         }
@@ -86,7 +87,7 @@ fun RootNavigation() {
             route = "chat"
         ) {
             composable("chat/hub") {
-                Log.d("CurrentUserChat", "${chatViewModel.userRepository.currentUser}")
+                Log.d("CurrentUserChat", FirebaseAuth.getInstance().currentUser!!.uid)
                 Scaffold(
                     topBar = {
                         CenterAlignedTopAppBar(
@@ -109,16 +110,12 @@ fun RootNavigation() {
                     Box(modifier = Modifier.padding(paddingValues)) {
                         chatViewModel.getLatestMessagesFromEachLocation() // Get the latest messages from each location in the database, before navigating to the ChatHubScreen TODO: LOOK AT
                         ChatHubScreen(
-                            locationsExcludingCurrentUserPrimaryLocation = chatViewModel.locationsWithLatestMessages.filter { location ->
-                                location.locationID != chatViewModel.userRepository.currentUser?.primaryLocationID //TODO make function and userRepository private
-                            },
+                            locationsExcludingCurrentUserPrimaryLocation = chatViewModel.locationsWithLatestMessages, // TODO: Should be a correct filter function
                             onChatLocalNavigate = {
                                 chatViewModel.selectedLocation = it
                                 navController.navigate("chat/local")
                             },
-                            currentUserPrimaryLocation = chatViewModel.locationsWithLatestMessages.find { location ->
-                                location.locationID == chatViewModel.userRepository.currentUser?.primaryLocationID //TODO make function and userRepository private
-                            }!!
+                            currentUserPrimaryLocation = chatViewModel.locationsWithLatestMessages[0] // TODO: Should be correct find function
                         )
                     }
                 }

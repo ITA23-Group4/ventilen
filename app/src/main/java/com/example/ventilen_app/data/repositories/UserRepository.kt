@@ -14,15 +14,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 
-class UserRepository(viewModelScope: CoroutineScope){
+class UserRepository(){
     private val db = Firebase.firestore
     var currentUser: User? by mutableStateOf(null)
-
-    init {
-        viewModelScope.launch {
-            getUser()
-        }
-    }
 
     private suspend fun isEmailInAdmins(email: String): Boolean {
         val querySnapshot = db.collection("admins")
@@ -33,7 +27,7 @@ class UserRepository(viewModelScope: CoroutineScope){
         return !querySnapshot.isEmpty
     }
 
-    private suspend fun getUser() {
+    suspend fun getUser() {
         val currentUserFirebaseInstance: FirebaseUser = FirebaseAuth.getInstance().currentUser!!
         val currentUserUID: String = currentUserFirebaseInstance.uid
         val currentUserEmail: String = currentUserFirebaseInstance.email!!

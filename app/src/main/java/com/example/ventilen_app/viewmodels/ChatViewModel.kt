@@ -11,12 +11,15 @@ import com.example.ventilen_app.data.repositories.ChatRepository
 import com.example.ventilen_app.data.models.Message
 import kotlinx.coroutines.flow.StateFlow
 import com.example.ventilen_app.data.repositories.UserRepository
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.launch
 import java.util.Date
 
 class ChatViewModel : ViewModel() {
-    val userRepository = UserRepository(viewModelScope) // TODO: Should be private
     private val chatRepository = ChatRepository()
+
+    private var currentUserUID: String by mutableStateOf(FirebaseAuth.getInstance().currentUser?.uid!!)
+    private var currentUserUsername: String by mutableStateOf("") // TODO: get username
 
     val locationsWithLatestMessages: MutableList<Location> = mutableStateListOf()
     val localMessages: StateFlow<List<Message>>
@@ -54,11 +57,11 @@ class ChatViewModel : ViewModel() {
 
     fun sendMessage() {
         val messageToSend = Message(
-            senderUID = userRepository.currentUser?.uid!!,
+            senderUID = currentUserUID,
             message = currentMessage,
             timestamp = Date(),
             locationID = selectedLocation.locationID!!,
-            username = userRepository.currentUser?.username!!
+            username = currentUserUID // TODO: This should be username and not UID
         )
 
         viewModelScope.launch{
@@ -71,7 +74,7 @@ class ChatViewModel : ViewModel() {
     }
 
     fun isCurrentUserSender(messageUserUID: String): Boolean {
-        return userRepository.currentUser!!.uid!! == messageUserUID
+        return currentUserUID == messageUserUID
     }
 
 }
