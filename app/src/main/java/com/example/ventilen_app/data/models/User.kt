@@ -5,9 +5,10 @@ import com.google.firebase.firestore.DocumentId
 data class User(
     val username: String = "",
     val primaryLocationID: String = "",
+    var isAdmin: Boolean = false,
     @DocumentId var uid: String? = null
 ) {
     override fun toString(): String {
-        return "User(username='$username', uid=$uid)"
+        return "User(username='$username', uid=$uid, isAdmin=$isAdmin)"
     }
 }

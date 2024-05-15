@@ -9,7 +9,6 @@ import kotlinx.coroutines.tasks.await
 class AccountService {
     private val auth = FirebaseAuth.getInstance()
 
-
     suspend fun createUserWithEmailAndPassword(
         email: String,
         password: String,
@@ -21,27 +20,11 @@ class AccountService {
             .await()
         val authUIDForDocumentTitle: String = firebaseAuthResult.user?.uid!!
         Log.d("CREATE_USER", "User created: $authUIDForDocumentTitle")
-        Log.d("USER", "User created: ${User(username, location.locationID!!, authUIDForDocumentTitle)}")
-        return User(username, location.locationID!!, authUIDForDocumentTitle)
-    }
-
-
-    fun authenticate(
-        email: String,
-        password: String,
-        username: String,
-        onRegistrationSuccess: (User) -> Unit,
-        onRegistrationFailed: () -> Unit,
-    ) {
-        auth.createUserWithEmailAndPassword(email, password)
-            .addOnSuccessListener { firebaseAuthResult ->
-                val newAuthUID: String = firebaseAuthResult.user?.uid!!
-                val newUser: User = User(username, newAuthUID)
-                onRegistrationSuccess(newUser)
-            }
-            .addOnFailureListener {
-                onRegistrationFailed()
-            }
+        return User(
+            username = username,
+            primaryLocationID = location.locationID!!,
+            uid = authUIDForDocumentTitle
+        )
     }
 
     suspend fun login(
@@ -55,23 +38,4 @@ class AccountService {
         Log.d("Logged In", "Logged in!")
     }
 
-    /*
-
-    fun login(
-        email: String,
-        password: String,
-        navigateOnLoginSuccess: () -> Unit,
-        onLoginFailed: () -> Unit
-    ) {
-        auth.signInWithEmailAndPassword(email, password)
-            .addOnSuccessListener {
-                Log.d("Logged In", "Logged in!")
-                navigateOnLoginSuccess()
-            }
-            .addOnFailureListener {
-                onLoginFailed()
-            }
-    }
-
-    */
 }

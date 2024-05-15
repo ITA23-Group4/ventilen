@@ -1,6 +1,7 @@
 package com.example.ventilen_app.navigation
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -84,6 +85,7 @@ fun RootNavigation() {
             route = "chat"
         ) {
             composable("chat/hub") {
+                Log.d("CurrentUserChat", "${chatViewModel.userRepository.currentUser}")
                 Scaffold(
                     topBar = {
                         CenterAlignedTopAppBar(
@@ -107,14 +109,14 @@ fun RootNavigation() {
                         chatViewModel.getLatestMessagesFromEachLocation() // Get the latest messages from each location in the database, before navigating to the ChatHubScreen TODO: LOOK AT
                         ChatHubScreen(
                             locationsExcludingCurrentUserPrimaryLocation = chatViewModel.locationsWithLatestMessages.filter { location ->
-                                location.locationID != chatViewModel.userRepository.currentUser?.primaryLocationID
+                                location.locationID != chatViewModel.userRepository.currentUser?.primaryLocationID //TODO make function and userRepository private
                             },
                             onChatLocalNavigate = {
                                 chatViewModel.selectedLocation = it
                                 navController.navigate("chat/local")
                             },
                             currentUserPrimaryLocation = chatViewModel.locationsWithLatestMessages.find { location ->
-                                location.locationID == chatViewModel.userRepository.currentUser?.primaryLocationID
+                                location.locationID == chatViewModel.userRepository.currentUser?.primaryLocationID //TODO make function and userRepository private
                             }!!
                         )
                     }

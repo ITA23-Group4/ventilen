@@ -15,7 +15,7 @@ import kotlinx.coroutines.launch
 
 class AuthViewModel : ViewModel() {
     private val accountService: AccountService = AccountService()
-    private val userRepository: UserRepository = UserRepository(viewModelScope)
+    private val userRepository: UserRepository = UserRepository()
     val locationRepository: LocationRepository = LocationRepository(viewModelScope)
     private val validateInput: ValidateInput = ValidateInput()
 
@@ -68,11 +68,11 @@ class AuthViewModel : ViewModel() {
     ) {
         viewModelScope.launch {
             try {
+                userRepository.logout() // TODO: Why I this needed?
                 accountService.login(
                     email = email,
                     password = password
                 )
-                isEmailInAdmins()
                 onLoginSuccess()
             } catch (error: Exception) {
                 Log.e("LOG IN", "Failed to log in: $error")
@@ -80,10 +80,6 @@ class AuthViewModel : ViewModel() {
             }
 
         }
-    }
-
-    private suspend fun isEmailInAdmins() {
-        isAdmin = userRepository.isEmailInAdmins(email)
     }
 
     fun changeEmail(newEmail: String) {

@@ -4,26 +4,22 @@ import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import com.example.ventilen_app.data.models.Location
 import com.example.ventilen_app.data.models.User
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.firestore
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 
-class UserRepository(viewModelScope: CoroutineScope){
+class UserRepository(){
     private val db = Firebase.firestore;
     var currentUser: User? by mutableStateOf(null)
 
-    init {
-        // Launch a coroutine in the viewModelScope
-        viewModelScope.launch {
-            getUser()
-        }
-    }
-
-    suspend fun isEmailInAdmins(email: String): Boolean {
+    private suspend fun isEmailInAdmins(email: String): Boolean {
         val querySnapshot = db.collection("admins")
             .whereEqualTo("email", email)
             .get()
@@ -32,15 +28,18 @@ class UserRepository(viewModelScope: CoroutineScope){
         return !querySnapshot.isEmpty
     }
 
-    private suspend fun getUser() {
-        val currentUserUID: String = FirebaseAuth.getInstance().currentUser!!.uid
+    suspend fun getUser() {
+        val currentUserFirebaseInstance: FirebaseUser = FirebaseAuth.getInstance().currentUser!!
+        val currentUserUID: String = currentUserFirebaseInstance.uid
+        val currentUserEmail: String = currentUserFirebaseInstance.email!!
 
-        currentUser = db.collection("users").document(currentUserUID).get().await()
-            .toObject(User::class.java)
+        // Get the user from Firestore and convert to User class
+        val userDocumentRef = db.collection("users").document(currentUserUID).get().await()
+        currentUser = convertUserDocumentToUser(userDocumentRef, currentUserEmail)
 
         Log.d(
             "CurrentUser:",
-            "Username = ${currentUser?.username.toString()} primaryLocation = ${currentUser?.primaryLocationID.toString()} UID = ${currentUser?.uid.toString()}"
+            "Username = ${currentUser?.username.toString()} primaryLocation = ${currentUser?.primaryLocationID.toString()} isAdmin=${currentUser?.isAdmin} UID = ${currentUser?.uid.toString()}"
         )
     }
 
@@ -51,4 +50,22 @@ class UserRepository(viewModelScope: CoroutineScope){
             .set(newUser)
             .await()
     }
+
+    private suspend fun convertUserDocumentToUser(document: DocumentSnapshot, currentUserEmail: String): User {
+        val name: String = document.getString("username") ?: ""
+        val primaryLocationID: String = document.getString("primaryLocationID") ?: ""
+        val isAdmin: Boolean = isEmailInAdmins(currentUserEmail)
+        val uid = document.id
+        return User(
+            username = name,
+            primaryLocationID = primaryLocationID,
+            isAdmin = isAdmin,
+            uid = uid
+        )
+    }
+
+    fun logout() {
+        FirebaseAuth.getInstance().signOut()
+    }
+
 }
