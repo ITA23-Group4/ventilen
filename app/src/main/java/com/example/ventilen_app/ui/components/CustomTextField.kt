@@ -29,7 +29,7 @@ fun CustomTextField(
         value = text,
         singleLine = isSingleLine,
         onValueChange = { onValueChange(it)},
-        visualTransformation = PasswordVisualTransformation(),
+        //visualTransformation = PasswordVisualTransformation(),
         label = { Text(label) },
         colors = TextFieldDefaults.outlinedTextFieldColors(
             unfocusedBorderColor = MaterialTheme.colorScheme.primary,

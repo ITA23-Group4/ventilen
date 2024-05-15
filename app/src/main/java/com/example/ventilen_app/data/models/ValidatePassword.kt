@@ -2,7 +2,7 @@ package com.example.ventilen_app.data.models
 
 class ValidatePassword {
 
-    fun execute(password: String): PassordValidationState {
+    fun execute(password: String): PasswordValidationState {
         val validateCapitalizedLetter = validateCapitalizedLetter(password)
         val validateNumber = validateNumber(password)
         val validateMinimun = validateMinimum(password)
@@ -13,7 +13,7 @@ class ValidatePassword {
             validateCapitalizedLetter
         ).all {it}
 
-        return PassordValidationState(
+        return PasswordValidationState(
             hasMinimun = validateMinimun,
             hasCapitalizedLetter = validateCapitalizedLetter,
             hasNumber = validateNumber,

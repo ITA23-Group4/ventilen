@@ -3,13 +3,12 @@ package com.example.ventilen_app.generalViewModels
 import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.ventilen_app.data.models.Location
-import com.example.ventilen_app.data.models.PassordValidationState
+import com.example.ventilen_app.data.models.PasswordValidationState
 import com.example.ventilen_app.data.models.ValidatePassword
 import com.example.ventilen_app.data.repositories.UserRepository
 import com.example.ventilen_app.services.AccountService
@@ -45,9 +44,9 @@ class AuthViewModel : ViewModel() {
             .stateIn(
                 scope = viewModelScope,
                 started = SharingStarted.WhileSubscribed(5_000),
-                initialValue = PassordValidationState()
+                initialValue = PasswordValidationState()
             )
-    val passwordError: PassordValidationState = validatePassword.execute(password)
+    val passwordError: PasswordValidationState = validatePassword.execute(password)
     fun changePassword(value: String) {
         password = value
     }
