@@ -28,6 +28,7 @@ import com.example.ventilen_app.ui.components.scaffolds.LocalChatScaffold
 import com.example.ventilen_app.ui.screens.Chat.ChatHubScreen
 import com.example.ventilen_app.ui.screens.Chat.ChatLocalScreen
 import com.example.ventilen_app.ui.screens.CreateEvent.CreateEventScreen
+import com.example.ventilen_app.ui.screens.CreateEvent.CreateEventViewModel
 import com.example.ventilen_app.ui.screens.Event.EventScreen
 import com.example.ventilen_app.ui.screens.Event.EventScreenViewModel
 import com.example.ventilen_app.ui.screens.Home.HomeScreen
@@ -51,6 +52,7 @@ fun RootNavigation() {
     val eventScreenViewModel: EventScreenViewModel = viewModel<EventScreenViewModel>()
     val locationsViewModel: LocationViewModel = viewModel<LocationViewModel>()
     val chatViewModel: ChatViewModel = viewModel<ChatViewModel>()
+    val createEventViewModel: CreateEventViewModel = viewModel<CreateEventViewModel>()
 
     NavHost(navController = navController, startDestination = "auth") {
         navigation(
@@ -218,14 +220,23 @@ fun RootNavigation() {
                                 navigationIconContentColor = MaterialTheme.colorScheme.onSurface,
                                 titleContentColor = MaterialTheme.colorScheme.onSurface
                             ),
+
                             title = { Text("Opret Event") }
                         )
                     }
                 ) { PaddingValues ->
                     Box(modifier = Modifier.padding(PaddingValues)) {
-                        CreateEventScreen {
-
-                        }
+                        CreateEventScreen(
+                            eventTitle = createEventViewModel.eventTitle,
+                            eventDescription = createEventViewModel.eventDescription,
+                            eventAddress = createEventViewModel.eventAddress,
+                            eventPrice = createEventViewModel.eventPrice,
+                            onValueChangeTitle = { createEventViewModel.eventTitle = it },
+                            onValueChangeDescription = { createEventViewModel.eventDescription = it },
+                            onValueChangeAddress = { createEventViewModel.eventAddress = it },
+                            onValueChangePrice = { createEventViewModel.eventPrice = it },
+                            onCreateEvent = {} // TODO: Implement create event functionality
+                        )
                     }
                 }
             }

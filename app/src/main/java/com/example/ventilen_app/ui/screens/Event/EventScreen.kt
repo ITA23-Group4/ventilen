@@ -48,10 +48,10 @@ fun EventScreen(
                 )
             }
         }
-        CustomFloatingActionButton(
-            onClick = onAddEvent
-        )
     }
+    CustomFloatingActionButton(
+        onClick = onAddEvent
+    )
 }
 
 @Preview

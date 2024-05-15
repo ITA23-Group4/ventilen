@@ -58,7 +58,9 @@ class EventRepository {
         )
     }
 
-    private fun createEvent(event: Event){
-
+    suspend fun createEvent(event: Event){
+        db.collection("events")
+            .add(event)
+            .await()
     }
 }
