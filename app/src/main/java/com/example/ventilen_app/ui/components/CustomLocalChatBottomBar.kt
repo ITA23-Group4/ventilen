@@ -49,7 +49,8 @@ fun CustomLocalChatBottomBar(
                 text = currentMessage,
                 onValueChange = { onCurrentMessageChanged(it) },
                 modifier = Modifier
-                    .fillMaxWidth(0.9f)
+                    .fillMaxWidth(0.9f),
+                label = ""
             )
             IconButton(onClick = onSendMessage) {
                 Icon(

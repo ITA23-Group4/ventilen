@@ -1,6 +1,7 @@
 package com.example.ventilen_app.navigation
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -51,7 +52,7 @@ fun RootNavigation() {
             startDestination = "auth/welcome",
             route = "auth"
         ) {
-            AuthNavGraph(
+            authNavGraph(
                 navController = navController,
                 authViewModel = authViewModel,
                 locationsViewModel = locationsViewModel
@@ -111,7 +112,7 @@ fun RootNavigation() {
                         ChatHubScreen(
                             locationsExcludingCurrentUserPrimaryLocation = locationsViewModel.getLocationsExcludingPrimaryLocation(),
                             onChatLocalNavigate = {
-                                chatViewModel.selectedLocationChatID = it
+                                chatViewModel.selectedLocation = it
                                 navController.navigate("chat/local")
                             },
                             currentUserPrimaryLocation = locationsViewModel.getPrimaryLocation()
@@ -120,14 +121,11 @@ fun RootNavigation() {
                 }
             }
             composable("chat/local") {
-                chatViewModel.getLocalMessages(chatViewModel.selectedLocationChatID) // Get the local messages for the selected location TODO: LOOK AT
+                chatViewModel.getLocalMessages(chatViewModel.selectedLocation.locationID!!) // Get the local messages for the selected location TODO: LOOK AT
                 Log.d("Chat", chatViewModel.localMessages.toString())
                 // It is logging this: androidx.lifecycle.MutableLiveData@********
                 // It should log the list of messages -- IDK dude
 
-
-                ChatLocalScreen(
-                    listOfLocationMessages = chatViewModel.messages, // TODO: USE CORRECT LIST (LOCAL MESSAGES)
                 chatViewModel.getLocalMessages(chatViewModel.selectedLocation.locationID!!) // Get the local messages for the selected location
                 LocalChatScaffold(
                     locationName = chatViewModel.selectedLocation.locationName,
@@ -141,7 +139,7 @@ fun RootNavigation() {
                     ChatLocalScreen(
                         listOfLocationMessages = chatViewModel.localMessages.collectAsState(),
                         isCurrentUserSender = {
-                            chatViewModel.isCurrentUserSender(currentUserViewModel.getUID(), it)
+                            chatViewModel.isCurrentUserSender(it)
                         }
                     )
                 }
@@ -185,7 +183,6 @@ fun RootNavigation() {
                             isAttending = { event ->
                                 eventScreenViewModel.isCurrentUserAttendingEvent(
                                     event = event,
-                                    currentUserUID = currentUserViewModel.getUID()
                                 )
                             }
                         )

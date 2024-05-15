@@ -55,7 +55,7 @@ class ChatViewModel : ViewModel() {
             senderUID = userRepository.currentUser?.uid!!,
             message = currentMessage,
             timestamp = Date(),
-            locationID = selectedLocationChatID,
+            locationID = selectedLocation.locationID!!,
             username = userRepository.currentUser?.username!!
         )
 
@@ -68,8 +68,8 @@ class ChatViewModel : ViewModel() {
         }
     }
 
-    fun isCurrentUserSender(currentUserUID: String, messageUserUID: String): Boolean {
-        return currentUserUID == messageUserUID
+    fun isCurrentUserSender(messageUserUID: String): Boolean {
+        return userRepository.currentUser!!.uid!! == messageUserUID
     }
 
 }

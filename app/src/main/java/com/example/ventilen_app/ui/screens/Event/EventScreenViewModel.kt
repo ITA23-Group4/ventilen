@@ -76,7 +76,8 @@ class EventScreenViewModel: ViewModel() {
         }
     }
 
-    fun isCurrentUserAttendingEvent(event: Event, currentUserUID: String): Boolean {
+    fun isCurrentUserAttendingEvent(event: Event): Boolean {
+        val currentUserUID = userRepository.currentUser!!.uid
         return event.attendeesByUID.contains(currentUserUID)
     }
 
