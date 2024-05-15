@@ -18,6 +18,10 @@ class ChatViewModel : ViewModel() {
     val userRepository = UserRepository(viewModelScope) //TODO: Should be private
     private val chatRepository = ChatRepository()
 
+    val locationsWithLatestMessages: MutableList<Location> = mutableStateListOf()
+    val localMessages: StateFlow<List<Message>>
+        get() = chatRepository.messagesFlow
+
     var currentMessage: String by mutableStateOf("")
     var selectedLocation: Location by mutableStateOf(
         Location(
@@ -28,14 +32,9 @@ class ChatViewModel : ViewModel() {
         )
     )
 
-    // TODO: ADD STATE :(
-    var locationsWithLatestMessages: List<Location> = emptyList<Location>()
-    val localMessages: StateFlow<List<Message>> get() = chatRepository.messagesFlow
-
     init {
         getLatestMessagesFromEachLocation()
     }
-
 
     fun getLocalMessages(locationID: String) {
         viewModelScope.launch {
@@ -45,8 +44,9 @@ class ChatViewModel : ViewModel() {
 
     fun getLatestMessagesFromEachLocation() {
         viewModelScope.launch {
-            val latestMessages = chatRepository.chatHubMessagesSnapshot()
-            locationsWithLatestMessages = latestMessages
+            val latestMessages: List<Location> = chatRepository.chatHubMessagesSnapshot()
+            locationsWithLatestMessages.clear()
+            locationsWithLatestMessages.addAll(latestMessages)
         }
     }
 

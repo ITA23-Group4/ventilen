@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -23,11 +24,12 @@ fun ChatLocalScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(4.dp, 0.dp)
+            .padding(4.dp, 0.dp),
+        verticalArrangement = Arrangement.Bottom
     ) {
         LazyColumn(
             modifier = Modifier
-                .fillMaxSize()
+                .fillMaxWidth()
                 .padding(0.dp, 8.dp, 0.dp, 8.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp),
             reverseLayout = true
