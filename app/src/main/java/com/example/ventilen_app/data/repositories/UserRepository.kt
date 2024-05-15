@@ -33,7 +33,7 @@ class UserRepository(viewModelScope: CoroutineScope){
         return !querySnapshot.isEmpty
     }
 
-    suspend fun getUser() {
+    private suspend fun getUser() {
         val currentUserFirebaseInstance: FirebaseUser = FirebaseAuth.getInstance().currentUser!!
         val currentUserUID: String = currentUserFirebaseInstance.uid
         val currentUserEmail: String = currentUserFirebaseInstance.email!!
