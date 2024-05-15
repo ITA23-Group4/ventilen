@@ -17,6 +17,7 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun CustomFilledButton(
     text: String,
+    isEnabled: Boolean = true,
     onClick: () -> Unit,
     color: Color = MaterialTheme.colorScheme.primary,
 ) {
@@ -26,7 +27,8 @@ fun CustomFilledButton(
         .fillMaxWidth()
         .height(56.dp),
         colors = ButtonDefaults.buttonColors(containerColor = color),
-        shape = RoundedCornerShape(8.dp)
+        shape = RoundedCornerShape(8.dp),
+        enabled = isEnabled
     ){
         Text(text = text, style = MaterialTheme.typography.labelLarge)
     }

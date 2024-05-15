@@ -4,10 +4,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
-import com.example.ventilen_app.data.models.ValidatePassword
+import com.example.ventilen_app.utils.ValidateInput
 
 class CredentialsScreenVievModel(
-    private val validatePassword: ValidatePassword = ValidatePassword()
+    private val validateInput: ValidateInput = ValidateInput()
 ): ViewModel() {
 
     var password by mutableStateOf("")

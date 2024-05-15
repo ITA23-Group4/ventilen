@@ -1,6 +1,5 @@
 package com.example.ventilen_app.navigation
 
-import androidx.compose.runtime.collectAsState
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
@@ -89,11 +88,13 @@ fun NavGraphBuilder.authNavGraph(
                 CredentialsScreen(
                     onNavigateUsername = { navController.navigate("auth/register/username") },
                     textEmail = authViewModel.email,
-                    textPassword = authViewModel.password,
-                    onValueChangeEmail = { authViewModel.email = it },
+                    hasEmailError = authViewModel.hasEmailError,
+                    repeatPassword = authViewModel.passwordRepeat,
+                    password = authViewModel.password,
+                    hasPasswordError = authViewModel.hasPasswordError,
+                    onValueChangeEmail = { authViewModel.changeEmail(it) },
                     onValueChangePassword = { authViewModel.changePassword(it) },
-                    onValueChangePasswordRepeat = { authViewModel.password = it },
-                    passwordError = authViewModel.passwordError.collectAsState().value
+                    onValueChangePasswordRepeat = { authViewModel.changeRepeatedPassword(it) },
                 )
             }
         }
@@ -103,8 +104,9 @@ fun NavGraphBuilder.authNavGraph(
             ) {
                 UsernameScreen(
                     onNavigateLocation = { navController.navigate("auth/register/location") },
-                    onValueChange = { authViewModel.username = it },
+                    onValueChange = { authViewModel.changeUsername(it) },
                     textUsername = authViewModel.username,
+                    hasUsernameError = authViewModel.hasUsernameError
                 )
             }
         }
@@ -138,7 +140,7 @@ fun NavGraphBuilder.authNavGraph(
                     locations = locationsViewModel.locations.sorted().map { it.locationName },
                     selectedLocation = authViewModel.location.locationName,
                     onLocationValueChanged = { selectedLocationName ->
-                        authViewModel.location = locationsViewModel.mapLocationNameToLocation.get(selectedLocationName)!!
+                        authViewModel.changeLocation(locationsViewModel.mapLocationNameToLocation.get(selectedLocationName)!!)
                     }
                 )
             }
