@@ -15,7 +15,7 @@ import kotlinx.coroutines.launch
 import java.util.Date
 
 class ChatViewModel : ViewModel() {
-    val userRepository = UserRepository() // TODO: Should be private
+    val userRepository = UserRepository(viewModelScope) // TODO: Should be private
     private val chatRepository = ChatRepository()
 
     val locationsWithLatestMessages: MutableList<Location> = mutableStateListOf()
@@ -34,7 +34,6 @@ class ChatViewModel : ViewModel() {
 
     init {
         viewModelScope.launch {
-            userRepository.getUser()
             getLatestMessagesFromEachLocation()
         }
     }

@@ -14,14 +14,13 @@ import kotlinx.coroutines.launch
 
 class EventViewModel: ViewModel() {
     private val eventRepository: EventRepository = EventRepository()
-    private val userRepository: UserRepository = UserRepository()
+    private val userRepository: UserRepository = UserRepository(viewModelScope)
 
     val events: MutableList<Event> = mutableStateListOf()
     private var selectedEventCardID: String by mutableStateOf("")
 
     init {
         viewModelScope.launch {
-            userRepository.getUser()
             getEvents()
         }
     }

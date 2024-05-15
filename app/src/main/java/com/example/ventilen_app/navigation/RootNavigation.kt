@@ -77,6 +77,7 @@ fun RootNavigation() {
             ) { paddingValues ->
                 Box(modifier = Modifier.padding(paddingValues)) {
                     HomeScreen()
+                    Log.d("CurrentUser", "${authViewModel.userRepository.currentUser}")
                 }
             }
         }

@@ -15,7 +15,7 @@ import kotlinx.coroutines.launch
 
 class AuthViewModel : ViewModel() {
     private val accountService: AccountService = AccountService()
-    private val userRepository: UserRepository = UserRepository()
+    val userRepository: UserRepository = UserRepository(viewModelScope) //TODO: Should be private
     val locationRepository: LocationRepository = LocationRepository(viewModelScope) //TODO: Should be private
     private val validateInput: ValidateInput = ValidateInput()
 
@@ -66,7 +66,7 @@ class AuthViewModel : ViewModel() {
     ) {
         viewModelScope.launch {
             try {
-                userRepository.logout() // TODO: Why I this needed?
+                // userRepository.logout() // TODO: Why I this needed?
                 accountService.login(
                     email = email,
                     password = password
