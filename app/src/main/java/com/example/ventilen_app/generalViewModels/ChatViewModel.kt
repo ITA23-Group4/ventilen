@@ -15,7 +15,7 @@ import kotlinx.coroutines.launch
 import java.util.Date
 
 class ChatViewModel : ViewModel() {
-    private val userRepository = UserRepository(viewModelScope)
+    val userRepository = UserRepository(viewModelScope) //TODO: Should be private
     private val chatRepository = ChatRepository()
 
     var currentMessage: String by mutableStateOf("")

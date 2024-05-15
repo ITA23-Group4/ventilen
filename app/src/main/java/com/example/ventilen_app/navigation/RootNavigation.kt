@@ -112,12 +112,16 @@ fun RootNavigation() {
                     Box(modifier = Modifier.padding(paddingValues)) {
                         chatViewModel.getLatestMessagesFromEachLocation() // Get the latest messages from each location in the database, before navigating to the ChatHubScreen TODO: LOOK AT
                         ChatHubScreen(
-                            locationsExcludingCurrentUserPrimaryLocation = locationsViewModel.getLocationsExcludingPrimaryLocation(),
+                            locationsExcludingCurrentUserPrimaryLocation = chatViewModel.locationsWithLatestMessages.filter { location ->
+                                location.locationID != chatViewModel.userRepository.currentUser?.primaryLocationID
+                            },
                             onChatLocalNavigate = {
                                 chatViewModel.selectedLocation = it
                                 navController.navigate("chat/local")
                             },
-                            currentUserPrimaryLocation = locationsViewModel.getPrimaryLocation()
+                            currentUserPrimaryLocation = chatViewModel.locationsWithLatestMessages.find { location ->
+                                location.locationID == chatViewModel.userRepository.currentUser?.primaryLocationID
+                            }!!
                         )
                     }
                 }
