@@ -1,4 +1,4 @@
-package com.example.ventilen_app.ui.screens.Event
+package com.example.ventilen_app.viewmodels
 
 import android.util.Log
 import androidx.compose.runtime.getValue

@@ -1,4 +1,4 @@
-package com.example.ventilen_app.generalViewModels
+package com.example.ventilen_app.viewmodels
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
@@ -15,7 +15,7 @@ import kotlinx.coroutines.launch
 import java.util.Date
 
 class ChatViewModel : ViewModel() {
-    val userRepository = UserRepository()
+    val userRepository = UserRepository() // TODO: Should be private
     private val chatRepository = ChatRepository()
 
     val locationsWithLatestMessages: MutableList<Location> = mutableStateListOf()

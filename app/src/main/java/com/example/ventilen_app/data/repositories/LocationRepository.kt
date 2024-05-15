@@ -11,6 +11,7 @@ import kotlinx.coroutines.tasks.await
 
 class LocationRepository(viewModelScope: CoroutineScope) {
     private val db = Firebase.firestore
+
     var locations: List<Location> = listOf()
         get() { return field.sorted() }
     val mapLocationNameToLocation: Map<String, Location>

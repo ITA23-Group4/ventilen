@@ -1,4 +1,4 @@
-package com.example.ventilen_app.generalViewModels
+package com.example.ventilen_app.viewmodels
 
 import android.util.Log
 import androidx.compose.runtime.getValue
@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
 class AuthViewModel : ViewModel() {
     private val accountService: AccountService = AccountService()
     private val userRepository: UserRepository = UserRepository()
-    val locationRepository: LocationRepository = LocationRepository(viewModelScope)
+    val locationRepository: LocationRepository = LocationRepository(viewModelScope) //TODO: Should be private
     private val validateInput: ValidateInput = ValidateInput()
 
     var email: String by mutableStateOf("marcus.rappenborg@gmail.com")
