@@ -24,7 +24,7 @@ import com.example.ventilen_app.ui.components.scaffolds.LocalChatScaffold
 import com.example.ventilen_app.ui.screens.Chat.ChatHubScreen
 import com.example.ventilen_app.ui.screens.Chat.ChatLocalScreen
 import com.example.ventilen_app.ui.screens.Event.EventScreen
-import com.example.ventilen_app.ui.screens.Event.EventScreenViewModel
+import com.example.ventilen_app.ui.screens.Event.EventViewModel
 import com.example.ventilen_app.ui.screens.Home.HomeScreen
 
 /**
@@ -41,7 +41,7 @@ fun RootNavigation() {
 
     // Initialize view models
     val authViewModel: AuthViewModel = viewModel<AuthViewModel>()
-    val eventScreenViewModel: EventScreenViewModel = viewModel<EventScreenViewModel>()
+    val eventViewModel: EventViewModel = viewModel<EventViewModel>()
     val chatViewModel: ChatViewModel = viewModel<ChatViewModel>()
 
     NavHost(navController = navController, startDestination = "auth") {
@@ -140,7 +140,7 @@ fun RootNavigation() {
                 }
             }
             composable("event") {
-                eventScreenViewModel.clearSelectedEventCard() // TODO: Scuffed transition on navigation
+                eventViewModel.clearSelectedEventCard() // TODO: Scuffed transition on navigation
                 Scaffold(
                     topBar = {
                         CenterAlignedTopAppBar(
@@ -162,21 +162,21 @@ fun RootNavigation() {
                 ) { paddingValues ->
                     Box(modifier = Modifier.padding(paddingValues)) {
                         EventScreen(
-                            events = eventScreenViewModel.events.sorted(),
+                            events = eventViewModel.events.sorted(),
                             onAttend = {
-                                eventScreenViewModel.addUserToEvent(
+                                eventViewModel.addUserToEvent(
                                     eventID = it
                             )
                         },
                         onNotAttend = {
-                            eventScreenViewModel.removeUserFromEvent(
+                            eventViewModel.removeUserFromEvent(
                                 eventID = it,
                                 )
                             },
-                            isEventSelected = { eventScreenViewModel.isSelectedEvent(it) },
-                            onEventCardClick = { eventScreenViewModel.toggleEventCard(it) },
+                            isEventSelected = { eventViewModel.isSelectedEvent(it) },
+                            onEventCardClick = { eventViewModel.toggleEventCard(it) },
                             isAttending = { event ->
-                                eventScreenViewModel.isCurrentUserAttendingEvent(
+                                eventViewModel.isCurrentUserAttendingEvent(
                                     event = event,
                                 )
                             }
