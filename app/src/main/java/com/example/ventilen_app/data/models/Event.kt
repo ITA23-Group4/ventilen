@@ -16,9 +16,9 @@ data class Event(
     val eventDescription: String = "",
     val eventAddress: String = "",
     val eventPrice: Double = 0.0,
-    // val eventDateTime: DateTime = DateTime.getDefaultInstance(), TODO: Implement this
     @DocumentId val eventID: String,
 ) : Comparable<Event> {
+
     fun withUpdatedAttendees(attendees: MutableList<String>): Event {
         return this.copy(attendeesByUID = attendees)
     }

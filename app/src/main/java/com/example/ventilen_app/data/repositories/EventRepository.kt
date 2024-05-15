@@ -7,17 +7,19 @@ import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.firestore
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 
-class EventRepository {
+class EventRepository() {
     private val db = Firebase.firestore;
 
-    suspend fun getEvents(): MutableList<Event> {
+    suspend fun getEvents(): List<Event> {
         val querySnapshot: QuerySnapshot = db.collection("events").get().await()
 
         return querySnapshot.documents.map { eventDocument ->
             convertEventDocumentToEvent(eventDocument)
-        }.toMutableList()
+        }
     }
 
     suspend fun getEvent(eventID: String): Event {

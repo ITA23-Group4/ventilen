@@ -15,9 +15,9 @@ import kotlinx.coroutines.launch
 class EventViewModel: ViewModel() {
     private val eventRepository: EventRepository = EventRepository()
     private val userRepository: UserRepository = UserRepository(viewModelScope)
-    val events: MutableList<Event> = mutableStateListOf()
 
-    var selectedEventCardID: String by mutableStateOf("")
+    val events: MutableList<Event> = mutableStateListOf()
+    private var selectedEventCardID: String by mutableStateOf("")
 
     init {
         getEvents()
@@ -26,7 +26,6 @@ class EventViewModel: ViewModel() {
     private fun getEvents(){
         viewModelScope.launch {
             try {
-                events.clear()
                 events.addAll(eventRepository.getEvents())
             } catch (error: Exception) {
                 Log.d("GetAllEvents", "ERROR: ${error.message}")

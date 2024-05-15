@@ -12,9 +12,9 @@ import kotlinx.coroutines.tasks.await
 class LocationRepository(viewModelScope: CoroutineScope) {
     private val db = Firebase.firestore
     var locations: List<Location> = listOf()
-        get() {return field.sorted()}
+        get() { return field.sorted() }
     val mapLocationNameToLocation: Map<String, Location>
-        get() {return locations.associateBy { location -> location.locationName }}
+        get() { return locations.associateBy { location -> location.locationName } }
 
     init {
         // Launch a coroutine in the viewModelScope
