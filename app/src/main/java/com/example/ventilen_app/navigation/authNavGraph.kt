@@ -1,5 +1,6 @@
 package com.example.ventilen_app.navigation
 
+import androidx.compose.runtime.collectAsState
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
@@ -92,7 +93,7 @@ fun NavGraphBuilder.authNavGraph(
                     onValueChangeEmail = { authViewModel.email = it },
                     onValueChangePassword = { authViewModel.changePassword(it) },
                     onValueChangePasswordRepeat = { authViewModel.password = it },
-                    passwordError = authViewModel.passwordError
+                    passwordError = authViewModel.passwordError.collectAsState().value
                 )
             }
         }

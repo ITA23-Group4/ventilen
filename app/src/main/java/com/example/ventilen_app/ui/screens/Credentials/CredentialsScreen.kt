@@ -27,9 +27,7 @@ fun CredentialsScreen(
     onValueChangePassword: (String) -> Unit,
     onValueChangePasswordRepeat: (String) -> Unit,
     passwordError: PasswordValidationState,
-
     ) {
-
 
     CustomColumn(
         horizontalAlignment = Alignment.CenterHorizontally ,
@@ -57,7 +55,7 @@ fun CredentialsScreen(
 
         CustomFilledButton(
             text = "Forsæt",
-            onClick = onNavigateUsername
+            onClick = { if (passwordError.successful) onNavigateUsername() }
         )
     }
 
