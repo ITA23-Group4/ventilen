@@ -5,7 +5,6 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import com.example.ventilen_app.generalViewModels.AuthViewModel
-import com.example.ventilen_app.generalViewModels.LocationViewModel
 import com.example.ventilen_app.ui.components.scaffolds.AuthScaffold
 import com.example.ventilen_app.ui.screens.Credentials.CredentialsScreen
 import com.example.ventilen_app.ui.screens.Location.LocationScreen
@@ -26,7 +25,6 @@ import com.example.ventilen_app.ui.screens.Welcome.WelcomeScreen
 fun NavGraphBuilder.authNavGraph(
     navController: NavController,
     authViewModel: AuthViewModel,
-    locationsViewModel: LocationViewModel
 ) {
     composable("auth/welcome") {
         AuthScaffold(
@@ -131,10 +129,10 @@ fun NavGraphBuilder.authNavGraph(
                             }
                         )
                     },
-                    locations = locationsViewModel.locations.sorted().map { it.locationName },
                     selectedLocation = authViewModel.location.locationName,
+                    locations = authViewModel.locationRepository.locations.map { it.locationName },
                     onLocationValueChanged = { selectedLocationName ->
-                        authViewModel.changeLocation(locationsViewModel.mapLocationNameToLocation.get(selectedLocationName)!!)
+                        authViewModel.changeLocation(authViewModel.locationRepository.mapLocationNameToLocation.get(selectedLocationName)!!)
                     }
                 )
             }

@@ -1,7 +1,6 @@
 package com.example.ventilen_app.navigation
 
 import android.annotation.SuppressLint
-import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -18,10 +17,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
-import com.example.ventilen_app.data.models.Message
 import com.example.ventilen_app.generalViewModels.AuthViewModel
 import com.example.ventilen_app.generalViewModels.ChatViewModel
-import com.example.ventilen_app.generalViewModels.LocationViewModel
 import com.example.ventilen_app.ui.components.scaffolds.CustomBottomNavigationBar
 import com.example.ventilen_app.ui.components.scaffolds.LocalChatScaffold
 import com.example.ventilen_app.ui.screens.Chat.ChatHubScreen
@@ -29,7 +26,6 @@ import com.example.ventilen_app.ui.screens.Chat.ChatLocalScreen
 import com.example.ventilen_app.ui.screens.Event.EventScreen
 import com.example.ventilen_app.ui.screens.Event.EventScreenViewModel
 import com.example.ventilen_app.ui.screens.Home.HomeScreen
-import java.util.Date
 
 /**
  * Root navigation structure of the application.
@@ -46,7 +42,6 @@ fun RootNavigation() {
     // Initialize view models
     val authViewModel: AuthViewModel = viewModel<AuthViewModel>()
     val eventScreenViewModel: EventScreenViewModel = viewModel<EventScreenViewModel>()
-    val locationsViewModel: LocationViewModel = viewModel<LocationViewModel>()
     val chatViewModel: ChatViewModel = viewModel<ChatViewModel>()
 
     NavHost(navController = navController, startDestination = "auth") {
@@ -56,8 +51,7 @@ fun RootNavigation() {
         ) {
             authNavGraph(
                 navController = navController,
-                authViewModel = authViewModel,
-                locationsViewModel = locationsViewModel
+                authViewModel = authViewModel
             )
         }
         composable("home") {
