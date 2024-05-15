@@ -19,7 +19,7 @@ import java.util.Date
 // - current route
 // - primaryLocationID
 class ChatViewModel : ViewModel() {
-    private val userRepository = UserRepository()
+    private val userRepository = UserRepository(viewModelScope)
     private val chatRepository = ChatRepository()
 
     var currentMessage: String by mutableStateOf("")

@@ -14,13 +14,13 @@ import kotlinx.coroutines.launch
 
 class AuthViewModel : ViewModel() {
     private val accountService: AccountService = AccountService()
-    private val userRepository: UserRepository = UserRepository()
+    private val userRepository: UserRepository = UserRepository(viewModelScope)
     private val validateInput: ValidateInput = ValidateInput()
 
-    var email: String by mutableStateOf("")
+    var email: String by mutableStateOf("marcus.rappenborg@gmail.com")
     var hasEmailError: Boolean by mutableStateOf(false)
 
-    var password: String by mutableStateOf("")
+    var password: String by mutableStateOf("Ventilen1234")
     var passwordRepeat: String by mutableStateOf("")
     var hasPasswordError: Boolean by mutableStateOf(false)
 
@@ -68,9 +68,9 @@ class AuthViewModel : ViewModel() {
                     email = email,
                     password = password
                 )
-                userRepository.getUser()
+                onLoginSuccess()
             } catch (error: Exception) {
-                Log.d("Logged In", "Failed to log in: $error")
+                Log.e("LOG IN", "Failed to log in: $error")
                 onLoginFailure()
             }
 

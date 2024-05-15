@@ -11,7 +11,7 @@ import kotlinx.coroutines.launch
 
 class EventScreenViewModel: ViewModel() {
     private val eventRepository: EventRepository = EventRepository()
-    private val userRepository: UserRepository = UserRepository()
+    private val userRepository: UserRepository = UserRepository(viewModelScope)
     val events: MutableList<Event> = mutableStateListOf()
 
     init {

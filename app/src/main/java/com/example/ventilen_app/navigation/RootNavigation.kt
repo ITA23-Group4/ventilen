@@ -85,7 +85,7 @@ fun RootNavigation() {
             route = "chat"
         ) {
             composable("chat/hub") {
-                chatViewModel.getLatestMessagesFromEachLocation() // Get the latest messages from each location in the database, before navigating to the ChatHubScreen TODO: LOOK AT
+                 // Get the latest messages from each location in the database, before navigating to the ChatHubScreen TODO: LOOK AT
                 ChatHubScreen(
                     locationsExcludingCurrentUserPrimaryLocation = locationsViewModel.getLocationsExcludingPrimaryLocation(),
                     onChatLocalNavigate = {

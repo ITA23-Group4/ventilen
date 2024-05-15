@@ -10,7 +10,7 @@ import kotlinx.coroutines.launch
 
 class LocationViewModel: ViewModel() {
     private val locationRepository: LocationRepository = LocationRepository()
-    private val userRepository = UserRepository()
+    private val userRepository = UserRepository(viewModelScope)
     var locations: List<Location> = listOf()
     var mapLocationNameToLocation: Map<String, Location> = emptyMap() //TODO: Locations are saved two places now
 
@@ -36,7 +36,7 @@ class LocationViewModel: ViewModel() {
 
     fun getPrimaryLocation(): Location {
         return locations.find { location ->
-            location.locationID == userRepository.currentUser?.primaryLocationID
+            location.locationID == userRepository.currentUser!!.primaryLocationID
         }!!
     }
 
