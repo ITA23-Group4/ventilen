@@ -19,7 +19,6 @@ import com.example.ventilen_app.ui.components.TopAuthPageDesign
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CredentialsScreen(
-    viewModel: CredentialsScreenVievModel = viewModel(),
     onNavigateUsername: () -> Unit,
     textEmail: String,
     textPassword: String,
@@ -28,7 +27,6 @@ fun CredentialsScreen(
     onValueChangePasswordRepeat: (String) -> Unit,
     passwordError: PasswordValidationState,
     ) {
-
     CustomColumn(
         horizontalAlignment = Alignment.CenterHorizontally ,
         verticalArrangement = Arrangement.spacedBy(30.dp)
@@ -40,9 +38,6 @@ fun CredentialsScreen(
         CustomTextField(text = textEmail, label = "Email") { onValueChangeEmail(it) }
 
         CustomTextField(text = textPassword, label = "Password" , onValueChange = {onValueChangePassword(it)})
-
-
-
 
         CustomTextField(text = textPassword, label = "Gentag Password") { onValueChangePasswordRepeat(it) }
 

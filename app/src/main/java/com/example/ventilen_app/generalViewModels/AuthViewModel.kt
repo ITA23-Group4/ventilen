@@ -27,9 +27,7 @@ class AuthViewModel : ViewModel() {
 
 
     var username: String by mutableStateOf("")
-
     var email: String by mutableStateOf("")
-
     var location: Location by mutableStateOf(Location(
         locationName = "Name",
         latestMessage = "Latest message",
@@ -37,7 +35,6 @@ class AuthViewModel : ViewModel() {
         locationID = "Location ID"
         )
     )
-
     var password: String by mutableStateOf("")
 
     @OptIn(ExperimentalCoroutinesApi::class)
@@ -55,8 +52,6 @@ class AuthViewModel : ViewModel() {
     fun changePassword(value: String) {
         password = value
     }
-
-
 
     fun registerNewUser(
         onRegistrationSuccess: () -> Unit,
