@@ -18,14 +18,17 @@ import com.example.ventilen_app.ui.theme.CustomColorScheme
 fun CustomTextField(
     text: String,
     label: String = "",
+    isSingleLine: Boolean = true,
+    hasError: Boolean = false,
     modifier: Modifier = Modifier,
-    onValueChange: (String) -> Unit,
+    onValueChange: (String) -> Unit
 ) {
     OutlinedTextField(
         modifier = modifier.fillMaxWidth(),
         value = text,
-        singleLine = true,
-        onValueChange = { onValueChange(it) },
+        singleLine = isSingleLine,
+        onValueChange = { onValueChange(it)},
+        //visualTransformation = PasswordVisualTransformation(),
         label = { Text(text = label,
             style = MaterialTheme.typography.bodyLarge,
             color = CustomColorScheme.Orange
@@ -35,5 +38,7 @@ fun CustomTextField(
             unfocusedLabelColor = MaterialTheme.colorScheme.primary
         ),
         textStyle = MaterialTheme.typography.bodyMedium
+        ,
+        isError = hasError
     )
 }

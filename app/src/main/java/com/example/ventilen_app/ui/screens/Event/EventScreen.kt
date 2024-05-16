@@ -20,11 +20,12 @@ import com.example.ventilen_app.ui.theme.VentilenAppTheme
 @Composable
 fun EventScreen(
     events: List<Event>,
+    onAddEvent: () -> Unit,
     isEventSelected: (String) -> Boolean,
     isAttending: (Event) -> Boolean,
     onAttend: (String) -> Unit,
     onNotAttend: (String) -> Unit,
-    onEventCardClick: (String) -> Unit,
+    onEventCardClick: (String) -> Unit
 ) {
     CustomColumn {
         LazyColumn(
@@ -58,6 +59,6 @@ fun EventScreenPreview() {
         Event(eventName = "Pita Night", attendeesByUID = mutableListOf(), eventID = "3")
     )
     VentilenAppTheme {
-        EventScreen(events = sampleEvents, onAttend = {}, onNotAttend = {}, onEventCardClick = {}, isEventSelected = { false }, isAttending = { false })
+        EventScreen(events = sampleEvents, onAttend = {}, onNotAttend = {}, onEventCardClick = {}, isEventSelected = { false }, isAttending = { false }, onAddEvent = {})
     }
 }

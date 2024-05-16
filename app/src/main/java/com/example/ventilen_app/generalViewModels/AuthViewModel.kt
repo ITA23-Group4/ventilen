@@ -9,22 +9,35 @@ import androidx.lifecycle.viewModelScope
 import com.example.ventilen_app.data.models.Location
 import com.example.ventilen_app.data.repositories.UserRepository
 import com.example.ventilen_app.services.AccountService
+import com.example.ventilen_app.utils.ValidateInput
 import kotlinx.coroutines.launch
 
 class AuthViewModel : ViewModel() {
-    private val accountService: AccountService = AccountService();
+    private val accountService: AccountService = AccountService()
     private val userRepository: UserRepository = UserRepository()
+    private val validateInput: ValidateInput = ValidateInput()
+
+    var isAdmin: Boolean? by mutableStateOf(null)
+
+    var email: String by mutableStateOf("christianbt96@gmail.com")
+    var hasEmailError: Boolean by mutableStateOf(false)
+
+    var password: String by mutableStateOf("Ventilen1234")
+    var passwordRepeat: String by mutableStateOf("")
+    var hasPasswordError: Boolean by mutableStateOf(false)
 
     var username: String by mutableStateOf("")
-    var email: String by mutableStateOf("christianbt96@gmail.com")
+    var hasUsernameError: Boolean by mutableStateOf(false)
+
     var location: Location by mutableStateOf(Location(
-        locationName = "Name",
-        latestMessage = "Latest message",
-        abbreviation = "Abbreviation",
-        locationID = "Location ID"
-        )
+        locationName = "",
+        latestMessage = "",
+        abbreviation = "",
+        locationID = ""
     )
-    var password: String by mutableStateOf("Ventilen1234")
+    )
+    var hasLocationError: Boolean by mutableStateOf(false)
+
 
     fun registerNewUser(
         onRegistrationSuccess: () -> Unit,
@@ -58,6 +71,7 @@ class AuthViewModel : ViewModel() {
                     email = email,
                     password = password
                 )
+                //isEmailInAdmins()
                 onLoginSuccess()
             } catch (error: Exception) {
                 Log.d("Logged In", "Failed to log in: $error")
@@ -65,6 +79,35 @@ class AuthViewModel : ViewModel() {
             }
 
         }
+    }
+
+    private suspend fun isEmailInAdmins() {
+        isAdmin = userRepository.isEmailInAdmins(email)
+    }
+
+    fun changeEmail(newEmail: String) {
+        email = newEmail
+        hasEmailError = validateInput.validateEmail(email)
+    }
+
+    fun changePassword(newPassword: String) {
+        password = newPassword
+        hasPasswordError = validateInput.validatePassword(password)
+    }
+
+    fun changeRepeatedPassword(newRepeatPassword: String) {
+        passwordRepeat = newRepeatPassword
+        hasPasswordError = (newRepeatPassword != password)
+    }
+
+    fun changeUsername(newUsername: String) {
+        username = newUsername
+        hasUsernameError = validateInput.validateUsername(username)
+    }
+
+    fun changeLocation(newLocation: Location) {
+        location = newLocation
+        hasLocationError = location.locationName.isNotEmpty()
     }
 
 }

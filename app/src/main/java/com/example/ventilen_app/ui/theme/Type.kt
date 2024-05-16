@@ -36,6 +36,7 @@ val Typography = Typography(
     val labelMedium: TextStyle = COMPILED_CODE,
     val labelSmall: TextStyle = COMPILED_CODE
  */
+
     //TODO: Redo typograpghy names to be propper and make all needed typograpghies
     headlineLarge = TextStyle(
         fontFamily = montserratFamily,

@@ -1,6 +1,5 @@
 package com.example.ventilen_app.ui.components
 
-import android.graphics.Color
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
