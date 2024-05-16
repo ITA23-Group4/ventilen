@@ -2,15 +2,12 @@ package com.example.ventilen_app.navigation
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FabPosition
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -24,9 +21,8 @@ import com.example.ventilen_app.data.models.Message
 import com.example.ventilen_app.generalViewModels.AdminViewModel
 import com.example.ventilen_app.generalViewModels.AuthViewModel
 import com.example.ventilen_app.generalViewModels.ChatViewModel
-import com.example.ventilen_app.generalViewModels.UserViewModel
 import com.example.ventilen_app.generalViewModels.LocationViewModel
-import com.example.ventilen_app.ui.components.CustomFloatingActionButton
+import com.example.ventilen_app.generalViewModels.UserViewModel
 import com.example.ventilen_app.ui.components.scaffolds.CreateEventScaffold
 import com.example.ventilen_app.ui.components.scaffolds.CustomBottomNavigationBar
 import com.example.ventilen_app.ui.components.scaffolds.EventScaffold
@@ -38,7 +34,6 @@ import com.example.ventilen_app.ui.screens.CreateEvent.CreateEventViewModel
 import com.example.ventilen_app.ui.screens.Event.EventScreen
 import com.example.ventilen_app.ui.screens.Event.EventScreenViewModel
 import com.example.ventilen_app.ui.screens.Home.HomeScreen
-import org.checkerframework.common.subtyping.qual.Bottom
 import java.util.Date
 
 /**

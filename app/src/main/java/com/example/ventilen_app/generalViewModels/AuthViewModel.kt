@@ -7,9 +7,9 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.ventilen_app.data.models.Location
-import com.example.ventilen_app.utils.ValidateInput
 import com.example.ventilen_app.data.repositories.UserRepository
 import com.example.ventilen_app.services.AccountService
+import com.example.ventilen_app.utils.ValidateInput
 import kotlinx.coroutines.launch
 
 class AuthViewModel : ViewModel() {
