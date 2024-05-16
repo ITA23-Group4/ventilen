@@ -10,5 +10,4 @@ data class User(
     override fun toString(): String {
         return "User(username='$username', uid=$uid)"
     }
-
 }
