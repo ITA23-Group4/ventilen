@@ -2,7 +2,6 @@ package com.example.ventilen_app.navigation
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -15,6 +14,7 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -24,6 +24,7 @@ import com.example.ventilen_app.data.models.Message
 import com.example.ventilen_app.generalViewModels.AdminViewModel
 import com.example.ventilen_app.generalViewModels.AuthViewModel
 import com.example.ventilen_app.generalViewModels.ChatViewModel
+import com.example.ventilen_app.generalViewModels.HomeViewModel
 import com.example.ventilen_app.generalViewModels.UserViewModel
 import com.example.ventilen_app.generalViewModels.LocationViewModel
 import com.example.ventilen_app.ui.components.CustomFloatingActionButton
@@ -36,7 +37,6 @@ import com.example.ventilen_app.ui.screens.CreateEvent.CreateEventViewModel
 import com.example.ventilen_app.ui.screens.Event.EventScreen
 import com.example.ventilen_app.ui.screens.Event.EventScreenViewModel
 import com.example.ventilen_app.ui.screens.Home.HomeScreen
-import org.checkerframework.common.subtyping.qual.Bottom
 import java.util.Date
 
 /**
@@ -57,6 +57,7 @@ fun RootNavigation() {
     val locationsViewModel: LocationViewModel = viewModel<LocationViewModel>()
     val chatViewModel: ChatViewModel = viewModel<ChatViewModel>()
     val createEventViewModel: CreateEventViewModel = viewModel<CreateEventViewModel>()
+    val homeViewModel: HomeViewModel = viewModel<HomeViewModel>()
 
     // Initialize currentUserViewModel based on isAdmin state in authViewModel
     val currentUserViewModel = if (authViewModel.isAdmin == true) {
@@ -70,7 +71,7 @@ fun RootNavigation() {
             startDestination = "auth/welcome",
             route = "auth"
         ) {
-            AuthNavGraph(
+            authNavGraph(
                 navController = navController,
                 userViewModel = currentUserViewModel,
                 authViewModel = authViewModel,
@@ -98,11 +99,12 @@ fun RootNavigation() {
                 }
             ) { paddingValues ->
                 Box(modifier = Modifier.padding(paddingValues)) {
+                    homeViewModel.context = LocalContext.current
                     HomeScreen(
-                        textUsername = currentUserViewModel.currentUser?.username.toString(),
-                        textUID = currentUserViewModel.currentUser?.uid.toString(),
-                        isAdmin = currentUserViewModel.isAdmin,
-                        logout = { (currentUserViewModel as AdminViewModel).logout() }
+                        selectedDate = homeViewModel.selectedDate,
+                        selectedTime = homeViewModel.selectedTime,
+                        showDatePicker = { homeViewModel.showDatePicker() },
+                        showTimePicker = { homeViewModel.showTimePicker() }
                     )
                 }
             }
