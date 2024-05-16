@@ -27,6 +27,7 @@ import com.example.ventilen_app.generalViewModels.ChatViewModel
 import com.example.ventilen_app.generalViewModels.UserViewModel
 import com.example.ventilen_app.generalViewModels.LocationViewModel
 import com.example.ventilen_app.ui.components.CustomFloatingActionButton
+import com.example.ventilen_app.ui.components.scaffolds.CreateEventScaffold
 import com.example.ventilen_app.ui.components.scaffolds.CustomBottomNavigationBar
 import com.example.ventilen_app.ui.components.scaffolds.LocalChatScaffold
 import com.example.ventilen_app.ui.screens.Chat.ChatHubScreen
@@ -196,7 +197,7 @@ fun RootNavigation() {
                         )
                     },
                     floatingActionButton = {
-                        CustomFloatingActionButton(onClick = { navController.navigate("event/create")})
+                        CustomFloatingActionButton(onClick = { navController.navigate("event/create") })
                     },
                     floatingActionButtonPosition = FabPosition.End
                 ) { paddingValues ->
@@ -229,31 +230,21 @@ fun RootNavigation() {
                 }
             }
             composable("event/create") {
-                Scaffold(
-                    topBar = {
-                        TopAppBar(
-                            colors = TopAppBarDefaults.topAppBarColors(
-                                containerColor = MaterialTheme.colorScheme.surface,
-                                navigationIconContentColor = MaterialTheme.colorScheme.onSurface,
-                                titleContentColor = MaterialTheme.colorScheme.onSurface
-                            ),
-                            title = { Text("Opret Event") }
-                        )
-                    }
-                ) { PaddingValues ->
-                    Box(modifier = Modifier.padding(PaddingValues)) {
-                        CreateEventScreen(
-                            eventTitle = createEventViewModel.eventTitle,
-                            eventDescription = createEventViewModel.eventDescription,
-                            eventAddress = createEventViewModel.eventAddress,
-                            eventPrice = createEventViewModel.eventPrice,
-                            onValueChangeTitle = { createEventViewModel.eventTitle = it },
-                            onValueChangeDescription = { createEventViewModel.eventDescription = it },
-                            onValueChangeAddress = { createEventViewModel.eventAddress = it },
-                            onValueChangePrice = { createEventViewModel.eventPrice = it },
-                            onCreateEvent = {} // TODO: Implement create event functionality
-                        )
-                    }
+                CreateEventScaffold(
+                    onNavigateBack = { navController.navigate("event") },
+
+                    ) {
+                    CreateEventScreen(
+                        eventTitle = createEventViewModel.eventTitle,
+                        eventDescription = createEventViewModel.eventDescription,
+                        eventAddress = createEventViewModel.eventAddress,
+                        eventPrice = createEventViewModel.eventPrice,
+                        onValueChangeTitle = { createEventViewModel.eventTitle = it },
+                        onValueChangeDescription = { createEventViewModel.eventDescription = it },
+                        onValueChangeAddress = { createEventViewModel.eventAddress = it },
+                        onValueChangePrice = { createEventViewModel.eventPrice = it },
+                        onCreateEvent = {} // TODO: Implement create event functionality
+                    )
                 }
             }
         }
