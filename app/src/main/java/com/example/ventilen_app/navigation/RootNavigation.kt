@@ -18,6 +18,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import com.example.ventilen_app.data.models.Message
+import com.example.ventilen_app.generalViewModels.AdminViewModel
 import com.example.ventilen_app.generalViewModels.AuthViewModel
 import com.example.ventilen_app.generalViewModels.ChatViewModel
 import com.example.ventilen_app.generalViewModels.CurrentUserViewModel
@@ -44,11 +45,17 @@ fun RootNavigation() {
     val navController = rememberNavController()
 
     // Initialize view models
-    val currentUserViewModel: CurrentUserViewModel = viewModel<CurrentUserViewModel>()
     val authViewModel: AuthViewModel = viewModel<AuthViewModel>()
     val eventScreenViewModel: EventScreenViewModel = viewModel<EventScreenViewModel>()
     val locationsViewModel: LocationViewModel = viewModel<LocationViewModel>()
     val chatViewModel: ChatViewModel = viewModel<ChatViewModel>()
+
+    // Initialize currentUserViewModel based on isAdmin state in authViewModel
+    val currentUserViewModel = if (authViewModel.isAdmin == true) {
+        viewModel<AdminViewModel>()
+    } else {
+        viewModel<CurrentUserViewModel>()
+    }
 
     NavHost(navController = navController, startDestination = "auth") {
         navigation(
@@ -86,6 +93,8 @@ fun RootNavigation() {
                     HomeScreen(
                         textUsername = currentUserViewModel.currentUser?.username.toString(),
                         textUID = currentUserViewModel.currentUser?.uid.toString(),
+                        isAdmin = currentUserViewModel.isAdmin,
+                        logout = { (currentUserViewModel as AdminViewModel).logout() }
                     )
                 }
             }

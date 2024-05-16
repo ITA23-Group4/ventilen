@@ -15,6 +15,8 @@ class AuthViewModel : ViewModel() {
     private val accountService: AccountService = AccountService();
     private val userRepository: UserRepository = UserRepository()
 
+    var isAdmin: Boolean? by mutableStateOf(null)
+
     var username: String by mutableStateOf("")
     var email: String by mutableStateOf("christianbt96@gmail.com")
     var location: Location by mutableStateOf(Location(
@@ -58,6 +60,7 @@ class AuthViewModel : ViewModel() {
                     email = email,
                     password = password
                 )
+                isEmailInAdmins()
                 onLoginSuccess()
             } catch (error: Exception) {
                 Log.d("Logged In", "Failed to log in: $error")
@@ -65,6 +68,10 @@ class AuthViewModel : ViewModel() {
             }
 
         }
+    }
+
+    private suspend fun isEmailInAdmins() {
+        isAdmin = userRepository.isEmailInAdmins(email)
     }
 
 }

@@ -12,9 +12,10 @@ import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.launch
 import java.lang.Exception
 
-class CurrentUserViewModel : ViewModel() {
+open class CurrentUserViewModel : ViewModel() {
     val userRepository: UserRepository = UserRepository()
     var currentUser: User? by mutableStateOf(User("username"))
+    open val isAdmin: Boolean = false
 
     fun getCurrentUser() {
         viewModelScope.launch {
@@ -26,11 +27,6 @@ class CurrentUserViewModel : ViewModel() {
                 Log.d("ERROR", error.toString());
             }
         }
-    }
-
-    // TODO: Remove
-    fun logout() {
-        FirebaseAuth.getInstance().signOut()
     }
 
     fun getUID(): String {
