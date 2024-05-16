@@ -41,6 +41,12 @@ fun CreateEventScreen(
             onValueChangeAddress(it)
         }
         // DatePicker
+        CustomFilledButton(
+            text = "Vælg Dato",
+            onClick = {
+
+            }
+        )
         // TimePicker
         CustomTextField(
             text = eventPrice,
