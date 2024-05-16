@@ -58,7 +58,7 @@ fun CustomBottomNavigationBar(
             label = { Text(
                 modifier = Modifier.offset(0.dp, (26).dp),
                 text = "Home",
-                style = MaterialTheme.typography.headlineMedium
+                style = MaterialTheme.typography.displayMedium
             ) },
             icon = {
                 Icon(
@@ -84,7 +84,7 @@ fun CustomBottomNavigationBar(
             label = { Text(
                 modifier = Modifier.offset(0.dp, (26).dp),
                 text = "Chat",
-                style = MaterialTheme.typography.headlineMedium
+                style = MaterialTheme.typography.displayMedium
             ) },
             icon = {
                 Icon(
@@ -110,7 +110,7 @@ fun CustomBottomNavigationBar(
             label = { Text(
                 modifier = Modifier.offset(0.dp, (26).dp),
                 text = "Events",
-                style = MaterialTheme.typography.headlineMedium
+                style = MaterialTheme.typography.displayMedium
             ) },
             icon = {
                 Icon(

@@ -38,7 +38,7 @@ fun CreateEventScaffold(
                     navigationIconContentColor = MaterialTheme.colorScheme.onSurface,
                     titleContentColor = MaterialTheme.colorScheme.onSurface
                 ),
-                title = { Text("Opret event") },
+                title = { Text("Opret event", style = MaterialTheme.typography.headlineLarge) },
                 navigationIcon = {
                     if (showBackButton) {
                         CustomBackButton(onNavigateBack = onNavigateBack)

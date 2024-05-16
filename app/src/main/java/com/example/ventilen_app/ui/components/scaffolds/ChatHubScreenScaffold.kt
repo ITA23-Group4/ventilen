@@ -29,7 +29,7 @@ fun ChatHubScreenScaffold(
                     navigationIconContentColor = MaterialTheme.colorScheme.onSurface,
                     titleContentColor = MaterialTheme.colorScheme.onSurface
                 ),
-                title = { Text("Chat") },
+                title = { Text("Chat", style = MaterialTheme.typography.headlineLarge) },
             )
         },
         bottomBar = {
