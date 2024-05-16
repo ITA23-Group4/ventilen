@@ -45,7 +45,7 @@ fun EventScaffold(
                     navigationIconContentColor = MaterialTheme.colorScheme.onSurface,
                     titleContentColor = MaterialTheme.colorScheme.onSurface
                 ),
-                title = { Text("Events") },
+                title = { Text("Events", style = MaterialTheme.typography.headlineLarge) },
                 actions = {
                     IconButton(onClick = onNavigateCreateEvent) {
                         Icon(
