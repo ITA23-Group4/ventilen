@@ -71,7 +71,7 @@ class AuthViewModel : ViewModel() {
                     email = email,
                     password = password
                 )
-                isEmailInAdmins()
+                //isEmailInAdmins()
                 onLoginSuccess()
             } catch (error: Exception) {
                 Log.d("Logged In", "Failed to log in: $error")
