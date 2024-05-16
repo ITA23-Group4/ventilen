@@ -2,12 +2,9 @@ package com.example.ventilen_app.ui.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.MaterialTheme
@@ -40,7 +37,7 @@ fun TopAuthPageDesign(
         Spacer(modifier = Modifier.height(66.dp))
         Text(text = topText, style = MaterialTheme.typography.headlineLarge)
         Spacer(modifier = Modifier.height(14.dp))
-        Text(text = bottomText, style = MaterialTheme.typography.headlineMedium)
+        Text(text = bottomText, style = MaterialTheme.typography.bodyMedium)
         Spacer(modifier = Modifier.height(28.dp))
     }
 }

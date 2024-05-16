@@ -7,6 +7,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.ShoppingCart
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -30,21 +31,24 @@ fun EventCardDetails(
             icon = Icons.Default.LocationOn,
             contentDescription = "Address location",
             content = {
-                Text(text = address)
+                Text(text = address,
+                    style = MaterialTheme.typography.bodyMedium)
             }
         )
         EventCardDetailRow(
             icon = Icons.Default.Info,
             contentDescription = "Date and time",
             content = {
-                Text(text = date)
-            }
+                Text(text = date,
+                    style = MaterialTheme.typography.bodyMedium)
+                    }
         )
         EventCardDetailRow(
             icon = Icons.Default.ShoppingCart,
             contentDescription = "Price",
             content = {
-                Text(text = "Pris: ${price.toInt()} kr.")
+                Text(text = "Pris: ${price.toInt()} kr.",
+                    style = MaterialTheme.typography.bodyMedium)
             }
         )
     }

@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.example.ventilen_app.ui.components.CustomSwitchComponent.CustomSwitch
+import com.example.ventilen_app.ui.theme.CustomColorScheme
 
 @Composable
 fun EventCardAttendeesRow(
@@ -35,7 +36,8 @@ fun EventCardAttendeesRow(
         ) {
             Text(
                 text = "Deltagere: $attendeesAmount",
-                style = MaterialTheme.typography.labelLarge
+                style = MaterialTheme.typography.labelLarge,
+                color = CustomColorScheme.OffWhite
             )
             CustomSwitch(
                 isAttending = isAttending,

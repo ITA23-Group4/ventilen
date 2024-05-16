@@ -1,6 +1,5 @@
 package com.example.ventilen_app.ui.components
 
-import android.graphics.Color
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -16,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import com.example.ventilen_app.data.models.Message
+import com.example.ventilen_app.ui.theme.CustomColorScheme
 
 @Composable
 fun CustomMessageBox(
@@ -27,8 +27,8 @@ fun CustomMessageBox(
     val horizontalArrangement = if (currentUserIsSender) Arrangement.End else Arrangement.Start
     val bottomEnd = if (currentUserIsSender) 0.dp else 16.dp
     val bottomStart = if (currentUserIsSender) 16.dp else 0.dp
-    val textStyleHeadline = if (currentUserIsSender) MaterialTheme.typography.bodyLarge else MaterialTheme.typography.headlineMedium
-    val textStyleBody = if (currentUserIsSender) MaterialTheme.typography.bodySmall else MaterialTheme.typography.headlineMedium
+    val textColorHeadLine = if (currentUserIsSender) CustomColorScheme.OffWhite else CustomColorScheme.OffBlack
+    val textColorBody = if (currentUserIsSender) CustomColorScheme.OffWhite else CustomColorScheme.OffBlack
 
     Row (
         modifier = Modifier.fillMaxWidth(),
@@ -48,8 +48,8 @@ fun CustomMessageBox(
                 .background(background)
                 .padding(12.dp)
         ) {
-            Text(text = message.username, style = textStyleHeadline)
-            Text(text = message.message, style = textStyleBody)
+            Text(text = message.username, style = MaterialTheme.typography.bodySmall, color = textColorHeadLine )
+            Text(text = message.message, style = MaterialTheme.typography.bodyMedium, color = textColorBody)
         }
     }
 }

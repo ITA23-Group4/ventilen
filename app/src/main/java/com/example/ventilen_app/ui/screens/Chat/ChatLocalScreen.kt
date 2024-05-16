@@ -24,14 +24,14 @@ fun ChatLocalScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(4.dp, 0.dp),
+            .padding(16.dp, 0.dp),
         verticalArrangement = Arrangement.Bottom
     ) {
         LazyColumn(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(0.dp, 8.dp, 0.dp, 8.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
+            verticalArrangement = Arrangement.spacedBy(20.dp),
             reverseLayout = true
         ) {
             items(listOfLocationMessages.value) { message ->
@@ -42,13 +42,4 @@ fun ChatLocalScreen(
             }
         }
     }
-
-
-    // CustomFilledButton(text = "Send", onClick = onSendMessage)
-    /*CustomTextField(
-        text = currentMessage,
-        label = "Message",
-        onValueChange = { onCurrentMessageChange(it) }
-    )*/
-
 }

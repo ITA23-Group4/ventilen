@@ -59,4 +59,10 @@ class EventRepository() {
             eventPrice = price
         )
     }
+
+    suspend fun createEvent(event: Event){
+        db.collection("events")
+            .add(event)
+            .await()
+    }
 }

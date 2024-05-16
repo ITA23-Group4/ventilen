@@ -1,19 +1,20 @@
 package com.example.ventilen_app.ui.components.scaffolds
 
-import androidx.compose.material3.BottomAppBar
-import androidx.compose.material3.NavigationBarItem
-import androidx.compose.runtime.Composable
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.LocationOn
+import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
@@ -37,11 +38,12 @@ fun CustomBottomNavigationBar(
     onNavigateEvent: () -> Unit = {}
 ) {
     BottomAppBar(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier.fillMaxWidth().height(56.dp),
         containerColor = MaterialTheme.colorScheme.surface,
         tonalElevation = 0.dp,
     ) {
         NavigationBarItem(
+            modifier = Modifier.offset(0.dp, (-16).dp),
             selected = currentRoute == "home",
             onClick = onNavigateHome,
             colors = NavigationBarItemDefaults.colors(
@@ -53,16 +55,21 @@ fun CustomBottomNavigationBar(
                 disabledIconColor = MaterialTheme.colorScheme.surface,
                 disabledTextColor = MaterialTheme.colorScheme.surface
             ),
-            label = { Text(text = "Home", style = MaterialTheme.typography.headlineMedium) },
+            label = { Text(
+                modifier = Modifier.offset(0.dp, (26).dp),
+                text = "Home",
+                style = MaterialTheme.typography.headlineMedium
+            ) },
             icon = {
                 Icon(
                     imageVector = Icons.Default.Home,
                     contentDescription = "Home",
-                    modifier = Modifier.size(30.dp)
+                    modifier = Modifier.size(32.dp)
                 )
             }
         )
         NavigationBarItem(
+            modifier = Modifier.offset(0.dp, (-16).dp),
             selected = currentRoute == "chat/hub",
             onClick = onNavigateChat,
             colors = NavigationBarItemDefaults.colors(
@@ -74,7 +81,11 @@ fun CustomBottomNavigationBar(
                 disabledIconColor = MaterialTheme.colorScheme.surface,
                 disabledTextColor = MaterialTheme.colorScheme.surface
             ),
-            label = { Text(text = "Chat", style = MaterialTheme.typography.headlineMedium) },
+            label = { Text(
+                modifier = Modifier.offset(0.dp, (26).dp),
+                text = "Chat",
+                style = MaterialTheme.typography.headlineMedium
+            ) },
             icon = {
                 Icon(
                     imageVector = Icons.Default.Email,
@@ -84,6 +95,7 @@ fun CustomBottomNavigationBar(
             }
         )
         NavigationBarItem(
+            modifier = Modifier.offset(0.dp, (-16).dp),
             selected = currentRoute == "event",
             onClick = onNavigateEvent,
             colors = NavigationBarItemDefaults.colors(
@@ -95,7 +107,11 @@ fun CustomBottomNavigationBar(
                 disabledIconColor = MaterialTheme.colorScheme.surface,
                 disabledTextColor = MaterialTheme.colorScheme.surface
             ),
-            label = { Text(text = "Events", style = MaterialTheme.typography.headlineMedium) },
+            label = { Text(
+                modifier = Modifier.offset(0.dp, (26).dp),
+                text = "Events",
+                style = MaterialTheme.typography.headlineMedium
+            ) },
             icon = {
                 Icon(
                     imageVector = Icons.Default.DateRange,

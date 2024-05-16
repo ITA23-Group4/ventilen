@@ -1,9 +1,7 @@
 package com.example.ventilen_app.ui.components
 
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.FilledTonalButton
@@ -13,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.example.ventilen_app.ui.theme.CustomColorScheme
 
 @Composable
 fun CustomFilledButton(
@@ -20,6 +19,7 @@ fun CustomFilledButton(
     isEnabled: Boolean = true,
     onClick: () -> Unit,
     color: Color = MaterialTheme.colorScheme.primary,
+    textColor: Color = MaterialTheme.colorScheme.surface
 ) {
     FilledTonalButton(
         onClick = onClick,
@@ -30,6 +30,6 @@ fun CustomFilledButton(
         shape = RoundedCornerShape(8.dp),
         enabled = isEnabled
     ){
-        Text(text = text, style = MaterialTheme.typography.labelLarge)
+        Text(text = text, style = MaterialTheme.typography.labelLarge, color = textColor)
     }
 }
