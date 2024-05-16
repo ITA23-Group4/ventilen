@@ -10,7 +10,6 @@ import com.example.ventilen_app.data.models.User
 import com.example.ventilen_app.data.repositories.UserRepository
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.launch
-import java.lang.Exception
 
 open class UserViewModel : ViewModel() {
     val userRepository: UserRepository = UserRepository()

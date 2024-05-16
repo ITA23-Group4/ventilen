@@ -7,9 +7,9 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.ventilen_app.data.models.Location
-import com.example.ventilen_app.utils.ValidateInput
 import com.example.ventilen_app.data.repositories.UserRepository
 import com.example.ventilen_app.services.AccountService
+import com.example.ventilen_app.utils.ValidateInput
 import kotlinx.coroutines.launch
 
 class AuthViewModel : ViewModel() {
@@ -19,10 +19,10 @@ class AuthViewModel : ViewModel() {
 
     var isAdmin: Boolean? by mutableStateOf(null)
 
-    var email: String by mutableStateOf("")
+    var email: String by mutableStateOf("christianbt96@gmail.com")
     var hasEmailError: Boolean by mutableStateOf(false)
 
-    var password: String by mutableStateOf("")
+    var password: String by mutableStateOf("Ventilen1234")
     var passwordRepeat: String by mutableStateOf("")
     var hasPasswordError: Boolean by mutableStateOf(false)
 
