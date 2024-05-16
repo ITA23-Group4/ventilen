@@ -2,12 +2,15 @@ package com.example.ventilen_app.navigation
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FabPosition
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -23,13 +26,17 @@ import com.example.ventilen_app.generalViewModels.AuthViewModel
 import com.example.ventilen_app.generalViewModels.ChatViewModel
 import com.example.ventilen_app.generalViewModels.CurrentUserViewModel
 import com.example.ventilen_app.generalViewModels.LocationViewModel
+import com.example.ventilen_app.ui.components.CustomFloatingActionButton
 import com.example.ventilen_app.ui.components.scaffolds.CustomBottomNavigationBar
 import com.example.ventilen_app.ui.components.scaffolds.LocalChatScaffold
 import com.example.ventilen_app.ui.screens.Chat.ChatHubScreen
 import com.example.ventilen_app.ui.screens.Chat.ChatLocalScreen
+import com.example.ventilen_app.ui.screens.CreateEvent.CreateEventScreen
+import com.example.ventilen_app.ui.screens.CreateEvent.CreateEventViewModel
 import com.example.ventilen_app.ui.screens.Event.EventScreen
 import com.example.ventilen_app.ui.screens.Event.EventScreenViewModel
 import com.example.ventilen_app.ui.screens.Home.HomeScreen
+import org.checkerframework.common.subtyping.qual.Bottom
 import java.util.Date
 
 /**
@@ -49,6 +56,7 @@ fun RootNavigation() {
     val eventScreenViewModel: EventScreenViewModel = viewModel<EventScreenViewModel>()
     val locationsViewModel: LocationViewModel = viewModel<LocationViewModel>()
     val chatViewModel: ChatViewModel = viewModel<ChatViewModel>()
+    val createEventViewModel: CreateEventViewModel = viewModel<CreateEventViewModel>()
 
     // Initialize currentUserViewModel based on isAdmin state in authViewModel
     val currentUserViewModel = if (authViewModel.isAdmin == true) {
@@ -186,7 +194,11 @@ fun RootNavigation() {
                             onNavigateHome = { navController.navigate("home") },
                             onNavigateChat = { navController.navigate("chat") }
                         )
-                    }
+                    },
+                    floatingActionButton = {
+                        CustomFloatingActionButton(onClick = { navController.navigate("event/create")})
+                    },
+                    floatingActionButtonPosition = FabPosition.End
                 ) { paddingValues ->
                     Box(modifier = Modifier.padding(paddingValues)) {
                         EventScreen(
@@ -210,7 +222,36 @@ fun RootNavigation() {
                                     event = event,
                                     currentUserUID = currentUserViewModel.getUID()
                                 )
-                            }
+                            },
+                            onAddEvent = { navController.navigate("event/create") }
+                        )
+                    }
+                }
+            }
+            composable("event/create") {
+                Scaffold(
+                    topBar = {
+                        TopAppBar(
+                            colors = TopAppBarDefaults.topAppBarColors(
+                                containerColor = MaterialTheme.colorScheme.surface,
+                                navigationIconContentColor = MaterialTheme.colorScheme.onSurface,
+                                titleContentColor = MaterialTheme.colorScheme.onSurface
+                            ),
+                            title = { Text("Opret Event") }
+                        )
+                    }
+                ) { PaddingValues ->
+                    Box(modifier = Modifier.padding(PaddingValues)) {
+                        CreateEventScreen(
+                            eventTitle = createEventViewModel.eventTitle,
+                            eventDescription = createEventViewModel.eventDescription,
+                            eventAddress = createEventViewModel.eventAddress,
+                            eventPrice = createEventViewModel.eventPrice,
+                            onValueChangeTitle = { createEventViewModel.eventTitle = it },
+                            onValueChangeDescription = { createEventViewModel.eventDescription = it },
+                            onValueChangeAddress = { createEventViewModel.eventAddress = it },
+                            onValueChangePrice = { createEventViewModel.eventPrice = it },
+                            onCreateEvent = {} // TODO: Implement create event functionality
                         )
                     }
                 }
