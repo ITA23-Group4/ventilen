@@ -2,11 +2,8 @@ package com.example.ventilen_app.ui.screens.Login
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -46,15 +43,16 @@ fun LoginScreen(
         CustomFilledButton(
             text = "Forsæt",
             onClick = onNavigateHome,
+            textColor = CustomColorScheme.OffWhite
         )
 
         // TODO placement should be fixed with CustomColumn
         Row(
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(text = "Har du ikke en bruger?", style = MaterialTheme.typography.headlineMedium)
+            Text(text = "Har du ikke en bruger?", style = MaterialTheme.typography.bodyMedium)
             TextButton(onClick = onNavigateRegistration) {
-                Text(text = "Tilmeld Dig", style = MaterialTheme.typography.headlineSmall)
+                Text(text = "Tilmeld Dig", style = MaterialTheme.typography.bodyLarge, color = CustomColorScheme.Orange)
             }
         }
 

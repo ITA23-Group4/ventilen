@@ -15,6 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.example.ventilen_app.ui.theme.CustomColorScheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -37,7 +38,9 @@ fun CustomDropDownMenu(
             readOnly = true,
             value = selectedValue,
             onValueChange = {},
-            label = { Text(text = label) },
+            label = { Text(text = label,
+                style = MaterialTheme.typography.bodyLarge,
+                color = CustomColorScheme.Orange) },
             trailingIcon = {
                 ExposedDropdownMenuDefaults.TrailingIcon(expanded = customDropDownMenuViewModel.isExpanded)
             },

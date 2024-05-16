@@ -1,12 +1,9 @@
 package com.example.ventilen_app.data.models
 
-import android.text.format.DateFormat
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.DocumentId
-import com.google.type.DateTime
 import java.text.SimpleDateFormat
 import java.util.Calendar
-import java.util.Date
 import java.util.Locale
 
 data class Event(
