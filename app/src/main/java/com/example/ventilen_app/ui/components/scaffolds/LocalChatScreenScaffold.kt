@@ -40,7 +40,7 @@ fun LocalChatScaffold(
                         CustomBackButton(onNavigateBack = onNavigateBack)
                     }
                 },
-                title = { Text(locationName) }
+                title = { Text(text = locationName, style = MaterialTheme.typography.headlineLarge) }
             )
         },
         bottomBar = {

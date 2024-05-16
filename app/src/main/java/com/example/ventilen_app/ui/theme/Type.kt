@@ -97,8 +97,13 @@ val Typography = Typography(
         fontWeight = FontWeight.Bold,
         fontSize = 24.sp,
         color = CustomColorScheme.OffBlack
+    ),
+    displayMedium = TextStyle(
+        fontFamily = montserratFamily,
+        fontWeight = FontWeight.Medium,
+        fontSize = 18.sp,
+        color = CustomColorScheme.OffBlack
     )
-    //sgsgsg
 
 )
 

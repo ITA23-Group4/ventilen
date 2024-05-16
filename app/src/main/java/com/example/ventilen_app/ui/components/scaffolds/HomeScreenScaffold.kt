@@ -35,7 +35,7 @@ fun HomeScreenScaffold(
                     navigationIconContentColor = MaterialTheme.colorScheme.onSurface,
                     titleContentColor = MaterialTheme.colorScheme.onSurface
                 ),
-                title = { Text("Home") },
+                title = { Text("Home", style = MaterialTheme.typography.headlineLarge) },
             )
         },
         bottomBar = {
