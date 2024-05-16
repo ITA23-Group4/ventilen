@@ -86,9 +86,13 @@ fun NavGraphBuilder.AuthNavGraph(
                 CredentialsScreen(
                     onNavigateUsername = { navController.navigate("auth/register/username") },
                     textEmail = authViewModel.email,
-                    textPassword = authViewModel.password,
-                    onValueChangeEmail = { authViewModel.email = it },
-                    onValueChangePassword = { authViewModel.password = it },
+                    hasEmailError = authViewModel.hasEmailError,
+                    repeatPassword = authViewModel.passwordRepeat,
+                    password = authViewModel.password,
+                    hasPasswordError = authViewModel.hasPasswordError,
+                    onValueChangeEmail = { authViewModel.changeEmail(it) },
+                    onValueChangePassword = { authViewModel.changePassword(it) },
+                    onValueChangePasswordRepeat = { authViewModel.changeRepeatedPassword(it) },
                 )
             }
         }
@@ -98,8 +102,9 @@ fun NavGraphBuilder.AuthNavGraph(
             ) {
                 UsernameScreen(
                     onNavigateLocation = { navController.navigate("auth/register/location") },
-                    onValueChange = { authViewModel.username = it },
+                    onValueChange = { authViewModel.changeUsername(it) },
                     textUsername = authViewModel.username,
+                    hasUsernameError = authViewModel.hasUsernameError
                 )
             }
         }
@@ -133,7 +138,7 @@ fun NavGraphBuilder.AuthNavGraph(
                     locations = locationsViewModel.locations.sorted().map { it.locationName },
                     selectedLocation = authViewModel.location.locationName,
                     onLocationValueChanged = { selectedLocationName ->
-                        authViewModel.location = locationsViewModel.mapLocationNameToLocation.get(selectedLocationName)!!
+                        authViewModel.changeLocation(locationsViewModel.mapLocationNameToLocation.get(selectedLocationName)!!)
                     }
                 )
             }

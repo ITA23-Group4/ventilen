@@ -10,25 +10,30 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.input.PasswordVisualTransformation
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CustomTextField(
     text: String,
-    label: String = "",
+    label: String,
+    isPassword: Boolean = false,
+    isSingleLine: Boolean = true,
+    hasError: Boolean = false,
     modifier: Modifier = Modifier,
-    onValueChange: (String) -> Unit,
+    onValueChange: (String) -> Unit
 ) {
+
     OutlinedTextField(
         modifier = modifier.fillMaxWidth(),
         value = text,
-        singleLine = true,
-        onValueChange = { onValueChange(it) },
+        singleLine = isSingleLine,
+        onValueChange = { onValueChange(it)},
+        //visualTransformation = PasswordVisualTransformation(),
         label = { Text(label) },
         colors = TextFieldDefaults.outlinedTextFieldColors(
             unfocusedBorderColor = MaterialTheme.colorScheme.primary,
             unfocusedLabelColor = MaterialTheme.colorScheme.primary
-        )
+        ),
+        isError = hasError
     )
 }
