@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -13,8 +14,13 @@ import com.example.ventilen_app.data.models.Message
 import com.example.ventilen_app.generalViewModels.AdminViewModel
 import com.example.ventilen_app.generalViewModels.AuthViewModel
 import com.example.ventilen_app.generalViewModels.ChatViewModel
+import com.example.ventilen_app.generalViewModels.HomeViewModel
 import com.example.ventilen_app.generalViewModels.LocationViewModel
 import com.example.ventilen_app.generalViewModels.UserViewModel
+import com.example.ventilen_app.ui.components.scaffolds.ChatHubScreenScaffold
+import com.example.ventilen_app.ui.components.scaffolds.CreateEventScaffold
+import com.example.ventilen_app.ui.components.scaffolds.EventScaffold
+import com.example.ventilen_app.ui.components.scaffolds.HomeScreenScaffold
 import com.example.ventilen_app.ui.components.scaffolds.LocalChatScaffold
 import com.example.ventilen_app.ui.screens.Chat.ChatHubScreen
 import com.example.ventilen_app.ui.screens.Chat.ChatLocalScreen
@@ -23,7 +29,6 @@ import com.example.ventilen_app.ui.screens.CreateEvent.CreateEventViewModel
 import com.example.ventilen_app.ui.screens.Event.EventScreen
 import com.example.ventilen_app.ui.screens.Event.EventScreenViewModel
 import com.example.ventilen_app.ui.screens.Home.HomeScreen
-import org.checkerframework.common.subtyping.qual.Bottom
 import java.util.Date
 
 /**
@@ -44,6 +49,7 @@ fun RootNavigation() {
     val locationsViewModel: LocationViewModel = viewModel<LocationViewModel>()
     val chatViewModel: ChatViewModel = viewModel<ChatViewModel>()
     val createEventViewModel: CreateEventViewModel = viewModel<CreateEventViewModel>()
+    val homeViewModel: HomeViewModel = viewModel<HomeViewModel>()
 
     // Initialize currentUserViewModel based on isAdmin state in authViewModel
     val currentUserViewModel = if (authViewModel.isAdmin == true) {
@@ -57,7 +63,7 @@ fun RootNavigation() {
             startDestination = "auth/welcome",
             route = "auth"
         ) {
-            authNavGraph(
+            AuthNavGraph(
                 navController = navController,
                 userViewModel = currentUserViewModel,
                 authViewModel = authViewModel,
@@ -65,6 +71,7 @@ fun RootNavigation() {
             )
         }
         composable("home") {
+            homeViewModel.context = LocalContext.current
             HomeScreenScaffold(
                 currentRoute = navController.currentDestination!!.route!!,
                 onNavigateEvent = { navController.navigate("event") },
@@ -74,6 +81,10 @@ fun RootNavigation() {
                     textUsername = currentUserViewModel.currentUser?.username.toString(),
                     textUID = currentUserViewModel.currentUser?.uid.toString(),
                     isAdmin = currentUserViewModel.isAdmin,
+                    selectedDate = homeViewModel.selectedDate,
+                    selectedTime = homeViewModel.selectedTime,
+                    showDatePicker = { homeViewModel.showDatePicker() }, // TODO: Dialog should not be made in ViewModel?
+                    showTimePicker = { homeViewModel.showTimePicker() },  // TODO: Dialog should not be made in ViewModel?
                     logout = { (currentUserViewModel as AdminViewModel).logout() }
                 )
             }
