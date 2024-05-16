@@ -15,8 +15,7 @@ import androidx.compose.ui.Modifier
 @Composable
 fun CustomTextField(
     text: String,
-    label: String,
-    isPassword: Boolean = false,
+    label: String = "",
     isSingleLine: Boolean = true,
     hasError: Boolean = false,
     modifier: Modifier = Modifier,
