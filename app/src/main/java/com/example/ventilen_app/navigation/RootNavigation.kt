@@ -24,7 +24,7 @@ import com.example.ventilen_app.data.models.Message
 import com.example.ventilen_app.generalViewModels.AdminViewModel
 import com.example.ventilen_app.generalViewModels.AuthViewModel
 import com.example.ventilen_app.generalViewModels.ChatViewModel
-import com.example.ventilen_app.generalViewModels.CurrentUserViewModel
+import com.example.ventilen_app.generalViewModels.UserViewModel
 import com.example.ventilen_app.generalViewModels.LocationViewModel
 import com.example.ventilen_app.ui.components.CustomFloatingActionButton
 import com.example.ventilen_app.ui.components.scaffolds.CustomBottomNavigationBar
@@ -62,7 +62,7 @@ fun RootNavigation() {
     val currentUserViewModel = if (authViewModel.isAdmin == true) {
         viewModel<AdminViewModel>()
     } else {
-        viewModel<CurrentUserViewModel>()
+        viewModel<UserViewModel>()
     }
 
     NavHost(navController = navController, startDestination = "auth") {
@@ -72,7 +72,7 @@ fun RootNavigation() {
         ) {
             AuthNavGraph(
                 navController = navController,
-                currentUserViewModel = currentUserViewModel,
+                userViewModel = currentUserViewModel,
                 authViewModel = authViewModel,
                 locationsViewModel = locationsViewModel
             )

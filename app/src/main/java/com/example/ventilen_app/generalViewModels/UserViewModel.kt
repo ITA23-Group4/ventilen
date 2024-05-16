@@ -12,7 +12,7 @@ import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.launch
 import java.lang.Exception
 
-open class CurrentUserViewModel : ViewModel() {
+open class UserViewModel : ViewModel() {
     val userRepository: UserRepository = UserRepository()
     var currentUser: User? by mutableStateOf(User("username"))
     open val isAdmin: Boolean = false
