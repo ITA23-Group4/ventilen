@@ -14,7 +14,6 @@ import androidx.compose.ui.unit.dp
 import com.example.ventilen_app.data.models.Event
 import com.example.ventilen_app.ui.components.CustomColumn
 import com.example.ventilen_app.ui.components.CustomEventCardComponent.CustomEventCard
-import com.example.ventilen_app.ui.components.CustomFloatingActionButton
 import com.example.ventilen_app.ui.theme.CustomColorScheme
 import com.example.ventilen_app.ui.theme.VentilenAppTheme
 

@@ -3,8 +3,8 @@ package com.example.ventilen_app.generalViewModels
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.ventilen_app.data.repositories.LocationRepository
 import com.example.ventilen_app.data.models.Location
+import com.example.ventilen_app.data.repositories.LocationRepository
 import kotlinx.coroutines.launch
 
 class LocationViewModel: ViewModel() {
