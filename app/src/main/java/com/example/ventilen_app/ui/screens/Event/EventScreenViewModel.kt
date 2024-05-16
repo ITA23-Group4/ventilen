@@ -1,21 +1,22 @@
 package com.example.ventilen_app.ui.screens.Event
 
 import android.util.Log
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.ventilen_app.data.Repository
 import com.example.ventilen_app.data.models.Event
+import com.example.ventilen_app.data.repositories.EventRepository
 import kotlinx.coroutines.launch
 
 class EventScreenViewModel: ViewModel() {
-    private val repository: Repository = Repository()
+    private val eventRepository: EventRepository = EventRepository()
     val events: MutableList<Event> = mutableStateListOf()
+
+    var selectedEventCardID: String by mutableStateOf("")
 
     init {
         getEvents()
@@ -25,8 +26,7 @@ class EventScreenViewModel: ViewModel() {
         viewModelScope.launch {
             try {
                 events.clear()
-                events.addAll(repository.getEvents())
-                // events = repository.getEvents() with 'var events' was the recompose problem
+                events.addAll(eventRepository.getEvents())
             } catch (error: Exception) {
                 Log.d("GetAllEvents", "ERROR: ${error.message}")
             }
@@ -36,7 +36,7 @@ class EventScreenViewModel: ViewModel() {
     fun addUserToEvent(currentUserUID: String, eventID: String) {
         viewModelScope.launch {
             try {
-                repository.addUserToEvent(currentUserUID, eventID)
+                eventRepository.addUserToEvent(currentUserUID, eventID)
                 updateEventAttendeesCount(eventID)
             } catch (error: Exception) {
                 Log.e("AddUserToEvent", "ERROR: ${error.message}")
@@ -47,7 +47,7 @@ class EventScreenViewModel: ViewModel() {
     fun removeUserFromEvent(currentUserUID: String, eventID: String) {
         viewModelScope.launch {
             try {
-                repository.removeUserFromEvent(currentUserUID, eventID)
+                eventRepository.removeUserFromEvent(currentUserUID, eventID)
                 updateEventAttendeesCount(eventID)
             } catch (error: Exception) {
                 Log.e("RemoveUserFromEvent", "ERROR: ${error.message}")
@@ -57,9 +57,9 @@ class EventScreenViewModel: ViewModel() {
 
     private fun updateEventAttendeesCount(eventID: String) {
         viewModelScope.launch {
-            events.indexOfFirst { it.id == eventID }.let { eventIndex ->
+            events.indexOfFirst { it.eventID == eventID }.let { eventIndex ->
                 // Extract the updated attendees from the updated event
-                val updatedEvent = repository.getEvent(eventID = eventID)
+                val updatedEvent = eventRepository.getEvent(eventID = eventID)
                 val updatedEventAttendees = updatedEvent.attendeesByUID
 
                 val eventToUpdate = events[eventIndex]
@@ -70,6 +70,30 @@ class EventScreenViewModel: ViewModel() {
                 events[eventIndex] = eventWithUpdatedAttendees
             }
         }
+    }
+
+    fun isCurrentUserAttendingEvent(event: Event, currentUserUID: String): Boolean {
+        return event.attendeesByUID.contains(currentUserUID)
+    }
+
+    fun isSelectedEvent(eventID: String): Boolean {
+        return eventID == selectedEventCardID
+    }
+
+    /**
+     * Toggles the selected event card ID.
+     *
+     * If the provided event ID is already selected, clears the selection;
+     * otherwise, sets the provided event ID as the selected ID.
+     *
+     * @param eventID The ID of the event to toggle.
+     */
+    fun toggleEventCard(eventID: String) {
+        selectedEventCardID = if (isSelectedEvent(eventID)) "" else eventID
+    }
+
+    fun clearSelectedEventCard() {
+        selectedEventCardID = ""
     }
 
 }

@@ -19,26 +19,19 @@ import com.example.ventilen_app.ui.components.CustomColumn
 import com.example.ventilen_app.ui.components.CustomFilledButton
 import com.example.ventilen_app.ui.theme.CustomColorScheme
 
-
 @Composable
 fun HomeScreen(
     textUsername: String,
     textUID: String,
-    onNavigateEvent: () -> Unit,
-    chatViewModel: ChatViewModel, // TODO: REMOVE?
-    onNavigateChat: () -> Unit,
-    // TODO: Remove
+    isAdmin: Boolean,
     logout: () -> Unit,
-    getCurrentUser: () -> Unit
 ) {
-
     CustomColumn(
         modifier = Modifier
             .fillMaxSize()
             .background(CustomColorScheme.Mocha),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(30.dp)) {
-
         Text(
             text = stringResource(R.string.home_welcome_title, textUsername),
             style = MaterialTheme.typography.headlineLarge
@@ -49,24 +42,12 @@ fun HomeScreen(
             style = MaterialTheme.typography.headlineMedium
         )
 
-        CustomFilledButton(text = "Go to Event", onClick =  onNavigateEvent )
-
-        // TODO: Remove
-        CustomFilledButton(text = "Logout", onClick = logout)
-        CustomFilledButton(text = "Current User", onClick = getCurrentUser)
-        CustomFilledButton(text = "Go to Chat", onClick = onNavigateChat )
-        //
-
-        LazyColumn {
-            chatViewModel.messages.value?.let { messages ->
-                items(messages.toMutableList()) { message ->
-                    Text(
-                        text = "${message.senderUID}: ${message.message}",
-                        style = MaterialTheme.typography.headlineMedium
-                    )
-                    Log.d("CHAT", "${message.senderUID}: ${message.message}. LocationID: ${message.locationID}")
-                }
-            }
+        // Conditionally show the logout button for admins
+        if (isAdmin) {
+            CustomFilledButton(
+                text = "Admin Logout",
+                onClick = logout
+            )
         }
 
     }

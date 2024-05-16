@@ -5,7 +5,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import com.example.ventilen_app.generalViewModels.AuthViewModel
-import com.example.ventilen_app.generalViewModels.CurrentUserViewModel
+import com.example.ventilen_app.generalViewModels.UserViewModel
 import com.example.ventilen_app.generalViewModels.LocationViewModel
 import com.example.ventilen_app.ui.components.scaffolds.AuthScaffold
 import com.example.ventilen_app.ui.screens.Credentials.CredentialsScreen
@@ -19,14 +19,14 @@ import com.example.ventilen_app.ui.screens.Welcome.WelcomeScreen
  * for user login & registration.
  *
  * @param navController The same navigation controller as used in RootNavigation
- * @param currentUserViewModel The view model for managing current user information.
+ * @param userViewModel The view model for managing current user information.
  * @param authViewModel The view model for authentication logic.
  * @param locationsViewModel The view model for managing location information.
  * @author Marcus, Christian, Nikolaj
  */
 fun NavGraphBuilder.AuthNavGraph(
     navController: NavController,
-    currentUserViewModel: CurrentUserViewModel,
+    userViewModel: UserViewModel,
     authViewModel: AuthViewModel,
     locationsViewModel: LocationViewModel
 ) {
@@ -37,8 +37,6 @@ fun NavGraphBuilder.AuthNavGraph(
             WelcomeScreen(
                 onNavigationLogin = { navController.navigate("auth/login") },
                 onNavigationRegister = { navController.navigate("auth/register") },
-                // TODO: Remove
-                whoUser = { currentUserViewModel.getCurrentUser() }
             )
         }
     }
@@ -50,7 +48,7 @@ fun NavGraphBuilder.AuthNavGraph(
                 onNavigateHome = {
                     authViewModel.loginUser(
                         onLoginSuccess = {
-                            currentUserViewModel.getCurrentUser()
+                            userViewModel.getCurrentUser()
                             navController.popBackStack(
                                 route = "auth",
                                 inclusive = true
@@ -66,7 +64,6 @@ fun NavGraphBuilder.AuthNavGraph(
                 textPassword = authViewModel.password,
                 onValueChangeEmail = { authViewModel.email = it },
                 onValueChangePassword = { authViewModel.password = it },
-                onNavigateBack = { navController.popBackStack() },
                 onNavigateRegistration = { navController.navigate("auth/register") }
             )
         }
@@ -89,10 +86,13 @@ fun NavGraphBuilder.AuthNavGraph(
                 CredentialsScreen(
                     onNavigateUsername = { navController.navigate("auth/register/username") },
                     textEmail = authViewModel.email,
-                    textPassword = authViewModel.password,
-                    onValueChangeEmail = { authViewModel.email = it },
-                    onValueChangePassword = { authViewModel.password = it },
-                    onNavigateBack = { navController.popBackStack() }
+                    hasEmailError = authViewModel.hasEmailError,
+                    repeatPassword = authViewModel.passwordRepeat,
+                    password = authViewModel.password,
+                    hasPasswordError = authViewModel.hasPasswordError,
+                    onValueChangeEmail = { authViewModel.changeEmail(it) },
+                    onValueChangePassword = { authViewModel.changePassword(it) },
+                    onValueChangePasswordRepeat = { authViewModel.changeRepeatedPassword(it) },
                 )
             }
         }
@@ -102,9 +102,9 @@ fun NavGraphBuilder.AuthNavGraph(
             ) {
                 UsernameScreen(
                     onNavigateLocation = { navController.navigate("auth/register/location") },
-                    onNavigateBack = { navController.popBackStack() },
-                    onValueChange = { authViewModel.username = it },
+                    onValueChange = { authViewModel.changeUsername(it) },
                     textUsername = authViewModel.username,
+                    hasUsernameError = authViewModel.hasUsernameError
                 )
             }
         }
@@ -118,7 +118,7 @@ fun NavGraphBuilder.AuthNavGraph(
                             onRegistrationSuccess = {
                                 authViewModel.loginUser(
                                     onLoginSuccess = {
-                                        currentUserViewModel.getCurrentUser()
+                                        userViewModel.getCurrentUser()
                                         navController.popBackStack(
                                             route = "auth",
                                             inclusive = true
@@ -135,14 +135,14 @@ fun NavGraphBuilder.AuthNavGraph(
                             }
                         )
                     },
-                    onNavigateBack = { navController.popBackStack() },
-                    locations = locationsViewModel.locations.map { it.name },
-                    selectedLocation = authViewModel.location.name,
+                    locations = locationsViewModel.locations.sorted().map { it.locationName },
+                    selectedLocation = authViewModel.location.locationName,
                     onLocationValueChanged = { selectedLocationName ->
-                        authViewModel.location = locationsViewModel.mapLocationNameToLocation.get(selectedLocationName)!!
+                        authViewModel.changeLocation(locationsViewModel.mapLocationNameToLocation.get(selectedLocationName)!!)
                     }
                 )
             }
         }
     }
 }
+

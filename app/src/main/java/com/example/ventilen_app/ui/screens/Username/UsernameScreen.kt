@@ -19,11 +19,10 @@ import com.example.ventilen_app.ui.theme.CustomColorScheme
 
 @Composable
 fun UsernameScreen(
-    onNavigateBack: () -> Unit,
     onNavigateLocation: () -> Unit,
     textUsername: String,
     onValueChange: (String) -> Unit,
-
+    hasUsernameError: Boolean
     ) {
     CustomColumn(modifier = Modifier.fillMaxSize()
         .background(CustomColorScheme.Mocha),
@@ -37,7 +36,8 @@ fun UsernameScreen(
         CustomTextField(
             text = textUsername,
             label = "Username",
-            onValueChange = {onValueChange(it)}
+            onValueChange = {onValueChange(it)},
+            hasError = hasUsernameError
         )
         CustomFilledButton(
             text = "Fortsæt",

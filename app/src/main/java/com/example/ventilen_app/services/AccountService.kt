@@ -21,8 +21,8 @@ class AccountService {
             .await()
         val authUIDForDocumentTitle: String = firebaseAuthResult.user?.uid!!
         Log.d("CREATE_USER", "User created: $authUIDForDocumentTitle")
-        Log.d("USER", "User created: ${User(username, location.uid!!, authUIDForDocumentTitle)}")
-        return User(username, location.uid!!, authUIDForDocumentTitle)
+        Log.d("USER", "User created: ${User(username, location.locationID!!, authUIDForDocumentTitle)}")
+        return User(username, location.locationID!!, authUIDForDocumentTitle)
     }
 
 

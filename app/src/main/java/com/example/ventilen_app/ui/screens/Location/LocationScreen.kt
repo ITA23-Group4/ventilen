@@ -25,7 +25,6 @@ import com.example.ventilen_app.ui.theme.CustomColorScheme
 
 @Composable
 fun LocationScreen(
-    onNavigateBack: () -> Unit,
     onNavigateHome: () -> Unit,
     // Parameters for the CustomDropDownMenu
     locations: List<String>,
