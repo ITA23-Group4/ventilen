@@ -18,8 +18,11 @@ import java.util.Date
 class ChatViewModel : ViewModel() {
     private val chatRepository = ChatRepository()
 
-    private var currentUserUID: String by mutableStateOf(FirebaseAuth.getInstance().currentUser?.uid!!)
     private var currentUserUsername: String by mutableStateOf("") // TODO: get username
+
+    private fun getCurrentUserUIDFromFirebase(): String {
+        return FirebaseAuth.getInstance().currentUser?.uid!!
+    }
 
     val locationsWithLatestMessages: MutableList<Location> = mutableStateListOf()
     val localMessages: StateFlow<List<Message>>
@@ -57,11 +60,11 @@ class ChatViewModel : ViewModel() {
 
     fun sendMessage() {
         val messageToSend = Message(
-            senderUID = currentUserUID,
+            senderUID = getCurrentUserUIDFromFirebase(),
             message = currentMessage,
             timestamp = Date(),
             locationID = selectedLocation.locationID!!,
-            username = currentUserUID // TODO: This should be username and not UID
+            username = getCurrentUserUIDFromFirebase() // TODO: This should be username and not UID
         )
 
         viewModelScope.launch{
@@ -74,7 +77,7 @@ class ChatViewModel : ViewModel() {
     }
 
     fun isCurrentUserSender(messageUserUID: String): Boolean {
-        return currentUserUID == messageUserUID
+        return getCurrentUserUIDFromFirebase() == messageUserUID
     }
 
 }
