@@ -29,6 +29,7 @@ import com.example.ventilen_app.generalViewModels.LocationViewModel
 import com.example.ventilen_app.ui.components.CustomFloatingActionButton
 import com.example.ventilen_app.ui.components.scaffolds.CreateEventScaffold
 import com.example.ventilen_app.ui.components.scaffolds.CustomBottomNavigationBar
+import com.example.ventilen_app.ui.components.scaffolds.EventScaffold
 import com.example.ventilen_app.ui.components.scaffolds.LocalChatScaffold
 import com.example.ventilen_app.ui.screens.Chat.ChatHubScreen
 import com.example.ventilen_app.ui.screens.Chat.ChatLocalScreen
@@ -178,75 +179,58 @@ fun RootNavigation() {
             }
             composable("event") {
                 eventScreenViewModel.clearSelectedEventCard() // TODO: Scuffed transition on navigation
-                Scaffold(
-                    topBar = {
-                        CenterAlignedTopAppBar(
-                            colors = TopAppBarDefaults.topAppBarColors(
-                                containerColor = MaterialTheme.colorScheme.surface,
-                                navigationIconContentColor = MaterialTheme.colorScheme.onSurface,
-                                titleContentColor = MaterialTheme.colorScheme.onSurface
-                            ),
-                            title = { Text("Events") }
-                        )
-                    },
-                    bottomBar = {
-                        CustomBottomNavigationBar(
-                            currentRoute = navController.currentDestination!!.route!!,
-                            onNavigateHome = { navController.navigate("home") },
-                            onNavigateChat = { navController.navigate("chat") }
-                        )
-                    },
-                    floatingActionButton = {
-                        CustomFloatingActionButton(onClick = { navController.navigate("event/create") })
-                    },
-                    floatingActionButtonPosition = FabPosition.End
-                ) { paddingValues ->
-                    Box(modifier = Modifier.padding(paddingValues)) {
-                        EventScreen(
-                            events = eventScreenViewModel.events.sorted(),
-                            onAttend = {
-                                eventScreenViewModel.addUserToEvent(
-                                    currentUserUID = currentUserViewModel.currentUser?.uid!!,
-                                    eventID = it
-                                )
-                            },
-                            onNotAttend = {
-                                eventScreenViewModel.removeUserFromEvent(
-                                    eventID = it,
-                                    currentUserUID = currentUserViewModel.currentUser?.uid!!
-                                )
-                            },
-                            isEventSelected = { eventScreenViewModel.isSelectedEvent(it) },
-                            onEventCardClick = { eventScreenViewModel.toggleEventCard(it) },
-                            isAttending = { event ->
-                                eventScreenViewModel.isCurrentUserAttendingEvent(
-                                    event = event,
-                                    currentUserUID = currentUserViewModel.getUID()
-                                )
-                            },
-                            onAddEvent = { navController.navigate("event/create") }
-                        )
-                    }
-                }
-            }
-            composable("event/create") {
-                CreateEventScaffold(
-                    onNavigateBack = { navController.navigate("event") },
-
-                    ) {
-                    CreateEventScreen(
-                        eventTitle = createEventViewModel.eventTitle,
-                        eventDescription = createEventViewModel.eventDescription,
-                        eventAddress = createEventViewModel.eventAddress,
-                        eventPrice = createEventViewModel.eventPrice,
-                        onValueChangeTitle = { createEventViewModel.eventTitle = it },
-                        onValueChangeDescription = { createEventViewModel.eventDescription = it },
-                        onValueChangeAddress = { createEventViewModel.eventAddress = it },
-                        onValueChangePrice = { createEventViewModel.eventPrice = it },
-                        onCreateEvent = {} // TODO: Implement create event functionality
+                EventScaffold(
+                    currentRoute = "event",
+                    onNavigateHome = { navController.navigate("home") },
+                    onNavigateChat = { navController.navigate("chat") },
+                    onNavigateCreateEvent = { navController.navigate("event/create") }
+                ) {
+                    EventScreen(
+                        events = eventScreenViewModel.events.sorted(),
+                        onAttend = {
+                            eventScreenViewModel.addUserToEvent(
+                                currentUserUID = currentUserViewModel.currentUser?.uid!!,
+                                eventID = it
+                            )
+                        },
+                        onNotAttend = {
+                            eventScreenViewModel.removeUserFromEvent(
+                                eventID = it,
+                                currentUserUID = currentUserViewModel.currentUser?.uid!!
+                            )
+                        },
+                        isEventSelected = { eventScreenViewModel.isSelectedEvent(it) },
+                        onEventCardClick = { eventScreenViewModel.toggleEventCard(it) },
+                        isAttending = { event ->
+                            eventScreenViewModel.isCurrentUserAttendingEvent(
+                                event = event,
+                                currentUserUID = currentUserViewModel.getUID()
+                            )
+                        },
+                        onAddEvent = { navController.navigate("event/create") }
                     )
                 }
+
+
+            }
+        }
+        composable("event/create") {
+            CreateEventScaffold(
+                onNavigateBack = { navController.navigate("event") },
+                ) {
+                CreateEventScreen(
+                    eventTitle = createEventViewModel.eventTitle,
+                    eventDescription = createEventViewModel.eventDescription,
+                    eventAddress = createEventViewModel.eventAddress,
+                    eventPrice = createEventViewModel.eventPrice,
+                    onValueChangeTitle = { createEventViewModel.eventTitle = it },
+                    onValueChangeDescription = { createEventViewModel.eventDescription = it },
+                    onValueChangeAddress = { createEventViewModel.eventAddress = it },
+                    onValueChangePrice = { createEventViewModel.eventPrice = it },
+                    onCreateEvent = {} // TODO: Implement create event functionality
+                )
             }
         }
     }
+
 }
