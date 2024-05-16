@@ -26,6 +26,7 @@ import com.example.ventilen_app.generalViewModels.UserViewModel
 import com.example.ventilen_app.ui.components.scaffolds.CreateEventScaffold
 import com.example.ventilen_app.ui.components.scaffolds.CustomBottomNavigationBar
 import com.example.ventilen_app.ui.components.scaffolds.EventScaffold
+import com.example.ventilen_app.ui.components.scaffolds.HomeScreenScaffold
 import com.example.ventilen_app.ui.components.scaffolds.LocalChatScaffold
 import com.example.ventilen_app.ui.screens.Chat.ChatHubScreen
 import com.example.ventilen_app.ui.screens.Chat.ChatLocalScreen
@@ -75,33 +76,17 @@ fun RootNavigation() {
             )
         }
         composable("home") {
-            Scaffold(
-                topBar = {
-                    CenterAlignedTopAppBar(
-                        title = { Text("Home") },
-                        colors = TopAppBarDefaults.topAppBarColors(
-                            containerColor = MaterialTheme.colorScheme.surface,
-                            navigationIconContentColor = MaterialTheme.colorScheme.onSurface,
-                            titleContentColor = MaterialTheme.colorScheme.onSurface
-                        )
-                    )
-                },
-                bottomBar = {
-                    CustomBottomNavigationBar(
-                        currentRoute = navController.currentDestination!!.route!!,
-                        onNavigateEvent = { navController.navigate("event") },
-                        onNavigateChat = { navController.navigate("chat") }
-                    )
-                }
-            ) { paddingValues ->
-                Box(modifier = Modifier.padding(paddingValues)) {
-                    HomeScreen(
-                        textUsername = currentUserViewModel.currentUser?.username.toString(),
-                        textUID = currentUserViewModel.currentUser?.uid.toString(),
-                        isAdmin = currentUserViewModel.isAdmin,
-                        logout = { (currentUserViewModel as AdminViewModel).logout() }
-                    )
-                }
+            HomeScreenScaffold(
+                currentRoute = navController.currentDestination!!.route!!,
+                onNavigateEvent = { navController.navigate("event") },
+                onNavigateChat = { navController.navigate("chat") }
+            ) {
+                HomeScreen(
+                    textUsername = currentUserViewModel.currentUser?.username.toString(),
+                    textUID = currentUserViewModel.currentUser?.uid.toString(),
+                    isAdmin = currentUserViewModel.isAdmin,
+                    logout = { (currentUserViewModel as AdminViewModel).logout() }
+                )
             }
         }
         navigation(
