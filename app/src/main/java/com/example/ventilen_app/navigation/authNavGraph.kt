@@ -5,9 +5,6 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import com.example.ventilen_app.viewmodels.AuthViewModel
-import com.example.ventilen_app.generalViewModels.AuthViewModel
-import com.example.ventilen_app.generalViewModels.LocationViewModel
-import com.example.ventilen_app.generalViewModels.UserViewModel
 import com.example.ventilen_app.ui.components.scaffolds.AuthScaffold
 import com.example.ventilen_app.ui.screens.Credentials.CredentialsScreen
 import com.example.ventilen_app.ui.screens.Location.LocationScreen

@@ -20,7 +20,7 @@ class ChatViewModel : ViewModel() {
 
     private var currentUserUsername: String by mutableStateOf("") // TODO: get username
 
-    private fun getCurrentUserUIDFromFirebase(): String {
+    fun getCurrentUserUIDFromFirebase(): String {
         return FirebaseAuth.getInstance().currentUser?.uid!!
     }
 

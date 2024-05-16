@@ -1,10 +1,6 @@
 package com.example.ventilen_app.navigation
 
 import android.annotation.SuppressLint
-import android.util.Log
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -14,20 +10,12 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
-import com.example.ventilen_app.data.models.Message
-import com.example.ventilen_app.generalViewModels.AdminViewModel
-import com.example.ventilen_app.generalViewModels.AuthViewModel
-import com.example.ventilen_app.generalViewModels.ChatViewModel
-import com.example.ventilen_app.generalViewModels.HomeViewModel
-import com.example.ventilen_app.generalViewModels.LocationViewModel
-import com.example.ventilen_app.generalViewModels.UserViewModel
 import com.example.ventilen_app.ui.components.scaffolds.ChatHubScreenScaffold
 import com.example.ventilen_app.ui.components.scaffolds.CreateEventScaffold
 import com.example.ventilen_app.ui.components.scaffolds.EventScaffold
 import com.example.ventilen_app.ui.components.scaffolds.HomeScreenScaffold
 import com.example.ventilen_app.viewmodels.AuthViewModel
 import com.example.ventilen_app.viewmodels.ChatViewModel
-import com.example.ventilen_app.ui.components.scaffolds.CustomBottomNavigationBar
 import com.example.ventilen_app.ui.components.scaffolds.LocalChatScaffold
 import com.example.ventilen_app.ui.screens.Chat.ChatHubScreen
 import com.example.ventilen_app.ui.screens.Chat.ChatLocalScreen
@@ -36,7 +24,7 @@ import com.example.ventilen_app.ui.screens.CreateEvent.CreateEventViewModel
 import com.example.ventilen_app.ui.screens.Event.EventScreen
 import com.example.ventilen_app.viewmodels.EventViewModel
 import com.example.ventilen_app.ui.screens.Home.HomeScreen
-import com.google.firebase.auth.FirebaseAuth
+import com.example.ventilen_app.viewmodels.HomeViewModel
 
 /**
  * Root navigation structure of the application.
@@ -62,7 +50,7 @@ fun RootNavigation() {
             startDestination = "auth/welcome",
             route = "auth"
         ) {
-            authNavGraph(
+            AuthNavGraph(
                 navController = navController,
                 authViewModel = authViewModel
             )
@@ -75,14 +63,14 @@ fun RootNavigation() {
                 onNavigateChat = { navController.navigate("chat") }
             ) {
                 HomeScreen(
-                    textUsername = currentUserViewModel.currentUser?.username.toString(),
-                    textUID = currentUserViewModel.currentUser?.uid.toString(),
-                    isAdmin = currentUserViewModel.isAdmin,
+                    textUsername = chatViewModel.getCurrentUserUIDFromFirebase(),
+                    textUID = chatViewModel.getCurrentUserUIDFromFirebase(),
+                    isAdmin = true,
                     selectedDate = homeViewModel.selectedDate,
                     selectedTime = homeViewModel.selectedTime,
                     showDatePicker = { homeViewModel.showDatePicker() }, // TODO: Dialog should not be made in ViewModel?
                     showTimePicker = { homeViewModel.showTimePicker() },  // TODO: Dialog should not be made in ViewModel?
-                    logout = { (currentUserViewModel as AdminViewModel).logout() }
+                    logout = { }
                 )
             }
         }
@@ -97,16 +85,12 @@ fun RootNavigation() {
                     onNavigateHome = { navController.navigate("home") }
                 ) {
                     ChatHubScreen(
-                        locationsExcludingCurrentUserPrimaryLocation = chatViewModel.locationsWithLatestMessages.filter { location ->
-                            location.locationID != currentUserViewModel.currentUser?.primaryLocationID
-                        },
+                        locationsExcludingCurrentUserPrimaryLocation = authViewModel.locationRepository.locations,
                         onChatLocalNavigate = {
                             chatViewModel.selectedLocation = it
                             navController.navigate("chat/local")
                         },
-                        currentUserPrimaryLocation = chatViewModel.locationsWithLatestMessages.find { location ->
-                            location.locationID == currentUserViewModel.currentUser?.primaryLocationID
-                        }!!
+                        currentUserPrimaryLocation = authViewModel.locationRepository.locations[0]
                     )
                 }
             }
@@ -130,7 +114,7 @@ fun RootNavigation() {
                 }
             }
             composable("event") {
-                eventScreenViewModel.clearSelectedEventCard() // TODO: Scuffed transition on navigation
+                eventViewModel.clearSelectedEventCard() // TODO: Scuffed transition on navigation
                 EventScaffold(
                     currentRoute = "event",
                     onNavigateHome = { navController.navigate("home") },
@@ -138,25 +122,22 @@ fun RootNavigation() {
                     onNavigateCreateEvent = { navController.navigate("event/create") }
                 ) {
                     EventScreen(
-                        events = eventScreenViewModel.events.sorted(),
+                        events = eventViewModel.events.sorted(),
                         onAttend = {
-                            eventScreenViewModel.addUserToEvent(
-                                currentUserUID = currentUserViewModel.currentUser?.uid!!,
+                            eventViewModel.addUserToEvent(
                                 eventID = it
                             )
                         },
                         onNotAttend = {
-                            eventScreenViewModel.removeUserFromEvent(
+                            eventViewModel.removeUserFromEvent(
                                 eventID = it,
-                                currentUserUID = currentUserViewModel.currentUser?.uid!!
                             )
                         },
-                        isEventSelected = { eventScreenViewModel.isSelectedEvent(it) },
-                        onEventCardClick = { eventScreenViewModel.toggleEventCard(it) },
+                        isEventSelected = { eventViewModel.isSelectedEvent(it) },
+                        onEventCardClick = { eventViewModel.toggleEventCard(it) },
                         isAttending = { event ->
-                            eventScreenViewModel.isCurrentUserAttendingEvent(
-                                event = event,
-                                currentUserUID = currentUserViewModel.getUID()
+                            eventViewModel.isCurrentUserAttendingEvent(
+                                event = event
                             )
                         },
                         onAddEvent = { navController.navigate("event/create") }

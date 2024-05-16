@@ -11,8 +11,6 @@ import com.example.ventilen_app.data.repositories.LocationRepository
 import com.example.ventilen_app.utils.ValidateInput
 import com.example.ventilen_app.data.repositories.UserRepository
 import com.example.ventilen_app.services.AccountService
-import com.google.firebase.auth.FirebaseAuth
-import com.example.ventilen_app.utils.ValidateInput
 import kotlinx.coroutines.launch
 
 class AuthViewModel : ViewModel() {
@@ -21,9 +19,6 @@ class AuthViewModel : ViewModel() {
     private val validateInput: ValidateInput = ValidateInput()
 
     var email: String by mutableStateOf("christianbt96/marcus.rappenborg@gmail.com")
-    var isAdmin: Boolean? by mutableStateOf(null)
-
-    var email: String by mutableStateOf("christianbt96@gmail.com")
     var hasEmailError: Boolean by mutableStateOf(false)
 
     var password: String by mutableStateOf("Ventilen1234")
@@ -75,7 +70,6 @@ class AuthViewModel : ViewModel() {
                     email = email,
                     password = password
                 )
-                //isEmailInAdmins()
                 onLoginSuccess()
             } catch (error: Exception) {
                 Log.e("LOG IN", "Failed to log in: $error")
@@ -83,10 +77,6 @@ class AuthViewModel : ViewModel() {
             }
 
         }
-    }
-
-    private suspend fun isEmailInAdmins() {
-        isAdmin = userRepository.isEmailInAdmins(email)
     }
 
     fun changeEmail(newEmail: String) {

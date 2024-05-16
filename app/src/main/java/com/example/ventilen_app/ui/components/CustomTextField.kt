@@ -18,7 +18,6 @@ import com.example.ventilen_app.ui.theme.CustomColorScheme
 fun CustomTextField(
     text: String,
     label: String = "",
-    modifier: Modifier = Modifier,
     isPassword: Boolean = false,
     isSingleLine: Boolean = true,
     hasError: Boolean = false,
