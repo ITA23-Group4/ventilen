@@ -19,11 +19,12 @@ fun CustomTextField(
     isPassword: Boolean = false,
     isSingleLine: Boolean = true,
     hasError: Boolean = false,
+    modifier: Modifier = Modifier,
     onValueChange: (String) -> Unit
 ) {
 
     OutlinedTextField(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = modifier.fillMaxWidth(),
         value = text,
         singleLine = isSingleLine,
         onValueChange = { onValueChange(it)},

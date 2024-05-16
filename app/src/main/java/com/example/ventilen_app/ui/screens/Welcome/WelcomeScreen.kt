@@ -22,7 +22,6 @@ import com.example.ventilen_app.ui.theme.CustomColorScheme
 fun WelcomeScreen(
     onNavigationLogin: () -> Unit,
     onNavigationRegister: () -> Unit,
-    whoUser: () -> Unit
 ) {
     CustomColumn(
         modifier = Modifier
@@ -43,12 +42,6 @@ fun WelcomeScreen(
         CustomOutlinedButton(
             text = "Tilmeld dig",
             onClick = onNavigationRegister
-        )
-
-        // TODO: Remove
-        CustomFilledButton(
-            text = "Who User",
-            onClick = whoUser
         )
     }
 }

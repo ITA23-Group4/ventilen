@@ -11,6 +11,8 @@ import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.firestore
 import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 
 /**
  * Repository class responsible for handling chat-related data operations.
@@ -21,42 +23,8 @@ import kotlinx.coroutines.tasks.await
 class ChatRepository {
     private val db = Firebase.firestore
 
-    /**
-     * Observes changes in the Firestore "chats" collection and invokes the provided callback
-     * with the updated list of messages whenever there is a change.
-     *
-     * @param updateMessages Callback function to be invoked with the updated list of messages.
-     */
-    fun observeMessages(updateMessages: (List<Message>) -> Unit) {
-        // Set up a listener to monitor changes in the Firestore "chats" collection
-        db.collection("chats")
-            .orderBy("timestamp", Query.Direction.DESCENDING)
-            .limit(3)
-            .addSnapshotListener { snapshot, exception ->
-                // Log an error if there's an issue retrieving messages
-                if (exception != null) {
-                    Log.e(TAG, "Error observing messages", exception)
-                    return@addSnapshotListener
-                }
-
-                // Convert each Firestore document into a Message object using map
-                val messages: List<Message> = snapshot?.documents?.map { document ->
-                    val senderRef = document.get("senderUID") as? DocumentReference
-                    val senderUID = senderRef?.id ?: ""
-                    val messageContent = document.getString("message") ?: ""
-                    val timestamp = document.getTimestamp("timestamp")!!.toDate()
-                    val locationRef = document.get("location") as? DocumentReference
-                    val locationID = locationRef?.id ?: ""
-                    val username = document.getString("username") ?: ""
-
-                    Message(senderUID, messageContent, timestamp, locationID, username)
-                } ?: emptyList()
-
-                // Invoke the callback with the updated list of messages
-                updateMessages(messages)
-            }
-    }
-
+    private val _messagesFlow = MutableStateFlow<List<Message>>(emptyList())
+    val messagesFlow: StateFlow<List<Message>> get() = _messagesFlow
 
     // Function to get the latest message from each location in the database
     // Then it returns a list of Location objects
@@ -86,10 +54,9 @@ class ChatRepository {
     // Usefull links:
     // https://stackoverflow.com/questions/50207339/cloud-firestore-failed-precondition-the-query-requires-an-index
     // https://www.fullstackfirebase.com/cloud-firestore/indexes
-    fun observeMessagesByLocation(locationId: String): LiveData<List<Message>> {
-        val messagesLiveData = MutableLiveData<List<Message>>()
-        db.collection("chats")
-            .whereEqualTo("location", locationId)
+    fun observeMessagesByLocation(locationId: String) {
+        db.collection("locations").document(locationId).collection("messages")
+            .orderBy("timestamp", Query.Direction.DESCENDING)
             .addSnapshotListener { snapshot, exception ->
                 if (exception != null) {
                     Log.e(TAG, "Error observing messages", exception)
@@ -108,10 +75,8 @@ class ChatRepository {
                     Message(senderUID, messageContent, timestamp, locationID, username)
                 } ?: emptyList()
 
-                messagesLiveData.value = messages
+                _messagesFlow.value = messages
             }
-
-        return messagesLiveData
     }
 
 
@@ -131,7 +96,7 @@ class ChatRepository {
         )
 
         try {
-            db.collection("chats")
+            db.collection("locations").document(message.locationID).collection("messages")
                 .add(messageHashMap)
                 .await()
                 .let { documentReference ->

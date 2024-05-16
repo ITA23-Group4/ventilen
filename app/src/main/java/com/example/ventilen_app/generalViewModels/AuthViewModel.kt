@@ -17,6 +17,8 @@ class AuthViewModel : ViewModel() {
     private val userRepository: UserRepository = UserRepository()
     private val validateInput: ValidateInput = ValidateInput()
 
+    var isAdmin: Boolean? by mutableStateOf(null)
+
     var email: String by mutableStateOf("")
     var hasEmailError: Boolean by mutableStateOf(false)
 
@@ -32,9 +34,10 @@ class AuthViewModel : ViewModel() {
         latestMessage = "",
         abbreviation = "",
         locationID = ""
-        )
+    )
     )
     var hasLocationError: Boolean by mutableStateOf(false)
+
 
     fun registerNewUser(
         onRegistrationSuccess: () -> Unit,
@@ -68,6 +71,7 @@ class AuthViewModel : ViewModel() {
                     email = email,
                     password = password
                 )
+                isEmailInAdmins()
                 onLoginSuccess()
             } catch (error: Exception) {
                 Log.d("Logged In", "Failed to log in: $error")
@@ -75,6 +79,10 @@ class AuthViewModel : ViewModel() {
             }
 
         }
+    }
+
+    private suspend fun isEmailInAdmins() {
+        isAdmin = userRepository.isEmailInAdmins(email)
     }
 
     fun changeEmail(newEmail: String) {
