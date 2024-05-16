@@ -36,6 +36,7 @@ fun WelcomeScreen(
             )
         CustomFilledButton(
             text = "Login",
+            textColor = CustomColorScheme.OffWhite,
             onClick = onNavigationLogin,
             color = CustomColorScheme.Orange
         )

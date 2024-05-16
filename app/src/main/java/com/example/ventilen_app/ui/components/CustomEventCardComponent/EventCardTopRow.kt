@@ -14,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.ventilen_app.ui.theme.CustomColorScheme
 
 @Composable
@@ -31,12 +32,13 @@ fun EventCardTopRow(
     ) {
         Text(
             text = title,
-            style = MaterialTheme.typography.bodyMedium
+            style = MaterialTheme.typography.headlineMedium
         )
         if (!isExpanded) {
             Text(
                 text = date,
-                style = MaterialTheme.typography.headlineMedium
+                style = MaterialTheme.typography.bodySmall,
+                fontSize = 18.sp
             )
         } else {
             Icon(

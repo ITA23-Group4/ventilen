@@ -46,15 +46,16 @@ fun LoginScreen(
         CustomFilledButton(
             text = "Forsæt",
             onClick = onNavigateHome,
+            textColor = CustomColorScheme.OffWhite
         )
 
         // TODO placement should be fixed with CustomColumn
         Row(
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(text = "Har du ikke en bruger?", style = MaterialTheme.typography.headlineMedium)
+            Text(text = "Har du ikke en bruger?", style = MaterialTheme.typography.bodyMedium)
             TextButton(onClick = onNavigateRegistration) {
-                Text(text = "Tilmeld Dig", style = MaterialTheme.typography.headlineSmall)
+                Text(text = "Tilmeld Dig", style = MaterialTheme.typography.bodyLarge, color = CustomColorScheme.Orange)
             }
         }
 

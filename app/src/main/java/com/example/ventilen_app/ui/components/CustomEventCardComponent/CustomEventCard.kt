@@ -19,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.ventilen_app.data.models.Event
+import com.example.ventilen_app.ui.theme.CustomColorScheme
 import com.example.ventilen_app.ui.theme.VentilenAppTheme
 import com.google.firebase.Timestamp
 import java.util.Date
@@ -75,9 +76,14 @@ fun CustomEventCard(
             // TODO: Should probably be hoisted :)
             // EventCard description
             if (isExpanded) {
-                Text(text = event.eventDescription)
+                Text(
+                    text = event.eventDescription,
+                    style = MaterialTheme.typography.bodySmall
+                    )
             } else {
-                Text(text = event.eventDescription.take(90) + "...")
+                Text(
+                    text = event.eventDescription.take(90) + "...",
+                    style = MaterialTheme.typography.bodySmall)
             }
 
             if (isExpanded) {

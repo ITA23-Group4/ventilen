@@ -13,12 +13,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.example.ventilen_app.ui.theme.CustomColorScheme
 
 @Composable
 fun CustomFilledButton(
     text: String,
     onClick: () -> Unit,
     color: Color = MaterialTheme.colorScheme.primary,
+    textColor: Color = MaterialTheme.colorScheme.surface
 ) {
     FilledTonalButton(
         onClick = onClick,
@@ -28,6 +30,6 @@ fun CustomFilledButton(
         colors = ButtonDefaults.buttonColors(containerColor = color),
         shape = RoundedCornerShape(8.dp)
     ){
-        Text(text = text, style = MaterialTheme.typography.labelLarge)
+        Text(text = text, style = MaterialTheme.typography.labelLarge, color = textColor)
     }
 }

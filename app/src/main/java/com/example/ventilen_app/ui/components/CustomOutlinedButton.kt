@@ -35,6 +35,6 @@ fun CustomOutlinedButton(
         ),
         shape = RoundedCornerShape(8.dp)
     ) {
-        Text(text = text, style = MaterialTheme.typography.labelMedium)
+        Text(text = text, style = MaterialTheme.typography.labelLarge, color = textColor)
     }
 }

@@ -11,6 +11,7 @@ import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import com.example.ventilen_app.ui.theme.CustomColorScheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -25,10 +26,14 @@ fun CustomTextField(
         value = text,
         singleLine = true,
         onValueChange = { onValueChange(it) },
-        label = { Text(label) },
+        label = { Text(text = label,
+            style = MaterialTheme.typography.bodyLarge,
+            color = CustomColorScheme.Orange
+        )},
         colors = TextFieldDefaults.outlinedTextFieldColors(
             unfocusedBorderColor = MaterialTheme.colorScheme.primary,
             unfocusedLabelColor = MaterialTheme.colorScheme.primary
-        )
+        ),
+        textStyle = MaterialTheme.typography.bodyMedium
     )
 }

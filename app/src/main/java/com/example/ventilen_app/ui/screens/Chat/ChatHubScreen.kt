@@ -29,7 +29,7 @@ fun ChatHubScreen(
         modifier = Modifier.padding(0.dp, 8.dp, 0.dp, 0.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        Text(text = "Primære mødested", style = MaterialTheme.typography.headlineLarge,
+        Text(text = "Primære mødested", style = MaterialTheme.typography.headlineMedium,
             modifier = Modifier.fillMaxWidth(),
             textAlign = TextAlign.Start)
         CustomChatCard(
@@ -39,7 +39,7 @@ fun ChatHubScreen(
             onClick = { onChatLocalNavigate(currentUserPrimaryLocation) }
         )
 
-        Text(text = "Andre mødesteder", style = MaterialTheme.typography.headlineLarge,
+        Text(text = "Andre mødesteder", style = MaterialTheme.typography.headlineMedium,
             modifier = Modifier.fillMaxWidth(),
             textAlign = TextAlign.Start)
 

@@ -40,7 +40,7 @@ fun TopAuthPageDesign(
         Spacer(modifier = Modifier.height(66.dp))
         Text(text = topText, style = MaterialTheme.typography.headlineLarge)
         Spacer(modifier = Modifier.height(14.dp))
-        Text(text = bottomText, style = MaterialTheme.typography.headlineMedium)
+        Text(text = bottomText, style = MaterialTheme.typography.bodyMedium)
         Spacer(modifier = Modifier.height(28.dp))
     }
 }

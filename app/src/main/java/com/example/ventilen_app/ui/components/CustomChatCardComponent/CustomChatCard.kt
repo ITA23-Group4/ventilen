@@ -62,8 +62,8 @@ fun CustomChatCard(
             ) {
                 Text(
                     text = abbreviation,
-                    style = MaterialTheme.typography.labelLarge,
-                    fontSize = 25.sp
+                    style = MaterialTheme.typography.displayLarge,
+                    color = CustomColorScheme.OffWhite
                 )
             }
 
@@ -73,11 +73,11 @@ fun CustomChatCard(
             ) {
                 Text(
                     text = locationName,
-                    style = MaterialTheme.typography.bodyLarge
+                    style = MaterialTheme.typography.labelMedium
                 )
                 Text(
                     text = latestMessage.take(30) + "...",
-                    style = MaterialTheme.typography.headlineMedium
+                    style = MaterialTheme.typography.bodySmall
                 )
             }
         }

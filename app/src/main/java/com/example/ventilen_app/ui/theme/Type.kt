@@ -12,7 +12,10 @@ import com.example.ventilen_app.R
 val montserratFamily = FontFamily(
     Font(R.font.montserrat_semibold, FontWeight.SemiBold),
     Font(R.font.montserrat_regular, FontWeight.Normal),
-    Font(R.font.montserrat_bold, FontWeight.Bold)
+    Font(R.font.montserrat_bold, FontWeight.Bold),
+    Font(R.font.montserrat_medium, FontWeight.Medium),
+    Font(R.font.montserrat_light, FontWeight.Light),
+    Font(R.font.montserrat_extrabold, FontWeight.ExtraBold),
 )
 
 val Typography = Typography(
@@ -34,12 +37,6 @@ val Typography = Typography(
     val labelSmall: TextStyle = COMPILED_CODE
  */
     //TODO: Redo typograpghy names to be propper and make all needed typograpghies
-    bodyMedium = TextStyle(
-        fontFamily = montserratFamily,
-        fontWeight = FontWeight.Black,
-        fontSize = 24.sp,
-        color = CustomColorScheme.OffBlack
-    ),
     headlineLarge = TextStyle(
         fontFamily = montserratFamily,
         fontWeight = FontWeight.SemiBold,
@@ -48,27 +45,57 @@ val Typography = Typography(
     ),
     headlineMedium = TextStyle(
         fontFamily = montserratFamily,
-        fontWeight = FontWeight.Normal,
-        fontSize = 14.sp,
+        fontWeight = FontWeight.SemiBold,
+        fontSize = 18.sp,
         color = CustomColorScheme.OffBlack
     ),
     headlineSmall = TextStyle(
         fontFamily = montserratFamily,
-        fontWeight = FontWeight.Bold,
-        fontSize = 14.sp,
-        color = CustomColorScheme.Orange
+        fontWeight = FontWeight.SemiBold,
+        fontSize = 16.sp,
+        color = CustomColorScheme.OffBlack
     ),
     labelLarge = TextStyle(
         fontFamily = montserratFamily,
         fontWeight = FontWeight.Bold,
         fontSize = 18.sp,
-        color = CustomColorScheme.OffWhite
+        color = CustomColorScheme.OffBlack
     ),
     labelMedium = TextStyle(
         fontFamily = montserratFamily,
+        fontWeight = FontWeight.Medium,
+        fontSize = 16.sp,
+        color = CustomColorScheme.OffBlack
+    ),
+    labelSmall = TextStyle(
+        fontFamily = montserratFamily,
+        fontWeight = FontWeight.Normal,
+        fontSize = 12.sp,
+        color = CustomColorScheme.OffBlack
+    ),
+    bodyLarge = TextStyle(
+        fontFamily = montserratFamily,
         fontWeight = FontWeight.Bold,
-        fontSize = 18.sp,
-        color = CustomColorScheme.Orange
+        fontSize = 14.sp,
+        color = CustomColorScheme.OffBlack
+    ),
+    bodyMedium = TextStyle(
+        fontFamily = montserratFamily,
+        fontWeight = FontWeight.Normal,
+        fontSize = 14.sp,
+        color = CustomColorScheme.OffBlack
+    ),
+    bodySmall = TextStyle(
+        fontFamily = montserratFamily,
+        fontWeight = FontWeight.Light,
+        fontSize = 14.sp,
+        color = CustomColorScheme.OffBlack
+    ),
+    displayLarge = TextStyle(
+        fontFamily = montserratFamily,
+        fontWeight = FontWeight.Bold,
+        fontSize = 24.sp,
+        color = CustomColorScheme.OffBlack
     )
 )
 
