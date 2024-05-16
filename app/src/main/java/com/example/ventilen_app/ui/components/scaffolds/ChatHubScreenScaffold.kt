@@ -4,27 +4,21 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreenScaffold(
+fun ChatHubScreenScaffold(
     currentRoute: String,
     onNavigateEvent: () -> Unit,
-    onNavigateChat: () -> Unit,
+    onNavigateHome: () -> Unit,
     content: @Composable () -> Unit
 ) {
     Scaffold(
@@ -35,14 +29,14 @@ fun HomeScreenScaffold(
                     navigationIconContentColor = MaterialTheme.colorScheme.onSurface,
                     titleContentColor = MaterialTheme.colorScheme.onSurface
                 ),
-                title = { Text("Home") },
+                title = { Text("Chat") },
             )
         },
         bottomBar = {
             CustomBottomNavigationBar(
                 currentRoute = currentRoute,
+                onNavigateHome = onNavigateHome,
                 onNavigateEvent = onNavigateEvent,
-                onNavigateChat = onNavigateChat,
             )
         },
         content = { paddingValues: PaddingValues ->

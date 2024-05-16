@@ -1,17 +1,9 @@
 package com.example.ventilen_app.navigation
 
 import android.annotation.SuppressLint
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -24,9 +16,9 @@ import com.example.ventilen_app.generalViewModels.ChatViewModel
 import com.example.ventilen_app.generalViewModels.LocationViewModel
 import com.example.ventilen_app.generalViewModels.UserViewModel
 import com.example.ventilen_app.ui.components.scaffolds.CreateEventScaffold
-import com.example.ventilen_app.ui.components.scaffolds.CustomBottomNavigationBar
 import com.example.ventilen_app.ui.components.scaffolds.EventScaffold
 import com.example.ventilen_app.ui.components.scaffolds.HomeScreenScaffold
+import com.example.ventilen_app.ui.components.scaffolds.ChatHubScreenScaffold
 import com.example.ventilen_app.ui.components.scaffolds.LocalChatScaffold
 import com.example.ventilen_app.ui.screens.Chat.ChatHubScreen
 import com.example.ventilen_app.ui.screens.Chat.ChatLocalScreen
@@ -94,40 +86,23 @@ fun RootNavigation() {
             route = "chat"
         ) {
             composable("chat/hub") {
-                Scaffold(
-                    topBar = {
-                        CenterAlignedTopAppBar(
-                            title = { Text("Chat") },
-                            colors = TopAppBarDefaults.topAppBarColors(
-                                containerColor = MaterialTheme.colorScheme.surface,
-                                navigationIconContentColor = MaterialTheme.colorScheme.onSurface,
-                                titleContentColor = MaterialTheme.colorScheme.onSurface
-                            )
-                        )
-                    },
-                    bottomBar = {
-                        CustomBottomNavigationBar(
-                            currentRoute = navController.currentDestination!!.route!!,
-                            onNavigateEvent = { navController.navigate("event") },
-                            onNavigateHome = { navController.navigate("home") }
-                        )
-                    }
-                ) { paddingValues ->
-                    Box(modifier = Modifier.padding(paddingValues)) {
-                        chatViewModel.getLatestMessagesFromEachLocation() // Get the latest messages from each location in the database, before navigating to the ChatHubScreen TODO: LOOK AT
-                        ChatHubScreen(
-                            locationsExcludingCurrentUserPrimaryLocation = chatViewModel.locationsWithLatestMessages.filter { location ->
-                                location.locationID != currentUserViewModel.currentUser?.primaryLocationID
-                            },
-                            onChatLocalNavigate = {
-                                chatViewModel.selectedLocation = it
-                                navController.navigate("chat/local")
-                            },
-                            currentUserPrimaryLocation = chatViewModel.locationsWithLatestMessages.find { location ->
-                                location.locationID == currentUserViewModel.currentUser?.primaryLocationID
-                            }!!
-                        )
-                    }
+                ChatHubScreenScaffold(
+                    currentRoute = "chat/hub",
+                    onNavigateEvent = { navController.navigate("event") },
+                    onNavigateHome = { navController.navigate("home") }
+                ) {
+                    ChatHubScreen(
+                        locationsExcludingCurrentUserPrimaryLocation = chatViewModel.locationsWithLatestMessages.filter { location ->
+                            location.locationID != currentUserViewModel.currentUser?.primaryLocationID
+                        },
+                        onChatLocalNavigate = {
+                            chatViewModel.selectedLocation = it
+                            navController.navigate("chat/local")
+                        },
+                        currentUserPrimaryLocation = chatViewModel.locationsWithLatestMessages.find { location ->
+                            location.locationID == currentUserViewModel.currentUser?.primaryLocationID
+                        }!!
+                    )
                 }
             }
             composable("chat/local") {
