@@ -85,12 +85,12 @@ fun RootNavigation() {
                     onNavigateHome = { navController.navigate("home") }
                 ) {
                     ChatHubScreen(
-                        locationsExcludingCurrentUserPrimaryLocation = authViewModel.locationRepository.locations,
+                        locationsExcludingCurrentUserPrimaryLocation = chatViewModel.locationsWithLatestMessages,
                         onChatLocalNavigate = {
                             chatViewModel.selectedLocation = it
                             navController.navigate("chat/local")
                         },
-                        currentUserPrimaryLocation = authViewModel.locationRepository.locations[0]
+                        currentUserPrimaryLocation = chatViewModel.locationsWithLatestMessages[0]
                     )
                 }
             }

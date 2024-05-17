@@ -50,11 +50,10 @@ class ChatViewModel : ViewModel() {
         }
     }
 
-    fun getLatestMessagesFromEachLocation() {
+    private fun getLatestMessagesFromEachLocation() {
         viewModelScope.launch {
-            val latestMessages: List<Location> = chatRepository.chatHubMessagesSnapshot()
             locationsWithLatestMessages.clear()
-            locationsWithLatestMessages.addAll(latestMessages)
+            locationsWithLatestMessages.addAll(chatRepository.chatHubMessagesSnapshot())
         }
     }
 
