@@ -11,7 +11,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 
-class EventRepository() {
+object EventRepository {
     private val db = Firebase.firestore;
 
     suspend fun getEvents(): List<Event> {

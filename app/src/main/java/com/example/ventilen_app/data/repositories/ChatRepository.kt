@@ -18,7 +18,7 @@ import kotlinx.coroutines.tasks.await
  * @property db Firebase Firestore instance.
  * @author Marcus, Christian
  */
-class ChatRepository {
+object ChatRepository {
     private val db = Firebase.firestore
 
     private val _messagesFlow = MutableStateFlow<List<Message>>(emptyList())
