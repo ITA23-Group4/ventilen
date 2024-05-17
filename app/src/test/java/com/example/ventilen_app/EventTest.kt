@@ -36,9 +36,9 @@ class EventTest {
      */
     @Test
     fun testCompareTo() {
-        // Verify eventA is less than eventB
-        assert(eventA < eventB)
-        assertEquals(-1, eventA.compareTo(eventB))
+        // Verify eventB is greater than eventA
+        assert(eventB > eventA)
+        assertEquals(1, eventB.compareTo(eventA))
 
         // Verify eventB is less than eventC
         assert(eventB < eventC)
