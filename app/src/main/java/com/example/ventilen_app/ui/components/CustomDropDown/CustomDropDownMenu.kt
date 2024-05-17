@@ -63,7 +63,7 @@ fun CustomDropDownMenu(
                         Text(
                             text = option,
                             style = MaterialTheme.typography.labelLarge,
-                            color = MaterialTheme.colorScheme.onSurface
+                            color = MaterialTheme.colorScheme.onBackground
                         ) },
                     onClick = {
                         customDropDownMenuViewModel.isExpanded = false
