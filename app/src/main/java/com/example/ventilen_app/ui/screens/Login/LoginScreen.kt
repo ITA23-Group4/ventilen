@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.ventilen_app.ui.components.CustomColumn
 import com.example.ventilen_app.ui.components.CustomFilledButton
+import com.example.ventilen_app.ui.components.CustomPasswordTextField
 import com.example.ventilen_app.ui.components.CustomTextField
 import com.example.ventilen_app.ui.components.TopAuthPageDesign
 import com.example.ventilen_app.ui.theme.CustomColorScheme
@@ -38,7 +39,7 @@ fun LoginScreen(
         )
         CustomTextField(text = textEmail, label = "Email") { onValueChangeEmail(it) }
 
-        CustomTextField(text = textPassword, label = "Password") { onValueChangePassword(it) }
+        CustomPasswordTextField(text = textPassword, label = "Password") { onValueChangePassword(it) }
 
         CustomFilledButton(
             text = "Forsæt",
