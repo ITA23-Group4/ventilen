@@ -19,7 +19,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.ventilen_app.data.models.Event
-import com.example.ventilen_app.ui.theme.CustomColorScheme
 import com.example.ventilen_app.ui.theme.VentilenAppTheme
 import com.google.firebase.Timestamp
 import java.util.Date
@@ -113,7 +112,7 @@ fun CustomEventCardPreview() {
     val event = Event(
         eventName = "Event Title",
         eventAddress = "123 Main St",
-        eventDateTime = Timestamp(Date()), // Provide a DateTime value
+        eventDateTimeStart = Timestamp(Date()), // Provide a DateTime value
         eventDescription = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
         eventPrice = 20.0,
         attendeesByUID = mutableListOf(), // Provide a mutable list of attendees

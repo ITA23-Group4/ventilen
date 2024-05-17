@@ -9,11 +9,12 @@ import java.util.Locale
 data class Event(
     val eventName: String = "",
     val attendeesByUID: MutableList<String> = mutableListOf(),
-    val eventDateTime: Timestamp = Timestamp.now(),
+    val eventDateTimeStart: Timestamp = Timestamp.now(),
+    // Plus an end time
     val eventDescription: String = "",
     val eventAddress: String = "",
     val eventPrice: Double = 0.0,
-    @DocumentId val eventID: String,
+    @DocumentId val eventID: String = "",
 ) : Comparable<Event> {
 
     fun withUpdatedAttendees(attendees: MutableList<String>): Event {
@@ -29,7 +30,7 @@ data class Event(
      * TODO: Look into Comparator if we want to sort in other ways than natural order
      */
     override fun compareTo(other: Event): Int {
-        return eventDateTime.compareTo(other.eventDateTime)
+        return eventDateTimeStart.compareTo(other.eventDateTimeStart)
     }
 
     fun getDate(): String {
@@ -38,7 +39,7 @@ data class Event(
 
     fun getDateWithTimeRange(): String {
         val dateFormat = SimpleDateFormat("dd. MMM yyyy\n'Klokken' HH:mm", Locale("da", "DK"))
-        val startDate = eventDateTime.toDate()
+        val startDate = eventDateTimeStart.toDate()
         val formattedStartDate = dateFormat.format(startDate)
 
         val calendar = Calendar.getInstance().apply { time = startDate }

@@ -24,10 +24,6 @@ fun HomeScreen(
     textUsername: String,
     textUID: String,
     isAdmin: Boolean,
-    selectedDate: Date?,
-    selectedTime: Date?,
-    showDatePicker: () -> Unit, // TODO: Dialog should not be made in ViewModel?
-    showTimePicker: () -> Unit,  // TODO: Dialog should not be made in ViewModel?
     logout: () -> Unit,
 ) {
     CustomColumn(
@@ -55,16 +51,6 @@ fun HomeScreen(
             )
         }
 
-        Button(onClick = { showDatePicker() }) {
-            Text("Select Date")
-        }
-
-        Button(onClick = { showTimePicker() }) {
-            Text("Select Time")
-        }
-
-        Text("Selected Date: ${selectedDate?.toString() ?: "None"}", color = Color.Black)
-        Text("Selected Time: ${selectedTime?.toString() ?: "None"}", color = Color.Black)
 
     }
 }

@@ -1,11 +1,15 @@
 package com.example.ventilen_app.ui.screens.CreateEvent
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.material3.Button
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.example.ventilen_app.ui.components.CustomColumn
 import com.example.ventilen_app.ui.components.CustomFilledButton
 import com.example.ventilen_app.ui.components.CustomTextField
+import java.util.Date
 
 @Composable
 fun CreateEventScreen(
@@ -14,10 +18,14 @@ fun CreateEventScreen(
     eventDescription: String,
     eventAddress: String,
     eventPrice: String,
+    selectedDate: Date?,
+    selectedTime: Date?,
+    showDatePicker: () -> Unit, // TODO: Dialog should not be made in ViewModel?
+    showTimePicker: () -> Unit,  // TODO: Dialog should not be made in ViewModel?
     onValueChangeTitle: (String) -> Unit,
     onValueChangeDescription: (String) -> Unit,
     onValueChangeAddress: (String) -> Unit,
-    onValueChangePrice: (String) -> Unit
+    onValueChangePrice: (String) -> Unit,
 ) {
     CustomColumn(
         verticalArrangement = Arrangement.spacedBy(20.dp)
@@ -40,14 +48,17 @@ fun CreateEventScreen(
         ) {
             onValueChangeAddress(it)
         }
-        // DatePicker
-        CustomFilledButton(
-            text = "Vælg Dato",
-            onClick = {
+        Button(onClick = { showDatePicker() }) {
+            Text("Select Date")
+        }
 
-            }
-        )
-        // TimePicker
+        Button(onClick = { showTimePicker() }) {
+            Text("Select Time")
+        }
+
+        Text("Selected Date: ${selectedDate?.toString() ?: "None"}", color = Color.Black)
+        Text("Selected Time: ${selectedTime?.toString() ?: "None"}", color = Color.Black)
+
         CustomTextField(
             text = eventPrice,
             label = "Pris"

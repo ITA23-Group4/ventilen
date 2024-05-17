@@ -20,11 +20,10 @@ import com.example.ventilen_app.ui.components.scaffolds.LocalChatScaffold
 import com.example.ventilen_app.ui.screens.Chat.ChatHubScreen
 import com.example.ventilen_app.ui.screens.Chat.ChatLocalScreen
 import com.example.ventilen_app.ui.screens.CreateEvent.CreateEventScreen
-import com.example.ventilen_app.ui.screens.CreateEvent.CreateEventViewModel
+import com.example.ventilen_app.viewmodels.CreateEventViewModel
 import com.example.ventilen_app.ui.screens.Event.EventScreen
 import com.example.ventilen_app.viewmodels.EventViewModel
 import com.example.ventilen_app.ui.screens.Home.HomeScreen
-import com.example.ventilen_app.viewmodels.HomeViewModel
 
 /**
  * Root navigation structure of the application.
@@ -43,7 +42,6 @@ fun RootNavigation() {
     val eventViewModel: EventViewModel = viewModel<EventViewModel>()
     val chatViewModel: ChatViewModel = viewModel<ChatViewModel>()
     val createEventViewModel: CreateEventViewModel = viewModel<CreateEventViewModel>()
-    val homeViewModel: HomeViewModel = viewModel<HomeViewModel>()
 
     NavHost(navController = navController, startDestination = "auth") {
         navigation(
@@ -56,7 +54,6 @@ fun RootNavigation() {
             )
         }
         composable("home") {
-            homeViewModel.context = LocalContext.current
             HomeScreenScaffold(
                 currentRoute = navController.currentDestination!!.route!!,
                 onNavigateEvent = { navController.navigate("event") },
@@ -66,10 +63,6 @@ fun RootNavigation() {
                     textUsername = chatViewModel.getCurrentUserUIDFromFirebase(),
                     textUID = chatViewModel.getCurrentUserUIDFromFirebase(),
                     isAdmin = true,
-                    selectedDate = homeViewModel.selectedDate,
-                    selectedTime = homeViewModel.selectedTime,
-                    showDatePicker = { homeViewModel.showDatePicker() }, // TODO: Dialog should not be made in ViewModel?
-                    showTimePicker = { homeViewModel.showTimePicker() },  // TODO: Dialog should not be made in ViewModel?
                     logout = { }
                 )
             }
@@ -148,6 +141,7 @@ fun RootNavigation() {
             }
         }
         composable("event/create") {
+            createEventViewModel.context = LocalContext.current
             CreateEventScaffold(
                 onNavigateBack = { navController.navigate("event") },
                 ) {
@@ -156,11 +150,19 @@ fun RootNavigation() {
                     eventDescription = createEventViewModel.eventDescription,
                     eventAddress = createEventViewModel.eventAddress,
                     eventPrice = createEventViewModel.eventPrice,
+
+                    selectedDate = createEventViewModel.selectedDate,
+                    selectedTime = createEventViewModel.selectedTime,
+                    showDatePicker = { createEventViewModel.showDatePicker() },
+                    showTimePicker = { createEventViewModel.showTimePicker() },
+
                     onValueChangeTitle = { createEventViewModel.eventTitle = it },
                     onValueChangeDescription = { createEventViewModel.eventDescription = it },
                     onValueChangeAddress = { createEventViewModel.eventAddress = it },
                     onValueChangePrice = { createEventViewModel.eventPrice = it },
-                    onCreateEvent = {} // TODO: Implement create event functionality
+                    onCreateEvent = {
+                        createEventViewModel.createEvent()
+                    }
                 )
             }
         }

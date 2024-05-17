@@ -7,8 +7,6 @@ import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.firestore
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 
 class EventRepository() {
@@ -30,39 +28,56 @@ class EventRepository() {
     suspend fun addUserToEvent(userUID: String, eventID: String) {
         val eventRef = db.collection("events").document(eventID)
         val userRef = db.collection("users").document(userUID)
-        eventRef.update("attendees", FieldValue.arrayUnion(userRef)).await()
+        eventRef.update("attendeesByUID", FieldValue.arrayUnion(userRef)).await()
     }
 
     suspend fun removeUserFromEvent(userUID: String, eventID: String) {
         val eventRef = db.collection("events").document(eventID)
         val userRef = db.collection("users").document(userUID)
-        eventRef.update("attendees", FieldValue.arrayRemove(userRef)).await()
+        eventRef.update("attendeesByUID", FieldValue.arrayRemove(userRef)).await()
     }
 
     private fun convertEventDocumentToEvent(document: DocumentSnapshot): Event {
-        val title: String = document.getString("title") ?: ""
-        val attendees: List<DocumentReference> = document.get("attendees") as? List<DocumentReference> ?: emptyList()
+        val title: String = document.getString("eventName") ?: ""
+        val attendees: List<DocumentReference> = document.get("attendeesByUID") as? List<DocumentReference> ?: emptyList()
         val attendeeUIDs: MutableList<String> = attendees.map { it.id }.toMutableList()
         val dateTime = document.getTimestamp("eventDateTime")// Retrieve DateTime field
-        val description: String = document.getString("description") ?: "" // Retrieve eventDescription field
-        val address: String = document.getString("address") ?: "" // Retrieve eventAddress field
-        val price: Double = document.getDouble("price") ?: 0.0 // Retrieve eventPrice field
+        val description: String = document.getString("eventDescription") ?: "" // Retrieve eventDescription field
+        val address: String = document.getString("eventAddress") ?: "" // Retrieve eventAddress field
+        val price: Double = document.getDouble("eventPrice") ?: 0.0 // Retrieve eventPrice field
         val id = document.id
 
         return Event(
             eventName = title,
             attendeesByUID = attendeeUIDs,
             eventID = id,
-            eventDateTime = dateTime!!,
+            eventDateTimeStart = dateTime!!,
             eventDescription = description,
             eventAddress = address,
             eventPrice = price
         )
     }
 
-    suspend fun createEvent(event: Event){
+    /*suspend fun createEvent(event: Event){
         db.collection("events")
             .add(event)
+            .await()
+    }*/
+
+    suspend fun createEvent(event: Event) {
+
+        val eventHashMap: HashMap<String, Any> = hashMapOf(
+            "eventName" to event.eventName,
+            "attendeesByUID" to event.attendeesByUID,
+            "eventDateTime" to event.eventDateTimeStart,
+            "eventDescription" to event.eventDescription,
+            "eventAddress" to event.eventAddress,
+            "eventPrice" to event.eventPrice
+        )
+
+        db.collection("events")
+            .document()
+            .set(eventHashMap)
             .await()
     }
 }
