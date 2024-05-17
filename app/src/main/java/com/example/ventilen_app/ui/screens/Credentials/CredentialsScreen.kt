@@ -7,6 +7,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.unit.dp
 import com.example.ventilen_app.ui.components.CustomColumn
 import com.example.ventilen_app.ui.components.CustomFilledButton
+import com.example.ventilen_app.ui.components.CustomPasswordTextField
 import com.example.ventilen_app.ui.components.CustomTextField
 import com.example.ventilen_app.ui.components.TopAuthPageDesign
 
@@ -29,7 +30,7 @@ fun CredentialsScreen(
     ) {
         TopAuthPageDesign(
             topText = "Hvordan skal vi huske dig",
-            bottomText = "indtast din email og password",
+            bottomText = "Indtast din email og password",
         )
 
         CustomTextField(
@@ -39,14 +40,14 @@ fun CredentialsScreen(
             hasError = hasEmailError
         )
 
-        CustomTextField(
+        CustomPasswordTextField(
             text = password,
             label = "Password" ,
             onValueChange = { onValueChangePassword(it) },
             hasError = hasPasswordError
         )
 
-        CustomTextField(
+        CustomPasswordTextField(
             text = repeatPassword,
             label = "Gentag Password",
             onValueChange =  { onValueChangePasswordRepeat(it) },
