@@ -15,8 +15,15 @@ import kotlinx.coroutines.launch
 
 class AuthViewModel : ViewModel() {
     private val accountService: AccountService = AccountService()
-    val locationRepository: LocationRepository = LocationRepository(viewModelScope) //TODO: Should be private
+    val locationRepository: LocationRepository = LocationRepository
+    private val userRepository: UserRepository = UserRepository
     private val validateInput: ValidateInput = ValidateInput()
+
+    init {
+        viewModelScope.launch {
+            locationRepository.getLocations()
+        }
+    }
 
     var email: String by mutableStateOf("christianbt96/marcus.rappenborg@gmail.com")
     var hasEmailError: Boolean by mutableStateOf(false)
@@ -37,6 +44,10 @@ class AuthViewModel : ViewModel() {
     )
     var hasLocationError: Boolean by mutableStateOf(false)
 
+    private suspend fun getUser() {
+        userRepository.getUser()
+    }
+
     fun registerNewUser(
         onRegistrationSuccess: () -> Unit,
         onRegistrationFailed: () -> Unit
@@ -49,7 +60,6 @@ class AuthViewModel : ViewModel() {
                     username = username,
                     location = location
                 ).let { newUser ->
-                    val userRepository: UserRepository = UserRepository()
                     userRepository.createUser(newUser)
                     onRegistrationSuccess()
                 }
@@ -70,6 +80,7 @@ class AuthViewModel : ViewModel() {
                     email = email,
                     password = password
                 )
+                getUser()
                 onLoginSuccess()
             } catch (error: Exception) {
                 Log.e("LOG IN", "Failed to log in: $error")

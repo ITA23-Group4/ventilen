@@ -14,7 +14,7 @@ import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.launch
 
 class EventViewModel: ViewModel() {
-    private val eventRepository: EventRepository = EventRepository()
+    private val eventRepository: EventRepository = EventRepository
     private var currentUserUID: String by mutableStateOf(FirebaseAuth.getInstance().currentUser?.uid!!)
 
 

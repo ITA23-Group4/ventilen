@@ -63,7 +63,7 @@ fun RootNavigation() {
                 onNavigateChat = { navController.navigate("chat") }
             ) {
                 HomeScreen(
-                    textUsername = chatViewModel.getCurrentUserUIDFromFirebase(),
+                    textUsername = chatViewModel.userRepository.currentUser!!.username,
                     textUID = chatViewModel.getCurrentUserUIDFromFirebase(),
                     isAdmin = true,
                     selectedDate = homeViewModel.selectedDate,

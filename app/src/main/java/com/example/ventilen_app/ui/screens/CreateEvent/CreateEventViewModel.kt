@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalMaterial3Api::class) // OptIn annotation to enable experimental API
 
 class CreateEventViewModel: ViewModel() {
-    private val eventRepository: EventRepository = EventRepository()
+    private val eventRepository: EventRepository = EventRepository
 
     var eventTitle: String by mutableStateOf("")
     var eventDescription: String by mutableStateOf("")

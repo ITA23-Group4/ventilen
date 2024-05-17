@@ -16,9 +16,8 @@ import kotlinx.coroutines.launch
 import java.util.Date
 
 class ChatViewModel : ViewModel() {
-    private val chatRepository = ChatRepository()
-
-    private var currentUserUsername: String by mutableStateOf("") // TODO: get username
+    private val chatRepository = ChatRepository
+    val userRepository = UserRepository
 
     fun getCurrentUserUIDFromFirebase(): String {
         return FirebaseAuth.getInstance().currentUser?.uid!!
