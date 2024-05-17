@@ -23,8 +23,15 @@ class LocationTest {
      */
     @Test
     fun testCompareTo() {
+        // Verify locationA is less than locationB
         assert(locationA < locationB)
+        assertEquals(-1, locationA.compareTo(locationB))
+
+        // Verify locationB is greater than locationA
         assert(locationB > locationA)
+        assertEquals(1, locationB.compareTo(locationA))
+
+        // Verify locationA is equal to itself
         assertEquals(0, locationA.compareTo(locationA))
     }
 
