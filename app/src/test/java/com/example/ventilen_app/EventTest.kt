@@ -7,7 +7,6 @@ import org.junit.Before
 import org.junit.Test
 
 class EventTest {
-
     private lateinit var eventA: Event
     private lateinit var eventB: Event
     private lateinit var eventC: Event
@@ -37,8 +36,15 @@ class EventTest {
      */
     @Test
     fun testCompareTo() {
+        // Verify eventA is less than eventB
         assert(eventA < eventB)
+        assertEquals(-1, eventA.compareTo(eventB))
+
+        // Verify eventB is less than eventC
         assert(eventB < eventC)
+        assertEquals(-1, eventB.compareTo(eventC))
+
+        // Verify eventA is equal to itself
         assertEquals(0, eventA.compareTo(eventA))
     }
 
