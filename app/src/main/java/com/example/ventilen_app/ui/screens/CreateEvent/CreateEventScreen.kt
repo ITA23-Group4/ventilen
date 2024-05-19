@@ -34,7 +34,7 @@ fun CreateEventScreen(
     CustomColumn(
         verticalArrangement = Arrangement.spacedBy(20.dp)
     ) {
-        Spacer(modifier = Modifier.size(10.dp))
+        Spacer(modifier = Modifier.size(2.dp))
         CustomTextField(
             text = eventTitle,
             label = "Event navn"

@@ -43,7 +43,7 @@ class CreateEventViewModel : ViewModel() {
         val context = context ?: return
         val calendar = Calendar.getInstance()
 
-        DatePickerDialog(
+        val datePickerDialog = DatePickerDialog(
             context,
             { _, year, month, dayOfMonth ->
                 calendar.set(year, month, dayOfMonth)
@@ -56,14 +56,20 @@ class CreateEventViewModel : ViewModel() {
                     },
                     calendar.get(Calendar.HOUR_OF_DAY),
                     calendar.get(Calendar.MINUTE),
-                    true
+                     true
                 ).show()
             },
             calendar.get(Calendar.YEAR),
             calendar.get(Calendar.MONTH),
             calendar.get(Calendar.DAY_OF_MONTH)
-        ).show()
+        )
+
+        // Set the minimum date to today
+        datePickerDialog.datePicker.minDate = calendar.timeInMillis
+
+        datePickerDialog.show()
     }
+
 
     fun createEvent() {
         val eventToCreate = Event(
