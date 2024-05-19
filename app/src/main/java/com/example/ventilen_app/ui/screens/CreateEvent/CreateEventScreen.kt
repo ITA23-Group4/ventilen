@@ -1,13 +1,17 @@
 package com.example.ventilen_app.ui.screens.CreateEvent
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.example.ventilen_app.ui.components.CustomColumn
 import com.example.ventilen_app.ui.components.CustomFilledButton
+import com.example.ventilen_app.ui.components.CustomOutlinedButton
 import com.example.ventilen_app.ui.components.CustomTextField
 import java.util.Date
 
@@ -30,6 +34,7 @@ fun CreateEventScreen(
     CustomColumn(
         verticalArrangement = Arrangement.spacedBy(20.dp)
     ) {
+        Spacer(modifier = Modifier.size(10.dp))
         CustomTextField(
             text = eventTitle,
             label = "Event navn"
@@ -48,16 +53,12 @@ fun CreateEventScreen(
         ) {
             onValueChangeAddress(it)
         }
-        Button(onClick = { showDatePicker() }) {
-            Text("Vælg start tidspunkt")
-        }
 
-        Button(onClick = { showTimePicker() }) {
-            Text("Vælg slut tidspunkt")
-        }
+        CustomOutlinedButton(text = "Vælg start tidspunkt", onClick = { showDatePicker() })
+        Text("Valgt starttidspunkt: ${selectedStartDateTime?.toString() ?: "Intet valgt"}", color = Color.Black)
 
-        Text("Selected Date: ${selectedStartDateTime?.toString() ?: "None"}", color = Color.Black)
-        Text("Selected Time: ${selectedEndDateTime?.toString() ?: "None"}", color = Color.Black)
+        CustomOutlinedButton(text = "Vælg slut tidspunkt", onClick = { showDatePicker() })
+        Text("Valgt sluttidspunkt: ${selectedEndDateTime?.toString() ?: "Intet valgt"}", color = Color.Black)
 
         CustomTextField(
             text = eventPrice,

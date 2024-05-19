@@ -8,7 +8,6 @@ import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
-import java.util.Date
 
 class EventRepository {
     private val db = Firebase.firestore

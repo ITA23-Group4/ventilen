@@ -1,6 +1,5 @@
 package com.example.ventilen_app.data.models
 
-import com.google.firebase.Timestamp
 import com.google.firebase.firestore.DocumentId
 import com.google.firebase.firestore.DocumentReference
 import java.text.SimpleDateFormat
@@ -44,15 +43,12 @@ data class Event(
         val startDate = eventStartDateTime
         val formattedStartDate = dateFormat.format(startDate)
 
-        val calendar = Calendar.getInstance().apply { time = startDate }
-        calendar.add(Calendar.HOUR_OF_DAY, 3) // TODO: Does not save ending timestamp
-        val endDate = calendar.time
-
-        val formattedEndDate = SimpleDateFormat("HH:mm", Locale("da", "DK")).format(endDate)
+        val endDate = eventEndDateTime
+        val formattedEndDateTime = SimpleDateFormat("HH:mm", Locale("da", "DK")).format(endDate)
 
         val monthIndex = formattedStartDate.indexOf(' ') + 1 // Index of the character after the whitespace
         val capitalizedMonthDate = formattedStartDate.replaceRange(monthIndex, monthIndex + 1, formattedStartDate[monthIndex].uppercase())
 
-        return "$capitalizedMonthDate - $formattedEndDate"
+        return "$capitalizedMonthDate - $formattedEndDateTime"
     }
 }
