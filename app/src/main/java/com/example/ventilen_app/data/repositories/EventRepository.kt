@@ -1,28 +1,28 @@
 package com.example.ventilen_app.data.repositories
 
 import com.example.ventilen_app.data.models.Event
-import com.google.firebase.Firebase
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.QuerySnapshot
-import com.google.firebase.firestore.firestore
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
+import java.util.Date
 
-class EventRepository() {
-    private val db = Firebase.firestore;
+class EventRepository {
+    private val db = Firebase.firestore
 
     suspend fun getEvents(): List<Event> {
         val querySnapshot: QuerySnapshot = db.collection("events").get().await()
-
-        return querySnapshot.documents.map { eventDocument ->
+        return querySnapshot.documents.mapNotNull { eventDocument ->
             convertEventDocumentToEvent(eventDocument)
         }
     }
 
-    suspend fun getEvent(eventID: String): Event {
+    suspend fun getEvent(eventID: String): Event? {
         val document = db.collection("events").document(eventID).get().await()
-        return convertEventDocumentToEvent(document)
+        return document?.let { convertEventDocumentToEvent(it) }
     }
 
     suspend fun addUserToEvent(userUID: String, eventID: String) {
@@ -37,23 +37,22 @@ class EventRepository() {
         eventRef.update("attendeesByUID", FieldValue.arrayRemove(userRef)).await()
     }
 
-    private fun convertEventDocumentToEvent(document: DocumentSnapshot): Event {
-        val title: String = document.getString("eventName") ?: ""
-        val attendees: List<DocumentReference> = document.get("attendeesByUID") as? List<DocumentReference> ?: emptyList()
-        val attendeeUIDs: MutableList<String> = attendees.map { it.id }.toMutableList()
-        val eventStartDateTime = document.getTimestamp("eventStartDateTime")// Retrieve DateTime field
-        val eventEndDateTime = document.getTimestamp("eventEndDateTime")// Retrieve DateTime field
-        val description: String = document.getString("eventDescription") ?: "" // Retrieve eventDescription field
-        val address: String = document.getString("eventAddress") ?: "" // Retrieve eventAddress field
-        val price: Double = document.getDouble("eventPrice") ?: 0.0 // Retrieve eventPrice field
+    private fun convertEventDocumentToEvent(document: DocumentSnapshot): Event? {
+        val title = document.getString("eventName") ?: return null
+        val attendeesByUID = document.get("attendeesByUID") as? List<DocumentReference> ?: emptyList()
+        val eventStartDateTime = document.getTimestamp("eventStartDateTime")?.toDate() ?: return null
+        val eventEndDateTime = document.getTimestamp("eventEndDateTime")?.toDate() ?: return null
+        val description = document.getString("eventDescription") ?: ""
+        val address = document.getString("eventAddress") ?: ""
+        val price = document.getDouble("eventPrice") ?: 0.0
         val id = document.id
 
         return Event(
             eventName = title,
-            attendeesByUID = attendeeUIDs,
+            attendeesByUID = attendeesByUID.toMutableList(),
             eventID = id,
-            eventStartDateTime = eventStartDateTime!!.toDate(),
-            eventEndDateTime = eventEndDateTime!!.toDate(),
+            eventStartDateTime = eventStartDateTime,
+            eventEndDateTime = eventEndDateTime,
             eventDescription = description,
             eventAddress = address,
             eventPrice = price
@@ -62,7 +61,7 @@ class EventRepository() {
 
     suspend fun createEvent(event: Event) {
 
-        val eventHashMap: HashMap<String, Any> = hashMapOf(
+        val eventHashMap = hashMapOf(
             "eventName" to event.eventName,
             "attendeesByUID" to event.attendeesByUID,
             "eventDescription" to event.eventDescription,

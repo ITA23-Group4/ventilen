@@ -50,6 +50,7 @@ fun EventScreen(
     }
 }
 
+/*
 @Preview
 @Composable
 fun EventScreenPreview() {
@@ -62,3 +63,5 @@ fun EventScreenPreview() {
         EventScreen(events = sampleEvents, onAttend = {}, onNotAttend = {}, onEventCardClick = {}, isEventSelected = { false }, isAttending = { false }, onAddEvent = {})
     }
 }
+
+ */

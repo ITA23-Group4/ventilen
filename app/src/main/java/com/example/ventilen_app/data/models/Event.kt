@@ -2,6 +2,7 @@ package com.example.ventilen_app.data.models
 
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.DocumentId
+import com.google.firebase.firestore.DocumentReference
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
@@ -9,7 +10,7 @@ import java.util.Locale
 
 data class Event(
     val eventName: String = "",
-    val attendeesByUID: MutableList<String> = mutableListOf(),
+    val attendeesByUID: MutableList<DocumentReference> = mutableListOf(),
     val eventStartDateTime: Date = Date(),
     val eventEndDateTime: Date = Date(),
     val eventDescription: String = "",
@@ -18,7 +19,7 @@ data class Event(
     @DocumentId val eventID: String = "",
 ) : Comparable<Event> {
 
-    fun withUpdatedAttendees(attendees: MutableList<String>): Event {
+    fun withUpdatedAttendees(attendees: MutableList<DocumentReference>): Event {
         return this.copy(attendeesByUID = attendees)
     }
 
