@@ -4,13 +4,14 @@ import com.google.firebase.Timestamp
 import com.google.firebase.firestore.DocumentId
 import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Date
 import java.util.Locale
 
 data class Event(
     val eventName: String = "",
     val attendeesByUID: MutableList<String> = mutableListOf(),
-    val eventDateTimeStart: Timestamp = Timestamp.now(),
-    // Plus an end time
+    val eventStartDateTime: Date = Date(),
+    val eventEndDateTime: Date = Date(),
     val eventDescription: String = "",
     val eventAddress: String = "",
     val eventPrice: Double = 0.0,
@@ -30,7 +31,7 @@ data class Event(
      * TODO: Look into Comparator if we want to sort in other ways than natural order
      */
     override fun compareTo(other: Event): Int {
-        return eventDateTimeStart.compareTo(other.eventDateTimeStart)
+        return eventStartDateTime?.compareTo(other.eventStartDateTime) ?: 0
     }
 
     fun getDate(): String {
@@ -39,7 +40,7 @@ data class Event(
 
     fun getDateWithTimeRange(): String {
         val dateFormat = SimpleDateFormat("dd. MMM yyyy\n'Klokken' HH:mm", Locale("da", "DK"))
-        val startDate = eventDateTimeStart.toDate()
+        val startDate = eventStartDateTime ?: Date()
         val formattedStartDate = dateFormat.format(startDate)
 
         val calendar = Calendar.getInstance().apply { time = startDate }

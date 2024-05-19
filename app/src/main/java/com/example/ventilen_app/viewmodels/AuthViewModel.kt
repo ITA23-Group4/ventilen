@@ -18,7 +18,7 @@ class AuthViewModel : ViewModel() {
     val locationRepository: LocationRepository = LocationRepository(viewModelScope) //TODO: Should be private
     private val validateInput: ValidateInput = ValidateInput()
 
-    var email: String by mutableStateOf("christianbt96/marcus.rappenborg@gmail.com")
+    var email: String by mutableStateOf("christianbt96@gmail.com")
     var hasEmailError: Boolean by mutableStateOf(false)
 
     var password: String by mutableStateOf("Ventilen1234")

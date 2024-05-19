@@ -51,26 +51,21 @@ class EventRepository() {
             eventName = title,
             attendeesByUID = attendeeUIDs,
             eventID = id,
-            eventDateTimeStart = dateTime!!,
+            eventStartDateTime = dateTime!!.toDate(),
             eventDescription = description,
             eventAddress = address,
             eventPrice = price
         )
     }
 
-    /*suspend fun createEvent(event: Event){
-        db.collection("events")
-            .add(event)
-            .await()
-    }*/
-
     suspend fun createEvent(event: Event) {
 
         val eventHashMap: HashMap<String, Any> = hashMapOf(
             "eventName" to event.eventName,
             "attendeesByUID" to event.attendeesByUID,
-            "eventDateTime" to event.eventDateTimeStart,
             "eventDescription" to event.eventDescription,
+            "eventStartDateTime" to com.google.firebase.Timestamp(event.eventStartDateTime),
+            "eventEndDateTime" to com.google.firebase.Timestamp(event.eventEndDateTime),
             "eventAddress" to event.eventAddress,
             "eventPrice" to event.eventPrice
         )

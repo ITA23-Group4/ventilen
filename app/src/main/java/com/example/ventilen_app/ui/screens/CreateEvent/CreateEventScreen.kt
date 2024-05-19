@@ -18,8 +18,8 @@ fun CreateEventScreen(
     eventDescription: String,
     eventAddress: String,
     eventPrice: String,
-    selectedDate: Date?,
-    selectedTime: Date?,
+    selectedStartDateTime: Date?,
+    selectedEndDateTime: Date?,
     showDatePicker: () -> Unit, // TODO: Dialog should not be made in ViewModel?
     showTimePicker: () -> Unit,  // TODO: Dialog should not be made in ViewModel?
     onValueChangeTitle: (String) -> Unit,
@@ -56,8 +56,8 @@ fun CreateEventScreen(
             Text("Select Time")
         }
 
-        Text("Selected Date: ${selectedDate?.toString() ?: "None"}", color = Color.Black)
-        Text("Selected Time: ${selectedTime?.toString() ?: "None"}", color = Color.Black)
+        Text("Selected Date: ${selectedStartDateTime?.toString() ?: "None"}", color = Color.Black)
+        Text("Selected Time: ${selectedEndDateTime?.toString() ?: "None"}", color = Color.Black)
 
         CustomTextField(
             text = eventPrice,

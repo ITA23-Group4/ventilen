@@ -151,10 +151,10 @@ fun RootNavigation() {
                     eventAddress = createEventViewModel.eventAddress,
                     eventPrice = createEventViewModel.eventPrice,
 
-                    selectedDate = createEventViewModel.selectedDate,
-                    selectedTime = createEventViewModel.selectedTime,
-                    showDatePicker = { createEventViewModel.showDatePicker() },
-                    showTimePicker = { createEventViewModel.showTimePicker() },
+                    selectedStartDateTime = createEventViewModel.eventStartDateTime,
+                    selectedEndDateTime = createEventViewModel.eventEndDateTime,
+                    showDatePicker = { createEventViewModel.showStartDateTimePicker() },
+                    showTimePicker = { createEventViewModel.showEndDateTimePicker() },
 
                     onValueChangeTitle = { createEventViewModel.eventTitle = it },
                     onValueChangeDescription = { createEventViewModel.eventDescription = it },

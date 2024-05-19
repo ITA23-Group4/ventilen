@@ -112,7 +112,7 @@ fun CustomEventCardPreview() {
     val event = Event(
         eventName = "Event Title",
         eventAddress = "123 Main St",
-        eventDateTimeStart = Timestamp(Date()), // Provide a DateTime value
+        eventStartDateTime = Date(), // Provide a DateTime value
         eventDescription = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
         eventPrice = 20.0,
         attendeesByUID = mutableListOf(), // Provide a mutable list of attendees
