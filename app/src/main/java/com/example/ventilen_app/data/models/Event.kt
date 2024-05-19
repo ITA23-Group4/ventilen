@@ -31,7 +31,7 @@ data class Event(
      * TODO: Look into Comparator if we want to sort in other ways than natural order
      */
     override fun compareTo(other: Event): Int {
-        return eventStartDateTime?.compareTo(other.eventStartDateTime) ?: 0
+        return eventStartDateTime.compareTo(other.eventStartDateTime) ?: 0
     }
 
     fun getDate(): String {
@@ -40,7 +40,7 @@ data class Event(
 
     fun getDateWithTimeRange(): String {
         val dateFormat = SimpleDateFormat("dd. MMM yyyy\n'Klokken' HH:mm", Locale("da", "DK"))
-        val startDate = eventStartDateTime ?: Date()
+        val startDate = eventStartDateTime
         val formattedStartDate = dateFormat.format(startDate)
 
         val calendar = Calendar.getInstance().apply { time = startDate }

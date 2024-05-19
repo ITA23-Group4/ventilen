@@ -49,11 +49,11 @@ fun CreateEventScreen(
             onValueChangeAddress(it)
         }
         Button(onClick = { showDatePicker() }) {
-            Text("Select Date")
+            Text("Vælg start tidspunkt")
         }
 
         Button(onClick = { showTimePicker() }) {
-            Text("Select Time")
+            Text("Vælg slut tidspunkt")
         }
 
         Text("Selected Date: ${selectedStartDateTime?.toString() ?: "None"}", color = Color.Black)

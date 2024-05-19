@@ -3,7 +3,6 @@ package com.example.ventilen_app.ui.components.CustomEventCardComponent
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowUp
@@ -15,13 +14,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.ventilen_app.ui.theme.CustomColorScheme
 
 @Composable
 fun EventCardTopRow(
     title: String,
     isExpanded: Boolean,
-    date: String,
+    dateStart: String,
     modifier: Modifier = Modifier
 ) {
     Row(
@@ -36,7 +34,7 @@ fun EventCardTopRow(
         )
         if (!isExpanded) {
             Text(
-                text = date,
+                text = dateStart,
                 style = MaterialTheme.typography.bodySmall,
                 fontSize = 18.sp
             )

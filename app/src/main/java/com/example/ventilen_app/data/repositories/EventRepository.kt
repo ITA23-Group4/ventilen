@@ -41,7 +41,8 @@ class EventRepository() {
         val title: String = document.getString("eventName") ?: ""
         val attendees: List<DocumentReference> = document.get("attendeesByUID") as? List<DocumentReference> ?: emptyList()
         val attendeeUIDs: MutableList<String> = attendees.map { it.id }.toMutableList()
-        val dateTime = document.getTimestamp("eventDateTime")// Retrieve DateTime field
+        val eventStartDateTime = document.getTimestamp("eventStartDateTime")// Retrieve DateTime field
+        val eventEndDateTime = document.getTimestamp("eventEndDateTime")// Retrieve DateTime field
         val description: String = document.getString("eventDescription") ?: "" // Retrieve eventDescription field
         val address: String = document.getString("eventAddress") ?: "" // Retrieve eventAddress field
         val price: Double = document.getDouble("eventPrice") ?: 0.0 // Retrieve eventPrice field
@@ -51,7 +52,8 @@ class EventRepository() {
             eventName = title,
             attendeesByUID = attendeeUIDs,
             eventID = id,
-            eventStartDateTime = dateTime!!.toDate(),
+            eventStartDateTime = eventStartDateTime!!.toDate(),
+            eventEndDateTime = eventEndDateTime!!.toDate(),
             eventDescription = description,
             eventAddress = address,
             eventPrice = price
