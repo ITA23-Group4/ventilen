@@ -26,6 +26,7 @@ import java.util.Date
  * @property context The context used to display the date and time pickers.
  * @property eventStartDateTime The selected start date and time for the event.
  * @property eventEndDateTime The selected end date and time for the event.
+ * @property showDialog State for dialog visibility.
  *
  * @constructor Creates an instance of CreateEventViewModel.
  *
@@ -46,6 +47,10 @@ class CreateEventViewModel : ViewModel() {
 
     var showDialog: Boolean by mutableStateOf(true) // State for dialog visibility
 
+
+    /**
+     * Dismisses the dialog.
+     */
     fun dismissDialog() {
         showDialog = false
     }

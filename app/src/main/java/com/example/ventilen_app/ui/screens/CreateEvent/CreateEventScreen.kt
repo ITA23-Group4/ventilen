@@ -37,6 +37,8 @@ import java.util.Date
  * @param onValueChangeDescription Lambda function invoked when the event description changes.
  * @param onValueChangeAddress Lambda function invoked when the event address changes.
  * @param onValueChangePrice Lambda function invoked when the event price changes.
+ * @param showDialog Boolean value representing the visibility of the dialog.
+ * @param dismissDialog Lambda function to dismiss the dialog.
  *
  * @author [Your Name] TODO: Add name
  */
