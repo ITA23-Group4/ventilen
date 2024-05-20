@@ -44,6 +44,12 @@ class CreateEventViewModel : ViewModel() {
     var eventStartDateTime: Date? by mutableStateOf(null)
     var eventEndDateTime: Date? by mutableStateOf(null)
 
+    var showDialog: Boolean by mutableStateOf(true) // State for dialog visibility
+
+    fun dismissDialog() {
+        showDialog = false
+    }
+
     /**
      * Displays the date and time picker for selecting the event's start date and time.
      */

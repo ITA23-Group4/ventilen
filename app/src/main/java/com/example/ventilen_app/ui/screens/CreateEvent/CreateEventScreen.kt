@@ -49,30 +49,27 @@ fun CreateEventScreen(
     eventPrice: String,
     selectedStartDateTime: Date?,
     selectedEndDateTime: Date?,
-    shotDateTimePicker: () -> Unit, // TODO: Dialog should not be made in ViewModel?
+    shotDateTimePicker: () -> Unit,
     onValueChangeTitle: (String) -> Unit,
     onValueChangeDescription: (String) -> Unit,
     onValueChangeAddress: (String) -> Unit,
     onValueChangePrice: (String) -> Unit,
+    showDialog: Boolean,
+    dismissDialog: () -> Unit
 ) {
-    var showDialog by remember { mutableStateOf(true) }
-
-    LaunchedEffect(Unit) {
-        showDialog = true
-    }
-
     if (showDialog) {
         AlertDialog(
-            onDismissRequest = { showDialog = false },
+            onDismissRequest = { dismissDialog() },
             confirmButton = {
-                TextButton(onClick = { showDialog = false }) {
+                TextButton(onClick = { dismissDialog() }) {
                     Text("OK")
                 }
             },
-            title = { Text(text = "Important information") },
-            text = { Text("This is some important information you need to know before creating an event.") }
+            title = { Text(text = "Event information.") },
+            text = { Text("Det er vigtigt når opretter et event at du udfylder alle felter samt husker at vælge et start- og sluttidspunkt for eventet. Hvis der mangler information i felterne oprettes eventet ikke korrekt.") }
         )
     }
+
     CustomColumn(
         verticalArrangement = Arrangement.spacedBy(20.dp)
     ) {
