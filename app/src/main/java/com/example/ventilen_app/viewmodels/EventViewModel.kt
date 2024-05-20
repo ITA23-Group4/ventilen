@@ -69,9 +69,7 @@ class EventViewModel: ViewModel() {
 
                 // Create a copy of the event with updated attendees
                 val eventWithUpdatedAttendees = updatedEventAttendees?.let {
-                    eventToUpdate.withUpdatedAttendees(
-                        it
-                    )
+                    eventToUpdate.withUpdatedAttendees(it)
                 }
 
                 if (eventWithUpdatedAttendees != null) {

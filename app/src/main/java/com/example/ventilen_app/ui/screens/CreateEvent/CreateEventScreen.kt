@@ -21,6 +21,25 @@ import com.example.ventilen_app.ui.components.CustomOutlinedButton
 import com.example.ventilen_app.ui.components.CustomTextField
 import java.util.Date
 
+/**
+ * Composable function that represents the Create Event screen in the application.
+ * This screen allows admin users to input details for creating a new event, such as the event's title, description, address, price, and start/end dates.
+ *
+ * @param onCreateEvent Lambda function invoked when the "Opret event" button is clicked.
+ * @param eventTitle The title of the event.
+ * @param eventDescription The description of the event.
+ * @param eventAddress The address where the event will be held.
+ * @param eventPrice The price of the event.
+ * @param selectedStartDateTime The selected start date and time for the event.
+ * @param selectedEndDateTime The selected end date and time for the event.
+ * @param shotDateTimePicker Lambda function to show the date and time picker dialog.
+ * @param onValueChangeTitle Lambda function invoked when the event title changes.
+ * @param onValueChangeDescription Lambda function invoked when the event description changes.
+ * @param onValueChangeAddress Lambda function invoked when the event address changes.
+ * @param onValueChangePrice Lambda function invoked when the event price changes.
+ *
+ * @author [Your Name] TODO: Add name
+ */
 @Composable
 fun CreateEventScreen(
     onCreateEvent: () -> Unit,
@@ -30,8 +49,7 @@ fun CreateEventScreen(
     eventPrice: String,
     selectedStartDateTime: Date?,
     selectedEndDateTime: Date?,
-    showDatePicker: () -> Unit, // TODO: Dialog should not be made in ViewModel?
-    showTimePicker: () -> Unit,  // TODO: Dialog should not be made in ViewModel?
+    shotDateTimePicker: () -> Unit, // TODO: Dialog should not be made in ViewModel?
     onValueChangeTitle: (String) -> Unit,
     onValueChangeDescription: (String) -> Unit,
     onValueChangeAddress: (String) -> Unit,
@@ -78,16 +96,16 @@ fun CreateEventScreen(
             onValueChangeAddress(it)
         }
 
-        CustomOutlinedButton(text = "Vælg start tidspunkt", onClick = { showDatePicker() })
+        CustomOutlinedButton(text = "Vælg start tidspunkt", onClick = { shotDateTimePicker() })
         Text("Valgt starttidspunkt: ${selectedStartDateTime?.toString() ?: "Intet valgt"}", color = Color.Black)
 
-        CustomOutlinedButton(text = "Vælg slut tidspunkt", onClick = { showDatePicker() })
+        CustomOutlinedButton(text = "Vælg slut tidspunkt", onClick = { shotDateTimePicker() })
         Text("Valgt sluttidspunkt: ${selectedEndDateTime?.toString() ?: "Intet valgt"}", color = Color.Black)
 
         CustomTextField(
             text = eventPrice,
             label = "Pris"
-            // keyboardType = KeyboardType.Number
+            // keyboardType = KeyboardType.Number TODO: MAKE!
         ) {
             onValueChangePrice(it)
         }

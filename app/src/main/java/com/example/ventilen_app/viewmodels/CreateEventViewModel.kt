@@ -14,6 +14,23 @@ import kotlinx.coroutines.launch
 import java.util.Calendar
 import java.util.Date
 
+/**
+ * ViewModel for managing the state and logic of creating an event in the application.
+ * Handles user input, date and time selection, and event creation via the EventRepository.
+ *
+ * @property eventRepository Repository for event data operations.
+ * @property eventTitle The title of the event.
+ * @property eventDescription The description of the event.
+ * @property eventAddress The address where the event will be held.
+ * @property eventPrice The price of the event.
+ * @property context The context used to display the date and time pickers.
+ * @property eventStartDateTime The selected start date and time for the event.
+ * @property eventEndDateTime The selected end date and time for the event.
+ *
+ * @constructor Creates an instance of CreateEventViewModel.
+ *
+ * @Author [Your Name] TODO: Add name
+ */
 class CreateEventViewModel : ViewModel() {
     private val eventRepository: EventRepository = EventRepository()
 
@@ -27,19 +44,21 @@ class CreateEventViewModel : ViewModel() {
     var eventStartDateTime: Date? by mutableStateOf(null)
     var eventEndDateTime: Date? by mutableStateOf(null)
 
-    fun showStartDateTimePicker() {
-        showDateTimePicker { dateTime ->
+    /**
+     * Displays the date and time picker for selecting the event's start date and time.
+     */
+    fun showDateTimePickerForUser() {
+        showDateTimePickerForUser { dateTime ->
             eventStartDateTime = dateTime
         }
     }
 
-    fun showEndDateTimePicker() {
-        showDateTimePicker { dateTime ->
-            eventEndDateTime = dateTime
-        }
-    }
-
-    private fun showDateTimePicker(onDateTimeSelected: (Date) -> Unit) {
+    /**
+     * Helper function to display a date and time picker dialog.
+     *
+     * @param onDateTimeSelected Callback invoked with the selected date and time.
+     */
+    private fun showDateTimePickerForUser(onDateTimeSelected: (Date) -> Unit) {
         val context = context ?: return
         val calendar = Calendar.getInstance()
 
@@ -56,7 +75,7 @@ class CreateEventViewModel : ViewModel() {
                     },
                     calendar.get(Calendar.HOUR_OF_DAY),
                     calendar.get(Calendar.MINUTE),
-                     true
+                    true
                 ).show()
             },
             calendar.get(Calendar.YEAR),
@@ -70,7 +89,10 @@ class CreateEventViewModel : ViewModel() {
         datePickerDialog.show()
     }
 
-
+    /**
+     * Creates an event with the entered details and saves it using the EventRepository.
+     * Resets the form fields upon successful creation.
+     */
     fun createEvent() {
         val eventToCreate = Event(
             eventName = eventTitle,
@@ -85,7 +107,7 @@ class CreateEventViewModel : ViewModel() {
         viewModelScope.launch {
             try {
                 eventRepository.createEvent(eventToCreate)
-                // To clear the text-fields after the event has been created
+                // Clear the text-fields after the event has been created
                 eventTitle = ""
                 eventDescription = ""
                 eventAddress = ""
@@ -93,7 +115,7 @@ class CreateEventViewModel : ViewModel() {
                 eventStartDateTime = null
                 eventEndDateTime = null
             } catch (error: Exception) {
-                // Log error
+                // Log error TODO: Handle error
             }
         }
     }
