@@ -17,7 +17,8 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun EventCardDetails(
     address: String,
-    date: String,
+    dateStart: String,
+    dateEnd: String,
     price: Double,
     modifier: Modifier = Modifier
 ) {
@@ -39,7 +40,7 @@ fun EventCardDetails(
             icon = Icons.Default.Info,
             contentDescription = "Date and time",
             content = {
-                Text(text = date,
+                Text(text = dateStart,
                     style = MaterialTheme.typography.bodyMedium)
                     }
         )

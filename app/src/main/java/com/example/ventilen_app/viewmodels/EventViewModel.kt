@@ -9,7 +9,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.ventilen_app.data.models.Event
 import com.example.ventilen_app.data.repositories.EventRepository
-import com.example.ventilen_app.data.repositories.UserRepository
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.launch
 
@@ -62,14 +61,18 @@ class EventViewModel: ViewModel() {
             events.indexOfFirst { it.eventID == eventID }.let { eventIndex ->
                 // Extract the updated attendees from the updated event
                 val updatedEvent = eventRepository.getEvent(eventID = eventID)
-                val updatedEventAttendees = updatedEvent.attendeesByUID
+                val updatedEventAttendees = updatedEvent?.attendeesByUID
 
                 val eventToUpdate = events[eventIndex]
 
                 // Create a copy of the event with updated attendees
-                val eventWithUpdatedAttendees = eventToUpdate.withUpdatedAttendees(updatedEventAttendees)
+                val eventWithUpdatedAttendees = updatedEventAttendees?.let {
+                    eventToUpdate.withUpdatedAttendees(it)
+                }
 
-                events[eventIndex] = eventWithUpdatedAttendees
+                if (eventWithUpdatedAttendees != null) {
+                    events[eventIndex] = eventWithUpdatedAttendees
+                }
             }
         }
     }
@@ -80,7 +83,7 @@ class EventViewModel: ViewModel() {
 
     fun isCurrentUserAttendingEvent(event: Event): Boolean {
         val currentUserUID = getCurrentUserUIDFromFirebase()
-        return event.attendeesByUID.contains(currentUserUID)
+        return event.attendeesByUID.any { it.id == currentUserUID }
     }
 
     fun isSelectedEvent(eventID: String): Boolean {
@@ -95,6 +98,7 @@ class EventViewModel: ViewModel() {
      *
      * @param eventID The ID of the event to toggle.
      */
+
     fun toggleEventCard(eventID: String) {
         selectedEventCardID = if (isSelectedEvent(eventID)) "" else eventID
     }

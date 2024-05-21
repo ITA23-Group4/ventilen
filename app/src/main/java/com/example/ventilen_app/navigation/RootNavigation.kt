@@ -20,7 +20,7 @@ import com.example.ventilen_app.ui.components.scaffolds.LocalChatScaffold
 import com.example.ventilen_app.ui.screens.Chat.ChatHubScreen
 import com.example.ventilen_app.ui.screens.Chat.ChatLocalScreen
 import com.example.ventilen_app.ui.screens.CreateEvent.CreateEventScreen
-import com.example.ventilen_app.ui.screens.CreateEvent.CreateEventViewModel
+import com.example.ventilen_app.viewmodels.CreateEventViewModel
 import com.example.ventilen_app.ui.screens.Event.EventScreen
 import com.example.ventilen_app.viewmodels.EventViewModel
 import com.example.ventilen_app.ui.screens.Home.HomeScreen
@@ -163,6 +163,7 @@ fun RootNavigation() {
             }
         }
         composable("event/create") {
+            createEventViewModel.context = LocalContext.current
             CreateEventScaffold(
                 onNavigateBack = { navController.navigate("event") },
                 ) {
@@ -171,11 +172,19 @@ fun RootNavigation() {
                     eventDescription = createEventViewModel.eventDescription,
                     eventAddress = createEventViewModel.eventAddress,
                     eventPrice = createEventViewModel.eventPrice,
+
+                    selectedStartDateTime = createEventViewModel.eventStartDateTime,
+                    selectedEndDateTime = createEventViewModel.eventEndDateTime,
+                    showStartDateTimePicker = { createEventViewModel.showStartDateTimePickerForUser() },
+                    showEndDateTimePicker = { createEventViewModel.showEndDateTimePickerForUser() },
+
                     onValueChangeTitle = { createEventViewModel.eventTitle = it },
                     onValueChangeDescription = { createEventViewModel.eventDescription = it },
                     onValueChangeAddress = { createEventViewModel.eventAddress = it },
                     onValueChangePrice = { createEventViewModel.eventPrice = it },
-                    onCreateEvent = {} // TODO: Implement create event functionality
+                    onCreateEvent = { createEventViewModel.createEvent() },
+                    showDialog = createEventViewModel.showDialog,
+                    dismissDialog = { createEventViewModel.dismissDialog() }
                 )
             }
         }
