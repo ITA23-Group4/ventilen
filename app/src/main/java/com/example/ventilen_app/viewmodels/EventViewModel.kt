@@ -15,8 +15,6 @@ import kotlinx.coroutines.launch
 
 class EventViewModel: ViewModel() {
     private val eventRepository: EventRepository = EventRepository
-    private var currentUserUID: String by mutableStateOf(FirebaseAuth.getInstance().currentUser?.uid!!)
-
 
     val events: MutableList<Event> = mutableStateListOf()
     private var selectedEventCardID: String by mutableStateOf("")
@@ -38,7 +36,7 @@ class EventViewModel: ViewModel() {
     fun addUserToEvent(eventID: String) {
         viewModelScope.launch {
             try {
-                val currentUserUID: String = currentUserUID
+                val currentUserUID: String = getCurrentUserUIDFromFirebase()
                 eventRepository.addUserToEvent(currentUserUID, eventID)
                 updateEventAttendeesCount(eventID)
             } catch (error: Exception) {
@@ -50,7 +48,7 @@ class EventViewModel: ViewModel() {
     fun removeUserFromEvent(eventID: String) {
         viewModelScope.launch {
             try {
-                val currentUserUID: String = currentUserUID
+                val currentUserUID: String = getCurrentUserUIDFromFirebase()
                 eventRepository.removeUserFromEvent(currentUserUID, eventID)
                 updateEventAttendeesCount(eventID)
             } catch (error: Exception) {
@@ -76,8 +74,12 @@ class EventViewModel: ViewModel() {
         }
     }
 
+    fun getCurrentUserUIDFromFirebase(): String {
+        return FirebaseAuth.getInstance().currentUser?.uid!!
+    }
+
     fun isCurrentUserAttendingEvent(event: Event): Boolean {
-        val currentUserUID = currentUserUID
+        val currentUserUID = getCurrentUserUIDFromFirebase()
         return event.attendeesByUID.contains(currentUserUID)
     }
 
