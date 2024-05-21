@@ -63,6 +63,7 @@ class CreateEventViewModel : ViewModel() {
             eventStartDateTime = dateTime
         }
     }
+
     fun showEndDateTimePickerForUser() {
         showStartDateTimePickerForUser { dateTime ->
             eventEndDateTime = dateTime
@@ -135,4 +136,5 @@ class CreateEventViewModel : ViewModel() {
             }
         }
     }
+}
 
