@@ -21,6 +21,7 @@ fun CredentialsScreen(
     repeatPassword: String,
     hasRepeatedPasswordError: Boolean,
     hasPasswordError: Boolean,
+    credentialsFieldsNotEmpty: () -> Boolean,
     onValueChangeEmail: (String) -> Unit,
     onValueChangePassword: (String) -> Unit,
     onValueChangePasswordRepeat: (String) -> Unit,
@@ -61,9 +62,7 @@ fun CredentialsScreen(
         CustomFilledButton(
             text = "Forsæt",
             onClick = { onNavigateUsername() },
-            isEnabled = textEmail.isNotEmpty()
-                    && password.isNotEmpty()
-                    && repeatPassword.isNotEmpty()
+            isEnabled = credentialsFieldsNotEmpty(),
         )
     }
 

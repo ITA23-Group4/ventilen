@@ -31,8 +31,8 @@ class ValidateInput {
 
     // TODO: What more? Check for explicit words, etc. (what about underscore ?)
     fun validateUsername(username: String): Boolean {
-        val usernamePattern = Regex("^[a-zA-Z0-9]{6,}$") // only letters and numbers
-        return usernamePattern.matches(username)
+        val usernamePattern = Regex("^[a-zA-Z0-9]{6,}$")
+        return !usernamePattern.matches(username)
     }
 
     private fun validateCapitalizedLetter(password: String): Boolean {

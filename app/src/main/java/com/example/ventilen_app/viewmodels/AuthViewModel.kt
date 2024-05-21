@@ -45,6 +45,8 @@ class AuthViewModel : ViewModel() {
     )
     var hasLocationError: Boolean by mutableStateOf(false)
 
+    var showDialog: Boolean by mutableStateOf(false)
+
     private suspend fun getUser() {
         userRepository.getUser()
     }
@@ -89,6 +91,18 @@ class AuthViewModel : ViewModel() {
             }
 
         }
+    }
+
+    fun credentialsFieldsNotEmptyAndValid(): Boolean {
+        val hasErrors: Boolean = hasEmailError && hasPasswordError && hasPasswordRepeatedError
+        val isNotEmpty: Boolean = email.isNotEmpty() && password.isNotEmpty() && passwordRepeat.isNotEmpty()
+        return !hasErrors && isNotEmpty
+    }
+
+    fun usernameFieldNotEmptyAndValid(): Boolean {
+        val hasErrors: Boolean = hasUsernameError
+        val isNotEmpty: Boolean = username.isNotEmpty()
+        return !hasErrors && isNotEmpty
     }
 
     fun changeEmail(newEmail: String) {

@@ -4,7 +4,6 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
-import com.example.ventilen_app.data.repositories.UserRepository
 import com.example.ventilen_app.viewmodels.AuthViewModel
 import com.example.ventilen_app.ui.components.scaffolds.AuthScaffold
 import com.example.ventilen_app.ui.screens.Credentials.CredentialsScreen
@@ -87,6 +86,7 @@ fun NavGraphBuilder.AuthNavGraph(
                     password = authViewModel.password,
                     hasPasswordError = authViewModel.hasPasswordError,
                     hasRepeatedPasswordError = authViewModel.hasPasswordRepeatedError,
+                    credentialsFieldsNotEmpty = { authViewModel.credentialsFieldsNotEmptyAndValid() },
                     onValueChangeEmail = { authViewModel.changeEmail(it) },
                     onValueChangePassword = { authViewModel.changePassword(it) },
                     onValueChangePasswordRepeat = { authViewModel.changeRepeatedPassword(it) },
@@ -101,7 +101,11 @@ fun NavGraphBuilder.AuthNavGraph(
                     onNavigateLocation = { navController.navigate("auth/register/location") },
                     onValueChange = { authViewModel.changeUsername(it) },
                     textUsername = authViewModel.username,
-                    hasUsernameError = authViewModel.hasUsernameError
+                    hasUsernameError = authViewModel.hasUsernameError,
+                    showDialog = authViewModel.showDialog,
+                    usernameFieldsNotEmpty = { authViewModel.usernameFieldNotEmptyAndValid() },
+                    onInformationClick = { authViewModel.showDialog = true },
+                    dismissDialog = { authViewModel.showDialog = false }
                 )
             }
         }
