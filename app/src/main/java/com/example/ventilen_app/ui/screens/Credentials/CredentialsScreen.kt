@@ -37,27 +37,30 @@ fun CredentialsScreen(
             text = textEmail,
             label = "Email",
             onValueChange = { onValueChangeEmail(it) },
-            hasError = hasEmailError
+            hasError = hasEmailError,
+            errorMessage = "Ikke en gyldig email"
         )
 
         CustomPasswordTextField(
             text = password,
             label = "Password" ,
             onValueChange = { onValueChangePassword(it) },
-            hasError = hasPasswordError
+            hasError = hasPasswordError,
+            errorMessage = "Password skal indeholde: mindst seks tegn, stort bogstav og et tal"
         )
 
         CustomPasswordTextField(
             text = repeatPassword,
             label = "Gentag Password",
             onValueChange =  { onValueChangePasswordRepeat(it) },
-            hasError = hasPasswordError
+            hasError = hasPasswordError,
+            errorMessage = "Passwords skal være ens"
         )
 
         CustomFilledButton(
             text = "Forsæt",
             onClick = { onNavigateUsername() },
-            isEnabled = !hasEmailError && !hasPasswordError
+            isEnabled = (!hasEmailError && !hasPasswordError) |
         )
     }
 

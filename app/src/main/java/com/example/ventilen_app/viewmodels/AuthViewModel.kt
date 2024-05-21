@@ -25,10 +25,10 @@ class AuthViewModel : ViewModel() {
         }
     }
 
-    var email: String by mutableStateOf("christianbt96/marcus.rappenborg@gmail.com")
+    var email: String by mutableStateOf("")
     var hasEmailError: Boolean by mutableStateOf(false)
 
-    var password: String by mutableStateOf("Ventilen1234")
+    var password: String by mutableStateOf("")
     var passwordRepeat: String by mutableStateOf("")
     var hasPasswordError: Boolean by mutableStateOf(false)
 
