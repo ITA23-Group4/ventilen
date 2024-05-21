@@ -26,6 +26,7 @@ fun CustomPasswordTextField(
     isSingleLine: Boolean = true,
     hasError: Boolean = false,
     errorMessage: String = "",
+    errorIndicator: String = "*",
     modifier: Modifier = Modifier,
     onValueChange: (String) -> Unit
 ) {
@@ -53,7 +54,7 @@ fun CustomPasswordTextField(
                         .offset(x = (-11).dp),
                     verticalAlignment = Alignment.Top
                 ){
-                    Text(text = "*",
+                    Text(text = errorIndicator,
                         style = MaterialTheme.typography.bodyLarge,
                         color = MaterialTheme.colorScheme.error
                     )

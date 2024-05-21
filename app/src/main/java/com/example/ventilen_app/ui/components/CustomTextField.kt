@@ -26,6 +26,7 @@ fun CustomTextField(
     label: String = "",
     isSingleLine: Boolean = true,
     hasError: Boolean = false,
+    errorIndicator: String = "*",
     errorMessage: String = "",
     modifier: Modifier = Modifier,
     onValueChange: (String) -> Unit
@@ -53,7 +54,8 @@ fun CustomTextField(
                         .offset(x = (-11).dp),
                     verticalAlignment = Alignment.Top
                 ){
-                    Text(text = "*",
+                    Text(
+                        text = errorIndicator,
                         style = MaterialTheme.typography.bodyLarge,
                         color = MaterialTheme.colorScheme.error
                     )

@@ -45,6 +45,8 @@ class AuthViewModel : ViewModel() {
     )
     var hasLocationError: Boolean by mutableStateOf(false)
 
+    var hasLoginError: Boolean by mutableStateOf(false)
+
     var showDialog: Boolean by mutableStateOf(false)
 
     private suspend fun getUser() {

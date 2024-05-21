@@ -28,7 +28,7 @@ fun CredentialsScreen(
     ) {
     CustomColumn(
         horizontalAlignment = Alignment.CenterHorizontally ,
-        verticalArrangement = Arrangement.spacedBy(30.dp)
+        verticalArrangement = Arrangement.spacedBy(18.dp)
     ) {
         TopAuthPageDesign(
             topText = "Hvordan skal vi huske dig",

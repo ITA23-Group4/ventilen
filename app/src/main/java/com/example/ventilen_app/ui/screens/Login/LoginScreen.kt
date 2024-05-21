@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.offset
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -23,6 +24,7 @@ fun LoginScreen(
     onNavigateHome: () -> Unit,
     textEmail: String,
     textPassword: String,
+    hasLoginError: Boolean,
     onValueChangeEmail: (String) -> Unit,
     onValueChangePassword: (String) -> Unit,
     onNavigateRegistration: () -> Unit
@@ -31,15 +33,35 @@ fun LoginScreen(
         .fillMaxSize()
         .background(CustomColorScheme.Mocha),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(30.dp)
+        verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         TopAuthPageDesign(
             topText = "Log ind",
             bottomText = "Indtast din email og password",
         )
-        CustomTextField(text = textEmail, label = "Email") { onValueChangeEmail(it) }
+        CustomTextField(
+            text = textEmail,
+            label = "Email",
+            onValueChange = { onValueChangeEmail(it) },
+            hasError = hasLoginError,
+            errorIndicator = ""
+        )
 
-        CustomPasswordTextField(text = textPassword, label = "Password") { onValueChangePassword(it) }
+        CustomPasswordTextField(
+            text = textPassword,
+            label = "Password",
+            onValueChange = { onValueChangePassword(it) },
+            hasError = hasLoginError,
+            errorIndicator = ""
+        )
+
+        if (hasLoginError) {
+            Text(
+                modifier = Modifier.offset(y = (-9).dp),
+                text = "Fejl",
+                color = MaterialTheme.colorScheme.error
+            )
+        }
 
         CustomFilledButton(
             text = "Forsæt",

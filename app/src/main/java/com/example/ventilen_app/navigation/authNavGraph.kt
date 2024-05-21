@@ -51,12 +51,13 @@ fun NavGraphBuilder.AuthNavGraph(
                             navController.navigate("home")
                         },
                         onLoginFailure = {
-                            navController.navigate("auth/welcome")
+                            authViewModel.hasLoginError = true
                         }
                     )
                 },
                 textEmail = authViewModel.email,
                 textPassword = authViewModel.password,
+                hasLoginError = authViewModel.hasLoginError,
                 onValueChangeEmail = { authViewModel.email = it },
                 onValueChangePassword = { authViewModel.password = it },
                 onNavigateRegistration = { navController.navigate("auth/register") }
