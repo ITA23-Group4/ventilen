@@ -62,7 +62,7 @@ class ChatViewModel : ViewModel() {
             message = currentMessage,
             timestamp = Date(),
             locationID = selectedLocation.locationID!!,
-            username = getCurrentUserUIDFromFirebase() // TODO: This should be username and not UID
+            username = userRepository.currentUser!!.username
         )
 
         viewModelScope.launch{
