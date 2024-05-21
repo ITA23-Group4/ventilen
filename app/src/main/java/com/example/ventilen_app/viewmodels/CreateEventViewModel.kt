@@ -58,9 +58,14 @@ class CreateEventViewModel : ViewModel() {
     /**
      * Displays the date and time picker for selecting the event's start date and time.
      */
-    fun showDateTimePickerForUser() {
-        showDateTimePickerForUser { dateTime ->
+    fun showStartDateTimePickerForUser() {
+        showStartDateTimePickerForUser { dateTime ->
             eventStartDateTime = dateTime
+        }
+    }
+    fun showEndDateTimePickerForUser() {
+        showStartDateTimePickerForUser { dateTime ->
+            eventEndDateTime = dateTime
         }
     }
 
@@ -69,7 +74,7 @@ class CreateEventViewModel : ViewModel() {
      *
      * @param onDateTimeSelected Callback invoked with the selected date and time.
      */
-    private fun showDateTimePickerForUser(onDateTimeSelected: (Date) -> Unit) {
+    private fun showStartDateTimePickerForUser(onDateTimeSelected: (Date) -> Unit) {
         val context = context ?: return
         val calendar = Calendar.getInstance()
 

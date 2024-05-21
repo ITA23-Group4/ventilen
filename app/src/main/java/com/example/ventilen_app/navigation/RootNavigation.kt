@@ -153,7 +153,8 @@ fun RootNavigation() {
 
                     selectedStartDateTime = createEventViewModel.eventStartDateTime,
                     selectedEndDateTime = createEventViewModel.eventEndDateTime,
-                    shotDateTimePicker = { createEventViewModel.showDateTimePickerForUser() },
+                    showStartDateTimePicker = { createEventViewModel.showStartDateTimePickerForUser() },
+                    showEndDateTimePicker = { createEventViewModel.showEndDateTimePickerForUser() },
 
                     onValueChangeTitle = { createEventViewModel.eventTitle = it },
                     onValueChangeDescription = { createEventViewModel.eventDescription = it },

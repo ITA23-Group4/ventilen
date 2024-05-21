@@ -7,11 +7,6 @@ import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
@@ -32,7 +27,7 @@ import java.util.Date
  * @param eventPrice The price of the event.
  * @param selectedStartDateTime The selected start date and time for the event.
  * @param selectedEndDateTime The selected end date and time for the event.
- * @param shotDateTimePicker Lambda function to show the date and time picker dialog.
+ * @param showStartDateTimePicker Lambda function to show the date and time picker dialog.
  * @param onValueChangeTitle Lambda function invoked when the event title changes.
  * @param onValueChangeDescription Lambda function invoked when the event description changes.
  * @param onValueChangeAddress Lambda function invoked when the event address changes.
@@ -51,7 +46,8 @@ fun CreateEventScreen(
     eventPrice: String,
     selectedStartDateTime: Date?,
     selectedEndDateTime: Date?,
-    shotDateTimePicker: () -> Unit,
+    showStartDateTimePicker: () -> Unit,
+    showEndDateTimePicker: () -> Unit,
     onValueChangeTitle: (String) -> Unit,
     onValueChangeDescription: (String) -> Unit,
     onValueChangeAddress: (String) -> Unit,
@@ -95,10 +91,10 @@ fun CreateEventScreen(
             onValueChangeAddress(it)
         }
 
-        CustomOutlinedButton(text = "Vælg start tidspunkt", onClick = { shotDateTimePicker() })
+        CustomOutlinedButton(text = "Vælg start tidspunkt", onClick = { showStartDateTimePicker() })
         Text("Valgt starttidspunkt: ${selectedStartDateTime?.toString() ?: "Intet valgt"}", color = Color.Black)
 
-        CustomOutlinedButton(text = "Vælg slut tidspunkt", onClick = { shotDateTimePicker() })
+        CustomOutlinedButton(text = "Vælg slut tidspunkt", onClick = { showEndDateTimePicker() })
         Text("Valgt sluttidspunkt: ${selectedEndDateTime?.toString() ?: "Intet valgt"}", color = Color.Black)
 
         CustomTextField(
