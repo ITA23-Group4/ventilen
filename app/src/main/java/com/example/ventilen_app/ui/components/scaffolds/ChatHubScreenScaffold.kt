@@ -13,6 +13,16 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 
+/**
+ * ChatHubScreenScaffold is a scaffold component tailored for the chat hub screen. It provides
+ * a customizable top app bar and a bottom navigation bar for navigation between different screens.
+ *
+ * @param currentRoute The current route used to highlight the selected item in the bottom navigation bar.
+ * @param onNavigateEvent Callback function invoked when the event navigation item is clicked.
+ * @param onNavigateHome Callback function invoked when the home navigation item is clicked.
+ * @param content The main content to be displayed within the scaffold.
+ * @Author [Your Name] TODO: Add name
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ChatHubScreenScaffold(
@@ -40,12 +50,13 @@ fun ChatHubScreenScaffold(
             )
         },
         content = { paddingValues: PaddingValues ->
-            Box(modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues = paddingValues)) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(paddingValues = paddingValues)
+            ) {
                 content()
             }
         }
     )
 }
-

@@ -1,16 +1,16 @@
 package com.example.ventilen_app.data.repositories
 
 import com.example.ventilen_app.data.models.Event
+import com.google.firebase.Firebase
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.QuerySnapshot
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
+import com.google.firebase.firestore.firestore
 import kotlinx.coroutines.tasks.await
 
-class EventRepository {
-    private val db = Firebase.firestore
+object EventRepository {
+    private val db = Firebase.firestore;
 
     suspend fun getEvents(): List<Event> {
         val querySnapshot: QuerySnapshot = db.collection("events").get().await()

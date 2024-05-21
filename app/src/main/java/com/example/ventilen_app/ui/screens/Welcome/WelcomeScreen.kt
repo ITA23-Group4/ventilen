@@ -27,7 +27,7 @@ fun WelcomeScreen(
     ) {
         TopAuthPageDesign(
             topText = "Velkommen",
-            bottomText = "login eller tilmeld dig",
+            bottomText = "Login eller tilmeld dig",
             )
         CustomFilledButton(
             text = "Login",

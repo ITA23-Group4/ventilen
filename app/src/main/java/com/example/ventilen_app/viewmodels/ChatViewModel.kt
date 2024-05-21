@@ -16,9 +16,8 @@ import kotlinx.coroutines.launch
 import java.util.Date
 
 class ChatViewModel : ViewModel() {
-    private val chatRepository = ChatRepository()
-
-    private var currentUserUsername: String by mutableStateOf("") // TODO: get username
+    private val chatRepository = ChatRepository
+    val userRepository = UserRepository
 
     fun getCurrentUserUIDFromFirebase(): String {
         return FirebaseAuth.getInstance().currentUser?.uid!!
@@ -50,11 +49,10 @@ class ChatViewModel : ViewModel() {
         }
     }
 
-    fun getLatestMessagesFromEachLocation() {
+    private fun getLatestMessagesFromEachLocation() {
         viewModelScope.launch {
-            val latestMessages: List<Location> = chatRepository.chatHubMessagesSnapshot()
             locationsWithLatestMessages.clear()
-            locationsWithLatestMessages.addAll(latestMessages)
+            locationsWithLatestMessages.addAll(chatRepository.chatHubMessagesSnapshot())
         }
     }
 

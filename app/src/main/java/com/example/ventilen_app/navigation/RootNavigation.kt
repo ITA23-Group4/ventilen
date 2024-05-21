@@ -24,6 +24,7 @@ import com.example.ventilen_app.viewmodels.CreateEventViewModel
 import com.example.ventilen_app.ui.screens.Event.EventScreen
 import com.example.ventilen_app.viewmodels.EventViewModel
 import com.example.ventilen_app.ui.screens.Home.HomeScreen
+import com.example.ventilen_app.viewmodels.HomeViewModel
 
 /**
  * Root navigation structure of the application.
@@ -60,10 +61,29 @@ fun RootNavigation() {
                 onNavigateChat = { navController.navigate("chat") }
             ) {
                 HomeScreen(
-                    textUsername = chatViewModel.getCurrentUserUIDFromFirebase(),
-                    textUID = chatViewModel.getCurrentUserUIDFromFirebase(),
-                    isAdmin = true,
-                    logout = { }
+                    currentUserPrimaryLocation = chatViewModel.locationsWithLatestMessages[0], // TODO: is it okay to borrow func from other ViewModels?
+                    onChatLocalNavigate = {
+                        chatViewModel.selectedLocation = it
+                        navController.navigate("chat/local")
+                    },
+                    events = eventViewModel.events.sorted(),
+                    onAttend = {
+                        eventViewModel.addUserToEvent(
+                            eventID = it
+                        )
+                    },
+                    onNotAttend = {
+                        eventViewModel.removeUserFromEvent(
+                            eventID = it,
+                        )
+                    },
+                    isEventSelected = { eventViewModel.isSelectedEvent(it) },
+                    onEventCardClick = { eventViewModel.toggleEventCard(it) },
+                    isAttending = { event ->
+                        eventViewModel.isCurrentUserAttendingEvent(
+                            event = event
+                        )
+                    }
                 )
             }
         }
@@ -78,20 +98,21 @@ fun RootNavigation() {
                     onNavigateHome = { navController.navigate("home") }
                 ) {
                     ChatHubScreen(
-                        locationsExcludingCurrentUserPrimaryLocation = authViewModel.locationRepository.locations,
+                        locationsExcludingCurrentUserPrimaryLocation = chatViewModel.locationsWithLatestMessages,
                         onChatLocalNavigate = {
                             chatViewModel.selectedLocation = it
                             navController.navigate("chat/local")
                         },
-                        currentUserPrimaryLocation = authViewModel.locationRepository.locations[0]
+                        currentUserPrimaryLocation = chatViewModel.locationsWithLatestMessages[0]
                     )
                 }
             }
             composable("chat/local") {
                 chatViewModel.getLocalMessages(chatViewModel.selectedLocation.locationID!!) // Get the local messages for the selected location
+                val lastDestinationRoute: String = navController.previousBackStackEntry!!.destination.route!!
                 LocalChatScaffold(
                     locationName = chatViewModel.selectedLocation.locationName,
-                    onNavigateBack = { navController.navigate("chat/hub") },
+                    onNavigateBack = { navController.navigate(lastDestinationRoute) },
                     currentMessage = chatViewModel.currentMessage,
                     onCurrentMessageChange = { chatViewModel.currentMessage = it },
                     onSendMessage = {
@@ -168,3 +189,4 @@ fun RootNavigation() {
         }
     }
 }
+

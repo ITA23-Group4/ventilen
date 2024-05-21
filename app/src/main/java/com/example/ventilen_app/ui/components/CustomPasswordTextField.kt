@@ -1,5 +1,3 @@
-@file:OptIn(ExperimentalMaterial3Api::class)
-
 package com.example.ventilen_app.ui.components
 
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -15,7 +13,7 @@ import com.example.ventilen_app.ui.theme.CustomColorScheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CustomTextField(
+fun CustomPasswordTextField(
     text: String,
     label: String = "",
     isSingleLine: Boolean = true,
@@ -28,6 +26,7 @@ fun CustomTextField(
         value = text,
         singleLine = isSingleLine,
         onValueChange = { onValueChange(it)},
+        visualTransformation = PasswordVisualTransformation(),
         label = { Text(text = label,
             style = MaterialTheme.typography.bodyLarge,
             color = CustomColorScheme.Orange
