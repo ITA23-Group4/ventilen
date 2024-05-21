@@ -32,6 +32,7 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun EventScaffold(
     currentRoute: String,
+    isAdmin: Boolean,
     onNavigateHome: () -> Unit,
     onNavigateChat: () -> Unit,
     onNavigateCreateEvent: () -> Unit,
@@ -47,13 +48,15 @@ fun EventScaffold(
                 ),
                 title = { Text("Events", style = MaterialTheme.typography.headlineLarge) },
                 actions = {
-                    IconButton(onClick = onNavigateCreateEvent) {
-                        Icon(
-                            Icons.Default.Add,
-                            contentDescription = "Add",
-                            modifier = Modifier
-                                .size(34.dp)
-                        )
+                    if (isAdmin) {
+                        IconButton(onClick = onNavigateCreateEvent) {
+                            Icon(
+                                Icons.Default.Add,
+                                contentDescription = "Add",
+                                modifier = Modifier
+                                    .size(34.dp)
+                            )
+                        }
                     }
                 }
             )

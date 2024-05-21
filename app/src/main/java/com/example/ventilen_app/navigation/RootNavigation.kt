@@ -131,6 +131,7 @@ fun RootNavigation() {
                 eventViewModel.clearSelectedEventCard() // TODO: Scuffed transition on navigation
                 EventScaffold(
                     currentRoute = "event",
+                    isAdmin = eventViewModel.isAdmin(),
                     onNavigateHome = { navController.navigate("home") },
                     onNavigateChat = { navController.navigate("chat") },
                     onNavigateCreateEvent = { navController.navigate("event/create") }
@@ -153,8 +154,7 @@ fun RootNavigation() {
                             eventViewModel.isCurrentUserAttendingEvent(
                                 event = event
                             )
-                        },
-                        onAddEvent = { navController.navigate("event/create") }
+                        }
                     )
                 }
 

@@ -20,7 +20,6 @@ import com.example.ventilen_app.ui.theme.VentilenAppTheme
 @Composable
 fun EventScreen(
     events: List<Event>,
-    onAddEvent: () -> Unit,
     isEventSelected: (String) -> Boolean,
     isAttending: (Event) -> Boolean,
     onAttend: (String) -> Unit,

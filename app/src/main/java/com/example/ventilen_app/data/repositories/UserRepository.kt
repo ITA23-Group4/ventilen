@@ -19,23 +19,13 @@ object UserRepository {
     private val db = Firebase.firestore
     var currentUser: User? by mutableStateOf(null)
 
-    private suspend fun isEmailInAdmins(email: String): Boolean {
-        val querySnapshot = db.collection("admins")
-            .whereEqualTo("email", email)
-            .get()
-            .await()
-
-        return !querySnapshot.isEmpty
-    }
-
     suspend fun getUser() {
         val currentUserFirebaseInstance: FirebaseUser = FirebaseAuth.getInstance().currentUser!!
         val currentUserUID: String = currentUserFirebaseInstance.uid
-        val currentUserEmail: String = currentUserFirebaseInstance.email!!
 
         // Get the user from Firestore and convert to User class
         val userDocumentRef = db.collection("users").document(currentUserUID).get().await()
-        currentUser = convertUserDocumentToUser(userDocumentRef, currentUserEmail)
+        currentUser = convertUserDocumentToUser(userDocumentRef)
 
         Log.d(
             "CurrentUser:",
@@ -51,10 +41,10 @@ object UserRepository {
             .await()
     }
 
-    private suspend fun convertUserDocumentToUser(document: DocumentSnapshot, currentUserEmail: String): User {
+    private fun convertUserDocumentToUser(document: DocumentSnapshot): User {
         val name: String = document.getString("username") ?: ""
         val primaryLocationID: String = document.getString("primaryLocationID") ?: ""
-        val isAdmin: Boolean = isEmailInAdmins(currentUserEmail)
+        val isAdmin: Boolean = document.getBoolean("isAdmin") ?: false
         val uid = document.id
         return User(
             username = name,

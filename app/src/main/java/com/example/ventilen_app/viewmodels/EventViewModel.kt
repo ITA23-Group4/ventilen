@@ -9,11 +9,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.ventilen_app.data.models.Event
 import com.example.ventilen_app.data.repositories.EventRepository
+import com.example.ventilen_app.data.repositories.UserRepository
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.launch
 
 class EventViewModel: ViewModel() {
     private val eventRepository: EventRepository = EventRepository
+    private val userRepository: UserRepository = UserRepository
 
     val events: MutableList<Event> = mutableStateListOf()
     private var selectedEventCardID: String by mutableStateOf("")
@@ -22,6 +24,10 @@ class EventViewModel: ViewModel() {
         viewModelScope.launch {
             getEvents()
         }
+    }
+
+    fun isAdmin(): Boolean {
+        return userRepository.currentUser!!.isAdmin
     }
 
     private suspend fun getEvents(){
