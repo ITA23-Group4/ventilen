@@ -9,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.ventilen_app.data.models.Location
 import com.example.ventilen_app.data.repositories.ChatRepository
 import com.example.ventilen_app.data.models.Message
+import com.example.ventilen_app.data.repositories.LocationRepository
 import kotlinx.coroutines.flow.StateFlow
 import com.example.ventilen_app.data.repositories.UserRepository
 import com.google.firebase.auth.FirebaseAuth
@@ -16,6 +17,7 @@ import kotlinx.coroutines.launch
 import java.util.Date
 
 class ChatViewModel : ViewModel() {
+    private val locationRepository = LocationRepository
     private val chatRepository = ChatRepository
     val userRepository = UserRepository
 
@@ -24,6 +26,7 @@ class ChatViewModel : ViewModel() {
     }
 
     val locationsWithLatestMessages: MutableList<Location> = mutableStateListOf()
+
     val localMessages: StateFlow<List<Message>>
         get() = chatRepository.messagesFlow
 

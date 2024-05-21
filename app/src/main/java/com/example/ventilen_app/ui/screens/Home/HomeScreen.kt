@@ -1,7 +1,6 @@
 package com.example.ventilen_app.ui.screens.Home
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.material3.Button
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
@@ -15,20 +14,15 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.graphics.Color
-import java.util.Date
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.example.ventilen_app.R
 import com.example.ventilen_app.data.models.Event
 import com.example.ventilen_app.data.models.Location
-import com.example.ventilen_app.ui.components.CustomChatCardComponent.CustomChatCard
+import com.example.ventilen_app.ui.components.CustomChatCardComponent.CustomCard
 import com.example.ventilen_app.ui.components.CustomColumn
 import com.example.ventilen_app.ui.components.CustomEventCardComponent.CustomEventCard
-import com.example.ventilen_app.ui.components.CustomFilledButton
 import com.example.ventilen_app.ui.theme.CustomColorScheme
 
 @Composable
@@ -55,24 +49,26 @@ fun HomeScreen(
             modifier = Modifier.fillMaxWidth(),
             textAlign = TextAlign.Start
         )
-        CustomChatCard(
-            locationName = currentUserPrimaryLocation.locationName,
-            latestMessage = currentUserPrimaryLocation.latestMessage,
+        CustomCard(
+            title = currentUserPrimaryLocation.locationName,
+            bodyText = currentUserPrimaryLocation.news,
             abbreviation = currentUserPrimaryLocation.abbreviation,
-            onClick = { onChatLocalNavigate(currentUserPrimaryLocation) }
+            backgroundColor = MaterialTheme.colorScheme.error
         )
 
-        Text(
-            text = "Primære mødested", style = MaterialTheme.typography.headlineMedium,
-            modifier = Modifier.fillMaxWidth(),
-            textAlign = TextAlign.Start
-        )
-        CustomChatCard(
-            locationName = currentUserPrimaryLocation.locationName,
-            latestMessage = currentUserPrimaryLocation.latestMessage,
-            abbreviation = currentUserPrimaryLocation.abbreviation,
-            onClick = { onChatLocalNavigate(currentUserPrimaryLocation) }
-        )
+        if (true) {
+            Text(
+                text = "Primære mødested", style = MaterialTheme.typography.headlineMedium,
+                modifier = Modifier.fillMaxWidth(),
+                textAlign = TextAlign.Start
+            )
+            CustomCard(
+                title = currentUserPrimaryLocation.locationName,
+                bodyText = currentUserPrimaryLocation.latestMessage,
+                abbreviation = currentUserPrimaryLocation.abbreviation,
+                onClick = { onChatLocalNavigate(currentUserPrimaryLocation) }
+            )
+        }
 
         Column(
             modifier = Modifier

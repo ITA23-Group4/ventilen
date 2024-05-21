@@ -57,6 +57,7 @@ fun RootNavigation() {
         composable("home") {
             HomeScreenScaffold(
                 currentRoute = navController.currentDestination!!.route!!,
+                isAdmin = true,
                 onNavigateEvent = { navController.navigate("event") },
                 onNavigateChat = { navController.navigate("chat") }
             ) {

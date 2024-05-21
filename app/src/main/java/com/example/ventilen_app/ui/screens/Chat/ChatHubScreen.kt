@@ -9,13 +9,12 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.ventilen_app.data.models.Location
-import com.example.ventilen_app.ui.components.CustomChatCardComponent.CustomChatCard
+import com.example.ventilen_app.ui.components.CustomChatCardComponent.CustomCard
 import com.example.ventilen_app.ui.components.CustomColumn
 
 
@@ -32,9 +31,9 @@ fun ChatHubScreen(
         Text(text = "Primære mødested", style = MaterialTheme.typography.headlineMedium,
             modifier = Modifier.fillMaxWidth(),
             textAlign = TextAlign.Start)
-        CustomChatCard(
-            locationName = currentUserPrimaryLocation.locationName,
-            latestMessage = currentUserPrimaryLocation.latestMessage,
+        CustomCard(
+            title = currentUserPrimaryLocation.locationName,
+            bodyText = currentUserPrimaryLocation.latestMessage,
             abbreviation = currentUserPrimaryLocation.abbreviation,
             onClick = { onChatLocalNavigate(currentUserPrimaryLocation) }
         )
@@ -51,9 +50,9 @@ fun ChatHubScreen(
             verticalArrangement = Arrangement.spacedBy(0.dp)
         ) {
             items(locationsExcludingCurrentUserPrimaryLocation) { Location ->
-                CustomChatCard(
-                    locationName = Location.locationName,
-                    latestMessage = Location.latestMessage,
+                CustomCard(
+                    title = Location.locationName,
+                    bodyText = Location.latestMessage,
                     abbreviation = Location.abbreviation,
                     onClick = { onChatLocalNavigate(Location) },
                     hasRoundCorners = false

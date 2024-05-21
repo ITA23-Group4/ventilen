@@ -24,11 +24,21 @@ object LocationRepository {
         }
         Log.d("LOCATION_LIST", locations.toString())
     }
+
     private fun convertLocationDocumentToLocation(document: DocumentSnapshot): Location {
         val name: String = document.getString("name") ?: ""
+        val news: String = document.getString("news") ?: ""
+        val latestMessage: String = document.getString("latestMessage") ?: ""
+        val abbreviation: String = document.getString("abbreviation") ?: ""
         val id = document.id
+
+        Log.d("NEWS", news)
+
         return Location(
             locationName = name,
+            latestMessage = latestMessage,
+            abbreviation = abbreviation,
+            news = news,
             locationID =  id
         )
     }

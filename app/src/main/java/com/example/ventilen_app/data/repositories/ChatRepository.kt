@@ -36,12 +36,13 @@ object ChatRepository {
             .get()
             .await()
         val locations = querySnapshot.documents.mapNotNull { document ->
-            val locationId = document.getString("name") ?: ""
+            val name = document.getString("name") ?: ""
             val latestMessage = document.getString("latestMessage") ?: ""
             val abbreviation = document.getString("abbreviation") ?: ""
+            val news = document.getString("news") ?: ""
             val locationID = document.id
 
-            Location(locationId, latestMessage, abbreviation, locationID)
+            Location(locationName = name, latestMessage = latestMessage, abbreviation = abbreviation, locationID = locationID, news = news)
         }
 
         return locations
