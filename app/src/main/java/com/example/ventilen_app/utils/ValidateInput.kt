@@ -23,12 +23,11 @@ class ValidateInput {
      * @return `true` if the password meets all criteria, `false` otherwise.
      */
     fun validatePassword(password: String): Boolean {
-        return listOf(
-            validateCapitalizedLetter(password),
-            validateNumber(password),
-            validateMinimum(password)
-        ).all { it }
+        return !(validateCapitalizedLetter(password) &&
+                validateNumber(password) &&
+                validateMinimum(password))
     }
+
 
     // TODO: What more? Check for explicit words, etc. (what about underscore ?)
     fun validateUsername(username: String): Boolean {

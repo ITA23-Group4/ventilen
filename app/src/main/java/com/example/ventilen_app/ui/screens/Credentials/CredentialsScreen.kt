@@ -19,6 +19,7 @@ fun CredentialsScreen(
     hasEmailError: Boolean,
     password: String,
     repeatPassword: String,
+    hasRepeatedPasswordError: Boolean,
     hasPasswordError: Boolean,
     onValueChangeEmail: (String) -> Unit,
     onValueChangePassword: (String) -> Unit,
@@ -53,14 +54,16 @@ fun CredentialsScreen(
             text = repeatPassword,
             label = "Gentag Password",
             onValueChange =  { onValueChangePasswordRepeat(it) },
-            hasError = hasPasswordError,
+            hasError = hasRepeatedPasswordError,
             errorMessage = "Passwords skal være ens"
         )
 
         CustomFilledButton(
             text = "Forsæt",
             onClick = { onNavigateUsername() },
-            isEnabled = (!hasEmailError && !hasPasswordError) |
+            isEnabled = textEmail.isNotEmpty()
+                    && password.isNotEmpty()
+                    && repeatPassword.isNotEmpty()
         )
     }
 

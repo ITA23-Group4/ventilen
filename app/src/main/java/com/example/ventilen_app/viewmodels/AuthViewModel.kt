@@ -31,6 +31,7 @@ class AuthViewModel : ViewModel() {
     var password: String by mutableStateOf("")
     var passwordRepeat: String by mutableStateOf("")
     var hasPasswordError: Boolean by mutableStateOf(false)
+    var hasPasswordRepeatedError: Boolean by mutableStateOf(false)
 
     var username: String by mutableStateOf("")
     var hasUsernameError: Boolean by mutableStateOf(false)
@@ -102,7 +103,7 @@ class AuthViewModel : ViewModel() {
 
     fun changeRepeatedPassword(newRepeatPassword: String) {
         passwordRepeat = newRepeatPassword
-        hasPasswordError = (newRepeatPassword != password)
+        hasPasswordRepeatedError = (newRepeatPassword != password)
     }
 
     fun changeUsername(newUsername: String) {
