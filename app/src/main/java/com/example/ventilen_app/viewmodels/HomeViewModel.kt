@@ -14,7 +14,6 @@ import java.util.Calendar
 import java.util.Date
 
 class HomeViewModel : ViewModel() {
-    val userRepository: UserRepository = UserRepository
-    val locationRepository: LocationRepository = LocationRepository
-    val chatRepository: ChatRepository = ChatRepository
+    var newsDescription: String by mutableStateOf("")
+    var showDialog: Boolean by mutableStateOf(false)
 }

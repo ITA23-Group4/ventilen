@@ -1,7 +1,6 @@
 package com.example.ventilen_app.navigation
 
 import android.annotation.SuppressLint
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.platform.LocalContext
@@ -32,7 +31,6 @@ import com.example.ventilen_app.viewmodels.HomeViewModel
  * @author Marcus, Christian, Nikolaj
  */
 @SuppressLint("StateFlowValueCalledInComposition")
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RootNavigation() {
     // Initialize navigation controller
@@ -40,6 +38,7 @@ fun RootNavigation() {
 
     // Initialize view models
     val authViewModel: AuthViewModel = viewModel<AuthViewModel>()
+    val homeViewModel: HomeViewModel = viewModel<HomeViewModel>()
     val eventViewModel: EventViewModel = viewModel<EventViewModel>()
     val chatViewModel: ChatViewModel = viewModel<ChatViewModel>()
     val createEventViewModel: CreateEventViewModel = viewModel<CreateEventViewModel>()
@@ -59,7 +58,8 @@ fun RootNavigation() {
                 currentRoute = navController.currentDestination!!.route!!,
                 isAdmin = true,
                 onNavigateEvent = { navController.navigate("event") },
-                onNavigateChat = { navController.navigate("chat") }
+                onNavigateChat = { navController.navigate("chat") },
+                onCreateNews = { homeViewModel.showDialog = true }
             ) {
                 HomeScreen(
                     currentUserPrimaryLocation = chatViewModel.locationsWithLatestMessages[0], // TODO: is it okay to borrow func from other ViewModels?
@@ -84,7 +84,11 @@ fun RootNavigation() {
                         eventViewModel.isCurrentUserAttendingEvent(
                             event = event
                         )
-                    }
+                    },
+                    showDialog = homeViewModel.showDialog,
+                    dialogDescription = "Text",
+                    onDialogDescriptionChange = { homeViewModel.newsDescription = it },
+                    dismissDialog = { homeViewModel.showDialog = false }
                 )
             }
         }

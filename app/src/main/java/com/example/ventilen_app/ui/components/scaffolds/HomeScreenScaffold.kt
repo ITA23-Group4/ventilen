@@ -36,6 +36,7 @@ fun HomeScreenScaffold(
     isAdmin: Boolean,
     onNavigateEvent: () -> Unit,
     onNavigateChat: () -> Unit,
+    onCreateNews: () -> Unit,
     content: @Composable () -> Unit
 ) {
     Scaffold(
@@ -49,7 +50,7 @@ fun HomeScreenScaffold(
                 title = { Text("Home", style = MaterialTheme.typography.headlineLarge) },
                 actions = {
                     if (isAdmin) {
-                        IconButton(onClick = {}) {
+                        IconButton(onClick = onCreateNews) {
                             Icon(
                                 Icons.Default.Add,
                                 contentDescription = "Add news",

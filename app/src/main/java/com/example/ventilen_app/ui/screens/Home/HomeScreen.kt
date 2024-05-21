@@ -11,8 +11,10 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -23,11 +25,14 @@ import com.example.ventilen_app.data.models.Location
 import com.example.ventilen_app.ui.components.CustomChatCardComponent.CustomCard
 import com.example.ventilen_app.ui.components.CustomColumn
 import com.example.ventilen_app.ui.components.CustomEventCardComponent.CustomEventCard
+import com.example.ventilen_app.ui.components.CustomFilledButton
+import com.example.ventilen_app.ui.components.CustomOutlinedButton
+import com.example.ventilen_app.ui.components.CustomTextField
 import com.example.ventilen_app.ui.theme.CustomColorScheme
 
 @Composable
 fun HomeScreen(
-    // Chat
+    // News + Chat
     currentUserPrimaryLocation: Location,
     onChatLocalNavigate: (Location) -> Unit,
 
@@ -37,8 +42,43 @@ fun HomeScreen(
     isAttending: (Event) -> Boolean,
     onAttend: (String) -> Unit,
     onNotAttend: (String) -> Unit,
-    onEventCardClick: (String) -> Unit
+    onEventCardClick: (String) -> Unit,
+
+    // Create news
+    showDialog: Boolean,
+    dialogDescription: String,
+    onDialogDescriptionChange: (String) -> Unit,
+    dismissDialog: () -> Unit
 ) {
+    if (showDialog) {
+        AlertDialog(
+            onDismissRequest = { dismissDialog() },
+            dismissButton = {
+                CustomFilledButton(
+                    text = "Opret",
+                    onClick = dismissDialog
+                )
+            },
+            confirmButton = {
+                CustomOutlinedButton(
+                    text = "Afbryd",
+                    onClick = dismissDialog
+                )
+            },
+            title = { Text(
+                text = "Opret Nyhed",
+                style = MaterialTheme.typography.headlineMedium
+            ) },
+            text = {
+                CustomTextField(
+                    text = dialogDescription,
+                    label = "Beskrivelse",
+                    onValueChange = onDialogDescriptionChange
+                )
+            }
+        )
+    }
+
 
     CustomColumn(
         modifier = Modifier.padding(0.dp, 8.dp, 0.dp, 0.dp),
