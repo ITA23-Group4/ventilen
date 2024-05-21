@@ -1,13 +1,12 @@
 package com.example.ventilen_app.data.repositories
 
 import com.example.ventilen_app.data.models.Event
+import com.google.firebase.Firebase
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.firestore
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 
 object EventRepository {

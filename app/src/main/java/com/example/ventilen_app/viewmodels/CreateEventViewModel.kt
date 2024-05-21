@@ -33,7 +33,7 @@ import java.util.Date
  * @Author [Your Name] TODO: Add name
  */
 class CreateEventViewModel : ViewModel() {
-    private val eventRepository: EventRepository = EventRepository()
+    private val eventRepository: EventRepository = EventRepository
 
     var eventTitle: String by mutableStateOf("")
     var eventDescription: String by mutableStateOf("")
@@ -45,7 +45,7 @@ class CreateEventViewModel : ViewModel() {
     var eventStartDateTime: Date? by mutableStateOf(null)
     var eventEndDateTime: Date? by mutableStateOf(null)
 
-    var showDialog: Boolean by mutableStateOf(true) // State for dialog visibility
+    var showDialog: Boolean by mutableStateOf(true)
 
 
     /**

@@ -43,7 +43,6 @@ fun RootNavigation() {
     val eventViewModel: EventViewModel = viewModel<EventViewModel>()
     val chatViewModel: ChatViewModel = viewModel<ChatViewModel>()
     val createEventViewModel: CreateEventViewModel = viewModel<CreateEventViewModel>()
-    val homeViewModel: HomeViewModel = viewModel<HomeViewModel>()
 
     NavHost(navController = navController, startDestination = "auth") {
         navigation(
