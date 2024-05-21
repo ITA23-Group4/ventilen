@@ -135,4 +135,4 @@ class CreateEventViewModel : ViewModel() {
             }
         }
     }
-}
+
