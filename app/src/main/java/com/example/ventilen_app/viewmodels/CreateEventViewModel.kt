@@ -11,8 +11,10 @@ import androidx.lifecycle.viewModelScope
 import com.example.ventilen_app.data.models.Event
 import com.example.ventilen_app.data.repositories.EventRepository
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
+import java.util.Locale
 
 /**
  * ViewModel for managing the state and logic of creating an event in the application.
@@ -27,6 +29,8 @@ import java.util.Date
  * @property eventStartDateTime The selected start date and time for the event.
  * @property eventEndDateTime The selected end date and time for the event.
  * @property showDialog State for dialog visibility.
+ * @property startDateTimeButtonText The text to display on the start date and time button.
+ * @property endDateTimeButtonText The text to display on the end date and time button.
  *
  * @constructor Creates an instance of CreateEventViewModel.
  *
@@ -45,8 +49,10 @@ class CreateEventViewModel : ViewModel() {
     var eventStartDateTime: Date? by mutableStateOf(null)
     var eventEndDateTime: Date? by mutableStateOf(null)
 
-    var showDialog: Boolean by mutableStateOf(true)
+    var startDateTimeButtonText: String by mutableStateOf("Vælg starttidspunkt")
+    var endDateTimeButtonText: String by mutableStateOf("Vælg sluttidspunkt")
 
+    var showDialog: Boolean by mutableStateOf(true)
 
     /**
      * Dismisses the dialog.
@@ -59,14 +65,19 @@ class CreateEventViewModel : ViewModel() {
      * Displays the date and time picker for selecting the event's start date and time.
      */
     fun showStartDateTimePickerForUser() {
-        showStartDateTimePickerForUser { dateTime ->
+        showDateTimePicker { dateTime ->
             eventStartDateTime = dateTime
+            startDateTimeButtonText = getFormattedDateRange(dateTime)
         }
     }
 
+    /**
+     * Displays the date and time picker for selecting the event's end date and time.
+     */
     fun showEndDateTimePickerForUser() {
-        showStartDateTimePickerForUser { dateTime ->
+        showDateTimePicker { dateTime ->
             eventEndDateTime = dateTime
+            endDateTimeButtonText = getFormattedDateRange(dateTime)
         }
     }
 
@@ -75,7 +86,7 @@ class CreateEventViewModel : ViewModel() {
      *
      * @param onDateTimeSelected Callback invoked with the selected date and time.
      */
-    private fun showStartDateTimePickerForUser(onDateTimeSelected: (Date) -> Unit) {
+    private fun showDateTimePicker(onDateTimeSelected: (Date) -> Unit) {
         val context = context ?: return
         val calendar = Calendar.getInstance()
 
@@ -131,10 +142,36 @@ class CreateEventViewModel : ViewModel() {
                 eventPrice = ""
                 eventStartDateTime = null
                 eventEndDateTime = null
+                startDateTimeButtonText = "Vælg starttidspunkt"
+                endDateTimeButtonText = "Vælg sluttidspunkt"
             } catch (error: Exception) {
                 // Log error TODO: Handle error
             }
         }
     }
-}
 
+    /**
+     * Formats a Date object into a user-friendly string.
+     *
+     * @param startDate The date to format.
+     * @return A string representing the formatted date.
+     */
+    private fun getFormattedDateRange(startDate: Date): String {
+        val dateFormat = SimpleDateFormat("dd. MMM yyyy 'Kl.' HH:mm", Locale("da", "DK"))
+        val formattedStartDate = dateFormat.format(startDate)
+
+        val monthIndex = formattedStartDate.indexOf(' ') + 1
+        val capitalizedMonthDate = formattedStartDate.replaceRange(monthIndex, monthIndex + 1, formattedStartDate[monthIndex].uppercase())
+
+        return capitalizedMonthDate
+    }
+
+    /**
+     * Checks if all required fields are filled.
+     *
+     * @return True if all fields are filled, false otherwise.
+     */
+    fun areAllFieldsFilled(): Boolean {
+        return eventTitle.isNotEmpty() && eventDescription.isNotEmpty() && eventAddress.isNotEmpty() && eventPrice.isNotEmpty() && eventStartDateTime != null && eventEndDateTime != null
+    }
+}

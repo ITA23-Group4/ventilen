@@ -15,9 +15,7 @@ import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
-import com.example.ventilen_app.ui.theme.CustomColorScheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -26,6 +24,7 @@ fun CustomTextField(
     label: String = "",
     isSingleLine: Boolean = true,
     hasError: Boolean = false,
+    isIntegerOnly: Boolean = false,
     errorIndicator: String = "*",
     errorMessage: String = "",
     modifier: Modifier = Modifier,
@@ -35,8 +34,11 @@ fun CustomTextField(
         modifier = modifier.fillMaxWidth(),
         value = text,
         singleLine = isSingleLine,
-        onValueChange = { onValueChange(it)},
-        label = { Text(text = label,
+        onValueChange = { newText ->
+            if (!isIntegerOnly || newText.all { it.isDigit() }) {
+                onValueChange(newText)
+            }
+        },        label = { Text(text = label,
             style = MaterialTheme.typography.labelMedium
         )},
         colors = TextFieldDefaults.outlinedTextFieldColors(

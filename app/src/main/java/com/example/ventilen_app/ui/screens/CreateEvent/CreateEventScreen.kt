@@ -8,52 +8,59 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.example.ventilen_app.ui.components.CustomColumn
 import com.example.ventilen_app.ui.components.CustomFilledButton
 import com.example.ventilen_app.ui.components.CustomOutlinedButton
 import com.example.ventilen_app.ui.components.CustomTextField
-import java.util.Date
 
 /**
  * Composable function that represents the Create Event screen in the application.
  * This screen allows admin users to input details for creating a new event, such as the event's title, description, address, price, and start/end dates.
  *
- * @param onCreateEvent Lambda function invoked when the "Opret event" button is clicked.
  * @param eventTitle The title of the event.
  * @param eventDescription The description of the event.
  * @param eventAddress The address where the event will be held.
  * @param eventPrice The price of the event.
- * @param selectedStartDateTime The selected start date and time for the event.
- * @param selectedEndDateTime The selected end date and time for the event.
- * @param showStartDateTimePicker Lambda function to show the date and time picker dialog.
+ * @param showDialog Boolean value representing the visibility of the dialog.
+ * @param startDateTimeButtonText The text to display on the start date and time button.
+ * @param endDateTimeButtonText The text to display on the end date and time button.
+ * @param onCreateEvent Lambda function invoked when the "Opret event" button is clicked.
+ * @param showStartDateTimePicker Lambda function to show the start date and time picker dialog.
+ * @param showEndDateTimePicker Lambda function to show the end date and time picker dialog.
  * @param onValueChangeTitle Lambda function invoked when the event title changes.
  * @param onValueChangeDescription Lambda function invoked when the event description changes.
  * @param onValueChangeAddress Lambda function invoked when the event address changes.
  * @param onValueChangePrice Lambda function invoked when the event price changes.
- * @param showDialog Boolean value representing the visibility of the dialog.
  * @param dismissDialog Lambda function to dismiss the dialog.
+ * @param areAllFieldsFilled Lambda function that returns a Boolean indicating whether all required fields are filled.
  *
- * @author [Your Name] TODO: Add name
+ * @see CustomTextField
+ * @see CustomOutlinedButton
+ * @see CustomFilledButton
+ * @see CustomColumn
+ * @see AlertDialog
+ *
+ * @Author [Your Name] TODO: Add name
  */
 @Composable
 fun CreateEventScreen(
-    onCreateEvent: () -> Unit,
     eventTitle: String,
     eventDescription: String,
     eventAddress: String,
     eventPrice: String,
-    selectedStartDateTime: Date?,
-    selectedEndDateTime: Date?,
+    showDialog: Boolean,
+    startDateTimeButtonText: String,
+    endDateTimeButtonText: String,
+    onCreateEvent: () -> Unit,
     showStartDateTimePicker: () -> Unit,
     showEndDateTimePicker: () -> Unit,
     onValueChangeTitle: (String) -> Unit,
     onValueChangeDescription: (String) -> Unit,
     onValueChangeAddress: (String) -> Unit,
     onValueChangePrice: (String) -> Unit,
-    showDialog: Boolean,
-    dismissDialog: () -> Unit
+    dismissDialog: () -> Unit,
+    areAllFieldsFilled: () -> Boolean
 ) {
     if (showDialog) {
         AlertDialog(
@@ -74,39 +81,42 @@ fun CreateEventScreen(
         Spacer(modifier = Modifier.size(2.dp))
         CustomTextField(
             text = eventTitle,
-            label = "Event navn"
-        ) {
-            onValueChangeTitle(it)
-        }
+            label = "Event navn",
+            onValueChange = {
+                if (it.length <= 30) onValueChangeTitle(it)
+            },
+        )
         CustomTextField(
             text = eventDescription,
-            label = "Beskrivelse"
-        ) {
-            onValueChangeDescription(it)
-        }
+            label = "Beskrivelse",
+            onValueChange = onValueChangeDescription
+        )
         CustomTextField(
             text = eventAddress,
-            label = "Adresse"
-        ) {
-            onValueChangeAddress(it)
-        }
+            label = "Adresse",
+            onValueChange = onValueChangeAddress
+        )
 
-        CustomOutlinedButton(text = "Vælg start tidspunkt", onClick = { showStartDateTimePicker() })
-        Text("Valgt starttidspunkt: ${selectedStartDateTime?.toString() ?: "Intet valgt"}", color = Color.Black)
-
-        CustomOutlinedButton(text = "Vælg slut tidspunkt", onClick = { showEndDateTimePicker() })
-        Text("Valgt sluttidspunkt: ${selectedEndDateTime?.toString() ?: "Intet valgt"}", color = Color.Black)
+        CustomOutlinedButton(
+            text = startDateTimeButtonText,
+            onClick = { showStartDateTimePicker() }
+        )
+        CustomOutlinedButton(
+            text = endDateTimeButtonText,
+            onClick = { showEndDateTimePicker() }
+        )
 
         CustomTextField(
             text = eventPrice,
-            label = "Pris"
-            // keyboardType = KeyboardType.Number TODO: MAKE!
-        ) {
-            onValueChangePrice(it)
-        }
+            label = "Pris",
+            onValueChange = onValueChangePrice,
+            isIntegerOnly = true
+        )
+
         CustomFilledButton(
             text = "Opret event",
-            onClick = onCreateEvent
+            onClick = onCreateEvent,
+            isEnabled = areAllFieldsFilled()
         )
     }
 }

@@ -23,7 +23,6 @@ import com.example.ventilen_app.viewmodels.CreateEventViewModel
 import com.example.ventilen_app.ui.screens.Event.EventScreen
 import com.example.ventilen_app.viewmodels.EventViewModel
 import com.example.ventilen_app.ui.screens.Home.HomeScreen
-import com.example.ventilen_app.viewmodels.HomeViewModel
 
 /**
  * Root navigation structure of the application.
@@ -129,8 +128,7 @@ fun RootNavigation() {
             }
             composable("chat/local") {
                 chatViewModel.getLocalMessages(chatViewModel.selectedLocation.locationID!!) // Get the local messages for the selected location
-                val lastDestinationRoute: String =
-                    navController.previousBackStackEntry!!.destination.route!!
+                val lastDestinationRoute: String = navController.previousBackStackEntry!!.destination.route!!
                 LocalChatScaffold(
                     locationName = chatViewModel.selectedLocation.locationName,
                     onNavigateBack = { navController.navigate(lastDestinationRoute) },
@@ -185,7 +183,7 @@ fun RootNavigation() {
         composable("event/create") {
             createEventViewModel.context = LocalContext.current
             CreateEventScaffold(
-                onNavigateBack = { navController.navigate("event") },
+                onNavigateBack = { navController.navigate("event") }
             ) {
                 CreateEventScreen(
                     eventTitle = createEventViewModel.eventTitle,
@@ -193,8 +191,8 @@ fun RootNavigation() {
                     eventAddress = createEventViewModel.eventAddress,
                     eventPrice = createEventViewModel.eventPrice,
 
-                    selectedStartDateTime = createEventViewModel.eventStartDateTime,
-                    selectedEndDateTime = createEventViewModel.eventEndDateTime,
+                    startDateTimeButtonText = createEventViewModel.startDateTimeButtonText,
+                    endDateTimeButtonText = createEventViewModel.endDateTimeButtonText,
                     showStartDateTimePicker = { createEventViewModel.showStartDateTimePickerForUser() },
                     showEndDateTimePicker = { createEventViewModel.showEndDateTimePickerForUser() },
 
@@ -203,8 +201,11 @@ fun RootNavigation() {
                     onValueChangeAddress = { createEventViewModel.eventAddress = it },
                     onValueChangePrice = { createEventViewModel.eventPrice = it },
                     onCreateEvent = { createEventViewModel.createEvent() },
+
                     showDialog = createEventViewModel.showDialog,
-                    dismissDialog = { createEventViewModel.dismissDialog() }
+                    dismissDialog = { createEventViewModel.dismissDialog() },
+
+                    areAllFieldsFilled = { createEventViewModel.areAllFieldsFilled() }
                 )
             }
         }
