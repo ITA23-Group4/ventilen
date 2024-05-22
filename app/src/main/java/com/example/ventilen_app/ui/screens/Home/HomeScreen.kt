@@ -31,6 +31,12 @@ import com.example.ventilen_app.ui.components.CustomOutlinedButton
 import com.example.ventilen_app.ui.components.CustomTextField
 import com.example.ventilen_app.ui.theme.CustomColorScheme
 
+/**
+ * A composable function that displays the Home screen. With news displayed,
+ * primary chat with latest message and event overview
+ *
+ * @author Marcus, ...
+ */
 @Composable
 fun HomeScreen(
     isAdmin: Boolean,

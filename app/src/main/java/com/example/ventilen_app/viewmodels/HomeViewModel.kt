@@ -10,6 +10,20 @@ import com.example.ventilen_app.data.repositories.LocationRepository
 import com.example.ventilen_app.data.repositories.UserRepository
 import kotlinx.coroutines.launch
 
+/**
+ * ViewModel for the Home screen of the app.
+ * Manages the state and handles business logic for news related to the user's primary location.
+ *
+ * @property userRepository Repository for user data.
+ * @property locationRepository Repository for location data.
+ *
+ * @property primaryLocationNews The latest news for the primary location.
+ * @property newsDescription The description for the news to be created.
+ * @property showDialog Flag to show or hide a dialog.
+ * @property isNewsCardExpanded Flag to expand or collapse the news card.
+ *
+ * @author Marcus, ...
+ */
 class HomeViewModel : ViewModel() {
     private val userRepository: UserRepository = UserRepository
     private val locationRepository: LocationRepository = LocationRepository

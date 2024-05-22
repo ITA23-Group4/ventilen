@@ -1,11 +1,8 @@
 package com.example.ventilen_app.ui.components
 
-
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -15,7 +12,6 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -23,7 +19,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -32,13 +27,27 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
 import com.example.ventilen_app.ui.theme.CustomColorScheme
 
+/**
+ * A composable function that displays a customizable news card. (Used on HomeScreen)
+ *
+ * @param title The title of the news card.
+ * @param bodyText The body text of the news card.
+ * @param abbreviation The abbreviation to be displayed in the circular area.
+ * @param backgroundColor The background color of the circular area.
+ * @param hasRoundCorners Flag to indicate if the card should have rounded corners. Defaults to true.
+ * @param isAdmin Flag to indicate if the current user is an admin.
+ * @param isExpanded Flag to indicate if the card is expanded.
+ * @param onCardClick Callback function to be invoked when the card is clicked.
+ * @param onDeleteNews Callback function to be invoked when the delete button is clicked.
+ *
+ * @author Marcus, ...
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CustomNewsCard(
