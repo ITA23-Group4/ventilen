@@ -139,42 +139,40 @@ fun HomeScreen(
             onClick = { onChatLocalNavigate(currentUserPrimaryLocation) }
         )
 
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-        ) {
-            Text(
-                text = "Events oversigt", style = MaterialTheme.typography.headlineMedium,
-                modifier = Modifier.fillMaxWidth(),
-                textAlign = TextAlign.Start
-            )
-
-            Spacer(modifier = Modifier.height(4.dp))
-
-            LazyColumn(
+        if (eventsWithinAWeek.isNotEmpty()) {
+            Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(CustomColorScheme.Mocha),
-                contentPadding = PaddingValues(vertical = 16.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(20.dp)
             ) {
-                items(eventsWithinAWeek) { event ->
-                    CustomEventCard(
-                        event = event,
-                        onAttend = { onAttend(event.eventID) },
-                        onNotAttend = { onNotAttend(event.eventID) },
-                        isExpanded = isEventSelected(event.eventID),
-                        isAttending = isAttending(event),
-                        onCardClick = { onEventCardClick(event.eventID) },
-                    )
+                Text(
+                    text = "Upcoming events", style = MaterialTheme.typography.headlineMedium,
+                    modifier = Modifier.fillMaxWidth(),
+                    textAlign = TextAlign.Start
+                )
+
+                Spacer(modifier = Modifier.height(4.dp))
+
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(CustomColorScheme.Mocha),
+                    contentPadding = PaddingValues(vertical = 16.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.spacedBy(20.dp)
+                ) {
+                    items(eventsWithinAWeek) { event ->
+                        CustomEventCard(
+                            event = event,
+                            onAttend = { onAttend(event.eventID) },
+                            onNotAttend = { onNotAttend(event.eventID) },
+                            isExpanded = isEventSelected(event.eventID),
+                            isAttending = isAttending(event),
+                            onCardClick = { onEventCardClick(event.eventID) },
+                        )
+                    }
                 }
+
             }
-
         }
-
-
     }
-
-
 }
