@@ -68,7 +68,7 @@ fun RootNavigation() {
             ) {
                 HomeScreen(
                     isAdmin = homeViewModel.isCurrentUserAdmin(),
-                    currentUserPrimaryLocation = chatViewModel.locationsWithLatestMessages[0], // TODO: is it okay to borrow func from other ViewModels?
+                    currentUserPrimaryLocation = chatViewModel.getCurrentUserPrimaryLocation(), // TODO: is it okay to borrow func from other ViewModels?
                     primaryLocationNews = homeViewModel.primaryLocationNews,
                     isNewsCardExpanded = homeViewModel.isNewsCardExpanded,
                     onNewsCardClick = { homeViewModel.toggleNewsCard() },
@@ -118,12 +118,12 @@ fun RootNavigation() {
                     onNavigateHome = { navController.navigate("home") }
                 ) {
                     ChatHubScreen(
-                        locationsExcludingCurrentUserPrimaryLocation = chatViewModel.locationsWithLatestMessages,
+                        locationsExcludingCurrentUserPrimaryLocation = chatViewModel.getLocationsExcludingPrimaryLocation(),
                         onChatLocalNavigate = {
                             chatViewModel.selectedLocation = it
                             navController.navigate("chat/local")
                         },
-                        currentUserPrimaryLocation = chatViewModel.locationsWithLatestMessages[0]
+                        currentUserPrimaryLocation = chatViewModel.getCurrentUserPrimaryLocation()
                     )
                 }
             }

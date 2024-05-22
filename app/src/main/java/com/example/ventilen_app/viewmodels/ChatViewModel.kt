@@ -17,9 +17,8 @@ import kotlinx.coroutines.launch
 import java.util.Date
 
 class ChatViewModel : ViewModel() {
-    private val locationRepository = LocationRepository
     private val chatRepository = ChatRepository
-    val userRepository = UserRepository
+    private val userRepository = UserRepository
 
     fun getCurrentUserUIDFromFirebase(): String {
         return FirebaseAuth.getInstance().currentUser?.uid!!
@@ -75,6 +74,16 @@ class ChatViewModel : ViewModel() {
 
             currentMessage = ""
         }
+    }
+
+    fun getCurrentUserPrimaryLocation(): Location {
+        val currentUserPrimaryLocationID: String = userRepository.currentUser!!.primaryLocationID
+        return locationsWithLatestMessages.find { it.locationID == currentUserPrimaryLocationID}!!
+    }
+
+    fun getLocationsExcludingPrimaryLocation(): List<Location> {
+        val currentUserPrimaryLocationID: String = userRepository.currentUser!!.primaryLocationID
+        return locationsWithLatestMessages.filter { it.locationID != currentUserPrimaryLocationID }
     }
 
     fun isCurrentUserSender(messageUserUID: String): Boolean {
