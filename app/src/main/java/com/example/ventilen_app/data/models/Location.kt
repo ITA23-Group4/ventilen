@@ -18,6 +18,7 @@ data class Location(
     var locationName: String,
     var latestMessage: String = "",
     var abbreviation: String = "",
+    var news: String = "",
     @DocumentId var locationID: String? = null
 ) : Comparable<Location> {
 

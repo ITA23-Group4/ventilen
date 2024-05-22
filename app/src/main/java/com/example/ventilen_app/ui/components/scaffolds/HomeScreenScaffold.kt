@@ -4,14 +4,20 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 
 /**
  * A scaffold for the home screen, providing a top app bar, a bottom navigation bar, and a content area.
@@ -27,8 +33,10 @@ import androidx.compose.ui.Modifier
 @Composable
 fun HomeScreenScaffold(
     currentRoute: String,
+    isAdmin: Boolean,
     onNavigateEvent: () -> Unit,
     onNavigateChat: () -> Unit,
+    onCreateNews: () -> Unit,
     content: @Composable () -> Unit
 ) {
     Scaffold(
@@ -40,6 +48,18 @@ fun HomeScreenScaffold(
                     titleContentColor = MaterialTheme.colorScheme.onSurface
                 ),
                 title = { Text("Home", style = MaterialTheme.typography.headlineLarge) },
+                actions = {
+                    if (isAdmin) {
+                        IconButton(onClick = onCreateNews) {
+                            Icon(
+                                Icons.Default.Add,
+                                contentDescription = "Add news",
+                                modifier = Modifier
+                                    .size(34.dp)
+                            )
+                        }
+                    }
+                }
             )
         },
         bottomBar = {
@@ -49,6 +69,7 @@ fun HomeScreenScaffold(
                 onNavigateChat = onNavigateChat,
             )
         },
+
         content = { paddingValues: PaddingValues ->
             Box(
                 modifier = Modifier

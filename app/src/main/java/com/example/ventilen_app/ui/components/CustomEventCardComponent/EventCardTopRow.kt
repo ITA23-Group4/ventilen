@@ -43,7 +43,7 @@ fun EventCardTopRow(
                 imageVector = Icons.Default.KeyboardArrowUp,
                 contentDescription = "Close card Icon",
                 tint = MaterialTheme.colorScheme.onSurface,
-                modifier = Modifier.size(40.dp)
+                modifier = Modifier.size(32.dp)
             )
         }
     }

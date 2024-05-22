@@ -1,7 +1,6 @@
 package com.example.ventilen_app.navigation
 
 import android.annotation.SuppressLint
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.platform.LocalContext
@@ -32,7 +31,6 @@ import com.example.ventilen_app.viewmodels.HomeViewModel
  * @author Marcus, Christian, Nikolaj
  */
 @SuppressLint("StateFlowValueCalledInComposition")
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RootNavigation() {
     // Initialize navigation controller
@@ -40,6 +38,7 @@ fun RootNavigation() {
 
     // Initialize view models
     val authViewModel: AuthViewModel = viewModel<AuthViewModel>()
+    val homeViewModel: HomeViewModel = viewModel<HomeViewModel>()
     val eventViewModel: EventViewModel = viewModel<EventViewModel>()
     val chatViewModel: ChatViewModel = viewModel<ChatViewModel>()
     val createEventViewModel: CreateEventViewModel = viewModel<CreateEventViewModel>()
@@ -55,13 +54,25 @@ fun RootNavigation() {
             )
         }
         composable("home") {
+            // Load the primary location news on first load
+            if (homeViewModel.primaryLocationNews.isBlank() && !homeViewModel.loadedPrimaryLocationNews) {
+                homeViewModel.primaryLocationNews = chatViewModel.locationsWithLatestMessages[0].news
+                homeViewModel.loadedPrimaryLocationNews = true
+            }
             HomeScreenScaffold(
                 currentRoute = navController.currentDestination!!.route!!,
+                isAdmin = homeViewModel.isCurrentUserAdmin(),
                 onNavigateEvent = { navController.navigate("event") },
-                onNavigateChat = { navController.navigate("chat") }
+                onNavigateChat = { navController.navigate("chat") },
+                onCreateNews = { homeViewModel.toggleDialog() }
             ) {
                 HomeScreen(
+                    isAdmin = homeViewModel.isCurrentUserAdmin(),
                     currentUserPrimaryLocation = chatViewModel.locationsWithLatestMessages[0], // TODO: is it okay to borrow func from other ViewModels?
+                    primaryLocationNews = homeViewModel.primaryLocationNews,
+                    isNewsCardExpanded = homeViewModel.isNewsCardExpanded,
+                    onNewsCardClick = { homeViewModel.toggleNewsCard() },
+                    onDeleteNews = { homeViewModel.clearNewsForPrimaryLocation() },
                     onChatLocalNavigate = {
                         chatViewModel.selectedLocation = it
                         navController.navigate("chat/local")
@@ -83,7 +94,15 @@ fun RootNavigation() {
                         eventViewModel.isCurrentUserAttendingEvent(
                             event = event
                         )
-                    }
+                    },
+                    showDialog = homeViewModel.showDialog,
+                    dialogDescription = homeViewModel.newsDescription,
+                    onDialogDescriptionChange = { homeViewModel.newsDescription = it },
+                    onCreateNews = {
+                        homeViewModel.createNewsForPrimaryLocation()
+                        homeViewModel.toggleDialog()
+                    },
+                    dismissDialog = { homeViewModel.toggleDialog() }
                 )
             }
         }
@@ -92,6 +111,7 @@ fun RootNavigation() {
             route = "chat"
         ) {
             composable("chat/hub") {
+                //chatViewModel.getLatestMessagesFromEachLocation()
                 ChatHubScreenScaffold(
                     currentRoute = "chat/hub",
                     onNavigateEvent = { navController.navigate("event") },
@@ -109,7 +129,8 @@ fun RootNavigation() {
             }
             composable("chat/local") {
                 chatViewModel.getLocalMessages(chatViewModel.selectedLocation.locationID!!) // Get the local messages for the selected location
-                val lastDestinationRoute: String = navController.previousBackStackEntry!!.destination.route!!
+                val lastDestinationRoute: String =
+                    navController.previousBackStackEntry!!.destination.route!!
                 LocalChatScaffold(
                     locationName = chatViewModel.selectedLocation.locationName,
                     onNavigateBack = { navController.navigate(lastDestinationRoute) },
@@ -165,7 +186,7 @@ fun RootNavigation() {
             createEventViewModel.context = LocalContext.current
             CreateEventScaffold(
                 onNavigateBack = { navController.navigate("event") },
-                ) {
+            ) {
                 CreateEventScreen(
                     eventTitle = createEventViewModel.eventTitle,
                     eventDescription = createEventViewModel.eventDescription,
