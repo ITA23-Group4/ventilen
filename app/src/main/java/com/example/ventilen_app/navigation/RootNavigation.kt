@@ -161,7 +161,7 @@ fun RootNavigation() {
                     onNavigateCreateEvent = { navController.navigate("event/create") }
                 ) {
                     EventScreen(
-                        events = eventViewModel.events,
+                        events = eventViewModel.events.sorted(),
                         onAttend = {
                             eventViewModel.addUserToEvent(
                                 eventID = it
