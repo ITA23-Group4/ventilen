@@ -54,10 +54,12 @@ fun RootNavigation() {
             )
         }
         composable("home") {
+            // Update locations with latest messages
             chatViewModel.getLatestMessagesFromEachLocation()
-            // Load the primary location news on first load
+
+            // Load the primary location news on first load and update homeviewmodel primarylocationnews state
             if (homeViewModel.primaryLocationNews.isBlank() && !homeViewModel.loadedPrimaryLocationNews) {
-                homeViewModel.primaryLocationNews = chatViewModel.locationsWithLatestMessages[0].news
+                homeViewModel.primaryLocationNews = chatViewModel.getCurrentUserPrimaryLocation().news
                 homeViewModel.loadedPrimaryLocationNews = true
             }
             HomeScreenScaffold(
@@ -129,7 +131,9 @@ fun RootNavigation() {
                 }
             }
             composable("chat/local") {
-                chatViewModel.getLocalMessages(chatViewModel.selectedLocation.locationID!!) // Get the local messages for the selected location
+                // Get the local messages for the selected location
+                chatViewModel.getLocalMessages(chatViewModel.selectedLocation.locationID!!)
+                // Allows better navigation home to local chat and back, and chat to local chat and back
                 val lastDestinationRoute: String = navController.previousBackStackEntry!!.destination.route!!
                 LocalChatScaffold(
                     locationName = chatViewModel.selectedLocation.locationName,
@@ -177,7 +181,7 @@ fun RootNavigation() {
 
 
             }
-        }
+        } // TODO: event/create is not nested. No need for event/ or else make nested (as it might should be)
         composable("event/create") {
             createEventViewModel.context = LocalContext.current
             CreateEventScaffold(
