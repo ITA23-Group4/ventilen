@@ -34,6 +34,7 @@ import com.example.ventilen_app.ui.theme.CustomColorScheme
 fun HomeScreen(
     // News + Chat
     currentUserPrimaryLocation: Location,
+    primaryLocationNews: String,
     onChatLocalNavigate: (Location) -> Unit,
 
     // Event
@@ -66,10 +67,12 @@ fun HomeScreen(
                     onClick = dismissDialog
                 )
             },
-            title = { Text(
-                text = "Opret Nyhed",
-                style = MaterialTheme.typography.headlineMedium
-            ) },
+            title = {
+                Text(
+                    text = "Opret Nyhed",
+                    style = MaterialTheme.typography.headlineMedium
+                )
+            },
             text = {
                 CustomTextField(
                     text = dialogDescription,
@@ -80,41 +83,40 @@ fun HomeScreen(
         )
     }
 
-
     CustomColumn(
         modifier = Modifier.padding(0.dp, 8.dp, 0.dp, 0.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        Text(
-            text = "Nyheder", style = MaterialTheme.typography.headlineMedium,
-            modifier = Modifier.fillMaxWidth(),
-            textAlign = TextAlign.Start
-        )
-        CustomCard(
-            title = currentUserPrimaryLocation.locationName,
-            bodyText = currentUserPrimaryLocation.news,
-            abbreviation = currentUserPrimaryLocation.abbreviation,
-            backgroundColor = MaterialTheme.colorScheme.error
-        )
-
-        if (true) {
+        if (primaryLocationNews.isNotEmpty()) {
             Text(
-                text = "Primære mødested", style = MaterialTheme.typography.headlineMedium,
+                text = "Nyheder", style = MaterialTheme.typography.headlineMedium,
                 modifier = Modifier.fillMaxWidth(),
                 textAlign = TextAlign.Start
             )
             CustomCard(
                 title = currentUserPrimaryLocation.locationName,
-                bodyText = currentUserPrimaryLocation.latestMessage,
+                bodyText = primaryLocationNews,
                 abbreviation = currentUserPrimaryLocation.abbreviation,
-                onClick = { onChatLocalNavigate(currentUserPrimaryLocation) }
+                backgroundColor = MaterialTheme.colorScheme.error
             )
         }
+
+        Text(
+            text = "Primære mødested", style = MaterialTheme.typography.headlineMedium,
+            modifier = Modifier.fillMaxWidth(),
+            textAlign = TextAlign.Start
+        )
+        CustomCard(
+            title = currentUserPrimaryLocation.locationName,
+            bodyText = currentUserPrimaryLocation.latestMessage,
+            abbreviation = currentUserPrimaryLocation.abbreviation,
+            onClick = { onChatLocalNavigate(currentUserPrimaryLocation) }
+        )
 
         Column(
             modifier = Modifier
                 .fillMaxSize()
-        ){
+        ) {
             Text(
                 text = "Events oversigt", style = MaterialTheme.typography.headlineMedium,
                 modifier = Modifier.fillMaxWidth(),

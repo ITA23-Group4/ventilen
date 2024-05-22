@@ -54,6 +54,8 @@ fun RootNavigation() {
             )
         }
         composable("home") {
+            if (homeViewModel.primaryLocationNews.isBlank())
+                homeViewModel.primaryLocationNews = chatViewModel.locationsWithLatestMessages[0].news
             HomeScreenScaffold(
                 currentRoute = navController.currentDestination!!.route!!,
                 isAdmin = true,
@@ -63,6 +65,7 @@ fun RootNavigation() {
             ) {
                 HomeScreen(
                     currentUserPrimaryLocation = chatViewModel.locationsWithLatestMessages[0], // TODO: is it okay to borrow func from other ViewModels?
+                    primaryLocationNews = homeViewModel.primaryLocationNews,
                     onChatLocalNavigate = {
                         chatViewModel.selectedLocation = it
                         navController.navigate("chat/local")

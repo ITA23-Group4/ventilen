@@ -14,6 +14,7 @@ class HomeViewModel : ViewModel() {
     private val userRepository: UserRepository = UserRepository
     private val locationRepository: LocationRepository = LocationRepository
 
+    var primaryLocationNews: String by mutableStateOf("")
     var newsDescription: String by mutableStateOf("")
     var showDialog: Boolean by mutableStateOf(false)
 
@@ -30,15 +31,8 @@ class HomeViewModel : ViewModel() {
     }
 
     private fun updateLatestNewsFromPrimaryLocation() {
-        viewModelScope.launch {
-            val currentUserPrimaryLocationID: String = userRepository.currentUser!!.primaryLocationID
-
-            locationRepository.locations.find {
-                it.locationID == currentUserPrimaryLocationID
-            }!!.latestMessage = newsDescription
-
-            newsDescription = ""
-        }
+        primaryLocationNews = newsDescription
+        newsDescription = ""
     }
 
     fun toggleDialog() {
