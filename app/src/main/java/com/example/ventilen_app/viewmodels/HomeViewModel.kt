@@ -19,7 +19,7 @@ import kotlinx.coroutines.launch
  *
  * @property primaryLocationNews The latest news for the primary location.
  * @property newsDescription The description for the news to be created.
- * @property showDialog Flag to show or hide a dialog.
+ * @property showCreateNewsDialog Flag to show or hide a dialog.
  * @property isNewsCardExpanded Flag to expand or collapse the news card.
  *
  * @author Marcus, ...
@@ -30,7 +30,8 @@ class HomeViewModel : ViewModel() {
 
     var primaryLocationNews: String by mutableStateOf("")
     var newsDescription: String by mutableStateOf("")
-    var showDialog: Boolean by mutableStateOf(false)
+    var showCreateNewsDialog: Boolean by mutableStateOf(false)
+    var showConfirmDeleteNewsDialog: Boolean by mutableStateOf(false)
     var isNewsCardExpanded: Boolean by mutableStateOf(false)
     var loadedPrimaryLocationNews: Boolean by mutableStateOf(false)
 
@@ -74,8 +75,12 @@ class HomeViewModel : ViewModel() {
         return userRepository.currentUser!!.isAdmin
     }
 
-    fun toggleDialog() {
-        showDialog = !showDialog
+    fun toggleCreateNewsDialog() {
+        showCreateNewsDialog = !showCreateNewsDialog
+    }
+
+    fun toggleConfirmDeleteNewsDialog() {
+        showConfirmDeleteNewsDialog = !showConfirmDeleteNewsDialog
     }
 
     fun toggleNewsCard() {

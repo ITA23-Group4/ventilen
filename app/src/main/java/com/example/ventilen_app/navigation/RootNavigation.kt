@@ -67,7 +67,7 @@ fun RootNavigation() {
                 isAdmin = homeViewModel.isCurrentUserAdmin(),
                 onNavigateEvent = { navController.navigate("event") },
                 onNavigateChat = { navController.navigate("chat") },
-                onCreateNews = { homeViewModel.toggleDialog() }
+                onCreateNews = { homeViewModel.toggleCreateNewsDialog() }
             ) {
                 HomeScreen(
                     isAdmin = homeViewModel.isCurrentUserAdmin(),
@@ -98,14 +98,17 @@ fun RootNavigation() {
                             event = event
                         )
                     },
-                    showDialog = homeViewModel.showDialog,
+                    showCreateNewsDialog = homeViewModel.showCreateNewsDialog,
+                    showDeleteNewsDialog = homeViewModel.showConfirmDeleteNewsDialog,
+                    onShowDeleteNewsDialog = { homeViewModel.toggleConfirmDeleteNewsDialog() },
                     dialogDescription = homeViewModel.newsDescription,
                     onDialogDescriptionChange = { homeViewModel.newsDescription = it },
                     onCreateNews = {
                         homeViewModel.createNewsForPrimaryLocation()
-                        homeViewModel.toggleDialog()
+                        homeViewModel.toggleCreateNewsDialog()
                     },
-                    dismissDialog = { homeViewModel.toggleDialog() }
+                    dismissCreateDialog = { homeViewModel.toggleCreateNewsDialog() },
+                    dismissDeleteDialog = { homeViewModel.toggleConfirmDeleteNewsDialog() }
                 )
             }
         }

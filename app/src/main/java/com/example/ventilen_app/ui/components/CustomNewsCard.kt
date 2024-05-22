@@ -18,6 +18,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.KeyboardArrowUp
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -57,11 +58,46 @@ fun CustomNewsCard(
     backgroundColor: Color,
     hasRoundCorners: Boolean = true,
     isAdmin: Boolean,
+
     // Expanded functions
+    showDeleteNewsDialog: Boolean,
     isExpanded: Boolean,
     onCardClick: () -> Unit,
-    onDeleteNews: () -> Unit
+    onDeleteNews: () -> Unit,
+    onShowDeleteNewsDialog: () -> Unit,
+    dismissDeleteDialog: () -> Unit
 ) {
+    if (showDeleteNewsDialog) (
+            AlertDialog(
+                onDismissRequest = { dismissDeleteDialog() },
+                dismissButton = {
+                    CustomFilledButton(
+                        text = "Slet nyhed",
+                        onClick = onDeleteNews
+                    )
+                },
+                confirmButton = {
+                    CustomOutlinedButton(
+                        text = "Afbryd",
+                        onClick = dismissDeleteDialog
+                    )
+                },
+                title = { // TODO: Nok med title?
+                    Text(
+                        text = "Er du sikker på, at du ønsker slette denne nyhed?",
+                        style = MaterialTheme.typography.headlineMedium
+                    )
+                },
+                text = { // TODO: Skal der være uddybende tekst her?
+                    Text(
+                        text = "Er du sikker på, at du ønsker slette denne nyhed?",
+                        style = MaterialTheme.typography.bodyMedium
+                    )
+                },
+                shape = RoundedCornerShape(8.dp)
+            )
+    )
+
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -80,9 +116,7 @@ fun CustomNewsCard(
                 .padding(10.dp),
             verticalAlignment = Alignment.Top
         ) {
-            Column(
-
-            ) {
+            Column{
                 Box(
                     modifier = Modifier
                         .size(80.dp)
@@ -118,11 +152,11 @@ fun CustomNewsCard(
                         style = MaterialTheme.typography.labelMedium
                     )
 
-                    if (isExpanded) { //TODO: Make dialog to confirm delete
+                    if (isExpanded) {
                         if (isAdmin) {
                             IconButton(
                                 modifier = Modifier.fillMaxHeight(),
-                                onClick = onDeleteNews
+                                onClick = onShowDeleteNewsDialog
                             ) {
                                 Icon(
                                     imageVector = Icons.Default.Delete,
