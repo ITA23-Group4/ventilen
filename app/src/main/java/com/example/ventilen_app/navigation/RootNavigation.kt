@@ -54,10 +54,12 @@ fun RootNavigation() {
             )
         }
         composable("home") {
+            // Update locations with latest messages
             chatViewModel.getLatestMessagesFromEachLocation()
-            // Load the primary location news on first load
+
+            // Load the primary location news on first load and update homeviewmodel primarylocationnews state
             if (homeViewModel.primaryLocationNews.isBlank() && !homeViewModel.loadedPrimaryLocationNews) {
-                homeViewModel.primaryLocationNews = chatViewModel.locationsWithLatestMessages[0].news
+                homeViewModel.primaryLocationNews = chatViewModel.getCurrentUserPrimaryLocation().news
                 homeViewModel.loadedPrimaryLocationNews = true
             }
             HomeScreenScaffold(
@@ -65,7 +67,7 @@ fun RootNavigation() {
                 isAdmin = homeViewModel.isCurrentUserAdmin(),
                 onNavigateEvent = { navController.navigate("event") },
                 onNavigateChat = { navController.navigate("chat") },
-                onCreateNews = { homeViewModel.toggleDialog() }
+                onCreateNews = { homeViewModel.toggleCreateNewsDialog() }
             ) {
                 HomeScreen(
                     isAdmin = homeViewModel.isCurrentUserAdmin(),
@@ -96,14 +98,17 @@ fun RootNavigation() {
                             event = event
                         )
                     },
-                    showDialog = homeViewModel.showDialog,
+                    showCreateNewsDialog = homeViewModel.showCreateNewsDialog,
+                    showDeleteNewsDialog = homeViewModel.showConfirmDeleteNewsDialog,
+                    onShowDeleteNewsDialog = { homeViewModel.toggleConfirmDeleteNewsDialog() },
                     dialogDescription = homeViewModel.newsDescription,
                     onDialogDescriptionChange = { homeViewModel.newsDescription = it },
                     onCreateNews = {
                         homeViewModel.createNewsForPrimaryLocation()
-                        homeViewModel.toggleDialog()
+                        homeViewModel.toggleCreateNewsDialog()
                     },
-                    dismissDialog = { homeViewModel.toggleDialog() }
+                    dismissCreateDialog = { homeViewModel.toggleCreateNewsDialog() },
+                    dismissDeleteDialog = { homeViewModel.toggleConfirmDeleteNewsDialog() }
                 )
             }
         }
@@ -129,7 +134,9 @@ fun RootNavigation() {
                 }
             }
             composable("chat/local") {
-                chatViewModel.getLocalMessages(chatViewModel.selectedLocation.locationID!!) // Get the local messages for the selected location
+                // Get the local messages for the selected location
+                chatViewModel.getLocalMessages(chatViewModel.selectedLocation.locationID!!)
+                // Allows better navigation home to local chat and back, and chat to local chat and back
                 val lastDestinationRoute: String = navController.previousBackStackEntry!!.destination.route!!
                 LocalChatScaffold(
                     locationName = chatViewModel.selectedLocation.locationName,
@@ -154,7 +161,7 @@ fun RootNavigation() {
                     onNavigateCreateEvent = { navController.navigate("event/create") }
                 ) {
                     EventScreen(
-                        events = eventViewModel.events,
+                        events = eventViewModel.events.sorted(),
                         onAttend = {
                             eventViewModel.addUserToEvent(
                                 eventID = it
@@ -177,7 +184,7 @@ fun RootNavigation() {
 
 
             }
-        }
+        } // TODO: event/create is not nested. No need for event/ or else make nested (as it might should be)
         composable("event/create") {
             createEventViewModel.context = LocalContext.current
             CreateEventScaffold(

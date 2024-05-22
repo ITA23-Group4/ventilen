@@ -16,7 +16,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -59,16 +58,19 @@ fun HomeScreen(
     onNotAttend: (String) -> Unit,
     onEventCardClick: (String) -> Unit,
 
-    // Create news
-    showDialog: Boolean,
+    // Create/delete news
+    showCreateNewsDialog: Boolean,
+    showDeleteNewsDialog: Boolean,
     dialogDescription: String,
+    onShowDeleteNewsDialog: () -> Unit,
     onDialogDescriptionChange: (String) -> Unit,
     onCreateNews: () -> Unit,
-    dismissDialog: () -> Unit
+    dismissCreateDialog: () -> Unit,
+    dismissDeleteDialog: () -> Unit
 ) {
-    if (showDialog) {
+    if (showCreateNewsDialog) {
         AlertDialog(
-            onDismissRequest = { dismissDialog() },
+            onDismissRequest = { dismissCreateDialog() },
             dismissButton = {
                 CustomFilledButton(
                     text = "Opret",
@@ -78,7 +80,7 @@ fun HomeScreen(
             confirmButton = {
                 CustomOutlinedButton(
                     text = "Afbryd",
-                    onClick = dismissDialog
+                    onClick = dismissCreateDialog
                 )
             },
             title = {
@@ -115,10 +117,13 @@ fun HomeScreen(
                 bodyText = primaryLocationNews,
                 abbreviation = currentUserPrimaryLocation.abbreviation,
                 backgroundColor = MaterialTheme.colorScheme.error,
+                showDeleteNewsDialog =  showDeleteNewsDialog,
                 isExpanded = isNewsCardExpanded,
                 isAdmin = isAdmin,
                 onCardClick = onNewsCardClick,
-                onDeleteNews = onDeleteNews
+                onDeleteNews = onDeleteNews,
+                dismissDeleteDialog = dismissDeleteDialog,
+                onShowDeleteNewsDialog = onShowDeleteNewsDialog
             )
         }
 
