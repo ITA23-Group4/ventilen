@@ -59,7 +59,7 @@ fun RootNavigation() {
                 isAdmin = true,
                 onNavigateEvent = { navController.navigate("event") },
                 onNavigateChat = { navController.navigate("chat") },
-                onCreateNews = { homeViewModel.showDialog = true }
+                onCreateNews = { homeViewModel.toggleDialog() }
             ) {
                 HomeScreen(
                     currentUserPrimaryLocation = chatViewModel.locationsWithLatestMessages[0], // TODO: is it okay to borrow func from other ViewModels?
@@ -86,9 +86,13 @@ fun RootNavigation() {
                         )
                     },
                     showDialog = homeViewModel.showDialog,
-                    dialogDescription = "Text",
+                    dialogDescription = homeViewModel.newsDescription,
                     onDialogDescriptionChange = { homeViewModel.newsDescription = it },
-                    dismissDialog = { homeViewModel.showDialog = false }
+                    onCreateNews = {
+                        homeViewModel.createNewsForPrimaryLocation()
+                        homeViewModel.toggleDialog()
+                    },
+                    dismissDialog = { homeViewModel.toggleDialog() }
                 )
             }
         }
@@ -114,7 +118,8 @@ fun RootNavigation() {
             }
             composable("chat/local") {
                 chatViewModel.getLocalMessages(chatViewModel.selectedLocation.locationID!!) // Get the local messages for the selected location
-                val lastDestinationRoute: String = navController.previousBackStackEntry!!.destination.route!!
+                val lastDestinationRoute: String =
+                    navController.previousBackStackEntry!!.destination.route!!
                 LocalChatScaffold(
                     locationName = chatViewModel.selectedLocation.locationName,
                     onNavigateBack = { navController.navigate(lastDestinationRoute) },
@@ -170,7 +175,7 @@ fun RootNavigation() {
             createEventViewModel.context = LocalContext.current
             CreateEventScaffold(
                 onNavigateBack = { navController.navigate("event") },
-                ) {
+            ) {
                 CreateEventScreen(
                     eventTitle = createEventViewModel.eventTitle,
                     eventDescription = createEventViewModel.eventDescription,

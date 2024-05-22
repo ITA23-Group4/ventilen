@@ -42,7 +42,13 @@ object ChatRepository {
             val news = document.getString("news") ?: ""
             val locationID = document.id
 
-            Location(locationName = name, latestMessage = latestMessage, abbreviation = abbreviation, locationID = locationID, news = news)
+            Location(
+                locationName = name,
+                latestMessage = latestMessage,
+                abbreviation = abbreviation,
+                locationID = locationID,
+                news = news
+            )
         }
 
         return locations

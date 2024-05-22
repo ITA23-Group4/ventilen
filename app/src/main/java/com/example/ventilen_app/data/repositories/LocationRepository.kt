@@ -4,6 +4,7 @@ import android.util.Log
 import com.example.ventilen_app.data.models.Location
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.firestore
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -16,6 +17,11 @@ object LocationRepository {
         get() { return field.sorted() }
     val mapLocationNameToLocation: Map<String, Location>
         get() { return locations.associateBy { location -> location.locationName } }
+
+    suspend fun createNewsForLocation(locationID: String, description: String) {
+        val locationRef = db.collection("locations").document(locationID)
+        locationRef.update("news", description).await()
+    }
 
     suspend fun getLocations() {
         val querySnapshot = db.collection("locations").get().await()

@@ -48,6 +48,7 @@ fun HomeScreen(
     showDialog: Boolean,
     dialogDescription: String,
     onDialogDescriptionChange: (String) -> Unit,
+    onCreateNews: () -> Unit,
     dismissDialog: () -> Unit
 ) {
     if (showDialog) {
@@ -56,7 +57,7 @@ fun HomeScreen(
             dismissButton = {
                 CustomFilledButton(
                     text = "Opret",
-                    onClick = dismissDialog
+                    onClick = onCreateNews
                 )
             },
             confirmButton = {

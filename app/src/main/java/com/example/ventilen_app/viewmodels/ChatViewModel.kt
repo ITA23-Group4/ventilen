@@ -52,7 +52,7 @@ class ChatViewModel : ViewModel() {
         }
     }
 
-    private fun getLatestMessagesFromEachLocation() {
+    fun getLatestMessagesFromEachLocation() {
         viewModelScope.launch {
             locationsWithLatestMessages.clear()
             locationsWithLatestMessages.addAll(chatRepository.chatHubMessagesSnapshot())
