@@ -17,6 +17,7 @@ class HomeViewModel : ViewModel() {
     var primaryLocationNews: String by mutableStateOf("")
     var newsDescription: String by mutableStateOf("")
     var showDialog: Boolean by mutableStateOf(false)
+    var isNewsCardExpanded: Boolean by mutableStateOf(false)
 
     fun createNewsForPrimaryLocation() {
         viewModelScope.launch {
@@ -30,13 +31,35 @@ class HomeViewModel : ViewModel() {
         }
     }
 
+    fun clearNewsForPrimaryLocation() {
+        viewModelScope.launch {
+            try {
+                val primaryLocationID: String = userRepository.currentUser!!.primaryLocationID
+                clearLatestNewsFromPrimaryLocation()
+                locationRepository.createNewsForLocation(primaryLocationID, newsDescription)
+                updateLatestNewsFromPrimaryLocation()
+            } catch (error: Exception) {
+                Log.e("Error", error.toString())
+            }
+        }
+    }
+
     private fun updateLatestNewsFromPrimaryLocation() {
+        primaryLocationNews = newsDescription
+        newsDescription = ""
+    }
+
+    private fun clearLatestNewsFromPrimaryLocation() {
         primaryLocationNews = newsDescription
         newsDescription = ""
     }
 
     fun toggleDialog() {
         showDialog = !showDialog
+    }
+
+    fun toggleNewsCard() {
+        isNewsCardExpanded = !isNewsCardExpanded
     }
 
 }

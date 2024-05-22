@@ -26,6 +26,7 @@ import com.example.ventilen_app.ui.components.CustomChatCardComponent.CustomCard
 import com.example.ventilen_app.ui.components.CustomColumn
 import com.example.ventilen_app.ui.components.CustomEventCardComponent.CustomEventCard
 import com.example.ventilen_app.ui.components.CustomFilledButton
+import com.example.ventilen_app.ui.components.CustomNewsCard
 import com.example.ventilen_app.ui.components.CustomOutlinedButton
 import com.example.ventilen_app.ui.components.CustomTextField
 import com.example.ventilen_app.ui.theme.CustomColorScheme
@@ -35,6 +36,9 @@ fun HomeScreen(
     // News + Chat
     currentUserPrimaryLocation: Location,
     primaryLocationNews: String,
+    isNewsCardExpanded: Boolean,
+    onNewsCardClick: () -> Unit,
+    onDeleteNews: () -> Unit,
     onChatLocalNavigate: (Location) -> Unit,
 
     // Event
@@ -93,11 +97,14 @@ fun HomeScreen(
                 modifier = Modifier.fillMaxWidth(),
                 textAlign = TextAlign.Start
             )
-            CustomCard(
+            CustomNewsCard(
                 title = currentUserPrimaryLocation.locationName,
                 bodyText = primaryLocationNews,
                 abbreviation = currentUserPrimaryLocation.abbreviation,
-                backgroundColor = MaterialTheme.colorScheme.error
+                backgroundColor = MaterialTheme.colorScheme.error,
+                isExpanded = isNewsCardExpanded,
+                onCardClick = onNewsCardClick,
+                onDeleteNews = onDeleteNews
             )
         }
 
@@ -134,7 +141,6 @@ fun HomeScreen(
                 verticalArrangement = Arrangement.spacedBy(20.dp)
             ) {
                 items(events) { event ->
-
                     CustomEventCard(
                         event = event,
                         onAttend = { onAttend(event.eventID) },
