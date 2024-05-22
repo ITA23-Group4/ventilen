@@ -160,7 +160,7 @@ class EventViewModel: ViewModel() {
 
             // If the event's start date is before or equal to the current date,
             // move the lower bound of the search interval to mid + 1
-            if (midDate.before(currentDate)) {
+            if (!midDate.after(currentDate)) {
                 low = mid + 1
             } else {
                 // If the event's start date is after the current date,
@@ -192,7 +192,7 @@ class EventViewModel: ViewModel() {
 
             // If the event's start date is on or before one week from now,
             // update the end index and move the lower bound of the search interval to mid + 1
-            if (midDate.before(oneWeekFromNow)) {
+            if (!midDate.after(oneWeekFromNow)) {
                 low = mid + 1
             } else {
                 // If the event's start date is after one week from now,
