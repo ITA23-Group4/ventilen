@@ -1,5 +1,6 @@
 package com.example.ventilen_app.ui.screens.Home
 
+import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -99,7 +100,9 @@ fun HomeScreen(
         modifier = Modifier.padding(0.dp, 8.dp, 0.dp, 0.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
+        Log.d("HomeScreen", "primaryLocationNews 1: $primaryLocationNews")
         if (primaryLocationNews.isNotEmpty()) {
+            Log.d("HomeScreen", "primaryLocationNews 2: $primaryLocationNews")
             Text(
                 text = "Nyheder", style = MaterialTheme.typography.headlineMedium,
                 modifier = Modifier.fillMaxWidth(),

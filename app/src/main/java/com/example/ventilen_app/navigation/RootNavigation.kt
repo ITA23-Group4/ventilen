@@ -54,8 +54,11 @@ fun RootNavigation() {
             )
         }
         composable("home") {
-            if (homeViewModel.primaryLocationNews.isBlank())
+            // Load the primary location news on first load
+            if (homeViewModel.primaryLocationNews.isBlank() && !homeViewModel.loadedPrimaryLocationNews) {
                 homeViewModel.primaryLocationNews = chatViewModel.locationsWithLatestMessages[0].news
+                homeViewModel.loadedPrimaryLocationNews = true
+            }
             HomeScreenScaffold(
                 currentRoute = navController.currentDestination!!.route!!,
                 isAdmin = homeViewModel.isCurrentUserAdmin(),
@@ -108,6 +111,7 @@ fun RootNavigation() {
             route = "chat"
         ) {
             composable("chat/hub") {
+                //chatViewModel.getLatestMessagesFromEachLocation()
                 ChatHubScreenScaffold(
                     currentRoute = "chat/hub",
                     onNavigateEvent = { navController.navigate("event") },

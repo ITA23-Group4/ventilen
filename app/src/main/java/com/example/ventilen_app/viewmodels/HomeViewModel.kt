@@ -32,6 +32,7 @@ class HomeViewModel : ViewModel() {
     var newsDescription: String by mutableStateOf("")
     var showDialog: Boolean by mutableStateOf(false)
     var isNewsCardExpanded: Boolean by mutableStateOf(false)
+    var loadedPrimaryLocationNews: Boolean by mutableStateOf(false)
 
     fun createNewsForPrimaryLocation() {
         viewModelScope.launch {
