@@ -66,7 +66,6 @@ val Typography = Typography(
         fontFamily = montserratFamily,
         fontWeight = FontWeight.Medium,
         fontSize = 16.sp,
-        color = CustomColorScheme.OffBlack
     ),
     labelSmall = TextStyle(
         fontFamily = montserratFamily,

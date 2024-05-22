@@ -49,6 +49,7 @@ fun LoginScreen(
 
         CustomPasswordTextField(
             text = textPassword,
+
             label = "Password",
             onValueChange = { onValueChangePassword(it) },
             hasError = hasLoginError,
@@ -66,7 +67,7 @@ fun LoginScreen(
         CustomFilledButton(
             text = "Forsæt",
             onClick = onNavigateHome,
-            textColor = CustomColorScheme.OffWhite
+            textColor = MaterialTheme.colorScheme.surface
         )
 
         // TODO placement should be fixed with CustomColumn
@@ -75,7 +76,7 @@ fun LoginScreen(
         ) {
             Text(text = "Har du ikke en bruger?", style = MaterialTheme.typography.bodyMedium)
             TextButton(onClick = onNavigateRegistration) {
-                Text(text = "Tilmeld Dig", style = MaterialTheme.typography.bodyLarge, color = CustomColorScheme.Orange)
+                Text(text = "Tilmeld Dig", style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.primary)
             }
         }
 

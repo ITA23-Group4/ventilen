@@ -37,12 +37,12 @@ fun CustomTextField(
         singleLine = isSingleLine,
         onValueChange = { onValueChange(it)},
         label = { Text(text = label,
-            style = MaterialTheme.typography.bodyLarge,
-            color = CustomColorScheme.Orange
+            style = MaterialTheme.typography.labelMedium
         )},
         colors = TextFieldDefaults.outlinedTextFieldColors(
             unfocusedBorderColor = MaterialTheme.colorScheme.primary,
-            unfocusedLabelColor = MaterialTheme.colorScheme.primary
+            unfocusedLabelColor = MaterialTheme.colorScheme.primary,
+            focusedLabelColor = MaterialTheme.colorScheme.onBackground
         ),
         textStyle = MaterialTheme.typography.bodyMedium,
         isError = hasError,
