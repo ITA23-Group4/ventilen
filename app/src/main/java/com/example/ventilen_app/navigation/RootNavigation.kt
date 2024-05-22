@@ -23,6 +23,7 @@ import com.example.ventilen_app.viewmodels.CreateEventViewModel
 import com.example.ventilen_app.ui.screens.Event.EventScreen
 import com.example.ventilen_app.viewmodels.EventViewModel
 import com.example.ventilen_app.ui.screens.Home.HomeScreen
+import com.example.ventilen_app.viewmodels.HomeViewModel
 
 /**
  * Root navigation structure of the application.
