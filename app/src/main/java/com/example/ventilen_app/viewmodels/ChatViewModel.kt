@@ -24,7 +24,7 @@ class ChatViewModel : ViewModel() {
         return FirebaseAuth.getInstance().currentUser?.uid!!
     }
 
-    val locationsWithLatestMessages: MutableList<Location> = mutableStateListOf()
+    var locationsWithLatestMessages: MutableList<Location> = mutableStateListOf()
 
     val localMessages: StateFlow<List<Message>>
         get() = chatRepository.messagesFlow
@@ -53,8 +53,7 @@ class ChatViewModel : ViewModel() {
 
     fun getLatestMessagesFromEachLocation() {
         viewModelScope.launch {
-            locationsWithLatestMessages.clear()
-            locationsWithLatestMessages.addAll(chatRepository.chatHubMessagesSnapshot())
+            locationsWithLatestMessages = chatRepository.chatHubMessagesSnapshot().toMutableList()
         }
     }
 
