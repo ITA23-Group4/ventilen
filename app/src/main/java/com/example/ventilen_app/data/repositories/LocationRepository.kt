@@ -15,6 +15,7 @@ object LocationRepository {
 
     var locations: List<Location> = listOf()
         get() { return field.sorted() }
+
     val mapLocationNameToLocation: Map<String, Location>
         get() { return locations.associateBy { location -> location.locationName } }
 

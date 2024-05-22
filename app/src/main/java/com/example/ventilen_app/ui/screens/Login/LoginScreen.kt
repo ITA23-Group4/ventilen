@@ -59,7 +59,7 @@ fun LoginScreen(
         if (hasLoginError) {
             Text(
                 modifier = Modifier.offset(y = (-9).dp),
-                text = "Fejl",
+                text = "Fejl ved login: Email eller password er ikke korrekt, hvis du ikke har en konto skal du tilmelde dig.",
                 color = MaterialTheme.colorScheme.error
             )
         }

@@ -27,7 +27,7 @@ fun CustomFilledButton(
         .fillMaxWidth()
         .height(56.dp),
         colors = ButtonDefaults.buttonColors(containerColor = color),
-        shape = RoundedCornerShape(8.dp),
+        shape = RoundedCornerShape(4.dp),
         enabled = isEnabled
     ){
         Text(text = text, style = MaterialTheme.typography.labelLarge, color = textColor)

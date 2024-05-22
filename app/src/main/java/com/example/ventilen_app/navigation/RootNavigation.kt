@@ -136,15 +136,11 @@ fun RootNavigation() {
                     onNavigateBack = { navController.navigate(lastDestinationRoute) },
                     currentMessage = chatViewModel.currentMessage,
                     onCurrentMessageChange = { chatViewModel.currentMessage = it },
-                    onSendMessage = {
-                        chatViewModel.sendMessage()
-                    },
+                    onSendMessage = { chatViewModel.sendMessage() },
                 ) {
                     ChatLocalScreen(
                         listOfLocationMessages = chatViewModel.localMessages.collectAsState(),
-                        isCurrentUserSender = {
-                            chatViewModel.isCurrentUserSender(it)
-                        }
+                        isCurrentUserSender = { chatViewModel.isCurrentUserSender(it) }
                     )
                 }
             }
@@ -158,7 +154,7 @@ fun RootNavigation() {
                     onNavigateCreateEvent = { navController.navigate("event/create") }
                 ) {
                     EventScreen(
-                        events = eventViewModel.events.sorted(),
+                        events = eventViewModel.events,
                         onAttend = {
                             eventViewModel.addUserToEvent(
                                 eventID = it

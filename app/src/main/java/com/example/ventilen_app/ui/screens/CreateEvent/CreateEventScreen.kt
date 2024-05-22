@@ -3,6 +3,7 @@ package com.example.ventilen_app.ui.screens.CreateEvent
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -66,12 +67,11 @@ fun CreateEventScreen(
         AlertDialog(
             onDismissRequest = { dismissDialog() },
             confirmButton = {
-                TextButton(onClick = { dismissDialog() }) {
-                    Text("OK")
-                }
+                CustomFilledButton(text = "OK", onClick = { dismissDialog() })
             },
             title = { Text(text = "Event information.") },
-            text = { Text("Det er vigtigt når opretter et event at du udfylder alle felter samt husker at vælge et start- og sluttidspunkt for eventet. Hvis der mangler information i felterne oprettes eventet ikke korrekt.") }
+            text = { Text("Det er vigtigt når opretter et event at du udfylder alle felter samt husker at vælge et start- og sluttidspunkt for eventet. Hvis der mangler information i felterne oprettes eventet ikke korrekt.") },
+            shape = RoundedCornerShape(8.dp)
         )
     }
 
