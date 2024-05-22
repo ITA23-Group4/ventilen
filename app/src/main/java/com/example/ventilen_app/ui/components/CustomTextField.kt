@@ -26,6 +26,7 @@ fun CustomTextField(
     label: String = "",
     isSingleLine: Boolean = true,
     hasError: Boolean = false,
+    isIntegerOnly: Boolean = false,
     errorIndicator: String = "*",
     errorMessage: String = "",
     modifier: Modifier = Modifier,
@@ -35,8 +36,11 @@ fun CustomTextField(
         modifier = modifier.fillMaxWidth(),
         value = text,
         singleLine = isSingleLine,
-        onValueChange = { onValueChange(it)},
-        label = { Text(text = label,
+        onValueChange = { newText ->
+            if (!isIntegerOnly || newText.all { it.isDigit() }) {
+                onValueChange(newText)
+            }
+        },        label = { Text(text = label,
             style = MaterialTheme.typography.bodyLarge,
             color = CustomColorScheme.Orange
         )},

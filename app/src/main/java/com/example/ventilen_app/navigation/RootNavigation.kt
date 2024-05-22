@@ -164,16 +164,16 @@ fun RootNavigation() {
         composable("event/create") {
             createEventViewModel.context = LocalContext.current
             CreateEventScaffold(
-                onNavigateBack = { navController.navigate("event") },
-                ) {
+                onNavigateBack = { navController.navigate("event") }
+            ) {
                 CreateEventScreen(
                     eventTitle = createEventViewModel.eventTitle,
                     eventDescription = createEventViewModel.eventDescription,
                     eventAddress = createEventViewModel.eventAddress,
                     eventPrice = createEventViewModel.eventPrice,
 
-                    selectedStartDateTime = createEventViewModel.eventStartDateTime,
-                    selectedEndDateTime = createEventViewModel.eventEndDateTime,
+                    startDateTimeButtonText = createEventViewModel.startDateTimeButtonText,
+                    endDateTimeButtonText = createEventViewModel.endDateTimeButtonText,
                     showStartDateTimePicker = { createEventViewModel.showStartDateTimePickerForUser() },
                     showEndDateTimePicker = { createEventViewModel.showEndDateTimePickerForUser() },
 
@@ -182,8 +182,11 @@ fun RootNavigation() {
                     onValueChangeAddress = { createEventViewModel.eventAddress = it },
                     onValueChangePrice = { createEventViewModel.eventPrice = it },
                     onCreateEvent = { createEventViewModel.createEvent() },
+
                     showDialog = createEventViewModel.showDialog,
-                    dismissDialog = { createEventViewModel.dismissDialog() }
+                    dismissDialog = { createEventViewModel.dismissDialog() },
+
+                    areAllFieldsFilled = { createEventViewModel.areAllFieldsFilled() }
                 )
             }
         }
