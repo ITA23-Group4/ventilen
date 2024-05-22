@@ -4,13 +4,18 @@ package com.example.ventilen_app.ui.components
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -27,6 +32,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
@@ -41,6 +47,7 @@ fun CustomNewsCard(
     abbreviation: String,
     backgroundColor: Color,
     hasRoundCorners: Boolean = true,
+    isAdmin: Boolean,
     // Expanded functions
     isExpanded: Boolean,
     onCardClick: () -> Unit,
@@ -91,7 +98,9 @@ fun CustomNewsCard(
                 verticalArrangement = Arrangement.Center
             ) {
                 Row(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(25.dp),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.Top
                 ) {
@@ -100,13 +109,25 @@ fun CustomNewsCard(
                         style = MaterialTheme.typography.labelMedium
                     )
 
-                    if (isExpanded) {
-                        IconButton(onClick = onDeleteNews ) {
+                    if (isExpanded) { //TODO: Make dialog to confirm delete
+                        if (isAdmin) {
+                            IconButton(
+                                modifier = Modifier.fillMaxHeight(),
+                                onClick = onDeleteNews
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Default.Delete,
+                                    contentDescription = "Delete news button",
+                                    tint = MaterialTheme.colorScheme.onError,
+                                    modifier = Modifier.fillMaxSize()
+                                )
+                            }
+                        } else {
                             Icon(
-                                imageVector = Icons.Default.Delete,
-                                contentDescription = "Remove news",
-                                tint = MaterialTheme.colorScheme.error,
-                                modifier = Modifier.size(28.dp)
+                                imageVector = Icons.Default.KeyboardArrowUp,
+                                contentDescription = "Delete news button",
+                                tint = MaterialTheme.colorScheme.onSurface,
+                                modifier = Modifier.fillMaxSize()
                             )
                         }
                     }

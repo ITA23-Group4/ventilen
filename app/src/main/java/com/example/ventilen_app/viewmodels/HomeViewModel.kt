@@ -47,11 +47,16 @@ class HomeViewModel : ViewModel() {
     private fun updateLatestNewsFromPrimaryLocation() {
         primaryLocationNews = newsDescription
         newsDescription = ""
+        isNewsCardExpanded = false
     }
 
     private fun clearLatestNewsFromPrimaryLocation() {
         primaryLocationNews = newsDescription
         newsDescription = ""
+    }
+
+    fun isCurrentUserAdmin(): Boolean {
+        return userRepository.currentUser!!.isAdmin
     }
 
     fun toggleDialog() {

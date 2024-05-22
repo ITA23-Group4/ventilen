@@ -58,12 +58,13 @@ fun RootNavigation() {
                 homeViewModel.primaryLocationNews = chatViewModel.locationsWithLatestMessages[0].news
             HomeScreenScaffold(
                 currentRoute = navController.currentDestination!!.route!!,
-                isAdmin = true,
+                isAdmin = homeViewModel.isCurrentUserAdmin(),
                 onNavigateEvent = { navController.navigate("event") },
                 onNavigateChat = { navController.navigate("chat") },
                 onCreateNews = { homeViewModel.toggleDialog() }
             ) {
                 HomeScreen(
+                    isAdmin = homeViewModel.isCurrentUserAdmin(),
                     currentUserPrimaryLocation = chatViewModel.locationsWithLatestMessages[0], // TODO: is it okay to borrow func from other ViewModels?
                     primaryLocationNews = homeViewModel.primaryLocationNews,
                     isNewsCardExpanded = homeViewModel.isNewsCardExpanded,

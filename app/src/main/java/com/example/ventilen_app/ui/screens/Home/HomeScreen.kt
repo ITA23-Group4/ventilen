@@ -33,6 +33,8 @@ import com.example.ventilen_app.ui.theme.CustomColorScheme
 
 @Composable
 fun HomeScreen(
+    isAdmin: Boolean,
+
     // News + Chat
     currentUserPrimaryLocation: Location,
     primaryLocationNews: String,
@@ -103,6 +105,7 @@ fun HomeScreen(
                 abbreviation = currentUserPrimaryLocation.abbreviation,
                 backgroundColor = MaterialTheme.colorScheme.error,
                 isExpanded = isNewsCardExpanded,
+                isAdmin = isAdmin,
                 onCardClick = onNewsCardClick,
                 onDeleteNews = onDeleteNews
             )
