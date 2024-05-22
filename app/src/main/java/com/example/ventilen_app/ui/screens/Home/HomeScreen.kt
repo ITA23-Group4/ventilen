@@ -51,7 +51,7 @@ fun HomeScreen(
     onChatLocalNavigate: (Location) -> Unit,
 
     // Event
-    events: List<Event>,
+    eventsWithinAWeek: List<Event>,
     isEventSelected: (String) -> Boolean,
     isAttending: (Event) -> Boolean,
     onAttend: (String) -> Unit,
@@ -159,7 +159,7 @@ fun HomeScreen(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(20.dp)
             ) {
-                items(events) { event ->
+                items(eventsWithinAWeek) { event ->
                     CustomEventCard(
                         event = event,
                         onAttend = { onAttend(event.eventID) },

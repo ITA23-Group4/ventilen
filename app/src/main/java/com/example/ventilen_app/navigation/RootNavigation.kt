@@ -80,7 +80,7 @@ fun RootNavigation() {
                         chatViewModel.selectedLocation = it
                         navController.navigate("chat/local")
                     },
-                    events = eventViewModel.events.sorted(),
+                    eventsWithinAWeek = eventViewModel.getEventsWithinNextWeek(),
                     onAttend = {
                         eventViewModel.addUserToEvent(
                             eventID = it
@@ -161,7 +161,7 @@ fun RootNavigation() {
                     onNavigateCreateEvent = { navController.navigate("event/create") }
                 ) {
                     EventScreen(
-                        events = eventViewModel.events.sorted(),
+                        events = eventViewModel.events,
                         onAttend = {
                             eventViewModel.addUserToEvent(
                                 eventID = it

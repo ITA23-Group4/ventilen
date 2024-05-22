@@ -13,7 +13,10 @@ object EventRepository {
     private val db = Firebase.firestore;
 
     suspend fun getEvents(): List<Event> {
-        val querySnapshot: QuerySnapshot = db.collection("events").get().await()
+        val querySnapshot: QuerySnapshot = db.collection("events")
+            .orderBy("eventStartDateTime")
+            .get()
+            .await()
         return querySnapshot.documents.mapNotNull { eventDocument ->
             convertEventDocumentToEvent(eventDocument)
         }
