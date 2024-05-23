@@ -30,7 +30,7 @@ fun LocationScreen(
     {
         TopAuthPageDesign(
             topText = "Hvor skal vi mødes",
-            bottomText ="Vælg det mødested som er tættest på dig",
+            bottomText ="Vælg dit primære mødested som er tættest på dig",
         )
 
         CustomDropDownMenu(

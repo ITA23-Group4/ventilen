@@ -48,7 +48,7 @@ fun CustomEventCard(
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .shadow(elevation = 8.75.dp, shape = RoundedCornerShape(12.dp))
+            .shadow(elevation = 4.dp, shape = RoundedCornerShape(12.dp))
             .animateContentSize(
                 animationSpec = tween(
                     durationMillis = 300,

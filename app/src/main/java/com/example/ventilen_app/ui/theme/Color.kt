@@ -10,4 +10,5 @@ object CustomColorScheme {
     val OffWhite = Color(0xFFFAF9F6)
     val LightGray = Color(0xFFF4F3F1)
     val OffBlack = Color(0xFF212427)
+    val Red = Color(0xFFFF3333)
 }

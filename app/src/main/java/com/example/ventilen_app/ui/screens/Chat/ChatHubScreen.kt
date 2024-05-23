@@ -2,7 +2,9 @@ package com.example.ventilen_app.ui.screens.Chat
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -42,8 +44,10 @@ fun ChatHubScreen(
             abbreviation = currentUserPrimaryLocation.abbreviation,
             onClick = { onChatLocalNavigate(currentUserPrimaryLocation) },
             cardModifier = Modifier
-                .shadow(elevation = 8.75.dp, shape = RoundedCornerShape(12.dp))
+                .shadow(elevation = 4.dp, shape = RoundedCornerShape(12.dp))
         )
+
+        Spacer(modifier = Modifier.height(4.dp))
 
         Text(text = "Andre mødesteder", style = MaterialTheme.typography.headlineMedium,
             modifier = Modifier.fillMaxWidth(),

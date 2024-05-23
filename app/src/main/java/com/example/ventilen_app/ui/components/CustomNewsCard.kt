@@ -18,6 +18,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.KeyboardArrowUp
+import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -97,7 +98,7 @@ fun CustomNewsCard(
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .shadow(elevation = 8.75.dp, shape = RoundedCornerShape(12.dp))
+            .shadow(elevation = 4.dp, shape = RoundedCornerShape(12.dp))
             .animateContentSize(
                 animationSpec = tween(
                     durationMillis = 300,
@@ -125,10 +126,11 @@ fun CustomNewsCard(
                         },
                     contentAlignment = Alignment.Center
                 ) {
-                    Text(
-                        text = abbreviation,
-                        style = MaterialTheme.typography.displayLarge,
-                        color = CustomColorScheme.OffWhite
+                    Icon(
+                        imageVector = Icons.Default.Notifications,
+                        contentDescription = "News alert",
+                        tint = Color.White,
+                        modifier = Modifier.size(44.dp)
                     )
                 }
             }
