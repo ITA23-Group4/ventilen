@@ -16,6 +16,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.ventilen_app.data.models.Event
@@ -47,6 +48,7 @@ fun CustomEventCard(
     Card(
         modifier = Modifier
             .fillMaxWidth()
+            .shadow(elevation = 8.75.dp, shape = RoundedCornerShape(12.dp))
             .animateContentSize(
                 animationSpec = tween(
                     durationMillis = 300,
@@ -102,31 +104,5 @@ fun CustomEventCard(
             modifierRow = Modifier.padding(16.dp, 2.dp)
         )
 
-    }
-}
-
-@Preview
-@Composable
-fun CustomEventCardPreview() {
-    val event = Event(
-        eventName = "Event Title",
-        eventAddress = "123 Main St",
-        eventStartDateTime = Date(), // Provide a DateTime value
-        eventEndDateTime = Date(), // Provide a DateTime value
-        eventDescription = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-        eventPrice = 20.0,
-        attendeesByUID = mutableListOf(), // Provide a mutable list of attendees
-        eventID = "12345" // Provide an event ID
-    )
-
-    VentilenAppTheme {
-        CustomEventCard(
-            event = event,
-            onAttend = {},
-            onNotAttend = {},
-            onCardClick = {},
-            isExpanded = true,
-            isAttending = false
-        )
     }
 }

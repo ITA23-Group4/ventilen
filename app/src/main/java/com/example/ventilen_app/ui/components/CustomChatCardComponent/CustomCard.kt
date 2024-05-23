@@ -17,6 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
@@ -30,10 +31,11 @@ fun CustomCard(
     abbreviation: String = "K",
     backgroundColor: Color = CustomColorScheme.Orange,
     hasRoundCorners: Boolean = true,
+    cardModifier: Modifier = Modifier,
     onClick: () -> Unit = {}
 ) {
     Card(
-        modifier = Modifier
+        modifier = cardModifier
             .fillMaxWidth(),
         onClick = onClick,
         shape = if (hasRoundCorners) RoundedCornerShape(12.dp) else RectangleShape

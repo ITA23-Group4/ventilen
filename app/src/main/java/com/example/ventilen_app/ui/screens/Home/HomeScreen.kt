@@ -19,6 +19,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.ventilen_app.data.models.Event
@@ -136,6 +137,8 @@ fun HomeScreen(
             title = currentUserPrimaryLocation.locationName,
             bodyText = currentUserPrimaryLocation.latestMessage,
             abbreviation = currentUserPrimaryLocation.abbreviation,
+            cardModifier = Modifier
+                .shadow(elevation = 8.75.dp, shape = RoundedCornerShape(12.dp)),
             onClick = { onChatLocalNavigate(currentUserPrimaryLocation) }
         )
 
@@ -158,7 +161,7 @@ fun HomeScreen(
                         .background(CustomColorScheme.Mocha),
                     contentPadding = PaddingValues(vertical = 16.dp),
                     horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.spacedBy(20.dp)
+                    verticalArrangement = Arrangement.spacedBy(24.dp)
                 ) {
                     items(eventsWithinAWeek) { event ->
                         CustomEventCard(

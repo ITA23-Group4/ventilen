@@ -16,6 +16,7 @@ import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.unit.dp
 import com.example.ventilen_app.R
 
@@ -39,7 +40,11 @@ fun CustomBottomNavigationBar(
     onNavigateEvent: () -> Unit = {}
 ) {
     BottomAppBar(
-        modifier = Modifier.fillMaxWidth().height(56.dp),
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(56.dp)
+            .shadow(elevation = 10.dp)
+        ,
         containerColor = MaterialTheme.colorScheme.surface,
         tonalElevation = 0.dp,
     ) {

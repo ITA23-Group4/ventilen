@@ -5,7 +5,10 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -13,6 +16,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.unit.dp
 import com.example.ventilen_app.data.models.Message
 import com.example.ventilen_app.ui.theme.CustomColorScheme
@@ -36,6 +41,12 @@ fun CustomMessageBox(
     ){
         Column(
             modifier = Modifier
+                .shadow(elevation = 10.dp, shape = RoundedCornerShape(
+                    topStart = 12.dp,
+                    topEnd = 12.dp,
+                    bottomEnd = bottomEnd,
+                    bottomStart = bottomStart
+                ))
                 .clip(
                     RoundedCornerShape(
                         topStart = 16.dp,
@@ -45,7 +56,7 @@ fun CustomMessageBox(
                     )
                 )
                 .background(background)
-                .padding(12.dp)
+                .padding(12.dp),
         ) {
             Text(text = message.username, style = MaterialTheme.typography.bodySmall, color = textColorHeadLine )
             Text(text = message.message, style = MaterialTheme.typography.bodyMedium, color = textColorBody)

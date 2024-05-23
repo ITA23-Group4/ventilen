@@ -7,7 +7,7 @@ object CustomColorScheme {
     val Orange = Color(0xFFEA620E)
     val Mocha = Color(0xFFFFEECE)
     val Beige = Color(0xFFD5C6AC)
-    val OffWhite = Color(0xFFF4F3F1)
-    val LightGray = Color(0xFFFAF9F6)
+    val OffWhite = Color(0xFFFAF9F6)
+    val LightGray = Color(0xFFF4F3F1)
     val OffBlack = Color(0xFF212427)
 }

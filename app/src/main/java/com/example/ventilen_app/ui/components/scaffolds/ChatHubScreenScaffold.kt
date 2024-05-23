@@ -12,6 +12,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.unit.dp
 
 /**
  * ChatHubScreenScaffold is a scaffold component tailored for the chat hub screen. It provides
@@ -34,6 +36,9 @@ fun ChatHubScreenScaffold(
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
+                modifier = Modifier
+                    .shadow(elevation = 4.dp)
+                ,
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = MaterialTheme.colorScheme.surface,
                     navigationIconContentColor = MaterialTheme.colorScheme.onSurface,

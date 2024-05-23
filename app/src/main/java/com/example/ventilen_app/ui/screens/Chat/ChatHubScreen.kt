@@ -1,5 +1,6 @@
 package com.example.ventilen_app.ui.screens.Chat
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -11,11 +12,15 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.ventilen_app.data.models.Location
 import com.example.ventilen_app.ui.components.CustomChatCardComponent.CustomCard
 import com.example.ventilen_app.ui.components.CustomColumn
+import com.example.ventilen_app.ui.theme.CustomColorScheme
 
 
 @Composable
@@ -35,7 +40,9 @@ fun ChatHubScreen(
             title = currentUserPrimaryLocation.locationName,
             bodyText = currentUserPrimaryLocation.latestMessage,
             abbreviation = currentUserPrimaryLocation.abbreviation,
-            onClick = { onChatLocalNavigate(currentUserPrimaryLocation) }
+            onClick = { onChatLocalNavigate(currentUserPrimaryLocation) },
+            cardModifier = Modifier
+                .shadow(elevation = 8.75.dp, shape = RoundedCornerShape(12.dp))
         )
 
         Text(text = "Andre mødesteder", style = MaterialTheme.typography.headlineMedium,
@@ -45,8 +52,19 @@ fun ChatHubScreen(
         LazyColumn(
             modifier = Modifier
                 .fillMaxWidth()
-                .clip(RoundedCornerShape(12.dp)),
-            verticalArrangement = Arrangement.spacedBy(0.dp)
+                .background(CustomColorScheme.LightGray)
+                .shadow(elevation = 8.75.dp, shape = RoundedCornerShape(
+                    topStart = 12.dp,
+                    topEnd = 12.dp,
+                    bottomStart = 0.dp,
+                    bottomEnd = 0.dp
+                ))
+                .clip(RoundedCornerShape(
+                    topStart = 12.dp,
+                    topEnd = 12.dp,
+                    bottomStart = 0.dp,
+                    bottomEnd = 0.dp
+                ))
         ) {
             items(locationsExcludingCurrentUserPrimaryLocation) { Location ->
                 CustomCard(
