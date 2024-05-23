@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.offset
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -13,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.ventilen_app.ui.components.CustomColumn
 import com.example.ventilen_app.ui.components.CustomFilledButton
+import com.example.ventilen_app.ui.components.CustomPasswordTextField
 import com.example.ventilen_app.ui.components.CustomTextField
 import com.example.ventilen_app.ui.components.TopAuthPageDesign
 import com.example.ventilen_app.ui.theme.CustomColorScheme
@@ -22,6 +24,7 @@ fun LoginScreen(
     onNavigateHome: () -> Unit,
     textEmail: String,
     textPassword: String,
+    hasLoginError: Boolean,
     onValueChangeEmail: (String) -> Unit,
     onValueChangePassword: (String) -> Unit,
     onNavigateRegistration: () -> Unit
@@ -30,29 +33,49 @@ fun LoginScreen(
         .fillMaxSize()
         .background(CustomColorScheme.Mocha),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(30.dp)
+        verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         TopAuthPageDesign(
             topText = "Log ind",
             bottomText = "Indtast din email og password",
         )
-        CustomTextField(text = textEmail, label = "Email") { onValueChangeEmail(it) }
+        CustomTextField(
+            text = textEmail,
+            label = "Email",
+            onValueChange = { onValueChangeEmail(it) },
+            hasError = hasLoginError,
+            errorIndicator = ""
+        )
 
-        CustomTextField(text = textPassword, label = "Password") { onValueChangePassword(it) }
+        CustomPasswordTextField(
+            text = textPassword,
+
+            label = "Password",
+            onValueChange = { onValueChangePassword(it) },
+            hasError = hasLoginError,
+            errorIndicator = ""
+        )
+
+        if (hasLoginError) {
+            Text(
+                modifier = Modifier.offset(y = (-9).dp),
+                text = "Fejl ved login: Email eller password er ikke korrekt, hvis du ikke har en konto skal du tilmelde dig.",
+                color = MaterialTheme.colorScheme.error
+            )
+        }
 
         CustomFilledButton(
             text = "Forsæt",
             onClick = onNavigateHome,
-            textColor = CustomColorScheme.OffWhite
+            textColor = MaterialTheme.colorScheme.surface
         )
 
-        // TODO placement should be fixed with CustomColumn
         Row(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(text = "Har du ikke en bruger?", style = MaterialTheme.typography.bodyMedium)
             TextButton(onClick = onNavigateRegistration) {
-                Text(text = "Tilmeld Dig", style = MaterialTheme.typography.bodyLarge, color = CustomColorScheme.Orange)
+                Text(text = "Tilmeld Dig", style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.primary)
             }
         }
 

@@ -14,6 +14,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.unit.dp
 
 @Composable
@@ -24,7 +25,8 @@ fun CustomLocalChatBottomBar(
 ) {
     BottomAppBar(
         modifier = Modifier
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .shadow(elevation = 20.dp),
         containerColor = MaterialTheme.colorScheme.surface,
         tonalElevation = 0.dp
     ){
@@ -42,7 +44,8 @@ fun CustomLocalChatBottomBar(
                 text = currentMessage,
                 onValueChange = { onCurrentMessageChanged(it) },
                 modifier = Modifier
-                    .fillMaxWidth(0.9f)
+                    .fillMaxWidth(0.9f),
+                label = ""
             )
             IconButton(onClick = onSendMessage) {
                 Icon(

@@ -4,9 +4,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
-import com.example.ventilen_app.generalViewModels.AuthViewModel
-import com.example.ventilen_app.generalViewModels.LocationViewModel
-import com.example.ventilen_app.generalViewModels.UserViewModel
+import com.example.ventilen_app.viewmodels.AuthViewModel
 import com.example.ventilen_app.ui.components.scaffolds.AuthScaffold
 import com.example.ventilen_app.ui.screens.Credentials.CredentialsScreen
 import com.example.ventilen_app.ui.screens.Location.LocationScreen
@@ -26,9 +24,7 @@ import com.example.ventilen_app.ui.screens.Welcome.WelcomeScreen
  */
 fun NavGraphBuilder.AuthNavGraph(
     navController: NavController,
-    userViewModel: UserViewModel,
     authViewModel: AuthViewModel,
-    locationsViewModel: LocationViewModel
 ) {
     composable("auth/welcome") {
         AuthScaffold(
@@ -48,7 +44,6 @@ fun NavGraphBuilder.AuthNavGraph(
                 onNavigateHome = {
                     authViewModel.loginUser(
                         onLoginSuccess = {
-                            userViewModel.getCurrentUser()
                             navController.popBackStack(
                                 route = "auth",
                                 inclusive = true
@@ -56,12 +51,13 @@ fun NavGraphBuilder.AuthNavGraph(
                             navController.navigate("home")
                         },
                         onLoginFailure = {
-                            navController.navigate("auth/welcome")
+                            authViewModel.hasLoginError = true
                         }
                     )
                 },
                 textEmail = authViewModel.email,
                 textPassword = authViewModel.password,
+                hasLoginError = authViewModel.hasLoginError,
                 onValueChangeEmail = { authViewModel.email = it },
                 onValueChangePassword = { authViewModel.password = it },
                 onNavigateRegistration = { navController.navigate("auth/register") }
@@ -90,6 +86,8 @@ fun NavGraphBuilder.AuthNavGraph(
                     repeatPassword = authViewModel.passwordRepeat,
                     password = authViewModel.password,
                     hasPasswordError = authViewModel.hasPasswordError,
+                    hasRepeatedPasswordError = authViewModel.hasPasswordRepeatedError,
+                    credentialsFieldsNotEmpty = { authViewModel.credentialsFieldsNotEmptyAndValid() },
                     onValueChangeEmail = { authViewModel.changeEmail(it) },
                     onValueChangePassword = { authViewModel.changePassword(it) },
                     onValueChangePasswordRepeat = { authViewModel.changeRepeatedPassword(it) },
@@ -104,7 +102,11 @@ fun NavGraphBuilder.AuthNavGraph(
                     onNavigateLocation = { navController.navigate("auth/register/location") },
                     onValueChange = { authViewModel.changeUsername(it) },
                     textUsername = authViewModel.username,
-                    hasUsernameError = authViewModel.hasUsernameError
+                    hasUsernameError = authViewModel.hasUsernameError,
+                    showDialog = authViewModel.showDialog,
+                    usernameFieldsNotEmpty = { authViewModel.usernameFieldNotEmptyAndValid() },
+                    onInformationClick = { authViewModel.showDialog = true },
+                    dismissDialog = { authViewModel.showDialog = false }
                 )
             }
         }
@@ -118,7 +120,6 @@ fun NavGraphBuilder.AuthNavGraph(
                             onRegistrationSuccess = {
                                 authViewModel.loginUser(
                                     onLoginSuccess = {
-                                        userViewModel.getCurrentUser()
                                         navController.popBackStack(
                                             route = "auth",
                                             inclusive = true
@@ -135,10 +136,11 @@ fun NavGraphBuilder.AuthNavGraph(
                             }
                         )
                     },
-                    locations = locationsViewModel.locations.sorted().map { it.locationName },
                     selectedLocation = authViewModel.location.locationName,
+                    locations = authViewModel.locationRepository.locations.map { it.locationName },
+                    hasLocationError = authViewModel.hasLocationError,
                     onLocationValueChanged = { selectedLocationName ->
-                        authViewModel.changeLocation(locationsViewModel.mapLocationNameToLocation.get(selectedLocationName)!!)
+                        authViewModel.changeLocation(authViewModel.locationRepository.mapLocationNameToLocation.get(selectedLocationName)!!)
                     }
                 )
             }

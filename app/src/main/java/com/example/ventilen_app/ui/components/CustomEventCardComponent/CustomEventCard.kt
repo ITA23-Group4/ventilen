@@ -16,12 +16,11 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.ventilen_app.data.models.Event
-import com.example.ventilen_app.ui.theme.CustomColorScheme
 import com.example.ventilen_app.ui.theme.VentilenAppTheme
-import com.google.firebase.Timestamp
 import java.util.Date
 
 /**
@@ -49,6 +48,7 @@ fun CustomEventCard(
     Card(
         modifier = Modifier
             .fillMaxWidth()
+            .shadow(elevation = 4.dp, shape = RoundedCornerShape(12.dp))
             .animateContentSize(
                 animationSpec = tween(
                     durationMillis = 300,
@@ -70,10 +70,9 @@ fun CustomEventCard(
             EventCardTopRow(
                 title = event.eventName,
                 isExpanded = isExpanded,
-                date = event.getDate(),
+                dateStart = event.getDate(),
             )
 
-            // TODO: Should probably be hoisted :)
             // EventCard description
             if (isExpanded) {
                 Text(
@@ -89,7 +88,8 @@ fun CustomEventCard(
             if (isExpanded) {
                 EventCardDetails(
                     address = event.eventAddress,
-                    date = event.getDateWithTimeRange(),
+                    dateStart = event.getDateWithTimeRange(),
+                    dateEnd = event.getDateWithTimeRange(),
                     price = event.eventPrice,
                     modifier = Modifier.padding(0.dp, 8.dp)
                 )
@@ -104,30 +104,5 @@ fun CustomEventCard(
             modifierRow = Modifier.padding(16.dp, 2.dp)
         )
 
-    }
-}
-
-@Preview
-@Composable
-fun CustomEventCardPreview() {
-    val event = Event(
-        eventName = "Event Title",
-        eventAddress = "123 Main St",
-        eventDateTime = Timestamp(Date()), // Provide a DateTime value
-        eventDescription = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-        eventPrice = 20.0,
-        attendeesByUID = mutableListOf(), // Provide a mutable list of attendees
-        eventID = "12345" // Provide an event ID
-    )
-
-    VentilenAppTheme {
-        CustomEventCard(
-            event = event,
-            onAttend = {},
-            onNotAttend = {},
-            onCardClick = {},
-            isExpanded = true,
-            isAttending = false
-        )
     }
 }

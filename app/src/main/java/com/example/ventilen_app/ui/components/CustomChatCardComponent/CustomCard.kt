@@ -17,22 +17,25 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.example.ventilen_app.ui.theme.CustomColorScheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CustomChatCard(
-    locationName: String = "København",
-    latestMessage: String = "Latest",
+fun CustomCard(
+    title: String = "København",
+    bodyText: String = "Latest",
     abbreviation: String = "K",
+    backgroundColor: Color = CustomColorScheme.Orange,
     hasRoundCorners: Boolean = true,
+    cardModifier: Modifier = Modifier,
     onClick: () -> Unit = {}
 ) {
     Card(
-        modifier = Modifier
+        modifier = cardModifier
             .fillMaxWidth(),
         onClick = onClick,
         shape = if (hasRoundCorners) RoundedCornerShape(12.dp) else RectangleShape
@@ -48,7 +51,7 @@ fun CustomChatCard(
                     .size(80.dp)
                     .drawBehind {
                         drawCircle(
-                            color = CustomColorScheme.Orange,
+                            color = backgroundColor,
                             radius = this.size.height / 2
                         )
                     }
@@ -67,15 +70,14 @@ fun CustomChatCard(
                 verticalArrangement = Arrangement.Center
             ) {
                 Text(
-                    text = locationName,
+                    text = title,
                     style = MaterialTheme.typography.labelMedium
                 )
                 Text(
-                    text = latestMessage.take(30) + "...",
+                    text = bodyText.take(30) + "...",
                     style = MaterialTheme.typography.bodySmall
                 )
             }
         }
     }
 }
-

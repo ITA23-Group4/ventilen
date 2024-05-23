@@ -16,6 +16,7 @@ import com.example.ventilen_app.ui.theme.CustomColorScheme
 
 @Composable
 fun LocationScreen(
+    hasLocationError: Boolean,
     onNavigateHome: () -> Unit,
     // Parameters for the CustomDropDownMenu
     locations: List<String>,
@@ -29,7 +30,7 @@ fun LocationScreen(
     {
         TopAuthPageDesign(
             topText = "Hvor skal vi mødes",
-            bottomText ="Vælg det mødested som er tættest på dig",
+            bottomText ="Vælg dit primære mødested som er tættest på dig",
         )
 
         CustomDropDownMenu(
@@ -42,6 +43,7 @@ fun LocationScreen(
         CustomFilledButton(
             text = "Fortsæt",
             onClick = onNavigateHome,
+            isEnabled = hasLocationError
         )
     }
 }

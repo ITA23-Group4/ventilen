@@ -39,14 +39,15 @@ fun CustomDropDownMenu(
             value = selectedValue,
             onValueChange = {},
             label = { Text(text = label,
-                style = MaterialTheme.typography.bodyLarge,
-                color = CustomColorScheme.Orange) },
+                style = MaterialTheme.typography.labelMedium
+            )},
             trailingIcon = {
                 ExposedDropdownMenuDefaults.TrailingIcon(expanded = customDropDownMenuViewModel.isExpanded)
             },
             colors = TextFieldDefaults.outlinedTextFieldColors(
                 unfocusedBorderColor = MaterialTheme.colorScheme.primary,
-                unfocusedLabelColor = MaterialTheme.colorScheme.primary
+                unfocusedLabelColor = MaterialTheme.colorScheme.primary,
+                focusedLabelColor = MaterialTheme.colorScheme.onBackground
             ),
             modifier = Modifier
                 .menuAnchor()
@@ -63,7 +64,7 @@ fun CustomDropDownMenu(
                         Text(
                             text = option,
                             style = MaterialTheme.typography.labelLarge,
-                            color = MaterialTheme.colorScheme.onSurface
+                            color = MaterialTheme.colorScheme.onBackground
                         ) },
                     onClick = {
                         customDropDownMenuViewModel.isExpanded = false

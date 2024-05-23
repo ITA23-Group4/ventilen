@@ -20,7 +20,6 @@ import com.example.ventilen_app.ui.theme.VentilenAppTheme
 @Composable
 fun EventScreen(
     events: List<Event>,
-    onAddEvent: () -> Unit,
     isEventSelected: (String) -> Boolean,
     isAttending: (Event) -> Boolean,
     onAttend: (String) -> Unit,
@@ -34,7 +33,7 @@ fun EventScreen(
                 .background(CustomColorScheme.Mocha),
             contentPadding = PaddingValues(vertical = 16.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(20.dp)
+            verticalArrangement = Arrangement.spacedBy(24.dp)
         ) {
             items(events) { event ->
                 CustomEventCard(
@@ -50,6 +49,7 @@ fun EventScreen(
     }
 }
 
+/*
 @Preview
 @Composable
 fun EventScreenPreview() {
@@ -62,3 +62,5 @@ fun EventScreenPreview() {
         EventScreen(events = sampleEvents, onAttend = {}, onNotAttend = {}, onEventCardClick = {}, isEventSelected = { false }, isAttending = { false }, onAddEvent = {})
     }
 }
+
+ */

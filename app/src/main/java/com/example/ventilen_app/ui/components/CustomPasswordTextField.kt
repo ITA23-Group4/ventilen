@@ -1,7 +1,6 @@
-@file:OptIn(ExperimentalMaterial3Api::class)
-
 package com.example.ventilen_app.ui.components
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -15,18 +14,19 @@ import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
+import com.example.ventilen_app.ui.theme.CustomColorScheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CustomTextField(
+fun CustomPasswordTextField(
     text: String,
     label: String = "",
     isSingleLine: Boolean = true,
     hasError: Boolean = false,
-    isIntegerOnly: Boolean = false,
-    errorIndicator: String = "*",
     errorMessage: String = "",
+    errorIndicator: String = "*",
     modifier: Modifier = Modifier,
     onValueChange: (String) -> Unit
 ) {
@@ -34,12 +34,10 @@ fun CustomTextField(
         modifier = modifier.fillMaxWidth(),
         value = text,
         singleLine = isSingleLine,
-        onValueChange = { newText ->
-            if (!isIntegerOnly || newText.all { it.isDigit() }) {
-                onValueChange(newText)
-            }
-        },        label = { Text(text = label,
-            style = MaterialTheme.typography.labelMedium
+        onValueChange = { onValueChange(it)},
+        visualTransformation = PasswordVisualTransformation(),
+        label = { Text(text = label,
+            style = MaterialTheme.typography.labelMedium,
         )},
         colors = TextFieldDefaults.outlinedTextFieldColors(
             unfocusedBorderColor = MaterialTheme.colorScheme.primary,
@@ -56,8 +54,7 @@ fun CustomTextField(
                         .offset(x = (-11).dp),
                     verticalAlignment = Alignment.Top
                 ){
-                    Text(
-                        text = errorIndicator,
+                    Text(text = errorIndicator,
                         style = MaterialTheme.typography.bodyLarge,
                         color = MaterialTheme.colorScheme.error
                     )

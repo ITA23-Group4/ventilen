@@ -7,17 +7,21 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.ShoppingCart
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import com.example.ventilen_app.R
 
 @Composable
 fun EventCardDetails(
     address: String,
-    date: String,
+    dateStart: String,
+    dateEnd: String,
     price: Double,
     modifier: Modifier = Modifier
 ) {
@@ -28,7 +32,7 @@ fun EventCardDetails(
         verticalArrangement = Arrangement.spacedBy(14.dp),
     ) {
         EventCardDetailRow(
-            icon = Icons.Default.LocationOn,
+            icon = painterResource(id = R.drawable.location),
             contentDescription = "Address location",
             content = {
                 Text(text = address,
@@ -36,18 +40,18 @@ fun EventCardDetails(
             }
         )
         EventCardDetailRow(
-            icon = Icons.Default.Info,
+            icon = painterResource(id = R.drawable.minute),
             contentDescription = "Date and time",
             content = {
-                Text(text = date,
+                Text(text = dateStart,
                     style = MaterialTheme.typography.bodyMedium)
                     }
         )
         EventCardDetailRow(
-            icon = Icons.Default.ShoppingCart,
+            icon = painterResource(id = R.drawable.price),
             contentDescription = "Price",
             content = {
-                Text(text = "Pris: ${price.toInt()} kr.",
+                Text(text = "${price.toInt()} kr.",
                     style = MaterialTheme.typography.bodyMedium)
             }
         )

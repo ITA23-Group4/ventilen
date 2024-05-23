@@ -17,6 +17,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.unit.dp
 
 /**
@@ -32,6 +33,7 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun EventScaffold(
     currentRoute: String,
+    isAdmin: Boolean,
     onNavigateHome: () -> Unit,
     onNavigateChat: () -> Unit,
     onNavigateCreateEvent: () -> Unit,
@@ -40,6 +42,9 @@ fun EventScaffold(
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
+                modifier = Modifier
+                    .shadow(elevation = 4.dp)
+                ,
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = MaterialTheme.colorScheme.surface,
                     navigationIconContentColor = MaterialTheme.colorScheme.onSurface,
@@ -47,13 +52,15 @@ fun EventScaffold(
                 ),
                 title = { Text("Events", style = MaterialTheme.typography.headlineLarge) },
                 actions = {
-                    IconButton(onClick = onNavigateCreateEvent) {
-                        Icon(
-                            Icons.Default.Add,
-                            contentDescription = "Add",
-                            modifier = Modifier
-                                .size(34.dp)
-                        )
+                    if (isAdmin) {
+                        IconButton(onClick = onNavigateCreateEvent) {
+                            Icon(
+                                Icons.Default.Add,
+                                contentDescription = "Add",
+                                modifier = Modifier
+                                    .size(34.dp)
+                            )
+                        }
                     }
                 }
             )

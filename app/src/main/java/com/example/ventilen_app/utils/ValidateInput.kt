@@ -23,17 +23,14 @@ class ValidateInput {
      * @return `true` if the password meets all criteria, `false` otherwise.
      */
     fun validatePassword(password: String): Boolean {
-        return listOf(
-            validateCapitalizedLetter(password),
-            validateNumber(password),
-            validateMinimum(password)
-        ).all { it }
+        return !(validateCapitalizedLetter(password) &&
+                validateNumber(password) &&
+                validateMinimum(password))
     }
 
-    // TODO: What more? Check for explicit words, etc. (what about underscore ?)
     fun validateUsername(username: String): Boolean {
-        val usernamePattern = Regex("^[a-zA-Z0-9]{6,}$") // only letters and numbers
-        return usernamePattern.matches(username)
+        val usernamePattern = Regex("^[a-zA-Z0-9]{6,}$")
+        return !usernamePattern.matches(username)
     }
 
     private fun validateCapitalizedLetter(password: String): Boolean {

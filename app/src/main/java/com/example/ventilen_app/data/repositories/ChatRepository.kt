@@ -18,7 +18,7 @@ import kotlinx.coroutines.tasks.await
  * @property db Firebase Firestore instance.
  * @author Marcus, Christian
  */
-class ChatRepository {
+object ChatRepository {
     private val db = Firebase.firestore
 
     private val _messagesFlow = MutableStateFlow<List<Message>>(emptyList())
@@ -36,22 +36,24 @@ class ChatRepository {
             .get()
             .await()
         val locations = querySnapshot.documents.mapNotNull { document ->
-            val locationId = document.getString("name") ?: ""
+            val name = document.getString("name") ?: ""
             val latestMessage = document.getString("latestMessage") ?: ""
             val abbreviation = document.getString("abbreviation") ?: ""
+            val news = document.getString("news") ?: ""
             val locationID = document.id
 
-            Location(locationId, latestMessage, abbreviation, locationID)
+            Location(
+                locationName = name,
+                latestMessage = latestMessage,
+                abbreviation = abbreviation,
+                locationID = locationID,
+                news = news
+            )
         }
 
         return locations
     }
 
-
-    // Functions might not be correct can't query message from log: "FAILED_PRECONDITION: The query requires an index" TODO: FIX
-    // Usefull links:
-    // https://stackoverflow.com/questions/50207339/cloud-firestore-failed-precondition-the-query-requires-an-index
-    // https://www.fullstackfirebase.com/cloud-firestore/indexes
     fun observeMessagesByLocation(locationId: String) {
         db.collection("locations").document(locationId).collection("messages")
             .orderBy("timestamp", Query.Direction.DESCENDING)
@@ -77,11 +79,9 @@ class ChatRepository {
             }
     }
 
-
     suspend fun sendMessage(
         message: Message
     ) {
-
         val locationRef = db.collection("locations").document(message.locationID)
         val senderUIDRef = db.collection("users").document(message.senderUID)
 
