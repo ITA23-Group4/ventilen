@@ -82,16 +82,10 @@ fun CustomNewsCard(
                         onClick = dismissDeleteDialog
                     )
                 },
-                title = { // TODO: Nok med title?
+                title = {
                     Text(
                         text = "Er du sikker på, at du ønsker slette denne nyhed?",
                         style = MaterialTheme.typography.headlineMedium
-                    )
-                },
-                text = { // TODO: Skal der være uddybende tekst her?
-                    Text(
-                        text = "Er du sikker på, at du ønsker slette denne nyhed?",
-                        style = MaterialTheme.typography.bodyMedium
                     )
                 },
                 shape = RoundedCornerShape(8.dp)

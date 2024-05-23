@@ -205,8 +205,10 @@ fun RootNavigation() {
                     onValueChangeDescription = { createEventViewModel.eventDescription = it },
                     onValueChangeAddress = { createEventViewModel.eventAddress = it },
                     onValueChangePrice = { createEventViewModel.eventPrice = it },
-                    onCreateEvent = { createEventViewModel.createEvent() },
-
+                    onCreateEvent = {
+                        createEventViewModel.createEvent()
+                        eventViewModel.getEvents()
+                    },
                     showDialog = createEventViewModel.showDialog,
                     dismissDialog = { createEventViewModel.dismissDialog() },
 

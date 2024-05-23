@@ -83,7 +83,7 @@ fun CreateEventScreen(
             text = eventTitle,
             label = "Event navn",
             onValueChange = {
-                if (it.length <= 30) onValueChangeTitle(it)
+                if (it.length <= 25) onValueChangeTitle(it)
             },
         )
         CustomTextField(

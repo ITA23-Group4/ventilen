@@ -23,20 +23,21 @@ class EventViewModel: ViewModel() {
     private var selectedEventCardID: String by mutableStateOf("")
 
     init {
-        viewModelScope.launch {
-            getEvents()
-        }
+        getEvents()
     }
 
     fun isAdmin(): Boolean {
         return userRepository.currentUser!!.isAdmin
     }
 
-    private suspend fun getEvents(){
-        try {
-            events.addAll(eventRepository.getEvents())
-        } catch (error: Exception) {
-            Log.d("GetAllEvents", "ERROR: ${error.message}")
+    fun getEvents(){
+        viewModelScope.launch {
+            try {
+                events.clear()
+                events.addAll(eventRepository.getEvents())
+            } catch (error: Exception) {
+                Log.d("GetAllEvents", "ERROR: ${error.message}")
+            }
         }
     }
 
