@@ -39,14 +39,16 @@ fun UsernameScreen(
             AlertDialog(
                 onDismissRequest = { dismissDialog() },
                 confirmButton = {
-                    TextButton(
-                        onClick = { dismissDialog() }
-                    ) {
-                        Text(text = "OK")
-                    }
+                    CustomFilledButton(
+                        text = "OK",
+                        onClick = dismissDialog
+                    )
                 },
                 title = { Text(text = "Information") },
-                text = { Text(text = "Username skal min. være 6 tegn og kan kun indholde tal og bogstaver") } // TODO: Do better
+                text = {
+                    Text(
+                        text = "Et anonymt username sikre din identitet ikke kan gennemskues. Et eksempel på dette kunne være: AnonymGiraf42, HestePersonen68.\n\nUsername skal min. være 6 tegn og kan kun indholde tal og bogstaver"
+                    ) }
             )
         }
 

@@ -71,7 +71,6 @@ fun CustomEventCard(
                 dateStart = event.getDate(),
             )
 
-            // TODO: Should probably be hoisted :)
             // EventCard description
             if (isExpanded) {
                 Text(

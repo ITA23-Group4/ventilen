@@ -22,7 +22,6 @@ fun CustomMessageBox(
     message: Message,
     currentUserIsSender: Boolean,
 ) {
-    // TODO: Make function in ChatViewModel --> should not have functionality inside Composable
     val background = if (currentUserIsSender) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surface
     val horizontalArrangement = if (currentUserIsSender) Arrangement.End else Arrangement.Start
     val bottomEnd = if (currentUserIsSender) 0.dp else 16.dp

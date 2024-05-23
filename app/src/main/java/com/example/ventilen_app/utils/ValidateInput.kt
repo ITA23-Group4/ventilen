@@ -28,8 +28,6 @@ class ValidateInput {
                 validateMinimum(password))
     }
 
-
-    // TODO: What more? Check for explicit words, etc. (what about underscore ?)
     fun validateUsername(username: String): Boolean {
         val usernamePattern = Regex("^[a-zA-Z0-9]{6,}$")
         return !usernamePattern.matches(username)

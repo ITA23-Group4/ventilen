@@ -42,7 +42,6 @@ fun ChatHubScreen(
             modifier = Modifier.fillMaxWidth(),
             textAlign = TextAlign.Start)
 
-        // TODO: Should prob be more white cards and gray lazyColumn background
         LazyColumn(
             modifier = Modifier
                 .fillMaxWidth()

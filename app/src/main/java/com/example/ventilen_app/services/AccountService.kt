@@ -13,7 +13,7 @@ import kotlinx.coroutines.tasks.await
  *
  * @constructor Creates an instance of AccountService.
  *
- * @Author [Your Name] TODO: Add name
+ * @author Christian, Nikolaj, Marcus
  */
 class AccountService {
     private val auth = FirebaseAuth.getInstance()

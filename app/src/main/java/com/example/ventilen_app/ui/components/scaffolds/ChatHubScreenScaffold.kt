@@ -21,7 +21,7 @@ import androidx.compose.ui.Modifier
  * @param onNavigateEvent Callback function invoked when the event navigation item is clicked.
  * @param onNavigateHome Callback function invoked when the home navigation item is clicked.
  * @param content The main content to be displayed within the scaffold.
- * @Author [Your Name] TODO: Add name
+ * @author Christian, Nikolaj, Marcus
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

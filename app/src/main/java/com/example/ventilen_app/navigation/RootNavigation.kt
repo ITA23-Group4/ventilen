@@ -71,7 +71,7 @@ fun RootNavigation() {
             ) {
                 HomeScreen(
                     isAdmin = homeViewModel.isCurrentUserAdmin(),
-                    currentUserPrimaryLocation = chatViewModel.getCurrentUserPrimaryLocation(), // TODO: is it okay to borrow func from other ViewModels?
+                    currentUserPrimaryLocation = chatViewModel.getCurrentUserPrimaryLocation(),
                     primaryLocationNews = homeViewModel.primaryLocationNews,
                     isNewsCardExpanded = homeViewModel.isNewsCardExpanded,
                     onNewsCardClick = { homeViewModel.toggleNewsCard() },
@@ -137,7 +137,8 @@ fun RootNavigation() {
                 // Get the local messages for the selected location
                 chatViewModel.getLocalMessages(chatViewModel.selectedLocation.locationID!!)
                 // Allows better navigation home to local chat and back, and chat to local chat and back
-                val lastDestinationRoute: String = navController.previousBackStackEntry!!.destination.route!!
+                val lastDestinationRoute: String =
+                    navController.previousBackStackEntry!!.destination.route!!
                 LocalChatScaffold(
                     locationName = chatViewModel.selectedLocation.locationName,
                     onNavigateBack = { navController.navigate(lastDestinationRoute) },
@@ -151,69 +152,72 @@ fun RootNavigation() {
                     )
                 }
             }
-            composable("event") {
-                eventViewModel.clearSelectedEventCard() // TODO: Scuffed transition on navigation
-                EventScaffold(
-                    currentRoute = "event",
-                    isAdmin = eventViewModel.isAdmin(),
-                    onNavigateHome = { navController.navigate("home") },
-                    onNavigateChat = { navController.navigate("chat") },
-                    onNavigateCreateEvent = { navController.navigate("event/create") }
+            navigation(
+                startDestination = "event/hub",
+                route = "event"
+            ) {
+                composable("event/hub") {
+                    eventViewModel.clearSelectedEventCard()
+                    EventScaffold(
+                        currentRoute = "event",
+                        isAdmin = eventViewModel.isAdmin(),
+                        onNavigateHome = { navController.navigate("home") },
+                        onNavigateChat = { navController.navigate("chat") },
+                        onNavigateCreateEvent = { navController.navigate("event/create") }
+                    ) {
+                        EventScreen(
+                            events = eventViewModel.events,
+                            onAttend = {
+                                eventViewModel.addUserToEvent(
+                                    eventID = it
+                                )
+                            },
+                            onNotAttend = {
+                                eventViewModel.removeUserFromEvent(
+                                    eventID = it,
+                                )
+                            },
+                            isEventSelected = { eventViewModel.isSelectedEvent(it) },
+                            onEventCardClick = { eventViewModel.toggleEventCard(it) },
+                            isAttending = { event ->
+                                eventViewModel.isCurrentUserAttendingEvent(
+                                    event = event
+                                )
+                            }
+                        )
+                    }
+                }
+            }
+            composable("event/create") {
+                createEventViewModel.context = LocalContext.current
+                CreateEventScaffold(
+                    onNavigateBack = { navController.navigate("event") }
                 ) {
-                    EventScreen(
-                        events = eventViewModel.events,
-                        onAttend = {
-                            eventViewModel.addUserToEvent(
-                                eventID = it
-                            )
+                    CreateEventScreen(
+                        eventTitle = createEventViewModel.eventTitle,
+                        eventDescription = createEventViewModel.eventDescription,
+                        eventAddress = createEventViewModel.eventAddress,
+                        eventPrice = createEventViewModel.eventPrice,
+
+                        startDateTimeButtonText = createEventViewModel.startDateTimeButtonText,
+                        endDateTimeButtonText = createEventViewModel.endDateTimeButtonText,
+                        showStartDateTimePicker = { createEventViewModel.showStartDateTimePickerForUser() },
+                        showEndDateTimePicker = { createEventViewModel.showEndDateTimePickerForUser() },
+
+                        onValueChangeTitle = { createEventViewModel.eventTitle = it },
+                        onValueChangeDescription = { createEventViewModel.eventDescription = it },
+                        onValueChangeAddress = { createEventViewModel.eventAddress = it },
+                        onValueChangePrice = { createEventViewModel.eventPrice = it },
+                        onCreateEvent = {
+                            createEventViewModel.createEvent()
+                            eventViewModel.getEvents()
                         },
-                        onNotAttend = {
-                            eventViewModel.removeUserFromEvent(
-                                eventID = it,
-                            )
-                        },
-                        isEventSelected = { eventViewModel.isSelectedEvent(it) },
-                        onEventCardClick = { eventViewModel.toggleEventCard(it) },
-                        isAttending = { event ->
-                            eventViewModel.isCurrentUserAttendingEvent(
-                                event = event
-                            )
-                        }
+                        showDialog = createEventViewModel.showDialog,
+                        dismissDialog = { createEventViewModel.dismissDialog() },
+
+                        areAllFieldsFilled = { createEventViewModel.areAllFieldsFilled() }
                     )
                 }
-
-
-            }
-        } // TODO: event/create is not nested. No need for event/ or else make nested (as it might should be)
-        composable("event/create") {
-            createEventViewModel.context = LocalContext.current
-            CreateEventScaffold(
-                onNavigateBack = { navController.navigate("event") }
-            ) {
-                CreateEventScreen(
-                    eventTitle = createEventViewModel.eventTitle,
-                    eventDescription = createEventViewModel.eventDescription,
-                    eventAddress = createEventViewModel.eventAddress,
-                    eventPrice = createEventViewModel.eventPrice,
-
-                    startDateTimeButtonText = createEventViewModel.startDateTimeButtonText,
-                    endDateTimeButtonText = createEventViewModel.endDateTimeButtonText,
-                    showStartDateTimePicker = { createEventViewModel.showStartDateTimePickerForUser() },
-                    showEndDateTimePicker = { createEventViewModel.showEndDateTimePickerForUser() },
-
-                    onValueChangeTitle = { createEventViewModel.eventTitle = it },
-                    onValueChangeDescription = { createEventViewModel.eventDescription = it },
-                    onValueChangeAddress = { createEventViewModel.eventAddress = it },
-                    onValueChangePrice = { createEventViewModel.eventPrice = it },
-                    onCreateEvent = {
-                        createEventViewModel.createEvent()
-                        eventViewModel.getEvents()
-                    },
-                    showDialog = createEventViewModel.showDialog,
-                    dismissDialog = { createEventViewModel.dismissDialog() },
-
-                    areAllFieldsFilled = { createEventViewModel.areAllFieldsFilled() }
-                )
             }
         }
     }

@@ -13,7 +13,7 @@ import java.util.Date
  *
  * @constructor Creates a new instance of Message.
  *
- * @Author [Your Name] TODO: Add name
+ * @author Christian, Nikolaj, Marcus
  */
 data class Message(
     val senderUID: String,

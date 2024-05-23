@@ -171,7 +171,6 @@ fun CustomNewsCard(
 
                 }
 
-                // TODO: Should probably be hoisted :)
                 if (isExpanded) {
                     Text(
                         text = bodyText,

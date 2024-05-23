@@ -3,6 +3,7 @@ package com.example.ventilen_app.viewmodels
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Context
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -34,7 +35,7 @@ import java.util.Locale
  *
  * @constructor Creates an instance of CreateEventViewModel.
  *
- * @Author [Your Name] TODO: Add name
+ * @author Christian, Nikolaj, Marcus
  */
 class CreateEventViewModel : ViewModel() {
     private val eventRepository: EventRepository = EventRepository
@@ -145,7 +146,7 @@ class CreateEventViewModel : ViewModel() {
                 startDateTimeButtonText = "Vælg starttidspunkt"
                 endDateTimeButtonText = "Vælg sluttidspunkt"
             } catch (error: Exception) {
-                // Log error TODO: Handle error
+                Log.e("CreateEventViewModel", "Failed to create event", error)
             }
         }
     }

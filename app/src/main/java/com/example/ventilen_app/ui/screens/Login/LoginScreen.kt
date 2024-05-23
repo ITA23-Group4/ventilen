@@ -70,7 +70,6 @@ fun LoginScreen(
             textColor = MaterialTheme.colorScheme.surface
         )
 
-        // TODO placement should be fixed with CustomColumn
         Row(
             verticalAlignment = Alignment.CenterVertically
         ) {

@@ -26,7 +26,7 @@ import com.example.ventilen_app.ui.components.CustomLocalChatBottomBar
  * @param onSendMessage The action to perform when the send button is clicked in the bottom chat bar.
  * @param content The main content to be displayed within the scaffold.
  *
- * @Author [Your Name] TODO: Add name
+ * @author Christian, Nikolaj, Marcus
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

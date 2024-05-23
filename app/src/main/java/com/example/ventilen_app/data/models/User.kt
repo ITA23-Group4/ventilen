@@ -12,7 +12,7 @@ import com.google.firebase.firestore.DocumentId
  *
  * @constructor Creates a new instance of User.
  *
- * @Author [Your Name] TODO: Add name
+ * @author Christian, Nikolaj, Marcus
  */
 data class User(
     val username: String = "",

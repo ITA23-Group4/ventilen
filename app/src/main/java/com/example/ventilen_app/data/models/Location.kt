@@ -12,7 +12,7 @@ import com.google.firebase.firestore.DocumentId
  *
  * @constructor Creates a new instance of Location.
  *
- * @Author [Your Name] TODO: Add name
+ * @author Chrsitian, Nikolaj, Marcus
  */
 data class Location(
     var locationName: String,

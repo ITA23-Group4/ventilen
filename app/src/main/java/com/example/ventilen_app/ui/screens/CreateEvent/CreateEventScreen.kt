@@ -42,7 +42,7 @@ import com.example.ventilen_app.ui.components.CustomTextField
  * @see CustomColumn
  * @see AlertDialog
  *
- * @Author [Your Name] TODO: Add name
+ * @author Christian, Nikolaj, Marcus
  */
 @Composable
 fun CreateEventScreen(

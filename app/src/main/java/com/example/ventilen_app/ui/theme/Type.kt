@@ -19,25 +19,6 @@ val montserratFamily = FontFamily(
 )
 
 val Typography = Typography(
-    /* TODO: Define these typographies
-    val displayLarge: TextStyle = COMPILED_CODE,
-    val displayMedium: TextStyle = COMPILED_CODE,
-    val displaySmall: TextStyle = COMPILED_CODE,
-    val headlineLarge: TextStyle = COMPILED_CODE,
-    val headlineMedium: TextStyle = COMPILED_CODE,
-    val headlineSmall: TextStyle = COMPILED_CODE,
-    val titleLarge: TextStyle = COMPILED_CODE,
-    val titleMedium: TextStyle = COMPILED_CODE,
-    val titleSmall: TextStyle = COMPILED_CODE,
-    val bodyLarge: TextStyle = COMPILED_CODE,
-    val bodyMedium: TextStyle = COMPILED_CODE,
-    val bodySmall: TextStyle = COMPILED_CODE,
-    val labelLarge: TextStyle = COMPILED_CODE,
-    val labelMedium: TextStyle = COMPILED_CODE,
-    val labelSmall: TextStyle = COMPILED_CODE
- */
-
-    //TODO: Redo typograpghy names to be propper and make all needed typograpghies
     headlineLarge = TextStyle(
         fontFamily = montserratFamily,
         fontWeight = FontWeight.SemiBold,
