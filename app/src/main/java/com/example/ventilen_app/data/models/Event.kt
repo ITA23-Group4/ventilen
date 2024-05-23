@@ -15,6 +15,7 @@ data class Event(
     val eventDescription: String = "",
     val eventAddress: String = "",
     val eventPrice: Double = 0.0,
+    val eventPrimaryLocationID: String = "",
     @DocumentId val eventID: String = "",
 ) : Comparable<Event> {
 

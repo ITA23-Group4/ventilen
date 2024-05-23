@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.ventilen_app.data.models.Event
 import com.example.ventilen_app.data.repositories.EventRepository
+import com.example.ventilen_app.data.repositories.UserRepository
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -39,6 +40,7 @@ import java.util.Locale
  */
 class CreateEventViewModel : ViewModel() {
     private val eventRepository: EventRepository = EventRepository
+    private val userRepository: UserRepository = UserRepository
 
     var eventTitle: String by mutableStateOf("")
     var eventDescription: String by mutableStateOf("")
@@ -130,7 +132,8 @@ class CreateEventViewModel : ViewModel() {
             eventAddress = eventAddress,
             eventPrice = eventPrice.toDouble(),
             eventStartDateTime = eventStartDateTime!!,
-            eventEndDateTime = eventEndDateTime!!
+            eventEndDateTime = eventEndDateTime!!,
+            eventPrimaryLocationID = userRepository.currentUser?.primaryLocationID ?: ""
         )
 
         viewModelScope.launch {

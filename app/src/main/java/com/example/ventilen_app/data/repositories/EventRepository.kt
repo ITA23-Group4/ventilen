@@ -63,6 +63,8 @@ object EventRepository {
 
     suspend fun createEvent(event: Event) {
 
+        val primaryLocationRef = db.collection("locations").document(event.eventPrimaryLocationID)
+
         val eventHashMap = hashMapOf(
             "eventName" to event.eventName,
             "attendeesByUID" to event.attendeesByUID,
@@ -70,7 +72,8 @@ object EventRepository {
             "eventStartDateTime" to com.google.firebase.Timestamp(event.eventStartDateTime),
             "eventEndDateTime" to com.google.firebase.Timestamp(event.eventEndDateTime),
             "eventAddress" to event.eventAddress,
-            "eventPrice" to event.eventPrice
+            "eventPrice" to event.eventPrice,
+            "eventPrimaryLocationID" to primaryLocationRef
         )
 
         db.collection("events")
