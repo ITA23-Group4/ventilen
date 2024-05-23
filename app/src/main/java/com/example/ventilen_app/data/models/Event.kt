@@ -3,7 +3,6 @@ package com.example.ventilen_app.data.models
 import com.google.firebase.firestore.DocumentId
 import com.google.firebase.firestore.DocumentReference
 import java.text.SimpleDateFormat
-import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 
