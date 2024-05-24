@@ -112,28 +112,14 @@ fun CustomNewsCard(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(10.dp),
-            verticalAlignment = Alignment.Top
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            Column{
-                Box(
-                    modifier = Modifier
-                        .size(80.dp)
-                        .drawBehind {
-                            drawCircle(
-                                color = backgroundColor,
-                                radius = this.size.height / 2
-                            )
-                        },
-                    contentAlignment = Alignment.Center
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Notifications,
-                        contentDescription = "News alert",
-                        tint = Color.White,
-                        modifier = Modifier.size(44.dp)
-                    )
-                }
-            }
+            Icon(
+                imageVector = Icons.Default.Notifications,
+                contentDescription = "News alert",
+                tint = CustomColorScheme.OffBlack,
+                modifier = Modifier.size(42.dp)
+            )
 
             Spacer(modifier = Modifier.size(20.dp))
             Column(
