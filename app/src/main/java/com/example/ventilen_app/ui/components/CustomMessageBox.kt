@@ -41,7 +41,7 @@ fun CustomMessageBox(
     ){
         Column(
             modifier = Modifier
-                .shadow(elevation = 10.dp, shape = RoundedCornerShape(
+                .shadow(elevation = 4.dp, shape = RoundedCornerShape(
                     topStart = 12.dp,
                     topEnd = 12.dp,
                     bottomEnd = bottomEnd,

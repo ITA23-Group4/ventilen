@@ -98,14 +98,19 @@ class EventViewModel: ViewModel() {
         val currentDate = Date()
 
         // Calculate the date and time one week from now
-        val calendar = Calendar.getInstance().apply {
+        val oneWeekFromNow = Calendar.getInstance().apply {
             time = currentDate
             add(Calendar.DATE, 7)
-        }
-        val oneWeekFromNow = calendar.time
+        }.time
 
-        // Find the start and end indices using binary search
+        // Find the start and end index using binary search
         val startIndex = findStartIndex(events, currentDate)
+
+        // If no events occur within the next week, return an empty list
+        if (startIndex == -1)
+            return emptyList()
+
+        //Find end index using binary search
         val endIndex = findEndIndex(events, oneWeekFromNow)
 
         return events.subList(startIndex, endIndex)
@@ -147,14 +152,14 @@ class EventViewModel: ViewModel() {
      *
      * @param events List of events sorted by eventStartDateTime.
      * @param currentDate The current date and time.
-     * @return The start index.
+     * @return The start index, or -1 if no valid start index is found.
      * @author Marcus
      */
     private fun findStartIndex(events: List<Event>, currentDate: Date): Int {
         var low = 0
         var high = events.size - 1
+        var startIndex = -1
 
-        // Binary search loop to find the start index
         while (low <= high) {
             val mid = (low + high) / 2
             val midDate = events[mid].eventStartDateTime
@@ -166,11 +171,12 @@ class EventViewModel: ViewModel() {
             } else {
                 // If the event's start date is after the current date,
                 // update the start index and move the upper bound of the search interval to mid - 1
+                startIndex = mid
                 high = mid - 1
             }
         }
 
-        return high
+        return startIndex
     }
 
     /**
@@ -191,18 +197,19 @@ class EventViewModel: ViewModel() {
             val mid = (low + high) / 2
             val midDate = events[mid].eventStartDateTime
 
-            // If the event's start date is on or before one week from now,
-            // update the end index and move the lower bound of the search interval to mid + 1
-            if (!midDate.after(oneWeekFromNow)) {
-                low = mid + 1
-            } else {
-                // If the event's start date is after one week from now,
-                // move the upper bound of the search interval to mid - 1
+            // If the event's start date is after one week from now,
+            // move the upper bound of the search interval to mid - 1
+            if (midDate.after(oneWeekFromNow)) {
                 high = mid - 1
+            } else {
+                // If the event's start date is on or before one week from now,
+                // update the end index and move the lower bound of the search interval to mid + 1
+                low = mid + 1
             }
         }
 
-        return low
+        // Adjust the end index by adding 1 to include the last valid index
+        return low + 1
     }
 
 }
