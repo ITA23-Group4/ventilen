@@ -17,10 +17,11 @@ import java.util.Date
 
 class EventViewModel: ViewModel() {
     private val eventRepository: EventRepository = EventRepository
-    private val userRepository: UserRepository = UserRepository
+    val userRepository: UserRepository = UserRepository
 
     val events: MutableList<Event> = mutableStateListOf()
     private var selectedEventCardID: String by mutableStateOf("")
+    var eventsFilteredForPrimaryLocationID: MutableList<Event> = mutableStateListOf()
 
     init {
         getEvents()
@@ -40,6 +41,11 @@ class EventViewModel: ViewModel() {
             }
         }
     }
+
+    fun filteredEventsForPrimaryLocationID(primaryLocation: String) {
+        eventsFilteredForPrimaryLocationID = events.filter { it.eventPrimaryLocationID == primaryLocation }.toMutableList()
+    }
+
 
     fun addUserToEvent(eventID: String) {
         viewModelScope.launch {

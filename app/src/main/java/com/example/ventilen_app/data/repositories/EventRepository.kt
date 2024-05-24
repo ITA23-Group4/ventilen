@@ -47,6 +47,7 @@ object EventRepository {
         val description = document.getString("eventDescription") ?: ""
         val address = document.getString("eventAddress") ?: ""
         val price = document.getDouble("eventPrice") ?: 0.0
+        val primaryLocationRef = document.getDocumentReference("eventPrimaryLocationID")?.id ?: return null
         val id = document.id
 
         return Event(
@@ -57,11 +58,14 @@ object EventRepository {
             eventEndDateTime = eventEndDateTime,
             eventDescription = description,
             eventAddress = address,
-            eventPrice = price
+            eventPrice = price,
+            eventPrimaryLocationID = primaryLocationRef
         )
     }
 
     suspend fun createEvent(event: Event) {
+
+        val primaryLocationRef = db.collection("locations").document(event.eventPrimaryLocationID!!)
 
         val eventHashMap = hashMapOf(
             "eventName" to event.eventName,
@@ -70,7 +74,8 @@ object EventRepository {
             "eventStartDateTime" to com.google.firebase.Timestamp(event.eventStartDateTime),
             "eventEndDateTime" to com.google.firebase.Timestamp(event.eventEndDateTime),
             "eventAddress" to event.eventAddress,
-            "eventPrice" to event.eventPrice
+            "eventPrice" to event.eventPrice,
+            "eventPrimaryLocationID" to primaryLocationRef
         )
 
         db.collection("events")

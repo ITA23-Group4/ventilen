@@ -3,7 +3,6 @@ package com.example.ventilen_app.data.models
 import com.google.firebase.firestore.DocumentId
 import com.google.firebase.firestore.DocumentReference
 import java.text.SimpleDateFormat
-import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 
@@ -15,6 +14,7 @@ data class Event(
     val eventDescription: String = "",
     val eventAddress: String = "",
     val eventPrice: Double = 0.0,
+    val eventPrimaryLocationID: String = "",
     @DocumentId val eventID: String = "",
 ) : Comparable<Event> {
 
