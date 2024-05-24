@@ -3,6 +3,7 @@ package com.example.ventilen_app.ui.components
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -12,8 +13,10 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
@@ -112,16 +115,24 @@ fun CustomNewsCard(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(10.dp),
-            verticalAlignment = Alignment.CenterVertically
+            verticalAlignment = Alignment.Top
         ) {
-            Icon(
-                imageVector = Icons.Default.Notifications,
-                contentDescription = "News alert",
-                tint = CustomColorScheme.OffBlack,
-                modifier = Modifier.size(42.dp)
-            )
+            Box(
+                modifier = Modifier
+                    .width(60.dp)
+                    .offset(x = (-5).dp)
+                    //.background(Color.Red)
+                ,
+                contentAlignment = Alignment.Center
+            ){
+                Icon(
+                    imageVector = Icons.Default.Notifications,
+                    contentDescription = "News alert",
+                    tint = CustomColorScheme.OffBlack,
+                    modifier = Modifier.size(42.dp)
+                )
+            }
 
-            Spacer(modifier = Modifier.size(20.dp))
             Column(
                 verticalArrangement = Arrangement.Center
             ) {
