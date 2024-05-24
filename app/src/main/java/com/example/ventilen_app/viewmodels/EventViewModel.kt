@@ -46,7 +46,6 @@ class EventViewModel: ViewModel() {
         eventsFilteredForPrimaryLocationID = events.filter { it.eventPrimaryLocationID == primaryLocation }.toMutableList()
     }
 
-
     fun addUserToEvent(eventID: String) {
         viewModelScope.launch {
             try {
@@ -170,14 +169,14 @@ class EventViewModel: ViewModel() {
             val mid = (low + high) / 2
             val midDate = events[mid].eventStartDateTime
 
-            // If the event's start date is before or equal to the current date,
+            // If the event's start date is before  the current date,
             // move the lower bound of the search interval to mid + 1
-            if (!midDate.after(currentDate)) {
+            if (midDate.before(currentDate)) {
                 low = mid + 1
             } else {
-                // If the event's start date is after the current date,
+                // If the event's start date is equal or after the current date,
                 // update the start index and move the upper bound of the search interval to mid - 1
-                startIndex = mid
+                startIndex = mid - 1
                 high = mid - 1
             }
         }
