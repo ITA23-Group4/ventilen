@@ -48,19 +48,3 @@ fun EventScreen(
         }
     }
 }
-
-/*
-@Preview
-@Composable
-fun EventScreenPreview() {
-    val sampleEvents = listOf(
-        Event(eventName = "Burrito Ballade", attendeesByUID = mutableListOf("user1", "user3", "user4", "user20", "user3", "user4", "user20"), eventID = "1"),
-        Event(eventName = "Sommerfesten 2024", attendeesByUID = mutableListOf("user3", "user4", "user20"), eventID = "2"),
-        Event(eventName = "Pita Night", attendeesByUID = mutableListOf(), eventID = "3")
-    )
-    VentilenAppTheme {
-        EventScreen(events = sampleEvents, onAttend = {}, onNotAttend = {}, onEventCardClick = {}, isEventSelected = { false }, isAttending = { false }, onAddEvent = {})
-    }
-}
-
- */
