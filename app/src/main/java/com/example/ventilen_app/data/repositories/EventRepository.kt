@@ -45,18 +45,29 @@ object EventRepository {
     }
 
     suspend fun getEvent(eventID: String): Event? {
-        val document = db.collection("events").document(eventID).get().await()
+        val document = db.collection("locations")
+            .document(currentUserPrimaryLocationID)
+            .collection("events")
+            .document(eventID)
+            .get()
+            .await()
         return document?.let { convertEventDocumentToEvent(it) }
     }
 
     suspend fun addUserToEvent(userUID: String, eventID: String) {
-        val eventRef = db.collection("events").document(eventID)
+        val eventRef = db.collection("locations")
+            .document(currentUserPrimaryLocationID)
+            .collection("events")
+            .document(eventID)
         val userRef = db.collection("users").document(userUID)
         eventRef.update("attendeesByUID", FieldValue.arrayUnion(userRef)).await()
     }
 
     suspend fun removeUserFromEvent(userUID: String, eventID: String) {
-        val eventRef = db.collection("events").document(eventID)
+        val eventRef = db.collection("locations")
+            .document(currentUserPrimaryLocationID)
+            .collection("events")
+            .document(eventID)
         val userRef = db.collection("users").document(userUID)
         eventRef.update("attendeesByUID", FieldValue.arrayRemove(userRef)).await()
     }

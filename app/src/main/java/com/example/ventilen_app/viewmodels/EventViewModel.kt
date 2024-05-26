@@ -37,6 +37,18 @@ class EventViewModel: ViewModel() {
         }
     }
 
+    fun getUpdatedEventsFromFirestore() {
+        viewModelScope.launch {
+            try {
+                eventRepository.getEvents()
+                events.clear()
+                events.addAll(eventRepository.events)
+            } catch (error: Exception) {
+                Log.d("GetAllEvents", "ERROR: ${error.message}")
+            }
+        }
+    }
+
     fun addUserToEvent(eventID: String) {
         viewModelScope.launch {
             try {
@@ -160,7 +172,7 @@ class EventViewModel: ViewModel() {
             val mid = (low + high) / 2
             val midDate = events[mid].eventStartDateTime
 
-            // If the event's start date is before  the current date,
+            // If the event's start date is before the current date,
             // move the lower bound of the search interval to mid + 1
             if (midDate.before(currentDate)) {
                 low = mid + 1
@@ -204,7 +216,6 @@ class EventViewModel: ViewModel() {
             }
         }
 
-        // Adjust the end index by adding 1 to include the last valid index
         return low
     }
 

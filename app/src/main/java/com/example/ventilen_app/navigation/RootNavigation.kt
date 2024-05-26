@@ -191,7 +191,7 @@ fun RootNavigation() {
                 }
             }
             composable("event/create") {
-                eventViewModel.getEvents()
+                eventViewModel.getUpdatedEventsFromFirestore()
                 createEventViewModel.context = LocalContext.current
                 CreateEventScaffold(
                     onNavigateBack = { navController.navigate("event") }
