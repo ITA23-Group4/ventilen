@@ -77,7 +77,10 @@ fun RootNavigation() {
                     primaryLocationNews = homeViewModel.primaryLocationNews,
                     isNewsCardExpanded = homeViewModel.isNewsCardExpanded,
                     onNewsCardClick = { homeViewModel.toggleNewsCard() },
-                    onDeleteNews = { homeViewModel.clearNewsForPrimaryLocation() },
+                    onDeleteNews = {
+                        homeViewModel.clearNewsForPrimaryLocation()
+                        homeViewModel.toggleConfirmDeleteNewsDialog()
+                                   },
                     onChatLocalNavigate = {
                         chatViewModel.selectedLocation = it
                         navController.navigate("chat/local")

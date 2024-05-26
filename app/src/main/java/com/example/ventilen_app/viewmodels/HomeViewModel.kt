@@ -53,7 +53,6 @@ class HomeViewModel : ViewModel() {
                 val primaryLocationID: String = userRepository.currentUser!!.primaryLocationID
                 clearLatestNewsFromPrimaryLocation()
                 locationRepository.createNewsForLocation(primaryLocationID, newsDescription)
-                updateLatestNewsFromPrimaryLocation()
             } catch (error: Exception) {
                 Log.e("Error", error.toString())
             }
@@ -63,7 +62,6 @@ class HomeViewModel : ViewModel() {
     private fun updateLatestNewsFromPrimaryLocation() {
         primaryLocationNews = newsDescription
         newsDescription = ""
-        isNewsCardExpanded = false
     }
 
     private fun clearLatestNewsFromPrimaryLocation() {
