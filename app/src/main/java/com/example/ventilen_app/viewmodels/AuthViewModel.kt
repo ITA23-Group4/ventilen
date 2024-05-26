@@ -7,6 +7,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.ventilen_app.data.models.Location
+import com.example.ventilen_app.data.repositories.EventRepository
 import com.example.ventilen_app.data.repositories.LocationRepository
 import com.example.ventilen_app.utils.ValidateInput
 import com.example.ventilen_app.data.repositories.UserRepository
@@ -15,8 +16,9 @@ import kotlinx.coroutines.launch
 
 class AuthViewModel : ViewModel() {
     private val accountService: AccountService = AccountService()
-    val locationRepository: LocationRepository = LocationRepository
+    private val locationRepository: LocationRepository = LocationRepository
     private val userRepository: UserRepository = UserRepository
+    private val eventRepository: EventRepository = EventRepository
     private val validateInput: ValidateInput = ValidateInput()
 
     init {
@@ -48,10 +50,6 @@ class AuthViewModel : ViewModel() {
     var hasLoginError: Boolean by mutableStateOf(false)
 
     var showDialog: Boolean by mutableStateOf(false)
-
-    private suspend fun getUser() {
-        userRepository.getUser()
-    }
 
     fun registerNewUser(
         onRegistrationSuccess: () -> Unit,
@@ -85,7 +83,9 @@ class AuthViewModel : ViewModel() {
                     email = email,
                     password = password
                 )
-                getUser()
+                userRepository.getUser()
+                eventRepository.currentUserPrimaryLocationID = userRepository.currentUser!!.primaryLocationID
+                eventRepository.getEvents()
                 onLoginSuccess()
             } catch (error: Exception) {
                 Log.e("LOG IN", "Failed to log in: $error")

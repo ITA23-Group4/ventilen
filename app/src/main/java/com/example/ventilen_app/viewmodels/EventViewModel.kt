@@ -23,10 +23,6 @@ class EventViewModel: ViewModel() {
     private var selectedEventCardID: String by mutableStateOf("")
     var eventsFilteredForPrimaryLocationID: MutableList<Event> = mutableStateListOf()
 
-    init {
-        getEvents()
-    }
-
     fun isAdmin(): Boolean {
         return userRepository.currentUser!!.isAdmin
     }
@@ -34,16 +30,14 @@ class EventViewModel: ViewModel() {
     fun getEvents(){
         viewModelScope.launch {
             try {
-                events.clear()
-                events.addAll(eventRepository.getEvents())
+                if (events.isNotEmpty()) {
+                    events.clear()
+                }
+                events.addAll(eventRepository.events)
             } catch (error: Exception) {
                 Log.d("GetAllEvents", "ERROR: ${error.message}")
             }
         }
-    }
-
-    fun filteredEventsForPrimaryLocationID(primaryLocation: String) {
-        eventsFilteredForPrimaryLocationID = events.filter { it.eventPrimaryLocationID == primaryLocation }.toMutableList()
     }
 
     fun addUserToEvent(eventID: String) {
@@ -127,7 +121,7 @@ class EventViewModel: ViewModel() {
 
     fun isCurrentUserAttendingEvent(event: Event): Boolean {
         val currentUserUID = getCurrentUserUIDFromFirebase()
-        return event.attendeesByUID.any { it.id == currentUserUID }
+        return event.attendeesByUID.any { it == currentUserUID }
     }
 
     fun isSelectedEvent(eventID: String): Boolean {
@@ -214,7 +208,7 @@ class EventViewModel: ViewModel() {
         }
 
         // Adjust the end index by adding 1 to include the last valid index
-        return low + 1
+        return low
     }
 
 }

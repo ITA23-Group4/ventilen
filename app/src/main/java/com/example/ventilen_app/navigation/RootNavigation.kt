@@ -157,7 +157,6 @@ fun RootNavigation() {
                 route = "event"
             ) {
                 composable("event/hub") {
-                    eventViewModel.filteredEventsForPrimaryLocationID(eventViewModel.userRepository.currentUser!!.primaryLocationID) // TODO: Scuffed maybe?
                     eventViewModel.clearSelectedEventCard()
                     EventScaffold(
                         currentRoute = "event",

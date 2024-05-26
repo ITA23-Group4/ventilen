@@ -8,17 +8,16 @@ import java.util.Locale
 
 data class Event(
     val eventName: String = "",
-    val attendeesByUID: MutableList<DocumentReference> = mutableListOf(),
+    val attendeesByUID: MutableList<String> = mutableListOf(),
     val eventStartDateTime: Date = Date(),
     val eventEndDateTime: Date = Date(),
     val eventDescription: String = "",
     val eventAddress: String = "",
     val eventPrice: Double = 0.0,
-    val eventPrimaryLocationID: String = "",
     @DocumentId val eventID: String = "",
 ) : Comparable<Event> {
 
-    fun withUpdatedAttendees(attendees: MutableList<DocumentReference>): Event {
+    fun withUpdatedAttendees(attendees: MutableList<String>): Event {
         return this.copy(attendeesByUID = attendees)
     }
 
