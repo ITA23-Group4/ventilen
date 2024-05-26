@@ -133,7 +133,6 @@ class CreateEventViewModel : ViewModel() {
             eventPrice = eventPrice.toDouble(),
             eventStartDateTime = eventStartDateTime!!,
             eventEndDateTime = eventEndDateTime!!,
-            eventPrimaryLocationID = userRepository.currentUser?.primaryLocationID ?: ""
         )
 
         viewModelScope.launch {

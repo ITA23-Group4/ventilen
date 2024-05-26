@@ -21,7 +21,6 @@ class EventViewModel: ViewModel() {
 
     val events: MutableList<Event> = mutableStateListOf()
     private var selectedEventCardID: String by mutableStateOf("")
-    var eventsFilteredForPrimaryLocationID: MutableList<Event> = mutableStateListOf()
 
     fun isAdmin(): Boolean {
         return userRepository.currentUser!!.isAdmin
@@ -83,6 +82,10 @@ class EventViewModel: ViewModel() {
                 }
             }
         }
+    }
+
+    fun eventsFilteredForPrimaryLocationID() {
+
     }
 
     /**

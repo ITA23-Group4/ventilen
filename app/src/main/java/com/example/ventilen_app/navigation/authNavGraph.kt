@@ -137,10 +137,10 @@ fun NavGraphBuilder.AuthNavGraph(
                         )
                     },
                     selectedLocation = authViewModel.location.locationName,
-                    locations = authViewModel.locationRepository.locations.map { it.locationName },
+                    locations = authViewModel.getLocationName(),
                     hasLocationError = authViewModel.hasLocationError,
                     onLocationValueChanged = { selectedLocationName ->
-                        authViewModel.changeLocation(authViewModel.locationRepository.mapLocationNameToLocation.get(selectedLocationName)!!)
+                        authViewModel.onLocationValueChanged(selectedLocationName)
                     }
                 )
             }

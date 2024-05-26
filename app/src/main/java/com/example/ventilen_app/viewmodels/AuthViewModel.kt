@@ -107,6 +107,16 @@ class AuthViewModel : ViewModel() {
         return !hasErrors && isNotEmpty
     }
 
+    fun getLocationName(): List<String> {
+        return locationRepository.locations.map { it.locationName }
+    }
+
+    fun onLocationValueChanged(selectedLocationName: String) {
+        val selectedLocation = locationRepository.mapLocationNameToLocation[selectedLocationName]!!
+        // Check if selectedLocation is not null before using it
+        changeLocation(selectedLocation)
+    }
+
     fun changeEmail(newEmail: String) {
         email = newEmail
         hasEmailError = validateInput.validateEmail(email)
