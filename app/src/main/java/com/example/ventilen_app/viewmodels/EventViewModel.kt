@@ -17,7 +17,7 @@ import java.util.Date
 
 class EventViewModel: ViewModel() {
     private val eventRepository: EventRepository = EventRepository
-    val userRepository: UserRepository = UserRepository
+    private val userRepository: UserRepository = UserRepository
 
     val events: MutableList<Event> = mutableStateListOf()
     private var selectedEventCardID: String by mutableStateOf("")
@@ -29,9 +29,7 @@ class EventViewModel: ViewModel() {
     fun getEvents(){
         viewModelScope.launch {
             try {
-                if (events.isNotEmpty()) {
-                    events.clear()
-                }
+                events.clear()
                 events.addAll(eventRepository.events)
             } catch (error: Exception) {
                 Log.d("GetAllEvents", "ERROR: ${error.message}")
@@ -84,10 +82,6 @@ class EventViewModel: ViewModel() {
         }
     }
 
-    fun eventsFilteredForPrimaryLocationID() {
-
-    }
-
     /**
      * Filters events that occur within a week from the current date by using
      * binary search to efficiently find the events that start within the next week in O(log n) time complexity
@@ -118,7 +112,7 @@ class EventViewModel: ViewModel() {
         return events.subList(startIndex, endIndex)
     }
 
-    fun getCurrentUserUIDFromFirebase(): String {
+    private fun getCurrentUserUIDFromFirebase(): String {
         return FirebaseAuth.getInstance().currentUser?.uid!!
     }
 

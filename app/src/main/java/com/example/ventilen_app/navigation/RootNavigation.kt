@@ -1,6 +1,7 @@
 package com.example.ventilen_app.navigation
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.platform.LocalContext
@@ -50,7 +51,8 @@ fun RootNavigation() {
         ) {
             AuthNavGraph(
                 navController = navController,
-                authViewModel = authViewModel
+                authViewModel = authViewModel,
+                eventViewModel = eventViewModel
             )
         }
         composable("home") {
@@ -166,7 +168,7 @@ fun RootNavigation() {
                         onNavigateCreateEvent = { navController.navigate("event/create") }
                     ) {
                         EventScreen(
-                            events = eventViewModel.eventsFilteredForPrimaryLocationID,
+                            events = eventViewModel.events,
                             onAttend = {
                                 eventViewModel.addUserToEvent(
                                     eventID = it
@@ -189,6 +191,7 @@ fun RootNavigation() {
                 }
             }
             composable("event/create") {
+                eventViewModel.getEvents()
                 createEventViewModel.context = LocalContext.current
                 CreateEventScaffold(
                     onNavigateBack = { navController.navigate("event") }

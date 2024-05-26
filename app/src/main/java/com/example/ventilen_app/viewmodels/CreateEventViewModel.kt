@@ -40,7 +40,6 @@ import java.util.Locale
  */
 class CreateEventViewModel : ViewModel() {
     private val eventRepository: EventRepository = EventRepository
-    private val userRepository: UserRepository = UserRepository
 
     var eventTitle: String by mutableStateOf("")
     var eventDescription: String by mutableStateOf("")
@@ -49,8 +48,8 @@ class CreateEventViewModel : ViewModel() {
 
     var context: Context? by mutableStateOf(null)
 
-    var eventStartDateTime: Date? by mutableStateOf(null)
-    var eventEndDateTime: Date? by mutableStateOf(null)
+    private var eventStartDateTime: Date? by mutableStateOf(null)
+    private var eventEndDateTime: Date? by mutableStateOf(null)
 
     var startDateTimeButtonText: String by mutableStateOf("Vælg starttidspunkt")
     var endDateTimeButtonText: String by mutableStateOf("Vælg sluttidspunkt")

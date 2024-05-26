@@ -11,6 +11,7 @@ import com.example.ventilen_app.ui.screens.Location.LocationScreen
 import com.example.ventilen_app.ui.screens.Login.LoginScreen
 import com.example.ventilen_app.ui.screens.Username.UsernameScreen
 import com.example.ventilen_app.ui.screens.Welcome.WelcomeScreen
+import com.example.ventilen_app.viewmodels.EventViewModel
 
 /**
  * Authentication navigation graph for the authentication flow, which includes screens
@@ -25,6 +26,7 @@ import com.example.ventilen_app.ui.screens.Welcome.WelcomeScreen
 fun NavGraphBuilder.AuthNavGraph(
     navController: NavController,
     authViewModel: AuthViewModel,
+    eventViewModel: EventViewModel
 ) {
     composable("auth/welcome") {
         AuthScaffold(
@@ -44,6 +46,7 @@ fun NavGraphBuilder.AuthNavGraph(
                 onNavigateHome = {
                     authViewModel.loginUser(
                         onLoginSuccess = {
+                            eventViewModel.getEvents()
                             navController.popBackStack(
                                 route = "auth",
                                 inclusive = true
@@ -120,6 +123,7 @@ fun NavGraphBuilder.AuthNavGraph(
                             onRegistrationSuccess = {
                                 authViewModel.loginUser(
                                     onLoginSuccess = {
+                                        eventViewModel.getEvents()
                                         navController.popBackStack(
                                             route = "auth",
                                             inclusive = true
