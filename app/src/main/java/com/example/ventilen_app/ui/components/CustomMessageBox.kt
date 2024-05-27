@@ -22,6 +22,9 @@ import androidx.compose.ui.unit.dp
 import com.example.ventilen_app.data.models.Message
 import com.example.ventilen_app.ui.theme.CustomColorScheme
 
+/**
+ * @author Chrsitian, Nikolaj, Marcus
+ */
 @Composable
 fun CustomMessageBox(
     message: Message,

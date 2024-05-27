@@ -16,6 +16,9 @@ import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.launch
 import java.util.Date
 
+/**
+ * @author Chrsitian, Nikolaj, Marcus
+ */
 class ChatViewModel : ViewModel() {
     private val chatRepository = ChatRepository
     private val userRepository = UserRepository

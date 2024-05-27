@@ -21,6 +21,9 @@ import androidx.compose.ui.unit.dp
 import com.example.ventilen_app.data.models.Message
 import com.example.ventilen_app.ui.components.CustomMessageBox
 
+/**
+ * @author Chrsitian, Nikolaj, Marcus
+ */
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun ChatLocalScreen(

@@ -6,6 +6,9 @@ import androidx.compose.material3.SwitchDefaults
 import androidx.compose.runtime.Composable
 import com.example.ventilen_app.ui.theme.CustomColorScheme
 
+/**
+ * @author Chrsitian, Nikolaj, Marcus
+ */
 @Composable
 fun CustomSwitch(
     isAttending: Boolean,

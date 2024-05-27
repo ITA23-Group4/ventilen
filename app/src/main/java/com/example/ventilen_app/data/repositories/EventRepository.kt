@@ -11,6 +11,9 @@ import com.google.firebase.firestore.firestore
 import kotlinx.coroutines.tasks.await
 import java.util.Calendar
 
+/**
+ * @author Chrsitian, Nikolaj, Marcus
+ */
 object EventRepository {
     private val db = Firebase.firestore
 

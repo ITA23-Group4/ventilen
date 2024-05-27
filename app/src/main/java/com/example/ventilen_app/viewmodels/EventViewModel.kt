@@ -15,6 +15,9 @@ import kotlinx.coroutines.launch
 import java.util.Calendar
 import java.util.Date
 
+/**
+ * @author Chrsitian, Nikolaj, Marcus
+ */
 class EventViewModel: ViewModel() {
     private val eventRepository: EventRepository = EventRepository
     private val userRepository: UserRepository = UserRepository

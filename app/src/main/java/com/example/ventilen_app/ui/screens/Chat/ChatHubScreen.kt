@@ -24,7 +24,9 @@ import com.example.ventilen_app.ui.components.CustomChatCardComponent.CustomCard
 import com.example.ventilen_app.ui.components.CustomColumn
 import com.example.ventilen_app.ui.theme.CustomColorScheme
 
-
+/**
+ * @author Chrsitian, Nikolaj, Marcus
+ */
 @Composable
 fun ChatHubScreen(
     locationsExcludingCurrentUserPrimaryLocation: List<Location>,

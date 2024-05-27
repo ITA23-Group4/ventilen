@@ -11,6 +11,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import com.example.ventilen_app.R
 
+/**
+ * @author Chrsitian, Nikolaj, Marcus
+ */
 val montserratFamily = FontFamily(
     Font(R.font.montserrat_semibold, FontWeight.SemiBold),
     Font(R.font.montserrat_regular, FontWeight.Normal),

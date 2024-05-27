@@ -11,6 +11,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
+/** NOT USED ANYMORE
+ * @author Chrsitian, Nikolaj, Marcus
+ */
 @Composable
 fun CustomFloatingActionButton(
     onClick: () -> Unit,

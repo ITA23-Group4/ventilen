@@ -18,6 +18,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.example.ventilen_app.ui.theme.CustomColorScheme
 
+/** NOT USED ANYMORE
+ * @author Chrsitian, Nikolaj, Marcus
+ */
 @Composable
 fun ConditionsRow(
     condition: String,

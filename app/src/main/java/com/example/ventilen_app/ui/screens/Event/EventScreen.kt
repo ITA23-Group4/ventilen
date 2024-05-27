@@ -18,6 +18,9 @@ import com.example.ventilen_app.ui.components.CustomEventCardComponent.CustomEve
 import com.example.ventilen_app.ui.theme.CustomColorScheme
 import com.example.ventilen_app.ui.theme.VentilenAppTheme
 
+/**
+ * @author Chrsitian, Nikolaj, Marcus
+ */
 @Composable
 fun EventScreen(
     events: List<Event>,

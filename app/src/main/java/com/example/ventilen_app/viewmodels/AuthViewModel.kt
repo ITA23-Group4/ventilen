@@ -14,6 +14,9 @@ import com.example.ventilen_app.data.repositories.UserRepository
 import com.example.ventilen_app.services.AccountService
 import kotlinx.coroutines.launch
 
+/**
+ * @author Chrsitian, Nikolaj, Marcus
+ */
 class AuthViewModel : ViewModel() {
     private val accountService: AccountService = AccountService()
     private val locationRepository: LocationRepository = LocationRepository

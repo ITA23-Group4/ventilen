@@ -13,6 +13,9 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 
+/**
+ * @author Chrsitian, Nikolaj, Marcus
+ */
 @Composable
 fun EventCardDetailRow(
     icon: Painter,

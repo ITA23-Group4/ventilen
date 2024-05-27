@@ -19,6 +19,9 @@ import com.example.ventilen_app.ui.components.CustomTextField
 import com.example.ventilen_app.ui.components.TopAuthPageDesign
 import com.example.ventilen_app.ui.theme.CustomColorScheme
 
+/**
+ * @author Chrsitian, Nikolaj, Marcus
+ */
 @Composable
 fun LoginScreen(
     onNavigateHome: () -> Unit,

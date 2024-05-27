@@ -39,7 +39,7 @@ import com.example.ventilen_app.ui.theme.CustomColorScheme
  * A composable function that displays the Home screen. With news displayed,
  * primary chat with latest message and event overview
  *
- * @author Marcus, ...
+ * @author Marcus, Christian, Nikolaj
  */
 @Composable
 fun HomeScreen(

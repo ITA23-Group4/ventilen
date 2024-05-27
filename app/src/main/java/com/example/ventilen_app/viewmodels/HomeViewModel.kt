@@ -22,7 +22,7 @@ import kotlinx.coroutines.launch
  * @property showCreateNewsDialog Flag to show or hide a dialog.
  * @property isNewsCardExpanded Flag to expand or collapse the news card.
  *
- * @author Marcus, ...
+ * @author Marcus, Christian, Nikolaj
  */
 class HomeViewModel : ViewModel() {
     private val userRepository: UserRepository = UserRepository

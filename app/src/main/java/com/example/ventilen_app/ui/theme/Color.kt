@@ -2,6 +2,9 @@ package com.example.ventilen_app.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
+/**
+ * @author Chrsitian, Nikolaj, Marcus
+ */
 object CustomColorScheme {
     // Light Color Scheme
     val Orange = Color(0xFFEA620E)

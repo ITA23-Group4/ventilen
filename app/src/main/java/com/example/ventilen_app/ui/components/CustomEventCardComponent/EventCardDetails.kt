@@ -17,6 +17,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.ventilen_app.R
 
+/**
+ * @author Chrsitian, Nikolaj, Marcus
+ */
 @Composable
 fun EventCardDetails(
     address: String,

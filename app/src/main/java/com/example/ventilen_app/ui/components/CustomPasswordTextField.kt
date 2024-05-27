@@ -18,6 +18,9 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import com.example.ventilen_app.ui.theme.CustomColorScheme
 
+/**
+ * @author Chrsitian, Nikolaj, Marcus
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CustomPasswordTextField(
