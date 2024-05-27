@@ -103,7 +103,12 @@ class EventViewModel: ViewModel() {
      */
     fun getEventsWithinNextWeek(): List<Event> {
         // Get the current date and time
-        val currentDate = Date()
+        val currentDate = Calendar.getInstance().apply {
+            set(Calendar.HOUR_OF_DAY, 0)
+            set(Calendar.MINUTE, 0)
+            set(Calendar.SECOND, 0)
+            set(Calendar.MILLISECOND, 0)
+        }.time
 
         // Calculate the date and time one week from now
         val oneWeekFromNow = Calendar.getInstance().apply {
@@ -179,10 +184,13 @@ class EventViewModel: ViewModel() {
             } else {
                 // If the event's start date is equal or after the current date,
                 // update the start index and move the upper bound of the search interval to mid - 1
-                startIndex = mid - 1
+                startIndex = mid
                 high = mid - 1
+                Log.d("Update StartIndex:", "$startIndex")
             }
         }
+
+        Log.d("findStartIndex", "startIndex: $startIndex")
 
         return startIndex
     }
