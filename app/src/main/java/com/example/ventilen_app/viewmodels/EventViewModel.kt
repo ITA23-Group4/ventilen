@@ -17,15 +17,10 @@ import java.util.Date
 
 class EventViewModel: ViewModel() {
     private val eventRepository: EventRepository = EventRepository
-    val userRepository: UserRepository = UserRepository
+    private val userRepository: UserRepository = UserRepository
 
     val events: MutableList<Event> = mutableStateListOf()
     private var selectedEventCardID: String by mutableStateOf("")
-    var eventsFilteredForPrimaryLocationID: MutableList<Event> = mutableStateListOf()
-
-    init {
-        getEvents()
-    }
 
     fun isAdmin(): Boolean {
         return userRepository.currentUser!!.isAdmin
@@ -35,15 +30,23 @@ class EventViewModel: ViewModel() {
         viewModelScope.launch {
             try {
                 events.clear()
-                events.addAll(eventRepository.getEvents())
+                events.addAll(eventRepository.events)
             } catch (error: Exception) {
                 Log.d("GetAllEvents", "ERROR: ${error.message}")
             }
         }
     }
 
-    fun filteredEventsForPrimaryLocationID(primaryLocation: String) {
-        eventsFilteredForPrimaryLocationID = events.filter { it.eventPrimaryLocationID == primaryLocation }.toMutableList()
+    fun getUpdatedEventsFromFirestore() {
+        viewModelScope.launch {
+            try {
+                eventRepository.getEvents()
+                events.clear()
+                events.addAll(eventRepository.events)
+            } catch (error: Exception) {
+                Log.d("GetAllEvents", "ERROR: ${error.message}")
+            }
+        }
     }
 
     fun addUserToEvent(eventID: String) {
@@ -100,12 +103,11 @@ class EventViewModel: ViewModel() {
      */
     fun getEventsWithinNextWeek(): List<Event> {
         // Get the current date and time
-        val currentDate = Date()
-
-        // Calculate the date and time one week from now
-        val oneWeekFromNow = Calendar.getInstance().apply {
-            time = currentDate
-            add(Calendar.DATE, 7)
+        val currentDate = Calendar.getInstance().apply {
+            set(Calendar.HOUR_OF_DAY, 0)
+            set(Calendar.MINUTE, 0)
+            set(Calendar.SECOND, 0)
+            set(Calendar.MILLISECOND, 0)
         }.time
 
         // Find the start and end index using binary search
@@ -115,19 +117,25 @@ class EventViewModel: ViewModel() {
         if (startIndex == -1)
             return emptyList()
 
+        // Calculate the date and time one week from now
+        val oneWeekFromNow = Calendar.getInstance().apply {
+            time = currentDate
+            add(Calendar.DATE, 7)
+        }.time
+
         //Find end index using binary search
         val endIndex = findEndIndex(events, oneWeekFromNow)
 
         return events.subList(startIndex, endIndex)
     }
 
-    fun getCurrentUserUIDFromFirebase(): String {
+    private fun getCurrentUserUIDFromFirebase(): String {
         return FirebaseAuth.getInstance().currentUser?.uid!!
     }
 
     fun isCurrentUserAttendingEvent(event: Event): Boolean {
         val currentUserUID = getCurrentUserUIDFromFirebase()
-        return event.attendeesByUID.any { it.id == currentUserUID }
+        return event.attendeesByUID.any { it == currentUserUID }
     }
 
     fun isSelectedEvent(eventID: String): Boolean {
@@ -169,14 +177,14 @@ class EventViewModel: ViewModel() {
             val mid = (low + high) / 2
             val midDate = events[mid].eventStartDateTime
 
-            // If the event's start date is before  the current date,
+            // If the event's start date is before the current date,
             // move the lower bound of the search interval to mid + 1
             if (midDate.before(currentDate)) {
                 low = mid + 1
             } else {
                 // If the event's start date is equal or after the current date,
                 // update the start index and move the upper bound of the search interval to mid - 1
-                startIndex = mid - 1
+                startIndex = mid
                 high = mid - 1
             }
         }
@@ -213,8 +221,7 @@ class EventViewModel: ViewModel() {
             }
         }
 
-        // Adjust the end index by adding 1 to include the last valid index
-        return low + 1
+        return low
     }
 
 }

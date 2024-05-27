@@ -1,6 +1,7 @@
 package com.example.ventilen_app.navigation
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.platform.LocalContext
@@ -50,7 +51,8 @@ fun RootNavigation() {
         ) {
             AuthNavGraph(
                 navController = navController,
-                authViewModel = authViewModel
+                authViewModel = authViewModel,
+                eventViewModel = eventViewModel
             )
         }
         composable("home") {
@@ -75,7 +77,10 @@ fun RootNavigation() {
                     primaryLocationNews = homeViewModel.primaryLocationNews,
                     isNewsCardExpanded = homeViewModel.isNewsCardExpanded,
                     onNewsCardClick = { homeViewModel.toggleNewsCard() },
-                    onDeleteNews = { homeViewModel.clearNewsForPrimaryLocation() },
+                    onDeleteNews = {
+                        homeViewModel.clearNewsForPrimaryLocation()
+                        homeViewModel.toggleConfirmDeleteNewsDialog()
+                    },
                     onChatLocalNavigate = {
                         chatViewModel.selectedLocation = it
                         navController.navigate("chat/local")
@@ -152,44 +157,44 @@ fun RootNavigation() {
                     )
                 }
             }
-            navigation(
-                startDestination = "event/hub",
-                route = "event"
-            ) {
-                composable("event/hub") {
-                    eventViewModel.filteredEventsForPrimaryLocationID(eventViewModel.userRepository.currentUser!!.primaryLocationID) // TODO: Scuffed maybe?
-                    eventViewModel.clearSelectedEventCard()
-                    EventScaffold(
-                        currentRoute = "event",
-                        isAdmin = eventViewModel.isAdmin(),
-                        onNavigateHome = { navController.navigate("home") },
-                        onNavigateChat = { navController.navigate("chat") },
-                        onNavigateCreateEvent = { navController.navigate("event/create") }
-                    ) {
-                        EventScreen(
-                            events = eventViewModel.eventsFilteredForPrimaryLocationID,
-                            onAttend = {
-                                eventViewModel.addUserToEvent(
-                                    eventID = it
-                                )
-                            },
-                            onNotAttend = {
-                                eventViewModel.removeUserFromEvent(
-                                    eventID = it,
-                                )
-                            },
-                            isEventSelected = { eventViewModel.isSelectedEvent(it) },
-                            onEventCardClick = { eventViewModel.toggleEventCard(it) },
-                            isAttending = { event ->
-                                eventViewModel.isCurrentUserAttendingEvent(
-                                    event = event
-                                )
-                            }
-                        )
-                    }
+        }
+        navigation(
+            startDestination = "event/hub",
+            route = "event"
+        ) {
+            composable("event/hub") {
+                eventViewModel.clearSelectedEventCard()
+                EventScaffold(
+                    currentRoute = "event",
+                    isAdmin = eventViewModel.isAdmin(),
+                    onNavigateHome = { navController.navigate("home") },
+                    onNavigateChat = { navController.navigate("chat") },
+                    onNavigateCreateEvent = { navController.navigate("event/create") }
+                ) {
+                    EventScreen(
+                        events = eventViewModel.events,
+                        onAttend = {
+                            eventViewModel.addUserToEvent(
+                                eventID = it
+                            )
+                        },
+                        onNotAttend = {
+                            eventViewModel.removeUserFromEvent(
+                                eventID = it,
+                            )
+                        },
+                        isEventSelected = { eventViewModel.isSelectedEvent(it) },
+                        onEventCardClick = { eventViewModel.toggleEventCard(it) },
+                        isAttending = { event ->
+                            eventViewModel.isCurrentUserAttendingEvent(
+                                event = event
+                            )
+                        }
+                    )
                 }
             }
             composable("event/create") {
+                eventViewModel.getUpdatedEventsFromFirestore()
                 createEventViewModel.context = LocalContext.current
                 CreateEventScaffold(
                     onNavigateBack = { navController.navigate("event") }
