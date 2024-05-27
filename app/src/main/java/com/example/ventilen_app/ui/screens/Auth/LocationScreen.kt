@@ -1,4 +1,4 @@
-package com.example.ventilen_app.ui.screens.Location
+package com.example.ventilen_app.ui.screens.Auth
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement

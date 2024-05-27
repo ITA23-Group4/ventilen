@@ -1,7 +1,6 @@
-package com.example.ventilen_app.ui.screens.Credentials
+package com.example.ventilen_app.ui.screens.Auth
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.unit.dp

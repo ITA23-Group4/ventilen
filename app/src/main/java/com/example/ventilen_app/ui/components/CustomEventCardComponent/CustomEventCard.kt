@@ -17,11 +17,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.ventilen_app.data.models.Event
-import com.example.ventilen_app.ui.theme.VentilenAppTheme
-import java.util.Date
 
 /**
  * Composable function to display a custom event card.

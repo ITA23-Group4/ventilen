@@ -1,6 +1,5 @@
 package com.example.ventilen_app.ui.screens.Event
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
@@ -10,13 +9,11 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.ventilen_app.data.models.Event
 import com.example.ventilen_app.ui.components.CustomColumn
 import com.example.ventilen_app.ui.components.CustomEventCardComponent.CustomEventCard
 import com.example.ventilen_app.ui.theme.CustomColorScheme
-import com.example.ventilen_app.ui.theme.VentilenAppTheme
 
 /**
  * @author Chrsitian, Nikolaj, Marcus

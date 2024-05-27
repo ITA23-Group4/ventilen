@@ -4,13 +4,13 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
-import com.example.ventilen_app.viewmodels.AuthViewModel
 import com.example.ventilen_app.ui.components.scaffolds.AuthScaffold
-import com.example.ventilen_app.ui.screens.Credentials.CredentialsScreen
-import com.example.ventilen_app.ui.screens.Location.LocationScreen
-import com.example.ventilen_app.ui.screens.Login.LoginScreen
-import com.example.ventilen_app.ui.screens.Username.UsernameScreen
-import com.example.ventilen_app.ui.screens.Welcome.WelcomeScreen
+import com.example.ventilen_app.ui.screens.Auth.CredentialsScreen
+import com.example.ventilen_app.ui.screens.Auth.LocationScreen
+import com.example.ventilen_app.ui.screens.Auth.LoginScreen
+import com.example.ventilen_app.ui.screens.Auth.UsernameScreen
+import com.example.ventilen_app.ui.screens.Auth.WelcomeScreen
+import com.example.ventilen_app.viewmodels.AuthViewModel
 import com.example.ventilen_app.viewmodels.EventViewModel
 
 /**

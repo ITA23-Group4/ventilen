@@ -4,6 +4,7 @@ import android.content.ContentValues.TAG
 import android.util.Log
 import com.example.ventilen_app.data.models.Location
 import com.example.ventilen_app.data.models.Message
+import com.example.ventilen_app.data.repositories.ChatRepository.db
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.Query

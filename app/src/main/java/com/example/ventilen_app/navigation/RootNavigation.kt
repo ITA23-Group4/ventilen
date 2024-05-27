@@ -1,7 +1,6 @@
 package com.example.ventilen_app.navigation
 
 import android.annotation.SuppressLint
-import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.platform.LocalContext
@@ -14,16 +13,16 @@ import com.example.ventilen_app.ui.components.scaffolds.ChatHubScreenScaffold
 import com.example.ventilen_app.ui.components.scaffolds.CreateEventScaffold
 import com.example.ventilen_app.ui.components.scaffolds.EventScaffold
 import com.example.ventilen_app.ui.components.scaffolds.HomeScreenScaffold
-import com.example.ventilen_app.viewmodels.AuthViewModel
-import com.example.ventilen_app.viewmodels.ChatViewModel
 import com.example.ventilen_app.ui.components.scaffolds.LocalChatScaffold
 import com.example.ventilen_app.ui.screens.Chat.ChatHubScreen
 import com.example.ventilen_app.ui.screens.Chat.ChatLocalScreen
-import com.example.ventilen_app.ui.screens.CreateEvent.CreateEventScreen
-import com.example.ventilen_app.viewmodels.CreateEventViewModel
+import com.example.ventilen_app.ui.screens.Event.CreateEventScreen
 import com.example.ventilen_app.ui.screens.Event.EventScreen
+import com.example.ventilen_app.ui.screens.HomeScreen
+import com.example.ventilen_app.viewmodels.AuthViewModel
+import com.example.ventilen_app.viewmodels.ChatViewModel
+import com.example.ventilen_app.viewmodels.CreateEventViewModel
 import com.example.ventilen_app.viewmodels.EventViewModel
-import com.example.ventilen_app.ui.screens.Home.HomeScreen
 import com.example.ventilen_app.viewmodels.HomeViewModel
 
 /**

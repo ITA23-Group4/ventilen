@@ -11,7 +11,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.ventilen_app.data.models.Event
 import com.example.ventilen_app.data.repositories.EventRepository
-import com.example.ventilen_app.data.repositories.UserRepository
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Calendar
