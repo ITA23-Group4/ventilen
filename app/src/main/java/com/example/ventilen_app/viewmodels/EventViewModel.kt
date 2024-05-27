@@ -186,11 +186,8 @@ class EventViewModel: ViewModel() {
                 // update the start index and move the upper bound of the search interval to mid - 1
                 startIndex = mid
                 high = mid - 1
-                Log.d("Update StartIndex:", "$startIndex")
             }
         }
-
-        Log.d("findStartIndex", "startIndex: $startIndex")
 
         return startIndex
     }
