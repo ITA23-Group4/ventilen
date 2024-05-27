@@ -110,18 +110,18 @@ class EventViewModel: ViewModel() {
             set(Calendar.MILLISECOND, 0)
         }.time
 
-        // Calculate the date and time one week from now
-        val oneWeekFromNow = Calendar.getInstance().apply {
-            time = currentDate
-            add(Calendar.DATE, 7)
-        }.time
-
         // Find the start and end index using binary search
         val startIndex = findStartIndex(events, currentDate)
 
         // If no events occur within the next week, return an empty list
         if (startIndex == -1)
             return emptyList()
+
+        // Calculate the date and time one week from now
+        val oneWeekFromNow = Calendar.getInstance().apply {
+            time = currentDate
+            add(Calendar.DATE, 7)
+        }.time
 
         //Find end index using binary search
         val endIndex = findEndIndex(events, oneWeekFromNow)
