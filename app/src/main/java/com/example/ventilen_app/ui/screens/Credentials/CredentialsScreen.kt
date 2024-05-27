@@ -11,7 +11,9 @@ import com.example.ventilen_app.ui.components.CustomPasswordTextField
 import com.example.ventilen_app.ui.components.CustomTextField
 import com.example.ventilen_app.ui.components.TopAuthPageDesign
 
-@OptIn(ExperimentalMaterial3Api::class)
+/**
+ * @author Chrsitian, Nikolaj, Marcus
+ */
 @Composable
 fun CredentialsScreen(
     onNavigateUsername: () -> Unit,

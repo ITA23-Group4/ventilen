@@ -13,6 +13,9 @@ import com.example.ventilen_app.ui.components.CustomOutlinedButton
 import com.example.ventilen_app.ui.components.TopAuthPageDesign
 import com.example.ventilen_app.ui.theme.CustomColorScheme
 
+/**
+ * @author Chrsitian, Nikolaj, Marcus
+ */
 @Composable
 fun WelcomeScreen(
     onNavigationLogin: () -> Unit,

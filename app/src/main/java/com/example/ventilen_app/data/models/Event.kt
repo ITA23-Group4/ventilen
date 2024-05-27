@@ -6,6 +6,9 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
+/**
+ * @author Chrsitian, Nikolaj, Marcus
+ */
 data class Event(
     val eventName: String = "",
     val attendeesByUID: MutableList<String> = mutableListOf(),

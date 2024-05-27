@@ -53,7 +53,7 @@ import com.example.ventilen_app.ui.theme.CustomColorScheme
  * @param onCardClick Callback function to be invoked when the card is clicked.
  * @param onDeleteNews Callback function to be invoked when the delete button is clicked.
  *
- * @author Marcus, ...
+ * @author Marcus, Christian, Nikolaj
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

@@ -27,7 +27,7 @@ import androidx.compose.ui.unit.dp
  * @param showBackButton Determines whether to show the back button in the top app bar. Defaults to true.
  * @param onNavigateBack Callback function invoked when the back button is clicked.
  * @param content The content to be displayed within the scaffold.
- * @author Marcus
+ * @author Marcus, Christian, Nikolaj
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

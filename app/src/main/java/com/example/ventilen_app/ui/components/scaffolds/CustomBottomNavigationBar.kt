@@ -30,7 +30,7 @@ import com.example.ventilen_app.R
  * @param onNavigateChat Callback function for navigating to the chat route.
  * @param onNavigateEvent Callback function for navigating to the event route.
  *
- * @author Marcus
+ * @author Marcus, Christian, Nikolaj
  */
 @Composable
 fun CustomBottomNavigationBar(

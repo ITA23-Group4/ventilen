@@ -28,7 +28,7 @@ import androidx.compose.ui.unit.dp
  * @param onNavigateChat The action to perform when the chat navigation item is clicked.
  * @param content The main content to be displayed within the scaffold.
  *
- * @Author [Your Name]
+ * @Author Marcus, Christian, Nikolaj
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

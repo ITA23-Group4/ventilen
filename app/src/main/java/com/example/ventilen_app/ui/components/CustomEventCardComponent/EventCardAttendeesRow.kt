@@ -13,6 +13,9 @@ import androidx.compose.ui.Modifier
 import com.example.ventilen_app.ui.components.CustomSwitchComponent.CustomSwitch
 import com.example.ventilen_app.ui.theme.CustomColorScheme
 
+/**
+ * @author Chrsitian, Nikolaj, Marcus
+ */
 @Composable
 fun EventCardAttendeesRow(
     attendeesAmount: Int,

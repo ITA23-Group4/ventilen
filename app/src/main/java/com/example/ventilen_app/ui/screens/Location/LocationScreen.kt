@@ -13,7 +13,9 @@ import com.example.ventilen_app.ui.components.CustomFilledButton
 import com.example.ventilen_app.ui.components.TopAuthPageDesign
 import com.example.ventilen_app.ui.theme.CustomColorScheme
 
-
+/**
+ * @author Chrsitian, Nikolaj, Marcus
+ */
 @Composable
 fun LocationScreen(
     hasLocationError: Boolean,

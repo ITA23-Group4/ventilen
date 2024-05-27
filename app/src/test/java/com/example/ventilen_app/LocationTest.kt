@@ -5,6 +5,9 @@ import junit.framework.TestCase.assertEquals
 import org.junit.Before
 import org.junit.Test
 
+/**
+ * @author Chrsitian, Nikolaj, Marcus
+ */
 class LocationTest {
     private lateinit var locationA: Location
     private lateinit var locationB: Location

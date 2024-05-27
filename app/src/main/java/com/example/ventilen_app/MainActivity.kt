@@ -11,6 +11,9 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.example.ventilen_app.navigation.RootNavigation
 import com.example.ventilen_app.ui.theme.VentilenAppTheme
 
+/**
+ * @author Chrsitian, Nikolaj, Marcus
+ */
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

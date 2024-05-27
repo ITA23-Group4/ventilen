@@ -10,6 +10,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 
+/**
+ * @author Chrsitian, Nikolaj, Marcus
+ */
 object LocationRepository {
     private val db = Firebase.firestore
 

@@ -13,6 +13,9 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 
+/**
+ * @author Chrsitian, Nikolaj, Marcus
+ */
 private val myLightColorScheme = lightColorScheme(
     primary = CustomColorScheme.Orange,
     secondary = CustomColorScheme.Mocha,

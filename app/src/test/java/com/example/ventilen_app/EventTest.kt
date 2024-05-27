@@ -6,6 +6,9 @@ import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 
+/** NOTE: NOT UPDATED WITH NEW TIMEFORMAT
+ * @author Chrsitian, Nikolaj, Marcus
+ */
 class EventTest {
     private lateinit var eventA: Event
     private lateinit var eventB: Event
@@ -15,7 +18,7 @@ class EventTest {
     fun setUp() {
         eventA = Event(
             eventName = "Event A",
-            eventDateTime = Timestamp(1620000000, 0),
+            eventSt = Timestamp(1620000000, 0),
             eventID = "1"
         )
         eventB = Event(

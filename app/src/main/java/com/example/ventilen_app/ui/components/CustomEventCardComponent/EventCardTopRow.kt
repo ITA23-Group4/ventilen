@@ -16,6 +16,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
+/**
+ * @author Chrsitian, Nikolaj, Marcus
+ */
 @Composable
 fun EventCardTopRow(
     title: String,

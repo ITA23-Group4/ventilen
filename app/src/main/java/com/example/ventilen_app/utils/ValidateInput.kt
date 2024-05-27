@@ -5,7 +5,7 @@ import android.util.Patterns
 /**
  * Utility class for input validation.
  * Provides methods to validate email addresses, passwords, and usernames.
- * @author
+ * @author Marcus, Christian, Nikolaj
  */
 class ValidateInput {
 

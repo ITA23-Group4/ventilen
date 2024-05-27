@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.dp
  * used in navigation bars or toolbars to navigate to the previous screen.
  *
  * @param onNavigateBack Callback function invoked when the back button is clicked.
- * @author Christian, Nikola, Marcus
+ * @author Christian, Nikolaj, Marcus
  */
 @Composable
 fun CustomBackButton(
