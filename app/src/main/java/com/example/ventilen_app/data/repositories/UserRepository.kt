@@ -37,7 +37,13 @@ object UserRepository {
     suspend fun createUser(newUser: User) {
         db.collection("users")
             .document(newUser.uid!!)
-            .set(newUser)
+            .set(
+                hashMapOf(
+                    "username" to newUser.username,
+                    "primaryLocationID" to newUser.primaryLocationID,
+                    "isAdmin" to newUser.isAdmin,
+                )
+            )
             .await()
     }
 
