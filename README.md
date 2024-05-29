@@ -1,12 +1,6 @@
-# Ventilen - MVP
+# Ventilen
 
-https://drive.google.com/drive/u/0/folders/1JSToBRP7UU8dWj3GJHSS8h11Gun9ZXvh
-
-**TODO** [Description of the project here...]
-
-## Demo
-
-Youtube link: https://youtu.be/Zn_20C_jflY?si=gWXznIjwcjnbaSf4
+**TODO** [Description of the project here...
 
 ## Branching Strategy
 
@@ -37,13 +31,4 @@ Here we divide tasks into the following categories:
 - **Done:** Tasks that are completed and ready for main.
 
 This system helps us organize our work and ensures that we have a clear understanding of what needs to be done, what is in progress, and what is completed.
-
-## Figma
-Link til projekt: https://www.figma.com/team_invite/redeem/dCSgPp7Zy9YX6QZSqfhpfr
-
-## Moodboard
-![moodboard](https://github.com/ITA23-Group4/ventilen/assets/56862691/aedb9ebc-42d0-4c0f-af89-95a77305236e)
-
-## Sketch
-![scan_nijo0001_2024-04-27-15-46-27](https://github.com/ITA23-Group4/ventilen/assets/56862691/64fe8aad-a21f-47d0-8ddd-9ecb018070bf)
 
